@@ -100,12 +100,10 @@ class CRF_PlayableCharacter : ScriptComponent
 				vector mat[4];
 				m_PlayerController.m_eCamera.GetTransform(mat);
 				mat[3][1] = mat[3][1] - 1.5;
-				m_PlayerController.GetLocalControlledEntity().SetOrigin(mat);
+				owner.SetOrigin(mat);
 			}
 			else {
-				vector mat[4];
-				mat[3][1] = 10000;
-				m_PlayerController.GetLocalControlledEntity().SetOrigin(mat);
+				owner.SetOrigin("0 10000 0");
 			}
 		}
 		Physics physics = owner.GetPhysics();

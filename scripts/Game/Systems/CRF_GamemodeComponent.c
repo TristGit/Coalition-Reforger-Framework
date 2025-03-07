@@ -378,8 +378,7 @@ class CRF_GamemodeComponent: SCR_BaseGameModeComponent
 				case(isInfSpec) : {UpdateInfantrySpecialtiesCustomGear(gearConfig.m_CustomFactionGear.m_InfantrySpecialtiesCustomGear, role, spawnParams, inventory, inventoryManager); break;}
 				case(isVehSpec) : {UpdateVehicleSpecialtiesCustomGear(gearConfig.m_CustomFactionGear.m_VehicleSpecialtiesCustomGear, role, spawnParams, inventory, inventoryManager);   break;}
 			}
-		} else
-			Print(string.Format("CRF GEAR SCRIPT ERROR: NO CUSTOM GEAR SET: %1", gearScriptResourceName), LogLevel.ERROR);
+		}
 		
 		//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 		// ITEMS

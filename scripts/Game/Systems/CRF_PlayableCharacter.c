@@ -96,15 +96,16 @@ class CRF_PlayableCharacter : ScriptComponent
 
 		if (m_bIsSpectator && m_PlayerController.GetLocalControlledEntity() == owner)
 		{
-			if (m_PlayerController.m_eCamera) 
-			{
+			if (m_PlayerController.m_eCamera) {
 				vector mat[4];
-				m_PlayerController.m_eCamera.GetWorldTransform(mat);
+				m_PlayerController.m_eCamera.GetTransform(mat);
 				mat[3][1] = mat[3][1] - 1.5;
-				owner.SetWorldTransform(mat);
+				m_PlayerController.UpdateEntityPos(mat);
 			} else {
-				owner.SetOrigin("0 10000 0");
-			};
+				vector mat[4];
+				mat[3][1] = 10000;
+				m_PlayerController.UpdateEntityPos(mat);
+			}
 			
 			Physics physics = owner.GetPhysics();
 			if (physics) {
@@ -117,7 +118,7 @@ class CRF_PlayableCharacter : ScriptComponent
 				physics.SetActive(ActiveState.INACTIVE);
 			}	
 		};
-	}
+	} 
 	
 	void DisableAI(IEntity owner)
 	{

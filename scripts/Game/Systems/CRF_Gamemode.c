@@ -669,8 +669,7 @@ class CRF_Gamemode : SCR_BaseGameMode
 			if(groupID == -1)
 			{
 				RplId groupRPLID = m_aActivePlayerGroupsIDs.Get(m_aGroupRplIDs.Find(m_aPlayerGroupIDs.Get(m_aSlots.Find(playerId))));
-				SCR_AIGroup playerGroup = SCR_AIGroup.Cast(RplComponent.Cast(Replication.FindItem(groupRPLID)).GetEntity());
-				group = SCR_AIGroup.Cast(RplComponent.Cast(Replication.FindItem(m_aGroupRplIDs.Get(m_aActivePlayerGroupsIDs.Find(RplComponent.Cast(playerGroup.FindComponent(RplComponent)).Id())))).GetEntity());
+				group = SCR_AIGroup.Cast(RplComponent.Cast(Replication.FindItem(groupRPLID)).GetEntity());
 			} else {
 				group = SCR_GroupsManagerComponent.GetInstance().FindGroup(groupID);
 			};

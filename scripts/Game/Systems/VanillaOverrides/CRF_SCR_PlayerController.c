@@ -228,9 +228,6 @@ modded class SCR_PlayerController
 		
 		Rpc(RpcDo_EnterGame, playerID);
 		
-		if(CRF_Gamemode.GetInstance().m_aSlots.Find(playerID) == -1)
-			CRF_ClientComponent.GetInstance().RequestSpectator(playerID);
-		
 		if(m_iFPS == 0 || !CRF_Gamemode.GetInstance())
 		{
 			BaseContainer video = GetGame().GetEngineUserSettings().GetModule("VideoUserSettings");

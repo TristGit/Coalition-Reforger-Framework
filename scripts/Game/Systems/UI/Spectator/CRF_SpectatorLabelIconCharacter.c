@@ -52,7 +52,7 @@ class CRF_SpectatorLabelIconCharacter : CRF_SpectatorLabelIcon
 			m_wSpectatorLabelIconCircleSmall.SetColor(faction.GetFactionColor());
 		}
 		
-		if(!m_EditableCharacterComponent.GetVisibleSelf())
+		if(m_EditableCharacterComponent.GetOwner().GetPrefabData().GetPrefabName() == "{59886ECB7BBAF5BC}Prefabs/Characters/CRF_InitialEntity.et")
 		{
 			m_fMaxIconSize = 20;
 			m_fMinIconOpacity = 1;

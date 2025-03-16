@@ -53,7 +53,6 @@ SCR_ChimeraCharacter : "{37578B1666981FCE}Prefabs/Characters/Core/Character_Base
     m_aAutoLabels {
     }
    }
-   m_bVisible 0
    m_Flags 2133
   }
   SCR_VoNComponent "{520EA1D2F659C856}" {

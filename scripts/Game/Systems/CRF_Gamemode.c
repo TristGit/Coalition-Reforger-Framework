@@ -276,7 +276,7 @@ class CRF_Gamemode : SCR_BaseGameMode
 		SCR_InstigatorContextData instigatorContextData = new SCR_InstigatorContextData(-1, entity, killerEntity, instigator);
 		int playerId = instigatorContextData.GetVictimPlayerID();
 
-		int delay = 1800;
+		int delay = 250;
 		if(entity.GetPrefabData().GetPrefabName() == "{59886ECB7BBAF5BC}Prefabs/Characters/CRF_InitialEntity.et")
 			delay = 0;
 		

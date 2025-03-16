@@ -1,5 +1,5 @@
 MetaFileClass {
- Name "{9668A21511C6F791}Terrains/Common/Water/WaterTreatmentPlant/Invisible_Material.emat"
+ Name "{0A94C84B94134E73}Assets/Characters/Spectator/InvisibiltyGoesSoHard.emat"
  Configurations {
   EMATResourceClass PC {
   }
@@ -9,9 +9,9 @@ MetaFileClass {
   }
   EMATResourceClass PS4 : PC {
   }
-  EMATResourceClass HEADLESS : PC {
-  }
   EMATResourceClass PS5 : PC {
+  }
+  EMATResourceClass HEADLESS : PC {
   }
   EMATResourceClass Xbox : PC {
   }

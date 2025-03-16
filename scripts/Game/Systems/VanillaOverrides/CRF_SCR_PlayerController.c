@@ -94,7 +94,8 @@ modded class SCR_PlayerController
 		m_eCamera.SetAngles(Vector(mat[0], mat[1], 0));
 		
 		CheckVONRegister();
-		GetGame().GetMenuManager().OpenMenu(ChimeraMenuPreset.CRF_SpectatorMenu);
+		if(CRF_Gamemode.GetInstance().m_GamemodeState == CRF_GamemodeState.GAME)
+			GetGame().GetMenuManager().OpenMenu(ChimeraMenuPreset.CRF_SpectatorMenu);
 		GetGame().GetCameraManager().SetCamera(CameraBase.Cast(m_eCamera));
 	}
 	

@@ -239,7 +239,7 @@ modded class SCR_PlayerController
 		
 		ResetSettingsToStoredValues();
 		
-		GetGame().GetCallqueue().CallLater(SetupRadioFrequency, 1000, false);
+		GetGame().GetCallqueue().CallLater(SetupRadioFrequency, 2250, false);
 	}
 	//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	void ResetSettingsToStoredValues()

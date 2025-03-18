@@ -1663,7 +1663,7 @@ class CRF_GamemodeComponent: SCR_BaseGameModeComponent
 		
 		if (m_sMessageContent == "All Blufor Players Have Been Eliminated!" || m_sMessageContent == "All Opfor Players Have Been Eliminated!" || m_sMessageContent == "All Indfor Players Have Been Eliminated!"  || m_sMessageContent == "All Civilian Players Have Been Eliminated!") 
 		{
-			m_PopUpNotification.PopupMsg(m_sMessageContent, 30);
+			m_PopUpNotification.PopupMsg(m_sMessageContent, 20);
 			return;
 		};
 

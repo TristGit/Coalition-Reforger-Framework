@@ -4,14 +4,15 @@ FrameWidgetClass {
   VerticalLayoutWidgetClass "{64E256DF1AA8A299}" {
    Name "FactionVerticalLayout"
    Slot FrameWidgetSlot "{64E256DF1AA8A2D9}" {
-    PositionX 2.619
-    OffsetLeft 2.619
-    PositionY 719.134
-    OffsetTop 719.134
-    SizeX 136.9
-    OffsetRight -139.519
-    SizeY 170.686
-    OffsetBottom -889.82
+    Anchor 0.001 0.666 0.073 0.824
+    PositionX 0
+    OffsetLeft 0
+    PositionY 0
+    OffsetTop 0
+    SizeX 0
+    OffsetRight 0
+    SizeY 0
+    OffsetBottom 0
    }
    {
     OverlayWidgetClass "{64E23B88485A98FB}" {
@@ -230,15 +231,15 @@ FrameWidgetClass {
   TextWidgetClass "{6058112C73B2D6CA}" {
    Name "TimerDescription"
    Slot FrameWidgetSlot "{6058112C73B2D710}" {
-    Anchor 0 1 0 1
-    PositionX 12.792
-    OffsetLeft 12.792
-    PositionY -411.898
-    OffsetTop -411.898
-    SizeX 115.386
-    OffsetRight -128.178
-    SizeY 18.732
-    OffsetBottom 393.166
+    Anchor 0.007 0.619 0.067 0.636
+    PositionX 0
+    OffsetLeft 0
+    PositionY 0
+    OffsetTop 0
+    SizeX 0
+    OffsetRight 0
+    SizeY 0
+    OffsetBottom 0
    }
    Opacity 0
    Text "Safe Start Enabled"
@@ -254,15 +255,15 @@ FrameWidgetClass {
   ImageWidgetClass "{6058112AEF7BFB9D}" {
    Name "TimerImage"
    Slot FrameWidgetSlot "{6058112AEF7BFBF7}" {
-    Anchor 0 1 0 1
-    PositionX 25.999
-    OffsetLeft 25.999
-    PositionY -389.762
-    OffsetTop -389.762
-    SizeX 23.834
-    OffsetRight -49.833
-    SizeY 23.141
-    OffsetBottom 366.621
+    Anchor 0.014 0.639 0.024 0.658
+    PositionX 0
+    OffsetLeft 0
+    PositionY 0
+    OffsetTop 0
+    SizeX 0
+    OffsetRight 0
+    SizeY 0
+    OffsetBottom 0
     SizeToContent 1
    }
    Opacity 0
@@ -273,15 +274,15 @@ FrameWidgetClass {
   TextWidgetClass "{6058112AD17BEB9F}" {
    Name "TimerText"
    Slot FrameWidgetSlot "{6058112AD17BEBE4}" {
-    Anchor 0 1 0 1
-    PositionX 49.505
-    OffsetLeft 49.505
-    PositionY -392.804
-    OffsetTop -392.804
-    SizeX 67.1
-    OffsetRight -116.605
-    SizeY 25.346
-    OffsetBottom 367.458
+    Anchor 0.026 0.636 0.061 0.66
+    PositionX 0
+    OffsetLeft 0
+    PositionY 0
+    OffsetTop 0
+    SizeX 0
+    OffsetRight 0
+    SizeY 0
+    OffsetBottom 0
    }
    Opacity 0
    Text "00:00:00"
@@ -300,15 +301,15 @@ FrameWidgetClass {
   TextWidgetClass "{60581123F1E9E3DD}" {
    Name "MissionStart"
    Slot FrameWidgetSlot "{6058112C73B2D710}" {
-    Anchor 0.5 0.5 0.5 0.5
-    PositionX -62.853
-    OffsetLeft -62.853
-    PositionY -15.204
-    OffsetTop -15.204
-    SizeX 135.026
-    OffsetRight -72.173
-    SizeY 13.922
-    OffsetBottom 1.282
+    Anchor 0.467 0.486 0.538 0.499
+    PositionX 0
+    OffsetLeft 0
+    PositionY 0
+    OffsetTop 0
+    SizeX 0
+    OffsetRight 0
+    SizeY 0
+    OffsetBottom 0
    }
    Opacity 0
    Text "Safe Start Ended"
@@ -324,15 +325,15 @@ FrameWidgetClass {
   TextWidgetClass "{60581123E93719AD}" {
    Name "MissionStart2"
    Slot FrameWidgetSlot "{6058112C73B2D710}" {
-    Anchor 0.5 0.5 0.5 0.5
-    PositionX -62.748
-    OffsetLeft -62.748
-    PositionY 0.084
-    OffsetTop 0.084
-    SizeX 134.847
-    OffsetRight -72.099
-    SizeY 15.257
-    OffsetBottom -15.341
+    Anchor 0.467 0.5 0.538 0.514
+    PositionX 0
+    OffsetLeft 0
+    PositionY 0
+    OffsetTop 0
+    SizeX 0
+    OffsetRight 0
+    SizeY 0
+    OffsetBottom 0
    }
    Opacity 0
    Color 0.502 0 0 1
@@ -349,15 +350,15 @@ FrameWidgetClass {
   ImageWidgetClass "{605D76D78F83ACA6}" {
    Name "FactionsBackground"
    Slot FrameWidgetSlot "{605D76D78F83AC87}" {
-    Anchor 0 1 0 1
-    PositionX 2.75
-    OffsetLeft 2.75
-    PositionY -416.428
-    OffsetTop -416.428
-    SizeX 136.672
-    OffsetRight -139.422
-    SizeY 55.39
-    OffsetBottom 361.038
+    Anchor 0.001 0.614 0.073 0.666
+    PositionX 0
+    OffsetLeft 0
+    PositionY 0
+    OffsetTop 0
+    SizeX 0
+    OffsetRight 0
+    SizeY 0
+    OffsetBottom 0
    }
    "Z Order" -1
    Opacity 0
@@ -367,14 +368,15 @@ FrameWidgetClass {
   PanelWidgetClass "{64E256D2A6417441}" {
    Name "FactionsPanel"
    Slot FrameWidgetSlot "{64E256D2A6411B58}" {
-    PositionX 2.815
-    OffsetLeft 2.815
-    PositionY 663.546
-    OffsetTop 663.546
-    SizeX 136.532
-    OffsetRight -139.348
-    SizeY 55.558
-    OffsetBottom -719.104
+    Anchor 0.001 0.614 0.073 0.666
+    PositionX 0
+    OffsetLeft 0
+    PositionY 0
+    OffsetTop 0
+    SizeX 0
+    OffsetRight 0
+    SizeY 0
+    OffsetBottom 0
    }
    Opacity 0
    Color 0 0 0 0.706

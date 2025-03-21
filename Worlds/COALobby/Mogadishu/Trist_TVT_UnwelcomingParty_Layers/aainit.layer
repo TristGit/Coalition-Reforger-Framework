@@ -1,0 +1,8 @@
+SCR_AIWorld : "{E0A05C76552E7F58}Prefabs/AI/SCR_AIWorld.et" {
+ coords 5943.268 -0 3823.701
+}
+CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et" {
+ coords 5962.377 12.656 3931.509
+ m_sFactionOneKey "BLU"
+ m_sFactionTwoKey "OPF"
+}

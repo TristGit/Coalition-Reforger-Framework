@@ -11,7 +11,7 @@ class CRF_ClientComponent: ScriptComponent
 	ref array<string> m_aScriptedMarkers = new array<string>; 
 	
 	protected CRF_GamemodeComponent m_gamemodeComponent;
-	
+		
 	//------------------------------------------------------------------------------------------------
 
 	// override/static functions
@@ -39,8 +39,8 @@ class CRF_ClientComponent: ScriptComponent
 		GetGame().GetInputManager().AddActionListener("CRF_AdminForceReady", EActionTrigger.DOWN, AdminForceReady);
 	
 		SCR_PlayerController.Cast(owner).m_OnControlledEntityChanged.Insert(OnControlledEntityChanged);
-		SCR_PlayerControllerGroupComponent.Cast(SCR_PlayerController.Cast(owner).FindComponent(SCR_PlayerControllerGroupComponent)).GetOnGroupChanged().Insert(UpdateLocalPlayerGroup);
 		GetGame().GetCallqueue().CallLater(WaitTillGameStart, 500, true);
+		GetGame().GetCallqueue().CallLater(AddAdvanceAction, 0, false);
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -237,30 +237,44 @@ class CRF_ClientComponent: ScriptComponent
 	//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	// Respawn
 	//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-	void SpawnGroup(int playerID, string prefab, vector spawnLocation, int groupID, bool logAction)
+	void SpawnOnGroup(int playerID, vector spawnLocation, int groupID, bool logAction)
 	{
-		Rpc(RpcAsk_SpawnGroup, playerID, prefab, spawnLocation, groupID, logAction);
+		Rpc(RpcAsk_SpawnOnGroup, playerID, spawnLocation, groupID, logAction);
 	}
 	
 	//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
-	void RpcAsk_SpawnGroup(int playerID, string prefab, vector spawnLocation, int groupID, bool logAction)
+	void RpcAsk_SpawnOnGroup(int playerID, vector spawnLocation, int groupID, bool logAction)
 	{
 		m_gamemodeComponent = CRF_GamemodeComponent.Cast(GetGame().GetGameMode().FindComponent(CRF_GamemodeComponent));
-		m_gamemodeComponent.SpawnGroupServer(playerID, prefab, spawnLocation, groupID, logAction);
+		m_gamemodeComponent.SpawnOnGroupServer(playerID, spawnLocation, groupID, logAction);
+	}
+	
+	//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	void RequestGroupIdFromServer(int requestedId, int requesterID)
+	{
+		Rpc(RpcAsk_RequestGroupIdFromServer, requestedId, requesterID);
+	}
+	
+	//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
+	void RpcAsk_RequestGroupIdFromServer(int requestedId, int requesterID)
+	{
+		m_gamemodeComponent = CRF_GamemodeComponent.Cast(GetGame().GetGameMode().FindComponent(CRF_GamemodeComponent));
+		m_gamemodeComponent.SendGroupIDToPlayer(requestedId, requesterID);
 	}
 	
 	//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	// Gear
 	//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-	void ResetGear(int playerID, string prefab, bool logAction)
+	void ResetGear(int playerID, ResourceName prefab, bool logAction)
 	{
 		Rpc(RpcAsk_ResetGear, playerID, prefab, logAction);
 	}
 	
 	//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
-	void RpcAsk_ResetGear(int playerID, string prefab, bool logAction)
+	void RpcAsk_ResetGear(int playerID, ResourceName prefab, bool logAction)
 	{
 		m_gamemodeComponent = CRF_GamemodeComponent.Cast(GetGame().GetGameMode().FindComponent(CRF_GamemodeComponent));
 		m_gamemodeComponent.SetPlayerGear(playerID, prefab, logAction);
@@ -289,7 +303,7 @@ class CRF_ClientComponent: ScriptComponent
 		EntitySpawnParams spawnParams = new EntitySpawnParams();
 	    spawnParams.TransformMode = ETransformMode.WORLD;
 		vector teleportLocation = vector.Zero;
-		SCR_WorldTools.FindEmptyTerrainPosition(teleportLocation, entity2.GetOrigin(), 3);
+		SCR_WorldTools.FindEmptyTerrainPosition(teleportLocation, entity2.GetOrigin(), 10);
 	    spawnParams.Transform[3] = teleportLocation;
 	
 		SCR_Global.TeleportPlayer(playerID1, teleportLocation);
@@ -413,16 +427,17 @@ class CRF_ClientComponent: ScriptComponent
 			return;
 		
 		GetGame().GetCallqueue().Remove(WaitTillGameStart);
-		GetGame().GetCallqueue().CallLater(DelayUpdate, 650, false);
+		GetGame().GetCallqueue().CallLater(DelayUpdate, 5000, false);
 	}
 	
 	//------------------------------------------------------------------------------------------------
 	protected void DelayUpdate()
 	{
-		if(SCR_PlayerController.GetLocalMainEntity().GetPrefabData().GetPrefabName() != "{59886ECB7BBAF5BC}Prefabs/Characters/CRF_InitialEntity.et")
+		IEntity entity = SCR_PlayerController.GetLocalMainEntity();
+		
+		if(entity && entity.GetPrefabData().GetPrefabName() != "{59886ECB7BBAF5BC}Prefabs/Characters/CRF_InitialEntity.et")
 		{
 			OnControlledEntityChanged(SCR_PlayerController.GetLocalMainEntity(), SCR_PlayerController.GetLocalMainEntity());
-			UpdateLocalPlayerGroup(SCR_GroupsManagerComponent.GetInstance().GetPlayerGroup(SCR_PlayerController.GetLocalPlayerId()).GetGroupID());
 		}
 	}
 	
@@ -433,15 +448,6 @@ class CRF_ClientComponent: ScriptComponent
 			return;
 		
 		Rpc(RpcAsk_UpdatePlayerGearScriptMap, to.GetPrefabData().GetPrefabName(), SCR_PlayerController.GetLocalPlayerId(), "GSR"); // GSR = Gear Script Resource
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	protected void UpdateLocalPlayerGroup(int groupId)
-	{
-		if(groupId <= 0)
-			return;
-		
-		Rpc(RpcAsk_UpdatePlayerGearScriptMap, groupId.ToString(), SCR_PlayerController.GetLocalPlayerId(), "GID"); // GID = GROUP ID    
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -486,23 +492,11 @@ class CRF_ClientComponent: ScriptComponent
 	//------------------------------------------------------------------------------------------------
 	void Owner_ToggleSideReady(string playerName)
 	{	
-		string setReady = "";
-		
 		SCR_FactionManager factionManager = SCR_FactionManager.Cast(GetGame().GetFactionManager());
 		Faction faction = factionManager.GetPlayerFaction(SCR_PlayerController.GetLocalPlayerId());
-			
-		Color factionColor = faction.GetFactionColor();
-		float rg = Math.Max(factionColor.R(), factionColor.G());
-		float rgb = Math.Max(rg, factionColor.B());
-			
-		switch (true) {
-			case(rgb == factionColor.R()) : {setReady = "Opfor";  break;};
-			case(rgb == factionColor.G()) : {setReady = "Indfor"; break;};
-			case(rgb == factionColor.B()) : {setReady = "Blufor"; break;};
-		};
 		
-		if (setReady == "") return;
-		Rpc(RpcAsk_ToggleSideReady, setReady, playerName, false);
+		if (faction.GetFactionKey() == "") return;
+		Rpc(RpcAsk_ToggleSideReady, faction.GetFactionKey(), playerName, false);
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -532,5 +526,60 @@ class CRF_ClientComponent: ScriptComponent
 	{
 //		CRF_RadioRespawnSystemComponent m_radioComponent = CRF_RadioRespawnSystemComponent.Cast(GetGame().GetGameMode().FindComponent(CRF_RadioRespawnSystemComponent));
 //		m_radioComponent.SpawnGroupServer(groupID);
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	//\***********************************************************************************************
+	//\***********************************************************************************************
+	
+	// Spectator
+	
+	//\***********************************************************************************************
+	//\***********************************************************************************************
+	//------------------------------------------------------------------------------------------------
+	
+	void RequestSpectator(int playerId)
+	{
+		Rpc(RpcAsk_RequestSpectator, playerId);
+	}
+	
+	//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
+	void RpcAsk_RequestSpectator(int playerId)
+	{
+		CRF_Gamemode.GetInstance().EnterSpectator(playerId);
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	//\***********************************************************************************************
+	//\***********************************************************************************************
+	
+	// AAR Screen
+	
+	//\***********************************************************************************************
+	//\***********************************************************************************************
+	//------------------------------------------------------------------------------------------------
+	
+	void AddAdvanceAction() 
+	{
+		SCR_ChatPanelManager chatPanelManager = SCR_ChatPanelManager.GetInstance();
+		ChatCommandInvoker invoker = chatPanelManager.GetCommandInvoker("aar");
+		invoker.Insert(Advance_Callback);
+	}
+	
+	//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	void Advance_Callback(SCR_ChatPanel panel, string data)
+	{
+		if (!SCR_Global.IsAdmin())
+			return;
+		
+		Rpc(RpcAsk_Advance_Callback)
+	}
+	
+	//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
+	void RpcAsk_Advance_Callback()
+	{
+		CRF_Gamemode.GetInstance().AdvanceGamemodeState(true);
 	}
 }

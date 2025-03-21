@@ -127,6 +127,9 @@ class CRF_GamemodeComponent: SCR_BaseGameModeComponent
 		if(RplSession.Mode() == RplMode.Client)
 			return;
 		
+		if(entity.GetPrefabData().GetPrefabName() == "{59886ECB7BBAF5BC}Prefabs/Characters/CRF_InitialEntity.et")
+			return;
+		
 		GetGame().GetCallqueue().CallLater(CheckWorldValid, 150, false, entity);
 	}
 	
@@ -375,8 +378,7 @@ class CRF_GamemodeComponent: SCR_BaseGameModeComponent
 				case(isInfSpec) : {UpdateInfantrySpecialtiesCustomGear(gearConfig.m_CustomFactionGear.m_InfantrySpecialtiesCustomGear, role, spawnParams, inventory, inventoryManager); break;}
 				case(isVehSpec) : {UpdateVehicleSpecialtiesCustomGear(gearConfig.m_CustomFactionGear.m_VehicleSpecialtiesCustomGear, role, spawnParams, inventory, inventoryManager);   break;}
 			}
-		} else
-			Print(string.Format("CRF GEAR SCRIPT ERROR: NO CUSTOM GEAR SET: %1", gearScriptResourceName), LogLevel.ERROR);
+		}
 		
 		//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 		// ITEMS
@@ -389,7 +391,7 @@ class CRF_GamemodeComponent: SCR_BaseGameModeComponent
 				AddInventoryItem(gearScriptSettings.m_rLeadershipRadiosPrefab, 1, spawnParams, inventory, inventoryManager);
 			
 			//Who we give GI Radios
-			if(gearScriptSettings.m_bEnableGIRadios && !(m_aLeadershipRolesUGL.Contains(role) || m_aLeadershipRolesCarbine.Contains(role) || role == "_Spotter_P" || role == "_Pilot_P" || role == "_CrewChief_P"))
+			if(gearScriptSettings.m_bEnableGIRadios && !(m_aLeadershipRolesUGL.Contains(role) || m_aLeadershipRolesCarbine.Contains(role) || role == "_Spotter_P" || role == "_Pilot_P" || role == "_CrewChief_P" || role == "_Medic_P" || role == "_RTO_P"))
 				AddInventoryItem(gearScriptSettings.m_rGIRadiosPrefab, 1, spawnParams, inventory, inventoryManager);
 			
 			//Who we give RTO Radios
@@ -1038,55 +1040,56 @@ class CRF_GamemodeComponent: SCR_BaseGameModeComponent
 	//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	// Respawn
 	//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-	void SpawnGroupServer(int playerId, string prefab, vector spawnLocation, int groupID, bool logAction)
+	void SpawnOnGroupServer(int playerId, vector spawnLocation, int groupID, bool logAction)
 	{
-		Rpc(Respawn, playerId, prefab, spawnLocation, groupID, logAction);
-	}
-	
-	//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
-	void Respawn(int playerId, string prefab, vector spawnLocation, int groupID, bool logAction)
-	{
-//		Rpc(RpcAsk_CloseMap, playerId);
-
-		if(prefab.IsEmpty())
-		{
-			switch(SCR_GroupsManagerComponent.GetInstance().FindGroup(groupID).m_faction)
-			{
-				case "BLUFOR" : {prefab = "{268EAF6C56517778}Prefabs/Characters/Factions/BLUFOR/US_Army/BLUFOR_AMG.et"; break;}
-				case "OPFOR"  : {prefab = "{FC0904D71EF8DB6A}Prefabs/Characters/Factions/OPFOR/CRF_GS_OPFOR_Rifleman_P.et";   break;}
-				case "INDFOR" : {prefab = "{A303C25424BC7149}Prefabs/Characters/Factions/INDFOR/CRF_GS_INDFOR_Rifleman_P.et"; break;}
-				case "CIV"    : {prefab = "{71EF8F2C5207403C}Prefabs/Characters/Factions/CIV/CRF_GS_CIV_Rifleman_P.et";       break;}
-			}
-		}
-
-		Resource resource = Resource.Load(prefab);
-		EntitySpawnParams spawnParams = new EntitySpawnParams();
-        spawnParams.TransformMode = ETransformMode.WORLD;
-		vector finalSpawnLocation = vector.Zero;
-		SCR_WorldTools.FindEmptyTerrainPosition(finalSpawnLocation, spawnLocation, 3);
-
-		CRF_Gamemode.GetInstance().RespawnPlayer(playerId);
+		if(RplSession.Mode() == RplMode.Client)
+			return;
+		
+		CRF_Gamemode.GetInstance().RespawnPlayer(playerId, spawnLocation, groupID);
 		
 		if (logAction)
 			LogAdminAction(string.Format("%1 was respawned to %2", GetGame().GetPlayerManager().GetPlayerName(playerId), SCR_GroupsManagerComponent.GetInstance().FindGroup(groupID).m_faction), playerId, true);
 	}
 	
 	//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-	void SetPlayerGroup(SCR_AIGroup group, int playerID)
+	void SendGroupIDToPlayer(int requestedId, int requesterID)
 	{
-		SCR_PlayerFactionAffiliationComponent.Cast(GetGame().GetPlayerManager().GetPlayerController(playerID).FindComponent(SCR_PlayerFactionAffiliationComponent)).RequestFaction(group.GetFaction());
-		SCR_GroupsManagerComponent.GetInstance().AddPlayerToGroup(group.GetGroupID(), playerID);
+		CRF_Gamemode gm = CRF_Gamemode.GetInstance();
+		
+		if(gm.m_aSlots.Find(requestedId) == -1)
+			return;
+		
+		RplId groupID = gm.m_aActivePlayerGroupsIDs.Get(gm.m_aGroupRplIDs.Find(gm.m_aPlayerGroupIDs.Get(gm.m_aSlots.Find(requestedId))));
+		SCR_AIGroup playerGroup = SCR_AIGroup.Cast(RplComponent.Cast(Replication.FindItem(groupID)).GetEntity());
+		if(playerGroup)
+		{
+			Rpc(RpcDo_SendGroupIDToPlayer, requesterID, playerGroup.GetGroupID());
+			RpcDo_SendGroupIDToPlayer(requesterID, playerGroup.GetGroupID());
+		};
+	}
+	
+	//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	[RplRpc(RplChannel.Reliable, RplRcver.Broadcast)]
+	void RpcDo_SendGroupIDToPlayer(int requesterID, int groupId)
+	{
+		if(SCR_PlayerController.GetLocalPlayerId() != requesterID || groupId == -1)
+			return;
+		
+		MenuBase topMenu = GetGame().GetMenuManager().GetTopMenu();
+		CRF_AdminMenu adminMenu = CRF_AdminMenu.Cast(topMenu);
+		
+		if(adminMenu)
+			adminMenu.UpdateSpawnGroup(groupId);
 	}
 	
 	//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	// Gear
 	//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-	void SetPlayerGear(int playerID, string prefab, bool logAction)
+	void SetPlayerGear(int playerID, ResourceName prefab, bool logAction)
 	{	
 		IEntity entity = GetGame().GetPlayerManager().GetPlayerControlledEntity(playerID);
-
-		GetGame().GetCallqueue().CallLater(SetupAddGearToEntity, m_RNG.RandInt(250, 1000), false, entity, entity.GetPrefabData().GetPrefabName());
+		
+		GetGame().GetCallqueue().CallLater(SetupAddGearToEntity, m_RNG.RandInt(250, 1000), false, entity, prefab);
 		SetPlayerGearScriptsMapValue(prefab, playerID, "GSR"); // GSR = Gear Script Resource
 		
 		if (logAction)
@@ -1131,7 +1134,7 @@ class CRF_GamemodeComponent: SCR_BaseGameModeComponent
 		EntitySpawnParams spawnParams = new EntitySpawnParams();
 	    spawnParams.TransformMode = ETransformMode.WORLD;
 		vector teleportLocation = vector.Zero;
-		SCR_WorldTools.FindEmptyTerrainPosition(teleportLocation, entity2.GetOrigin(), 3);
+		SCR_WorldTools.FindEmptyTerrainPosition(teleportLocation, entity2.GetOrigin(), 10);
 	    spawnParams.Transform[3] = teleportLocation;
 	
 		SCR_Global.TeleportPlayer(playerID1, teleportLocation);
@@ -1306,6 +1309,7 @@ class CRF_GamemodeComponent: SCR_BaseGameModeComponent
 	protected bool m_bBluforReady = false;
 	protected bool m_bOpforReady = false;
 	protected bool m_bIndforReady = false;
+	protected bool m_bCivReady = false;
 	
 	protected bool m_bAdminForcedReady = false;
 	
@@ -1351,28 +1355,27 @@ class CRF_GamemodeComponent: SCR_BaseGameModeComponent
 		string bluforString = "#Coal_SS_No_Faction";
 		string opforString = "#Coal_SS_No_Faction"; 
 		string indforString = "#Coal_SS_No_Faction";
+		string civString = "#Coal_SS_No_Faction";
 
 		foreach(SCR_Faction faction : outArray) {
-			if (faction.GetPlayerCount() == 0 || faction.GetFactionLabel() == EEditableEntityLabel.FACTION_NONE) 
+			if (faction.GetPlayerCount() == 0 || (faction.GetFactionKey() != "BLUFOR" && faction.GetFactionKey() != "OPFOR" && faction.GetFactionKey() != "INDFOR" && faction.GetFactionKey() != "CIV")) 
 				continue;
 			
 			m_aPlayedFactionsArray.Insert(faction);
 			
-			Color factionColor = faction.GetFactionColor();
-			float rg = Math.Max(factionColor.R(), factionColor.G());
-			float rgb = Math.Max(rg, factionColor.B());
-			
 			switch (true) {
-				case(!m_bBluforReady && rgb == factionColor.B()) : {bluforString = "#Coal_SS_Faction_Not_Ready"; break;};
-				case(m_bBluforReady && rgb == factionColor.B())  : {bluforString = "#Coal_SS_Faction_Ready";     break;};
-				case(!m_bOpforReady && rgb == factionColor.R())  : {opforString = "#Coal_SS_Faction_Not_Ready";  break;};
-				case(m_bOpforReady && rgb == factionColor.R())   : {opforString = "#Coal_SS_Faction_Ready";      break;};
-				case(!m_bIndforReady && rgb == factionColor.G()) : {indforString = "#Coal_SS_Faction_Not_Ready"; break;};
-				case(m_bIndforReady && rgb == factionColor.G())  : {indforString = "#Coal_SS_Faction_Ready";     break;};
+				case(!m_bBluforReady && faction.GetFactionKey() == "BLUFOR") : {bluforString = "#Coal_SS_Faction_Not_Ready"; break;};
+				case(m_bBluforReady && faction.GetFactionKey() == "BLUFOR")  : {bluforString = "#Coal_SS_Faction_Ready";     break;};
+				case(!m_bOpforReady && faction.GetFactionKey() == "OPFOR")  : {opforString = "#Coal_SS_Faction_Not_Ready";  break;};
+				case(m_bOpforReady && faction.GetFactionKey() == "OPFOR")   : {opforString = "#Coal_SS_Faction_Ready";      break;};
+				case(!m_bIndforReady && faction.GetFactionKey() == "INDFOR") : {indforString = "#Coal_SS_Faction_Not_Ready"; break;};
+				case(m_bIndforReady && faction.GetFactionKey() == "INDFOR")  : {indforString = "#Coal_SS_Faction_Ready";     break;};
+				case(!m_bCivReady && faction.GetFactionKey() == "CIV") : {civString = "#Coal_SS_Faction_Not_Ready"; 			break;};
+				case(m_bCivReady && faction.GetFactionKey() == "CIV")  : {civString = "#Coal_SS_Faction_Ready";     			break;};
 			};
 		};
 		
-		m_aFactionsStatusArray = {bluforString, opforString, indforString};
+		m_aFactionsStatusArray = {bluforString, opforString, indforString, civString};
 		m_iPlayedFactionsCount = 0;
 		
 		foreach (string factionString : m_aFactionsStatusArray)
@@ -1388,7 +1391,7 @@ class CRF_GamemodeComponent: SCR_BaseGameModeComponent
 	
 	//Call from server
 	//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-	void ToggleSideReady(string setReady, string playerName, bool adminForced) {
+	void ToggleSideReady(FactionKey setReady, string playerName, bool adminForced) {
 		if (!GetSafestartStatus()) return;
 		
 		// If it's an admin-forced action
@@ -1399,6 +1402,7 @@ class CRF_GamemodeComponent: SCR_BaseGameModeComponent
 				m_bBluforReady = false;
 				m_bOpforReady = false;
 				m_bIndforReady = false;
+				m_bCivReady = false;
 				m_bAdminForcedReady = false;
 			
 				m_sMessageContent = string.Format("An Admin (%1) Has Force Unreadied All Sides!", playerName);
@@ -1410,6 +1414,7 @@ class CRF_GamemodeComponent: SCR_BaseGameModeComponent
 			m_bBluforReady = true;
 			m_bOpforReady = true;
 			m_bIndforReady = true;
+			m_bCivReady = true;
 			m_bAdminForcedReady = true;
 			
 			m_sMessageContent = string.Format("An Admin (%1) Has Force Readied All Sides!", playerName);
@@ -1423,22 +1428,28 @@ class CRF_GamemodeComponent: SCR_BaseGameModeComponent
 			
 		switch (setReady)
 		{
-			case("Blufor") : {
+			case("BLUFOR") : {
 				m_bBluforReady = !m_bBluforReady; 
 				if (m_bBluforReady) m_sMessageContent = string.Format("#Coal_SS_Faction_Readied_Blufor - %1", playerName);
 				if (!m_bBluforReady) m_sMessageContent = string.Format("#Coal_SS_Faction_Unreadied_Blufor - %1", playerName);
 				break;
 			};
-			case("Opfor")  : {
+			case("OPFOR")  : {
 				m_bOpforReady = !m_bOpforReady;
 				if (m_bOpforReady) m_sMessageContent = string.Format("#Coal_SS_Faction_Readied_Opfor - %1", playerName);
 				if (!m_bOpforReady) m_sMessageContent = string.Format("#Coal_SS_Faction_Unreadied_Opfor - %1", playerName);
 				break;
 			};
-			case("Indfor") : {
+			case("INDFOR") : {
 				m_bIndforReady = !m_bIndforReady; 
 				if (m_bIndforReady) m_sMessageContent = string.Format("#Coal_SS_Faction_Readied_Indfor - %1", playerName);
 				if (!m_bIndforReady) m_sMessageContent = string.Format("#Coal_SS_Faction_Unreadied_Indfor - %1", playerName);
+				break;
+			};
+			case("CIV") : {
+				m_bCivReady = !m_bCivReady; 
+				if (m_bCivReady) m_sMessageContent = string.Format("#Coal_SS_Faction_Readied_Civ - %1", playerName);
+				if (!m_bCivReady) m_sMessageContent = string.Format("#Coal_SS_Faction_Unreadied_Civ - %1", playerName);
 				break;
 			};
 		};
@@ -1530,6 +1541,7 @@ class CRF_GamemodeComponent: SCR_BaseGameModeComponent
 			m_bBluforReady = false;
 			m_bOpforReady = false;
 			m_bIndforReady = false;
+			m_bCivReady = false;
 			
 			GetGame().GetCallqueue().Remove(CheckStartCountDown);
 			GetGame().GetCallqueue().Remove(UpdateServerWorldTime);
@@ -1649,9 +1661,9 @@ class CRF_GamemodeComponent: SCR_BaseGameModeComponent
 		
 		m_sStoredMessageContent = m_sMessageContent;
 		
-		if (m_sMessageContent == "All Blufor Players Have Been Eliminated!" || m_sMessageContent == "All Opfor Players Have Been Eliminated!" || m_sMessageContent == "All Indfor Players Have Been Eliminated!") 
+		if (m_sMessageContent == "All Blufor Players Have Been Eliminated!" || m_sMessageContent == "All Opfor Players Have Been Eliminated!" || m_sMessageContent == "All Indfor Players Have Been Eliminated!"  || m_sMessageContent == "All Civilian Players Have Been Eliminated!") 
 		{
-			m_PopUpNotification.PopupMsg(m_sMessageContent, 30);
+			m_PopUpNotification.PopupMsg(m_sMessageContent, 20);
 			return;
 		};
 
@@ -1665,14 +1677,11 @@ class CRF_GamemodeComponent: SCR_BaseGameModeComponent
 	void CheckPlayersAlive()
 	{
 		foreach(SCR_Faction faction : m_aPlayedFactionsArray) {
-			Color factionColor = faction.GetFactionColor();
-			float rg = Math.Max(factionColor.R(), factionColor.G());
-			float rgb = Math.Max(rg, factionColor.B());
-			
 			switch (true) {
-				case(rgb == factionColor.B() && faction.GetPlayerCount() == 0 && m_aFactionsStatusArray[0] != "#Coal_SS_No_Faction") : { m_sMessageContent = "All Blufor Players Have Been Eliminated!"; break;};
-				case(rgb == factionColor.R() && faction.GetPlayerCount() == 0 && m_aFactionsStatusArray[1] != "#Coal_SS_No_Faction") : { m_sMessageContent = "All Opfor Players Have Been Eliminated!";  break;};
-				case(rgb == factionColor.G() && faction.GetPlayerCount() == 0 && m_aFactionsStatusArray[2] != "#Coal_SS_No_Faction") : { m_sMessageContent = "All Indfor Players Have Been Eliminated!";  break;};
+				case(faction.GetFactionKey() == "BLUFOR" && faction.GetPlayerCount() == 0 && m_aFactionsStatusArray[0] != "#Coal_SS_No_Faction") : { m_sMessageContent = "All Blufor Players Have Been Eliminated!"; break;};
+				case(faction.GetFactionKey() == "OPFOR" && faction.GetPlayerCount() == 0 && m_aFactionsStatusArray[1] != "#Coal_SS_No_Faction") : { m_sMessageContent = "All Opfor Players Have Been Eliminated!";  break;};
+				case(faction.GetFactionKey() == "INDFOR" && faction.GetPlayerCount() == 0 && m_aFactionsStatusArray[2] != "#Coal_SS_No_Faction") : { m_sMessageContent = "All Indfor Players Have Been Eliminated!";  break;};
+				case(faction.GetFactionKey() == "CIV" && faction.GetPlayerCount() == 0 && m_aFactionsStatusArray[3] != "#Coal_SS_No_Faction") : { m_sMessageContent = "All Civilian Players Have Been Eliminated!";  break;};
 			};
 		};
 		

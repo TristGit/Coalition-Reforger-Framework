@@ -9,20 +9,23 @@ CRF_Gamemode : "{1B76F75A3175E85C}Prefabs/MP/Modes/Plain/GameMode_Plain.et" {
   SCR_DataCollectorComponent "{5ADE83EE64329989}" {
    m_aModules {
     SCR_DataCollectorCrimesModule "{5D9C706AD14AF695}" {
-     m_bWarCrimesEnabled 0
-     m_bWarCrimesProportionalityPrincipleEnabled 0
     }
    }
   }
   SCR_GameModeHealthSettings "{5A22E11F9ACBB1DF}" {
    m_fDOTScale 0.5
    m_fRegenScale 0.75
+   m_bPermitUnconsciousVON 0
+   m_fRegenerationDelay 30
    m_fRegenerationScale 0.6
   }
   SCR_InitWeatherComponent "{64427EEC0AFF43EE}" {
   }
   SCR_NametagConfigComponent "{571AA9E54FC9210D}" {
    m_sConfigPath "{09F7AAA14A642683}Configs/NameTags/NametagFriendlies.conf"
+  }
+  SCR_NightModeGameModeComponent "{5D50E84688D5A408}" {
+   m_bAllowGlobalNightMode 1
   }
   SCR_NotificationSenderComponent "{56FA84B04BE7D4C0}" {
    m_iKillFeedType DISABLED
@@ -319,20 +322,60 @@ CRF_Gamemode : "{1B76F75A3175E85C}Prefabs/MP/Modes/Plain/GameMode_Plain.et" {
     }
     SCR_Faction "{61500924662B6062}" {
      FactionKey "SPEC"
-     FactionColor 1 0.491 0.076 1
+     FactionColor 0.392 0.157 0.624 1
      UIInfo SCR_FactionUIInfo "{615009275A4B9FE7}" {
       Name "Spectator"
-      Icon "{CCF597A247ACFD7F}UI/Textures/Flags/CIV-flag-base.edds"
+      Icon "{BB790255945032F8}UI/data/Spec_Eye_BCR.edds"
       m_sNameUpper "SPECTATOR"
      }
+     "Identity of soldiers" FactionIdentity "{570D128F4022EF5A}" {
+      VisualIdentityArray {
+       VisualIdentity "{570CE64C784286B5}" {
+        Head "{2FC2A1CE68435471}Prefabs/Characters/Heads/Head_Invisible.et"
+        Body "{E25DCEC549E17067}Prefabs/Characters/Basebody/CharacterBasebody_Invisible.et"
+       }
+       VisualIdentity "{570CFDC06CAAD480}" {
+        Head "{2FC2A1CE68435471}Prefabs/Characters/Heads/Head_Invisible.et"
+        Body "{E25DCEC549E17067}Prefabs/Characters/Basebody/CharacterBasebody_Invisible.et"
+       }
+       VisualIdentity "{570CFDC05A2BFCE8}" {
+        Head "{2FC2A1CE68435471}Prefabs/Characters/Heads/Head_Invisible.et"
+        Body "{E25DCEC549E17067}Prefabs/Characters/Basebody/CharacterBasebody_Invisible.et"
+       }
+       VisualIdentity "{570CE64C790A3C7D}" {
+        Head "{2FC2A1CE68435471}Prefabs/Characters/Heads/Head_Invisible.et"
+        Body "{E25DCEC549E17067}Prefabs/Characters/Basebody/CharacterBasebody_Invisible.et"
+       }
+       VisualIdentity "{570CFDC037CCBCD3}" {
+        Head "{2FC2A1CE68435471}Prefabs/Characters/Heads/Head_Invisible.et"
+        Body "{E25DCEC549E17067}Prefabs/Characters/Basebody/CharacterBasebody_Invisible.et"
+       }
+       VisualIdentity "{570CFDC1C8B17A43}" {
+        Head "{2FC2A1CE68435471}Prefabs/Characters/Heads/Head_Invisible.et"
+        Body "{E25DCEC549E17067}Prefabs/Characters/Basebody/CharacterBasebody_Invisible.et"
+       }
+       VisualIdentity "{570EDB838B8AC563}" {
+        Head "{2FC2A1CE68435471}Prefabs/Characters/Heads/Head_Invisible.et"
+        Body "{E25DCEC549E17067}Prefabs/Characters/Basebody/CharacterBasebody_Invisible.et"
+       }
+       VisualIdentity "{588508C19AA51746}" {
+        Head "{2FC2A1CE68435471}Prefabs/Characters/Heads/Head_Invisible.et"
+        Body "{E25DCEC549E17067}Prefabs/Characters/Basebody/CharacterBasebody_Invisible.et"
+       }
+       VisualIdentity "{588508C199AD5966}" {
+        Head "{2FC2A1CE68435471}Prefabs/Characters/Heads/Head_Invisible.et"
+        Body "{E25DCEC549E17067}Prefabs/Characters/Basebody/CharacterBasebody_Invisible.et"
+       }
+      }
+     }
      m_iOrder 3
-     m_OutlineFactionColor 0.116 0.056 0 1
-     m_NotificationFactionColor 1 0.491 0.076 1
-     m_NotificationTextFactionColor 1 0.491 0.076 1
+     m_OutlineFactionColor 0.392 0.157 0.624 1
+     m_NotificationFactionColor 0.392 0.157 0.624 1
+     m_NotificationTextFactionColor 0.392 0.157 0.624 1
      m_bIsPlayable 0
      m_bShowInWelcomeScreenIfNonPlayable 0
      m_bIsMilitary 0
-     m_sFactionFlag "{76A2D42714BB3806}UI/Textures/Flags/Civilian-flag-base_3it.edds"
+     m_sFactionFlag "{BB790255945032F8}UI/data/Spec_Eye_BCR.edds"
      m_FactionFlagMaterial "{E3BB2EF7F600DD28}Assets/Props/Fabric/Flags/Data/Flag_2_3_CIVILIAN.emat"
      m_FactionLabel FACTION_CIV
      m_aFriendlyFactionsIds + {

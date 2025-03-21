@@ -17,7 +17,6 @@ class CRF_SpectatorLabelIconCharacter : CRF_SpectatorLabelIcon
 	
 	protected ref Color m_cDeadColor = Color.Gray;
 	
-	
 	protected float m_fClickIgnoreTime;
 	
 	override void HandlerAttached(Widget w)
@@ -30,6 +29,11 @@ class CRF_SpectatorLabelIconCharacter : CRF_SpectatorLabelIcon
 		m_Gamemode = CRF_Gamemode.GetInstance();
 		
 		super.HandlerAttached(w);
+	}
+	
+	SCR_ButtonTextComponent GetButton()
+	{
+		return SCR_ButtonTextComponent.Cast(m_wRoot.FindAnyWidget("LabelButton").FindHandler(SCR_ButtonTextComponent));
 	}
 	
 	override void SetEntity(IEntity entity, string boneName)
@@ -46,6 +50,19 @@ class CRF_SpectatorLabelIconCharacter : CRF_SpectatorLabelIcon
 			m_wSpectatorLabelIconBackground.SetColor(faction.GetFactionColor());
 			m_wSpectatorLabelIconCircle.SetColor(faction.GetOutlineFactionColor());
 			m_wSpectatorLabelIconCircleSmall.SetColor(faction.GetFactionColor());
+		}
+		
+		if(m_EditableCharacterComponent.GetOwner().GetPrefabData().GetPrefabName() == "{59886ECB7BBAF5BC}Prefabs/Characters/CRF_InitialEntity.et")
+		{
+			m_fMaxIconSize = 20;
+			m_fMinIconOpacity = 1;
+			m_fMaxIconOpacity = 1;
+			m_fMaxIconDistance = 425;
+			m_fMaxLabelDistance = 425;
+			m_wSpectatorLabelText.SetVisible(false);
+			m_wSpectatorLabelIconBackground.SetVisible(false);
+			m_wSpectatorLabelIconCircle.SetVisible(false);
+			m_wSpectatorLabelIconCircleSmall.SetVisible(false);
 		}
 		
 		SCR_UIInfo uiInfo = m_EditableCharacterComponent.GetInfo();
@@ -73,7 +90,7 @@ class CRF_SpectatorLabelIconCharacter : CRF_SpectatorLabelIcon
 			}
 		}
 		
-		if (m_fDistanceToIcon > 30)
+		if (m_fDistanceToIcon > m_fMaxLabelDistance)
 		{
 			m_wOverlayCircle.SetVisible(false);
 			m_wSpectatorLabelIcon.SetVisible(false);
@@ -82,7 +99,7 @@ class CRF_SpectatorLabelIconCharacter : CRF_SpectatorLabelIcon
 			m_wSpectatorLabelIcon.SetVisible(true);
 		}
 		
-		if (!m_bDead)
+		if (!m_bDead && m_EditableCharacterComponent.GetVisibleSelf())
 		{
 			if (!m_bWounded && m_ControllerComponent.IsUnconscious()) {
 				//m_wSpectatorLabelIcon.LoadImageFromSet(0, m_rIconImageSet, "Wounded");

@@ -319,6 +319,7 @@ class CRF_Gamemode : SCR_BaseGameMode
 		if(currentGroup)
 			currentGroup.RemovePlayer(playerId);
 		
+		SCR_CharacterDamageManagerComponent.Cast(initialEntity.FindComponent(SCR_CharacterDamageManagerComponent)).EnableDamageHandling(false);
 		SCR_PlayerFactionAffiliationComponent.Cast(GetGame().GetPlayerManager().GetPlayerController(playerId).FindComponent(SCR_PlayerFactionAffiliationComponent)).RequestFaction(GetGame().GetFactionManager().GetFactionByKey("SPEC"));
 
 		vector cameraPos[4];

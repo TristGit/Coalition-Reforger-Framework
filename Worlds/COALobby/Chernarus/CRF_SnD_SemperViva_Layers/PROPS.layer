@@ -7,12 +7,6 @@ Vehicle S1203_transport_red1 : "{11A28C90DB40318D}Prefabs/Vehicles/Wheeled/S1203
  coords 3126.412 303.355 7951.863
  angleY -52.971
 }
-GenericEntity : "{1E9ECC41D168521B}Prefabs/Structures/Wreck/lada.et" {
- coords 3097.849 308.903 7828.844
- angleX 3.652
- angleY -96.232
- angleZ 0.5
-}
 $grp GenericEntity : "{21D83950DF36F250}Prefabs/Props/Military/Sandbags/Sandbag_01_long_burlap.et" {
  {
   coords 2928.515 326.573 7880.442
@@ -51,12 +45,6 @@ Vehicle S105_lightgreen1 : "{321016E0F9361A22}Prefabs/Vehicles/Wheeled/S105/S105
   }
  }
  coords 3094.269 306.063 7902.528
-}
-GenericEntity : "{3872E0C19D19A045}Prefabs/Structures/Wreck/pickup.et" {
- coords 3199.832 299.002 8124.539
- angleX -0.747
- angleY 56.586
- angleZ 0.493
 }
 GenericEntity : "{3BAF6AA8C20D924D}Prefabs/Compositions/Misc/SubCompositions/Barricade_Logs_01.et" {
  coords 3051.282 303.142 8000.231
@@ -144,10 +132,6 @@ $grp StaticModelEntity : "{70D4AB7B8164BB3A}Prefabs/Structures/BuildingParts/Doo
 GenericEntity : "{7AF4B627D5C90235}Prefabs/Props/Military/Sandbags/Sandbag_01_round_high_burlap.et" {
  coords 2926.675 326.573 7886.469
  angleY -81.87
-}
-GenericEntity : "{84CBCE9163176B3E}Prefabs/Props/Wrecks/S105_wreck.et" {
- coords 3093.795 303.373 8001.823
- angleY -35.16
 }
 Vehicle S105_red1 : "{85F0BD6AF0F42D6D}Prefabs/Vehicles/Wheeled/S105/S105_red.et" {
  components {
@@ -539,24 +523,6 @@ $grp GenericEntity : "{CC66836BF4E211F9}Prefabs/Props/Military/Camps/Duckboard_0
   angleY -52.266
   angleZ -90
   scale 0.71
- }
-}
-GenericEntity : "{CF9930D0DBC6DC22}Prefabs/Structures/Wreck/ikarus_b.et" {
- coords 3084.719 303.917 7980.55
- angleX 1.214
- angleY -151.423
- angleZ -0.358
-}
-$grp GenericEntity : "{F34E4A33FB471ECA}Prefabs/Structures/Wreck/tractor.et" {
- {
-  coords 3207.288 300.678 8084.948
-  angleY 62.359
- }
- {
-  coords 3047.589 309.81 7887.867
-  angleX -4.457
-  angleY -0.209
-  angleZ 2.692
  }
 }
 Vehicle Ural4320_transport_covered_CIV_JZD1 : "{FB219B49A448A8EA}Prefabs/Vehicles/Wheeled/Ural4320/Ural4320_transport_covered_CIV_JZD.et" {

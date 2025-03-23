@@ -399,6 +399,7 @@ class CRF_Gamemode : SCR_BaseGameMode
 		m_aGroupLockedStatus.Insert(false);
 		SCR_AIGroup newGroup = SCR_GroupsManagerComponent.GetInstance().CreateNewPlayableGroup(group.GetFaction());
 		newGroup.SetCanDeleteIfNoPlayer(false);
+		newGroup.SetMaxMembers(12);
 		m_aActivePlayerGroupsIDs.Insert(RplComponent.Cast(newGroup.FindComponent(RplComponent)).Id());
 		Replication.BumpMe();
 	}

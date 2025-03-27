@@ -20,4 +20,25 @@ $grp SCR_VehicleSpawn {
   respawnDelay 10000
   firstSpawn 1
  }
+ {
+  coords 2799.043 82.903 6398.163
+  angleY -120.278
+  m_rnPrefab "{16C1F16C9B053801}Prefabs/Vehicles/Wheeled/Ural4320/Ural4320_transport.et"
+  respawnDelay 10000
+  firstSpawn 1
+ }
+ {
+  coords 2815.339 82.903 6408.273
+  angleY -120.278
+  m_rnPrefab "{16C1F16C9B053801}Prefabs/Vehicles/Wheeled/Ural4320/Ural4320_transport.et"
+  respawnDelay 10000
+  firstSpawn 1
+ }
+ {
+  coords 2828.672 82.903 6416.043
+  angleY -120.278
+  m_rnPrefab "{16C1F16C9B053801}Prefabs/Vehicles/Wheeled/Ural4320/Ural4320_transport.et"
+  respawnDelay 10000
+  firstSpawn 1
+ }
 }

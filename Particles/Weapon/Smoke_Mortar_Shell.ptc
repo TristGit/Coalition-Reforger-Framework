@@ -257,7 +257,7 @@ EffectDef {
    AnimOnce 0
    AnimFPS 60
    LifetimeByAnim 0
-   Lifetime 19
+   Lifetime 60
    LifetimeRND 4
    LifetimeVelFactor 0.15
    Color {

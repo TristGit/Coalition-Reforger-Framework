@@ -1,5 +1,5 @@
 MetaFileClass {
- Name "{C90C2EE913D7A0F4}Prefabs/Weapons/Ammo/122mmHE.et"
+ Name "{38BAE094333E31BF}Prefabs/Weapons/Ammo/Ammo_Shell_81mm_HE_M821.et"
  Configurations {
   EntityTemplateResourceClass PC {
   }

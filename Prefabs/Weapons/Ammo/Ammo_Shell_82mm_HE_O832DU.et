@@ -9,5 +9,8 @@ Projectile : "{EEF8495A9A6787A6}Prefabs/Weapons/Core/Ammo_MortarShell_Base.et" {
     }
    }
   }
+  ShellMoveComponent "{5098E3DEA78F87A3}" {
+   DispersionMultiplier 8
+  }
  }
 }

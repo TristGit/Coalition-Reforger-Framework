@@ -3,6 +3,9 @@ CRF_Gamemode : "{1B76F75A3175E85C}Prefabs/MP/Modes/Plain/GameMode_Plain.et" {
  components {
   CRF_GamemodeComponent "{644344EEF3C64CD6}" {
   }
+  CRF_LoggingServerComponent "{61761C7B221DBCD4}" {
+   Enabled 0
+  }
   SCR_AdditionalGameModeSettingsComponent "{6170E11C3C452ACC}" {
    m_bEnableTeamKillPunishment 0
   }
@@ -378,7 +381,7 @@ CRF_Gamemode : "{1B76F75A3175E85C}Prefabs/MP/Modes/Plain/GameMode_Plain.et" {
      m_sFactionFlag "{BB790255945032F8}UI/data/Spec_Eye_BCR.edds"
      m_FactionFlagMaterial "{E3BB2EF7F600DD28}Assets/Props/Fabric/Flags/Data/Flag_2_3_CIVILIAN.emat"
      m_FactionLabel FACTION_CIV
-     m_aFriendlyFactionsIds + {
+     m_aFriendlyFactionsIds {
       "USSR" "FIA"
      }
      m_sFactionRadioEncryptionKey "Sandbox"

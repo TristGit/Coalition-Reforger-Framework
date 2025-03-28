@@ -81,7 +81,7 @@ CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et
         m_sCallsign "2-3"
        }
        SCR_CallsignInfo "{64F94C73358BDE7D}" {
-        m_sCallsign "LAV3"
+        m_sCallsign "LAV1"
        }
        SCR_CallsignInfo "{64F9625100744B5B}" {
         m_sCallsign "LAV2"

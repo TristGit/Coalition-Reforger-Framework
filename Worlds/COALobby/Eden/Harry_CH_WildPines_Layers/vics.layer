@@ -1,35 +1,3 @@
-$grp SCR_VehicleSpawn {
- {
-  coords 6446.491 161.921 6442.542
-  angleX 1.774
-  angleY 82.419
-  angleZ -0.236
-  m_rnPrefab "{00C9BBE426F7D459}Prefabs/Vehicles/Wheeled/M998/M997_maxi_ambulance.et"
-  respawnDelay 10000
-  firstSpawn 1
- }
- {
-  coords 7511.275 165.75 4306.298
-  angleY 14.558
-  m_rnPrefab "{43C4AF1EEBD001CE}Prefabs/Vehicles/Wheeled/UAZ452/UAZ452_ambulance.et"
-  respawnDelay 10000
-  firstSpawn 1
- }
- {
-  coords 6417.987 160.552 6433.324
-  angleY 67.024
-  m_rnPrefab "{0FBF8F010F81A4E5}Prefabs/Vehicles/Wheeled/LAV25/LAV25.et"
-  respawnDelay 10000
-  firstSpawn 1
- }
- {
-  coords 6402.77 159.644 6426.872
-  angleY 67.024
-  m_rnPrefab "{0FBF8F010F81A4E5}Prefabs/Vehicles/Wheeled/LAV25/LAV25.et"
-  respawnDelay 10000
-  firstSpawn 1
- }
-}
 $grp Vehicle : "{16C1F16C9B053801}Prefabs/Vehicles/Wheeled/Ural4320/Ural4320_transport.et" {
  Ural4320_transport1 {
   coords 7509.507 165.75 4293.511

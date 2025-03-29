@@ -6,23 +6,26 @@ GenericEntity : "{492CA9A2919ECA45}Prefabs/Weapons/Warheads/Warhead_Mine_HE.et" 
     ExplosionDamageContainer "{5A12D2D8ABE24913}" : "{8A81F4702F919838}Prefabs/Weapons/Core/Damage/ExplosionContainer_HE.conf" {
      ExplosionEffects {
       BaseExplosionDamage "{5D8D1EB3EF9D02C6}" : "{3BE7AB8C8BD42E9B}Prefabs/Weapons/Core/Damage/BlastDamageEffect.conf" {
-       DamageValue 2650
-       DamageDistance 14
-       ExplosionDamagePower 0.8
-       ExplosionRangePower 0.22222
+       DamageValue 1250
+       DamageDistance 10
+       ExplosionDamagePower 0.05
+       ExplosionRangePower 0.1
       }
       BaseExplosionDamage "{61DAF5E24D9CA168}" : "{8B0302FD53B4AC5C}Prefabs/Weapons/Core/Damage/BlastDamageEffect_NoTrace.conf" {
-       DamageValue 950
-       DamageDistance 4.5
+       DamageValue 8450
+       DamageDistance 2.5
+       ExplosionDamagePower 1
+       ExplosionRangePower 1
       }
       ExplosionImpulseEffect "{5E6D1CEE09A33086}" : "{FB1F33936312F72B}Prefabs/Weapons/Core/Damage/BlastImpulseEffect.conf" {
-       DamageValue 1.8
+       DamageValue 2
       }
       ExplosionFragmentationEffect "{567CBC1D7AB652C7}" : "{9264AB458027FBA7}Prefabs/Weapons/Core/Damage/FragmentationDamageEffect_AT.conf" {
        DamageFragmentCount 270
        CaseWeight 2700
       }
      }
+     ChargeWeight 8000
     }
     SpawnDecalEffect "{5E24CB0404FD81A6}" {
      Material "{D73EF1B0C42AD52E}Assets/Decals/Logistics/Data/Logistics_Explosion_Decal_Large.emat"

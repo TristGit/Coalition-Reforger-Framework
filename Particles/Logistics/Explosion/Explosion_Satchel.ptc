@@ -317,7 +317,7 @@ EffectDef {
    ShapeSize 2 2 2
    ConeAngle 360 0 100
    ConeAngleMinDist 100
-   MaxNum 500
+   MaxNum 65
    BirthRate 848.3
    Offset 0 -2 0
    Angles 0 0 0
@@ -358,7 +358,7 @@ EffectDef {
    ShapeType Ellipse
    ShapeSize 1 1 1
    ConeAngle 360 0 100
-   MaxNum 155
+   MaxNum 50
    BirthRate 6666
    Angles 0 0 0
    LocalTransform 0

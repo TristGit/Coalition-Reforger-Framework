@@ -23,14 +23,39 @@ SCR_ChimeraCharacter : "{37578B1666981FCE}Prefabs/Characters/Core/Character_Base
    PixelSizeScale 0
   }
   SCR_CharacterDamageManagerComponent "{55872AD7B4E959F2}" {
+   "Additional hit zones" {
+    SCR_CharacterHeadHitZone Head {
+     IgnoreExplosions 1
+    }
+    SCR_CharacterHitZone Chest {
+     IgnoreExplosions 1
+    }
+    SCR_CharacterHitZone Abdomen {
+     IgnoreExplosions 1
+    }
+    SCR_CharacterHitZone RForearm {
+     IgnoreExplosions 1
+    }
+    SCR_CharacterHitZone LForearm {
+     IgnoreExplosions 1
+    }
+    SCR_CharacterHitZone RCalf {
+     IgnoreExplosions 1
+    }
+    SCR_CharacterHitZone LCalf {
+     IgnoreExplosions 1
+    }
+   }
    "Fall damage min speed" 999
    "Fall damage max speed" 999
    CollisionVelocityThreshold 999
    EnableDamage 0
+   m_iMinimumBurningState NONE
+   m_sBleedingParticle ""
+   m_fBleedingParticleRateScale 0
+   m_fDOTScale 0
    m_bPermitUnconsciousness 0
-  }
-  SCR_CharacterPerceivableComponent "{566CCE2397E28600}" {
-   Enabled 0
+   m_bAllowBloodyClothes 0
   }
   SCR_CharacterStaminaComponent "{520EA1D2F659C824}" {
    StaminaRegainPerS 1
@@ -57,6 +82,9 @@ SCR_ChimeraCharacter : "{37578B1666981FCE}Prefabs/Characters/Core/Character_Base
   }
   SCR_VoNComponent "{520EA1D2F659C856}" {
    "Speaking Range" 0
+  }
+  SCR_CharacterPerceivableComponent "{566CCE2397E28600}" {
+   Enabled 0
   }
   CharacterWeaponSlotComponent "{520EA1D2F659CFAB}" {
    WeaponSlotIndex 0

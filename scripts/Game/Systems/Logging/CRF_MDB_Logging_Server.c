@@ -34,7 +34,7 @@ class CRF_MDB_LoggingServerComponent: SCR_BaseGameModeComponent
 	override void OnWorldPostProcess(World world)
 	{
 		super.OnWorldPostProcess(world);
-		if (Replication.IsClient() || !GetGame().InPlayMode())
+		if (Replication.IsClient() || !GetGame().InPlayMode() || !CRF_Gamemode.GetInstance())
 			return;
 
 		m_sMissionName = GetGame().GetMissionName();

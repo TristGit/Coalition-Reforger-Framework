@@ -13,6 +13,9 @@ modded class SCR_PlayerController
 	override protected void UpdateLocalPlayerController()
 	{
 		super.UpdateLocalPlayerController();
+		
+		if(!CRF_Gamemode.GetInstance())
+			return;
 
 		m_bIsLocalPlayerController = this == GetGame().GetPlayerController();
 		if (!m_bIsLocalPlayerController)
@@ -44,6 +47,9 @@ modded class SCR_PlayerController
 	//------------------------------------------------------------------------------------------------
 	override void OnControlledEntityChanged(IEntity from, IEntity to)
 	{
+		if(!CRF_Gamemode.GetInstance())
+			return;
+		
 		GetGame().GetInputManager().RemoveActionListener("SpecNVG", EActionTrigger.DOWN, ToggleNVGs);
 		if (m_bActivated)
 			SCR_ScreenEffectsManager.GetScreenEffectsDisplay().RHS_SetHDR("{765A5E642D09A4B8}Common/Postprocess/HDR_Vanila.emat", false);
@@ -56,6 +62,9 @@ modded class SCR_PlayerController
 	//------------------------------------------------------------------------------------------------
 	override void DisconnectFromGame()
 	{
+		if(!CRF_Gamemode.GetInstance())
+			return;
+		
 		super.DisconnectFromGame();
 
 		ResetSettingsToStoredValues();

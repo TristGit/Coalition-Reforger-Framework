@@ -6,6 +6,9 @@ modded class SCR_InventoryStorageManagerComponent : ScriptedInventoryStorageMana
 	{		
 		super.OnItemAdded(storageOwner, item);
 		
+		if(!CRF_Gamemode.GetInstance())
+			return;
+		
 		if(CRF_Gamemode.GetInstance() && RplSession.Mode() != RplMode.Client && CRF_Gamemode.GetInstance().m_bAllowEspionage)
 			return;
 

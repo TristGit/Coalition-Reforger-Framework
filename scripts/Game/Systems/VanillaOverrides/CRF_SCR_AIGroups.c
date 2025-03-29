@@ -7,7 +7,7 @@ modded class SCR_AIGroup
 	{
 		super.EOnInit(owner);
 		
-		if(!GetGame().InPlayMode())
+		if(!GetGame().InPlayMode() || !CRF_Gamemode.GetInstance())
 			return;
 		
 		GetGame().GetCallqueue().CallLater(CheckIfPlayableOnInit, 150, false);

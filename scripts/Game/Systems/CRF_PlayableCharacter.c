@@ -53,7 +53,7 @@ class CRF_PlayableCharacter : ScriptComponent
 	{
 		super.OnPostInit(owner);
 
-		if (!GetGame().InPlayMode())
+		if (!GetGame().InPlayMode() || !CRF_Gamemode.GetInstance())
 			return;
 
 		if (CRF_Gamemode.GetInstance().m_GamemodeState == CRF_GamemodeState.GAME && CRF_Gamemode.GetInstance().EnableAIInGameState && owner.GetPrefabData().GetPrefabName() != "{59886ECB7BBAF5BC}Prefabs/Characters/CRF_InitialEntity.et")

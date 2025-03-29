@@ -34,6 +34,12 @@ modded class SCR_EditorManagerEntity
 	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
 	override protected void ToggleServer(bool open)
 	{
+		if(!CRF_Gamemode.GetInstance())
+		{
+			super.ToggleServer(open);
+			return;
+		}
+
 		if (m_bIsOpened == open || RplSession.Mode() == RplMode.Client) return;
 		// Attempting to close when it's not allowed
 		if (!open && !CanClose())
@@ -65,6 +71,9 @@ modded class SCR_EditorManagerEntity
 	{
 		super.StartEvents(type);
 		
+		if(!CRF_Gamemode.GetInstance())
+			return;
+		
 		if(type == EEditorEventOperation.OPEN)
 		{	
 			GetGame().GetMenuManager().CloseMenuByPreset(ChimeraMenuPreset.CRF_PreviewMenu);
@@ -82,7 +91,7 @@ modded class SCR_EditorManagerEntity
 	}
 	
 	void OpenUI()
-	{
+	{	
 		CRF_Gamemode gamemode = CRF_Gamemode.GetInstance();
 		if(gamemode)
 			if(SCR_PlayerController.GetLocalControlledEntity().FindComponent(CRF_PlayableCharacter))

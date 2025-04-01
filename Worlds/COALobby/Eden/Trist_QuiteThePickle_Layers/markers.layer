@@ -1,0 +1,274 @@
+PS_ManualMarker : "{054125164E41BAB1}PrefabsEditable/Markers/BLUFORSafeStartBorderMarker.et" {
+ coords 3879.657 78.695 3426.913
+ angleY 22.688
+ {
+  $grp PS_ManualMarker : "{054125164E41BAB1}PrefabsEditable/Markers/BLUFORSafeStartBorderMarker.et" {
+   {
+    coords -0 0 -236.613
+    angleY 0
+   }
+   {
+    coords 357.176 0 0.001
+    angleY 0
+   }
+   {
+    coords 357.175 0 -236.613
+    angleY 0
+   }
+  }
+ }
+}
+PS_ManualMarker : "{36BD5DC9A80977F2}PrefabsEditable/Markers/INDFORSafeStartBorderMarker.et" {
+ coords 7444.329 129.25 2262.76
+ {
+  $grp PS_ManualMarker : "{36BD5DC9A80977F2}PrefabsEditable/Markers/INDFORSafeStartBorderMarker.et" {
+   {
+    coords 0 0 -43.787
+   }
+   {
+    coords 40 0 -43.787
+   }
+   {
+    coords 40 0 0
+   }
+  }
+ }
+}
+PS_ManualMarker : "{AE820D882CD0ACC4}PrefabsEditable/Markers/OPFORSafeStartBorderMarker.et" {
+ coords 7641.966 168.943 4318.035
+ angleY 18.196
+ {
+  $grp PS_ManualMarker : "{AE820D882CD0ACC4}PrefabsEditable/Markers/OPFORSafeStartBorderMarker.et" {
+   {
+    coords -0 0 -47.486
+    angleY 0
+   }
+   {
+    coords -0.001 0 -97.604
+    angleY 0
+   }
+   {
+    coords -0.001 0 -165.427
+    angleY 0
+   }
+   {
+    coords -85.401 0 -165.427
+    angleY 0
+   }
+   {
+    coords -161.542 0 -165.427
+    angleY 0
+   }
+   {
+    coords -240.277 0 -165.427
+    angleY 0
+   }
+   {
+    coords -240.277 0 -108.023
+    angleY 0
+   }
+   {
+    coords -240.277 0 -52.615
+    angleY 0
+   }
+   {
+    coords -240.278 0 -5.223
+    angleY 0
+   }
+   {
+    coords -148.99 0 -5.223
+    angleY 0
+   }
+   {
+    coords -60.457 0 -2.681
+    angleY 0
+   }
+  }
+ }
+}
+$grp PS_ManualMarker : "{BE9E1F90BFFBB48A}PrefabsEditable/Markers/GameZoneMarker.et" {
+ {
+  coords 6200 0 1000
+  angleY 0
+  m_MarkerColor 0.008 0.001 0.001 1
+  m_fWorldSize 200
+  {
+   $grp PS_ManualMarker : "{BE9E1F90BFFBB48A}PrefabsEditable/Markers/GameZoneMarker.et" {
+    {
+     coords 0 0 500
+     angleY 0
+     m_MarkerColor 0.008 0.001 0.001 1
+     m_fWorldSize 200
+    }
+    {
+     coords 0 0 1000
+     angleY 0
+     m_MarkerColor 0.008 0.001 0.001 1
+     m_fWorldSize 200
+    }
+    {
+     coords 0 0 1500
+     angleY 0
+     m_MarkerColor 0.008 0.001 0.001 1
+     m_fWorldSize 200
+    }
+    {
+     coords 0 0 2000
+     angleY 0
+     m_MarkerColor 0.008 0.001 0.001 1
+     m_fWorldSize 200
+    }
+    {
+     coords 0 0 2500
+     angleY 0
+     m_MarkerColor 0.008 0.001 0.001 1
+     m_fWorldSize 200
+    }
+    {
+     coords 0 0 3000
+     angleY 0
+     m_MarkerColor 0.008 0.001 0.001 1
+     m_fWorldSize 200
+    }
+    {
+     coords 1163.842 0 3587.794
+     angleY 0
+     m_MarkerColor 0.008 0.001 0.001 1
+     m_fWorldSize 200
+    }
+    {
+     coords 804.166 0 3587.794
+     angleY 0
+     m_MarkerColor 0.008 0.001 0.001 1
+     m_fWorldSize 200
+    }
+    {
+     coords 476.142 0 3587.794
+     angleY 0
+     m_MarkerColor 0.008 0.001 0.001 1
+     m_fWorldSize 200
+    }
+    {
+     coords 171.608 0 3230.363
+     angleY 0
+     m_MarkerColor 0.008 0.001 0.001 1
+     m_fWorldSize 200
+    }
+    {
+     coords 1528.488 0 3589.764
+     angleY 0
+     m_MarkerColor 0.008 0.001 0.001 1
+     m_fWorldSize 200
+    }
+   }
+  }
+ }
+ {
+  coords 6700 0 1000
+  angleY 0
+  m_MarkerColor 0.008 0.001 0.001 1
+  m_fWorldSize 200
+ }
+ {
+  coords 7200 0 1000
+  angleY 0
+  m_MarkerColor 0.008 0.001 0.001 1
+  m_fWorldSize 200
+ }
+ {
+  coords 7700 0 1000
+  angleY 0
+  m_MarkerColor 0.008 0.001 0.001 1
+  m_fWorldSize 200
+ }
+ {
+  coords 8200 0 1018.044
+  angleY 0
+  m_MarkerColor 0.008 0.001 0.001 1
+  m_fWorldSize 200
+ }
+ {
+  coords 8700 0 1018.044
+  angleY 0
+  m_MarkerColor 0.008 0.001 0.001 1
+  m_fWorldSize 200
+ }
+ {
+  coords 9200 0 1018.044
+  angleY 0
+  m_MarkerColor 0.008 0.001 0.001 1
+  m_fWorldSize 200
+ }
+ {
+  coords 9200 0 1250
+  angleY 0
+  m_MarkerColor 0.008 0.001 0.001 1
+  m_fWorldSize 200
+ }
+ {
+  coords 8950 0 1500
+  angleY 0
+  m_MarkerColor 0.008 0.001 0.001 1
+  m_fWorldSize 200
+ }
+ {
+  coords 8700 0 1800
+  angleY 0
+  m_MarkerColor 0.008 0.001 0.001 1
+  m_fWorldSize 200
+ }
+ {
+  coords 8554.634 0 2100
+  angleY 0
+  m_MarkerColor 0.008 0.001 0.001 1
+  m_fWorldSize 200
+ }
+ {
+  coords 8383.749 0 2400
+  angleY 0
+  m_MarkerColor 0.008 0.001 0.001 1
+  m_fWorldSize 200
+ }
+ {
+  coords 8061.986 0 3000
+  angleY 0
+  m_MarkerColor 0.008 0.001 0.001 1
+  m_fWorldSize 200
+ }
+ {
+  coords 8034.296 0 3300
+  angleY 0
+  m_MarkerColor 0.008 0.001 0.001 1
+  m_fWorldSize 200
+ }
+ {
+  coords 8034.296 0 3600
+  angleY 0
+  m_MarkerColor 0.008 0.001 0.001 1
+  m_fWorldSize 200
+ }
+ {
+  coords 8034.296 0 3900
+  angleY 0
+  m_MarkerColor 0.008 0.001 0.001 1
+  m_fWorldSize 200
+ }
+ {
+  coords 7933.603 0 4200
+  angleY 0
+  m_MarkerColor 0.008 0.001 0.001 1
+  m_fWorldSize 200
+ }
+ {
+  coords 7819.111 0 4390.248
+  angleY 0
+  m_MarkerColor 0.008 0.001 0.001 1
+  m_fWorldSize 200
+ }
+ {
+  coords 8250.857 0 2700
+  angleY 0
+  m_MarkerColor 0.008 0.001 0.001 1
+  m_fWorldSize 200
+ }
+}

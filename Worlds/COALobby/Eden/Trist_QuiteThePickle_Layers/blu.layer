@@ -1,0 +1,47 @@
+SCR_AIGroup : "{3D4D53B053964445}Prefabs/Groups/BLUFOR/Standard/Command/CRF_BLUFOR_Platoon_p.et" {
+ components {
+  AIFormationComponent "{507E9DC12F541FE6}" {
+   DefaultFormation "Line"
+  }
+ }
+ coords 3978.936 17.328 3272.806
+ angleY -68.52
+ m_bSnapToTerrain 0
+ {
+  SCR_AIGroup : "{677549B9DAF416D1}Prefabs/Groups/BLUFOR/Standard/Support/CRF_BLUFOR_SniperTeam_p.et" {
+   components {
+    AIFormationComponent "{507E9DC12F541FE6}" {
+     DefaultFormation "Line"
+    }
+   }
+   coords -4.241 0 11.813
+   angleY 92.824
+   m_bSnapToTerrain 0
+  }
+  $grp SCR_AIGroup : "{9C45BAF40F909576}Prefabs/Groups/BLUFOR/Standard/Infantry/CRF_BLUFOR_RifleSquad_p.et" {
+   {
+    components {
+     AIFormationComponent "{507E9DC12F541FE6}" {
+      DefaultFormation "Column"
+     }
+    }
+    coords -0.375 0 9.195
+    angleY -177.612
+    m_bSnapToTerrain 0
+   }
+   {
+    components {
+     AIFormationComponent "{507E9DC12F541FE6}" {
+      DefaultFormation "Column"
+     }
+    }
+    coords 4.953 0 9.022
+    angleY 180
+    m_bSnapToTerrain 0
+   }
+  }
+ }
+}
+Vehicle J3RHIB1 : "{BB6140AD15AE0AE0}Prefabs/Vehicles/Naval/J3RHIB.et" {
+ coords 3978.818 0 3297.695
+}

@@ -2,21 +2,61 @@ SCR_AIWorld : "{70CCCF16487C927F}Prefabs/AI/SCR_AIWorld_Eden.et" {
  coords 7500.928 145.584 2303.256
 }
 CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et" {
+ components {
+  SCR_InitWeatherComponent "{64427EEC0AFF43EE}" {
+   m_sInitialStartingWeatherId "Clear"
+   m_iSetWeatherConstant 1
+   m_initialWeatherDurationMax 1.7
+  }
+  SCR_TimeAndWeatherHandlerComponent "{64427EEC304DD9A0}" {
+   m_iStartingHours 20
+   m_iStartingMinutes 45
+   m_iRangeHoursStart 20
+   m_iRangeMinutesStart 45
+   m_iRangeHoursEnd 5
+  }
+ }
  coords 7496.208 143.815 2298.846
- m_iTimeLimitMinutes 50
  m_aMissionDescriptors {
   CRF_MissionDescriptor "{644250503DF684C0}" {
-   m_sTextData "A NATO Huey helicopter has been shot down by garrisoned _ forces. A US QRF have been greenlit from the nearby stationed HMAS Adelaide before the downed crew is taken prisoner. Survivors of the crash must act quick to recover and relocate to avoid enemy capture."\
+   m_sTextData "A UH60 carrying a high value SpecOps unit commencing a covert mission has been shot down. A US QRF has been greenlit from a nearby vessel to locate and rescue the unit. The SpecOps are cut off with no comms and must act on their own to evade the enemy/signal for rescue."\
    ""\
-   "BLUFOR Composition: Armored/Infantry/Mechanized/Etc.."\
-   "BLUFOR Assets:"\
+   "BLUFOR/INDFOR Comp.: 1x Air-Assault Inf. Platoon - 1x SpecOps Inf. Squad"\
+   "BLUFOR Assets: 2x UH60 (1 Armed) - 1x AH6M"\
    ""\
-   "OPFOR Composition: Armored/Infantry/Mechanized/Etc.."\
+   "OPFOR Comp.: Inf. Company"\
    "OPFOR Assets:"\
    ""\
-   "Time:"\
+   "Time: 5:00 AM"\
+   "Weather: Overcast"
+  }
+  CRF_MissionDescriptor "{64425051F2E00216}" {
+   m_sTextData "- Allocate available teams/assets to Locate, Protect, & Extract the SpecOps Team."\
+   "- Alternative Land Rescue Route available"\
    ""\
-   "Weather:"
+   ""\
+   ""\
+   ""
+  }
+  CRF_MissionDescriptor "{64425051B9B5AF67}" {
+   m_sTextData "- Investigate the crash site while assuming any surviving personel are HVT's"\
+   "- Find & Eliminate All SpecOps HVT's (Indfor)"\
+   "- Prevent rescue/extraction"
+  }
+  CRF_MissionDescriptor "{644250519BE30999}" {
+   m_sTextData "- Recover from the crash, evade death or capture, signal for BLUFOR help"\
+   "- Alternative escape via LAND possible"
+  }
+  CRF_MissionDescriptor "{6502A75332633BBC}" {
+   m_sTitle "Win/Loss Condition"
+   m_sTextData "BLUFOR/INDFOR"\
+   "Major Victory: Extraction of MORE than half of the SpecOps unit OR eliminate all enemies"\
+   "Minor Victory: Extraction of LESS than half of the SpecOps unit"\
+   ""\
+   "OPFOR"\
+   "Major Victory: Elimination of ALL the SpecOps OR all enemies"\
+   "Minor Victory: Elimination of less than half of the SpecOps"
+   m_bShowForAnyFaction 1
   }
  }
  m_sFactionOneKey "BLU"
@@ -27,5 +67,30 @@ CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et
  }
  m_OPFORGearScriptSettings CRF_GearScriptContainer "{64570ACB9B11EAAD}" {
   m_rGearScript "{030B29DB38331AB6}Configs/Gearscripts/Custom/fluff/Chernarussian/CRF_GS_CHDKZ_HR.conf"
+ }
+ {
+  SCR_FactionManager {
+   ID "632A77473B3CC3A8"
+   Factions {
+    SCR_Faction "{628B22E9B4056C88}" {
+     m_CallsignInfo SCR_FactionCallsignInfo "{5DA0F2A6677ADA9E}" {
+      m_aSquadNames {
+       SCR_CallsignInfo "{6502F44DEEA4EC54}" {
+        m_sCallsign "Pilots"
+       }
+      }
+     }
+    }
+    SCR_Faction "{628CDE9209CA3FF9}" {
+     m_CallsignInfo SCR_FactionCallsignInfo "{60A6B21E18F28741}" {
+      m_aSquadNames {
+       SCR_CallsignInfo "{58B2B630FDD64B6D}" {
+        m_sCallsign "SpecOps Squad"
+       }
+      }
+     }
+    }
+   }
+  }
  }
 }

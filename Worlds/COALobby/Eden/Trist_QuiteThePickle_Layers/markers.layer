@@ -228,21 +228,21 @@ $grp PS_ManualMarker : "{BE9E1F90BFFBB48A}PrefabsEditable/Markers/GameZoneMarker
      m_sDescription "AO Limit (Non-Air)"
     }
     {
-     coords 3073.609 0 -460
+     coords 2951.626 0 -634.496
      angleY 0
      m_MarkerColor 0.008 0.001 0.001 1
      m_fWorldSize 200
      m_sDescription "AO Limit (Non-Air)"
     }
     {
-     coords 3127.777 0 287.367
+     coords 3150.643 0 324.665
      angleY 0
      m_MarkerColor 0.008 0.001 0.001 1
      m_fWorldSize 200
      m_sDescription "AO Limit (Non-Air)"
     }
     {
-     coords 2856.71 0 520.667
+     coords 2904.673 0 573.767
      angleY 0
      m_MarkerColor 0.008 0.001 0.001 1
      m_fWorldSize 200
@@ -319,7 +319,7 @@ $grp PS_ManualMarker : "{BE9E1F90BFFBB48A}PrefabsEditable/Markers/GameZoneMarker
      m_sDescription "AO Limit (Non-Air)"
     }
     {
-     coords 3463.093 0 -98.154
+     coords 3509.736 0 -47.563
      angleY 0
      m_MarkerColor 0.008 0.001 0.001 1
      m_fWorldSize 200
@@ -340,7 +340,21 @@ $grp PS_ManualMarker : "{BE9E1F90BFFBB48A}PrefabsEditable/Markers/GameZoneMarker
      m_sDescription "AO Limit (Non-Air)"
     }
     {
-     coords 3471.854 0 -106.234
+     coords 3825.053 0 -357.199
+     angleY 0
+     m_MarkerColor 0.008 0.001 0.001 1
+     m_fWorldSize 200
+     m_sDescription "AO Limit (Non-Air)"
+    }
+    {
+     coords 3804.995 0 -623.958
+     angleY 0
+     m_MarkerColor 0.008 0.001 0.001 1
+     m_fWorldSize 200
+     m_sDescription "AO Limit (Non-Air)"
+    }
+    {
+     coords 3421.605 0 -863.594
      angleY 0
      m_MarkerColor 0.008 0.001 0.001 1
      m_fWorldSize 200

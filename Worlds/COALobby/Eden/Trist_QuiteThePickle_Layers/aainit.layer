@@ -17,7 +17,7 @@ CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et
  coords 7496.208 143.815 2298.846
  m_aMissionDescriptors {
   CRF_MissionDescriptor "{644250503DF684C0}" {
-   m_sTextData "A helo RTBing a SpecOps unit after a covert mission's been shot down. A US QRF has been greenlit from to locate and rescue the unit. The SpecOps (INDFOR), cut off with no comms, must act tactically to fight/fade from OPFOR while signaling BLUFOR rescue."\
+   m_sTextData "A helo RTBing a SpecOps unit after a covert mission's been shot down. A US QRF has been greenlit to locate and rescue the unit. The SpecOps (INDFOR), cut off with no comms, must act tactically to fight/fade from OPFOR while signaling BLUFOR rescue."\
    ""\
    "BLU/IND Comp.: - 1x Air-Assault Inf Plt (BLUF) "\
    "- 1x SpecOps Inf Sqd (IND)"\
@@ -26,7 +26,7 @@ CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et
    "OPFOR Comp.: - 1x Inf. Company"\
    "OPFOR Assets: - 4x UAZ (2x Armed) - 2x Ural - 1x Med"\
    ""\
-   "Time: 5:00 AM"\
+   "Time: 8:00 PM"\
    "Weather: Overcast"
   }
   CRF_MissionDescriptor "{64425051F2E00216}" {

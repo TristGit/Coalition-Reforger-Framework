@@ -9,53 +9,73 @@ CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et
    m_initialWeatherDurationMax 1.7
   }
   SCR_TimeAndWeatherHandlerComponent "{64427EEC304DD9A0}" {
-   m_iStartingHours 20
-   m_iStartingMinutes 45
-   m_iRangeHoursStart 20
-   m_iRangeMinutesStart 45
+   m_iStartingHours 21
+   m_iRangeHoursStart 21
    m_iRangeHoursEnd 5
   }
  }
  coords 7496.208 143.815 2298.846
  m_aMissionDescriptors {
   CRF_MissionDescriptor "{644250503DF684C0}" {
-   m_sTextData "A UH60 carrying a high value SpecOps unit commencing a covert mission has been shot down. A US QRF has been greenlit from a nearby vessel to locate and rescue the unit. The SpecOps are cut off with no comms and must act on their own to evade the enemy/signal for rescue."\
+   m_sTextData "A helo RTBing a SpecOps unit after a covert mission's been shot down. A US QRF has been greenlit from to locate and rescue the unit. The SpecOps (INDFOR), cut off with no comms, must act tactically to fight/fade from OPFOR while signaling BLUFOR rescue."\
    ""\
-   "BLUFOR/INDFOR Comp.: 1x Air-Assault Inf. Platoon - 1x SpecOps Inf. Squad"\
-   "BLUFOR Assets: 2x UH60 (1 Armed) - 1x AH6M"\
+   "BLU/IND Comp.: - 1x Air-Assault Inf Plt (BLUF) "\
+   "- 1x SpecOps Inf Sqd (IND)"\
+   "BLUFOR Assets: 1x MH47 - 1x AH6M"\
    ""\
-   "OPFOR Comp.: Inf. Company"\
-   "OPFOR Assets:"\
+   "OPFOR Comp.: - 1x Inf. Company"\
+   "OPFOR Assets: - 4x UAZ (2x Armed) - 2x Ural - 1x Med"\
    ""\
    "Time: 5:00 AM"\
    "Weather: Overcast"
   }
   CRF_MissionDescriptor "{64425051F2E00216}" {
-   m_sTextData "- Allocate available teams/assets to Locate, Protect, & Extract the SpecOps Team."\
-   "- Alternative Land Rescue Route available"\
+   m_sTextData "- Safely land teams/assets to Locate & Protect the SpecOps"\
+   "- Establish a new LZ and extract SpecOps"\
+   "(Contingency Land Route available)"\
+   ""\
+   "Extra Details: - IND has a several types of flares for communication."\
+   "- Watch for UNMARKED contacts as they could be IND"\
+   "- Stationing MH47 on land is allowed, direct assets as PLT sees fit"\
    ""\
    ""\
    ""\
    ""
+   m_aFactionKeys + {
+    "INDFOR"
+   }
   }
   CRF_MissionDescriptor "{64425051B9B5AF67}" {
-   m_sTextData "- Investigate the crash site while assuming any surviving personel are HVT's"\
-   "- Find & Eliminate All SpecOps HVT's (Indfor)"\
-   "- Prevent rescue/extraction"
+   m_sTextData "- Find the crash site "\
+   "- Find & Eliminate all SpecOps (IND) crash survivors "\
+   "- Prevent Rescue/Extraction"
+   m_aFactionKeys + {
+    ""
+   }
   }
   CRF_MissionDescriptor "{644250519BE30999}" {
-   m_sTextData "- Recover from the crash, evade death or capture, signal for BLUFOR help"\
-   "- Alternative escape via LAND possible"
+   m_sTextData "- Recover from the crash, signal for BLUFOR help while evading/fending off OPF"\
+   "- Alternative escape via LAND possible"\
+   ""\
+   "Details: SL/TL's have several types of flares for communications as there are no comms to BLU"
+   m_aFactionKeys + {
+    "BLUFOR"
+   }
+  }
+  CRF_MissionDescriptor "{6442505149CF6C93}" {
+   m_sTextData "The BLU/IND LAND extract zone is rendering those players out of play while OOB for OPF, they can loiter in that area. "
   }
   CRF_MissionDescriptor "{6502A75332633BBC}" {
-   m_sTitle "Win/Loss Condition"
+   m_sTitle "Win/Loss Conditions"
    m_sTextData "BLUFOR/INDFOR"\
-   "Major Victory: Extraction of MORE than half of the SpecOps unit OR eliminate all enemies"\
-   "Minor Victory: Extraction of LESS than half of the SpecOps unit"\
+   "Major Victory: Extraction of 5+ SpecOps"\
+   "Minor Victory: Extraction of 1-4 SpecOps"\
    ""\
    "OPFOR"\
-   "Major Victory: Elimination of ALL the SpecOps OR all enemies"\
-   "Minor Victory: Elimination of less than half of the SpecOps"
+   "Major Victory: Elimination of 5+ SpecOps"\
+   "Minor Victory: Elimination of 1-4 SpecOps"\
+   ""\
+   "Total Side Elim. = Complete Victory"
    m_bShowForAnyFaction 1
   }
  }
@@ -66,26 +86,77 @@ CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et
   m_rGearScript "{3FCA1378C33401ED}Configs/Gearscripts/Standard/Modern/CRF_GS_RHSUSArmyMC.conf"
  }
  m_OPFORGearScriptSettings CRF_GearScriptContainer "{64570ACB9B11EAAD}" {
-  m_rGearScript "{030B29DB38331AB6}Configs/Gearscripts/Custom/fluff/Chernarussian/CRF_GS_CHDKZ_HR.conf"
+  m_rGearScript "{B086179BD91E5999}Configs/Gearscripts/Custom/Trist/QuiteThePickle/CRF_GS_CHDKZ_semimodern.conf"
+ }
+ m_INDFORGearScriptSettings CRF_GearScriptContainer "{64570ACB9AE1C9ED}" {
+  m_rGearScript "{7390ADBDED008392}Configs/Gearscripts/Custom/Trist/QuiteThePickle/CRF_GS_RHSWCS_USspecops.conf"
  }
  {
-  SCR_FactionManager {
+  SCR_FactionManager "65048B1AB2ED7F0B" {
    ID "632A77473B3CC3A8"
    Factions {
     SCR_Faction "{628B22E9B4056C88}" {
+     m_aFriendlyFactionsIds {
+      "INDFOR"
+     }
      m_CallsignInfo SCR_FactionCallsignInfo "{5DA0F2A6677ADA9E}" {
       m_aSquadNames {
+       SCR_CallsignInfo "{6506A1C0F4E1ECF6}" {
+        m_sCallsign "Med. Team"
+       }
        SCR_CallsignInfo "{6502F44DEEA4EC54}" {
-        m_sCallsign "Pilots"
+        m_sCallsign "Pilots (MH47)"
+       }
+       SCR_CallsignInfo "{6506A1C0BB677531}" {
+        m_sCallsign "Pilots (AH6)"
+       }
+      }
+     }
+    }
+    SCR_Faction "{628C2D2BFC8C6447}" {
+     m_CallsignInfo SCR_FactionCallsignInfo "{5DA0F2A67DFB8809}" {
+      m_aSquadNames {
+       SCR_CallsignInfo "{55CCB79287E901BC}" {
+        m_sCallsign "COY"
+       }
+       SCR_CallsignInfo "{55CCB79287936EBD}" {
+        m_sCallsign "1PLT"
+       }
+       SCR_CallsignInfo "{55CCB79287BAFBD6}" {
+        m_sCallsign "1-1"
+       }
+       SCR_CallsignInfo "{55CCB79287A4D7B6}" {
+        m_sCallsign "1-2"
+       }
+       SCR_CallsignInfo "{6506A1C0F94D5F6E}" {
+        m_sCallsign "Med. Team"
+       }
+       SCR_CallsignInfo "{650557B00A9DDAC1}" {
+        m_sCallsign "1-3"
+       }
+       SCR_CallsignInfo "{650557B00D1A9091}" {
+        m_sCallsign "2PLT"
+       }
+       SCR_CallsignInfo "{650557B00DB9A0C4}" {
+        m_sCallsign "2-1"
+       }
+       SCR_CallsignInfo "{650557B1B5E57AAA}" {
+        m_sCallsign "2-2"
+       }
+       SCR_CallsignInfo "{650557B1B462925D}" {
+        m_sCallsign "2-3"
        }
       }
      }
     }
     SCR_Faction "{628CDE9209CA3FF9}" {
+     m_aFriendlyFactionsIds {
+      "BLUFOR"
+     }
      m_CallsignInfo SCR_FactionCallsignInfo "{60A6B21E18F28741}" {
       m_aSquadNames {
        SCR_CallsignInfo "{58B2B630FDD64B6D}" {
-        m_sCallsign "SpecOps Squad"
+        m_sCallsign "SpecOps Team"
        }
       }
      }

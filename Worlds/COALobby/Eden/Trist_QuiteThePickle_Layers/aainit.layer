@@ -15,6 +15,7 @@ CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et
   }
  }
  coords 7496.208 143.815 2298.846
+ m_iTimeLimitMinutes 50
  m_aMissionDescriptors {
   CRF_MissionDescriptor "{644250503DF684C0}" {
    m_sTextData "A helo RTBing a SpecOps unit after a covert mission's been shot down. A US QRF has been greenlit to locate and rescue the unit. The SpecOps (INDFOR), cut off with no comms, must act tactically to fight/fade from OPFOR while signaling BLUFOR rescue."\

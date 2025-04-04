@@ -15,33 +15,42 @@ CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et
   }
  }
  coords 7496.208 143.815 2298.846
- m_iTimeLimitMinutes 50
+ m_iTimeLimitMinutes 60
+ m_bAllowEspionage 1
  m_aMissionDescriptors {
   CRF_MissionDescriptor "{644250503DF684C0}" {
-   m_sTextData "A helo RTBing a SpecOps unit after a covert mission's been shot down. A US QRF has been greenlit to locate and rescue the unit. The SpecOps (INDFOR), cut off with no comms, must act tactically to fight/fade from OPFOR while signaling BLUFOR rescue."\
+   m_sTextData "A helo RTBing a SpecOps unit after a covert mission's been shot down. BLUFOR must locate and rescue the unit. The SpecOps (INDFOR), cut off with no comms, must act tactically to fight/fade from OPFOR while signaling BLUFOR rescue around established LZ's."\
    ""\
-   "BLU/IND Comp.: - 1x Air-Assault Inf Plt (BLUF) "\
-   "- 1x SpecOps Inf Sqd (IND)"\
-   "BLUFOR Assets: 1x MH47 - 1x AH6M"\
+   "BLU/IND Comp.:  1x Air Assault Inf Plt (BLU) "\
+   "1xSpecOps Inf Sqd (IND)"\
+   "BLUFOR Assets: 1x MH47 - 1x AH6"\
    ""\
-   "OPFOR Comp.: - 1x Inf. Company"\
-   "OPFOR Assets: - 4x UAZ (2x Armed) - 2x Ural - 1x Med"\
+   "OPFOR Comp.: 1x Inf. Company"\
+   "OPFOR Assets: 1x Mi8 - 4x UAZ (2x MG) - 4x Ural - 1x Med"\
    ""\
-   "Time: 8:00 PM"\
-   "Weather: Overcast"
+   "Time: 9:00 PM"
+  }
+  CRF_MissionDescriptor "{650861A11219774F}" {
+   m_sTitle "Mission: Rules"
+   m_sTextData "LZ's/Extracting"\
+   "- BLU may initially insert loosely"\
+   "- BLU can permanently land the Chinook until needed"\
+   "- IND/BLU must loosely use premarked LZ's for extraction"\
+   "- LZ'S ARE KNOWN TO OPFOR. "\
+   ""\
+   "Comms"\
+   "- Enemy radio (Espionage) usage is possible, plan accordingly"
+   m_bShowForAnyFaction 1
   }
   CRF_MissionDescriptor "{64425051F2E00216}" {
    m_sTextData "- Safely land teams/assets to Locate & Protect the SpecOps"\
-   "- Establish a new LZ and extract SpecOps"\
+   "- Must loosely use established LZ zones and extract SpecOps"\
    "(Contingency Land Route available)"\
    ""\
-   "Extra Details: - IND has a several types of flares for communication."\
-   "- Watch for UNMARKED contacts as they could be IND"\
-   "- Stationing MH47 on land is allowed, direct assets as PLT sees fit"\
    ""\
-   ""\
-   ""\
-   ""
+   "Details: "\
+   "- IND has a several types of flares for comms method."\
+   "- Instruct squads as IND is the friendly SpecOps"
    m_aFactionKeys + {
     "INDFOR"
    }
@@ -49,25 +58,28 @@ CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et
   CRF_MissionDescriptor "{64425051B9B5AF67}" {
    m_sTextData "- Find the crash site "\
    "- Find & Eliminate all SpecOps (IND) crash survivors "\
-   "- Prevent Rescue/Extraction"
-   m_aFactionKeys + {
-    ""
-   }
+   "- Prevent Rescue/Extraction by using radio espionage, zoning, or closing in on suspected LZ's or denying the Land Route"\
+   ""\
+   "Details:"\
+   "- Mi8 for scouting/aerial support"
   }
   CRF_MissionDescriptor "{644250519BE30999}" {
    m_sTextData "- Recover from the crash, signal for BLUFOR help while evading/fending off OPF"\
    "- Alternative escape via LAND possible"\
+   "- Loosely extract via LZ's "\
    ""\
-   "Details: SL/TL's have several types of flares for communications as there are no comms to BLU"
+   "Details: "\
+   "SL/TL's have several types of flares for comms as there is none to BLU. Implement codewords/strategize for LZ\"s due to espionage possibility"
    m_aFactionKeys + {
     "BLUFOR"
    }
   }
   CRF_MissionDescriptor "{6442505149CF6C93}" {
-   m_sTextData "The BLU/IND LAND extract zone is rendering those players out of play while OOB for OPF, they can loiter in that area. "
+   m_sTextData "The BLU/IND LAND extract zone is rendering those players out of play while OOB for OPF, they can loiter in that area. "\
+   ""
   }
-  CRF_MissionDescriptor "{6502A75332633BBC}" {
-   m_sTitle "Win/Loss Conditions"
+  CRF_MissionDescriptor "{650861A35AED174F}" {
+   m_sTitle "Win/Loss Cond."
    m_sTextData "BLUFOR/INDFOR"\
    "Major Victory: Extraction of 5+ SpecOps"\
    "Minor Victory: Extraction of 1-4 SpecOps"\
@@ -102,8 +114,8 @@ CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et
      }
      m_CallsignInfo SCR_FactionCallsignInfo "{5DA0F2A6677ADA9E}" {
       m_aSquadNames {
-       SCR_CallsignInfo "{6506A1C0F4E1ECF6}" {
-        m_sCallsign "Med. Team"
+       SCR_CallsignInfo "{650861A5BB9FDB88}" {
+        m_sCallsign "MED"
        }
        SCR_CallsignInfo "{6502F44DEEA4EC54}" {
         m_sCallsign "Pilots (MH47)"
@@ -120,6 +132,9 @@ CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et
        SCR_CallsignInfo "{55CCB79287E901BC}" {
         m_sCallsign "COY"
        }
+       SCR_CallsignInfo "{650861A59364D903}" {
+        m_sCallsign "MED"
+       }
        SCR_CallsignInfo "{55CCB79287936EBD}" {
         m_sCallsign "1PLT"
        }
@@ -128,9 +143,6 @@ CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et
        }
        SCR_CallsignInfo "{55CCB79287A4D7B6}" {
         m_sCallsign "1-2"
-       }
-       SCR_CallsignInfo "{6506A1C0F94D5F6E}" {
-        m_sCallsign "Med. Team"
        }
        SCR_CallsignInfo "{650557B00A9DDAC1}" {
         m_sCallsign "1-3"
@@ -146,6 +158,9 @@ CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et
        }
        SCR_CallsignInfo "{650557B1B462925D}" {
         m_sCallsign "2-3"
+       }
+       SCR_CallsignInfo "{650861BED52BCB8B}" {
+        m_sCallsign "Pilots(Mi8)"
        }
       }
      }
@@ -166,41 +181,82 @@ CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et
   }
  }
 }
-SCR_BaseTriggerEntity extTrigger {
- coords 4474.624 0 2545.949
- TriggerShapeType Sphere
- SphereRadius 120
- DrawShape 1
- TriggerActivationType "First change"
- PeriodicQueries 1
- UpdatePeriod 10
- PrefabsFilter {
-  PrefabFilter "{6508206FA895E2C1}" {
-   Prefab "{ED774ED0660B2DCD}Prefabs/Characters/Factions/INDFOR/CRF_GS_INDFOR_Pilot_P.et"
+$grp SCR_BaseTriggerEntity {
+ extTrigger {
+  coords 4474.624 0 2545.949
+  TriggerShapeType Sphere
+  SphereRadius 120
+  DrawShape 1
+  TriggerActivationType "First change"
+  PeriodicQueries 1
+  UpdatePeriod 10
+  PrefabsFilter {
+   PrefabFilter "{6508206FA895E2C1}" {
+    Prefab "{8949382562216B1E}Prefabs/Characters/Factions/INDFOR/CRF_GS_INDFOR_SL_P.et"
+   }
+   PrefabFilter "{6508206FAF01DD07}" {
+    Prefab "{ED774ED0660B2DCD}Prefabs/Characters/Factions/INDFOR/CRF_GS_INDFOR_Pilot_P.et"
+   }
+   PrefabFilter "{6508206FAFE4A8E3}" {
+    Prefab "{65F1BBC392B2B484}Prefabs/Characters/Factions/INDFOR/CRF_GS_INDFOR_Sniper_P.et"
+   }
+   PrefabFilter "{6508206FAFC0F7E7}" {
+    Prefab "{23546266D23BBE77}Prefabs/Characters/Factions/INDFOR/CRF_GS_INDFOR_Medic_P.et"
+   }
+   PrefabFilter "{6508206FD70E884E}" {
+    Prefab "{5BCF0823FB56CF1C}Prefabs/Characters/Factions/INDFOR/CRF_GS_INDFOR_TL_P.et"
+   }
+   PrefabFilter "{6508206FD7E838E9}" {
+    Prefab "{C4F92D98246A62C5}Prefabs/Characters/Factions/INDFOR/CRF_GS_INDFOR_Gren_P.et"
+   }
+   PrefabFilter "{6508206FD7D46272}" {
+    Prefab "{0C86D510A52DF210}Prefabs/Characters/Factions/INDFOR/CRF_GS_INDFOR_Demo_P.et"
+   }
+   PrefabFilter "{6508206FD7B0AEA2}" {
+    Prefab "{1DB9BCE5811F8602}Prefabs/Characters/Factions/INDFOR/CRF_GS_INDFOR_MAT_P.et"
+   }
   }
-  PrefabFilter "{6508206FAF01DD07}" {
-   Prefab "{8949382562216B1E}Prefabs/Characters/Factions/INDFOR/CRF_GS_INDFOR_SL_P.et"
-  }
-  PrefabFilter "{6508206FAFE4A8E3}" {
-   Prefab "{2CCC80A8B667DF74}Prefabs/Characters/Factions/INDFOR/CRF_GS_INDFOR_AR_P.et"
-  }
-  PrefabFilter "{6508206FAFC0F7E7}" {
-   Prefab "{EED52618D358395A}Prefabs/Characters/Factions/INDFOR/CRF_GS_INDFOR_AAR_P.et"
-  }
-  PrefabFilter "{6508206FD70E884E}" {
-   Prefab "{5BCF0823FB56CF1C}Prefabs/Characters/Factions/INDFOR/CRF_GS_INDFOR_TL_P.et"
-  }
-  PrefabFilter "{6508206FD7E838E9}" {
-   Prefab "{911CD22FC97CC36A}Prefabs/Characters/Factions/INDFOR/CRF_GS_INDFOR_AT_P.et"
-  }
-  PrefabFilter "{6508206FD7D46272}" {
-   Prefab "{23546266D23BBE77}Prefabs/Characters/Factions/INDFOR/CRF_GS_INDFOR_Medic_P.et"
-  }
-  PrefabFilter "{6508206FD7B0AEA2}" {
-   Prefab "{0C86D510A52DF210}Prefabs/Characters/Factions/INDFOR/CRF_GS_INDFOR_Demo_P.et"
-  }
+  OnActivate ""\
+  "		SCR_PopUpNotification.GetInstance().PopupMsg(\"IND SF has extracted\", duration: 10);"\
+  "	"
  }
- OnActivate ""\
- "		SCR_PopUpNotification.GetInstance().PopupMsg(\"IND SF has extracted\", duration: 10);"\
- "	"
+ extTrigger2 {
+  coords 6339.124 0.001 4731.802
+  angleY -6.672
+  TriggerShapeType Sphere
+  SphereRadius 352.8
+  DrawShape 1
+  TriggerActivationType "First change"
+  PeriodicQueries 1
+  UpdatePeriod 10
+  PrefabsFilter {
+   PrefabFilter "{6508206FA895E2C1}" {
+    Prefab "{8949382562216B1E}Prefabs/Characters/Factions/INDFOR/CRF_GS_INDFOR_SL_P.et"
+   }
+   PrefabFilter "{6508206FAF01DD07}" {
+    Prefab "{ED774ED0660B2DCD}Prefabs/Characters/Factions/INDFOR/CRF_GS_INDFOR_Pilot_P.et"
+   }
+   PrefabFilter "{6508206FAFE4A8E3}" {
+    Prefab "{65F1BBC392B2B484}Prefabs/Characters/Factions/INDFOR/CRF_GS_INDFOR_Sniper_P.et"
+   }
+   PrefabFilter "{6508206FAFC0F7E7}" {
+    Prefab "{23546266D23BBE77}Prefabs/Characters/Factions/INDFOR/CRF_GS_INDFOR_Medic_P.et"
+   }
+   PrefabFilter "{6508206FD70E884E}" {
+    Prefab "{5BCF0823FB56CF1C}Prefabs/Characters/Factions/INDFOR/CRF_GS_INDFOR_TL_P.et"
+   }
+   PrefabFilter "{6508206FD7E838E9}" {
+    Prefab "{C4F92D98246A62C5}Prefabs/Characters/Factions/INDFOR/CRF_GS_INDFOR_Gren_P.et"
+   }
+   PrefabFilter "{6508206FD7D46272}" {
+    Prefab "{0C86D510A52DF210}Prefabs/Characters/Factions/INDFOR/CRF_GS_INDFOR_Demo_P.et"
+   }
+   PrefabFilter "{6508206FD7B0AEA2}" {
+    Prefab "{1DB9BCE5811F8602}Prefabs/Characters/Factions/INDFOR/CRF_GS_INDFOR_MAT_P.et"
+   }
+  }
+  OnActivate ""\
+  "		SCR_PopUpNotification.GetInstance().PopupMsg(\"IND SF has extracted\", duration: 10);"\
+  "	"
+ }
 }

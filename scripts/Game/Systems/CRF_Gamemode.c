@@ -291,7 +291,7 @@ class CRF_Gamemode : SCR_BaseGameMode
 			delay = 0;
 
 		// If respawn is enabled
-		if (m_bRespawnEnabled && entity.GetPrefabData().GetPrefabName() != "{59886ECB7BBAF5BC}Prefabs/Characters/CRF_InitialEntity.et")
+		if (m_bRespawnEnabled && entity.GetPrefabData().GetPrefabName() != "{59886ECB7BBAF5BC}Prefabs/Characters/CRF_InitialEntity.et" && m_GamemodeState != CRF_GamemodeState.AAR)
 		{
 			string faction = SCR_FactionManager.SGetPlayerFaction(playerId).GetFactionKey();
 
@@ -594,13 +594,17 @@ class CRF_Gamemode : SCR_BaseGameMode
 	{
 		m_iRespawnTimer--;
 
-		if (m_iRespawnTimer <= 0)
+		if (m_iRespawnTimer <= 0 || m_GamemodeState == CRF_GamemodeState.AAR)
 		{
 			m_iRespawnTimer = m_iRespawnWaveCurrentTime;
 				
-			SCR_PlayerController.Cast(GetGame().GetPlayerController()).RespawnPlayer(SCR_PlayerController.GetLocalPlayerId());
+			if(m_GamemodeState != CRF_GamemodeState.AAR)
+			{
+				SCR_PlayerController.Cast(GetGame().GetPlayerController()).RespawnPlayer(SCR_PlayerController.GetLocalPlayerId());
+				GetGame().GetMenuManager().CloseAllMenus();
+			};
 			GetGame().GetCallqueue().Remove(RespawnTimer);
-			GetGame().GetMenuManager().CloseAllMenus();
+			return;
 		}
 
 		MenuBase topMenu = GetGame().GetMenuManager().GetTopMenu();
@@ -898,7 +902,7 @@ class CRF_Gamemode : SCR_BaseGameMode
 	//------------------------------------------------------------------------------------------------
 	void OnGamemodeStateChanged()
 	{
-		if (RplSession.Mode() == RplMode.Dedicated)
+		if (RplSession.Mode() == RplMode.Dedicated || RplSession.Mode() == RplMode.Listen)
 		{
 			if (m_OnStateChanged)
 				m_OnStateChanged.Invoke();

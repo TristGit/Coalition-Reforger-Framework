@@ -317,7 +317,10 @@ class CRF_Gamemode : SCR_BaseGameMode
 		SCR_PlayerController pc = SCR_PlayerController.Cast(GetGame().GetPlayerManager().GetPlayerController(playerId));
 		
 		if(!pc || !initialEntity)
+		{	
+			GetGame().GetCallqueue().CallLater(EnterSpectator, 100, false, playerId, entity);
 			return;
+		}
 
 		GetGame().GetCallqueue().CallLater(pc.SetInitialMainEntity, 250, false, initialEntity);
 

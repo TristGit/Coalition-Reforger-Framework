@@ -63,6 +63,9 @@ CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et
        SCR_CallsignInfo "{647F1E75A5CAC8B8}" {
         m_sCallsign "1-4"
        }
+       SCR_CallsignInfo "{6508FC70B9487A60}" {
+        m_sCallsign "MTR"
+       }
       }
      }
     }
@@ -77,6 +80,9 @@ CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et
        }
        SCR_CallsignInfo "{647F1E75B44D98D2}" {
         m_sCallsign "WEP B"
+       }
+       SCR_CallsignInfo "{6508FC70D5D34F8C}" {
+        m_sCallsign "SCOUT"
        }
       }
      }

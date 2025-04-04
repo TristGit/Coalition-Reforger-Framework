@@ -43,8 +43,8 @@ PS_ManualMarker : "{36BD5DC9A80977F2}PrefabsEditable/Markers/INDFORSafeStartBord
  }
 }
 $grp PS_ManualMarker : "{7B677FB61E410D0D}PrefabsEditable/Markers/ObjectiveMarker.et" {
- LZExtMarker {
-  coords 6462.322 1.651 1812.321
+ LZExtMarkerA {
+  coords 6459.155 1.651 1670.356
   angleY 90
   m_MarkerColor 0 0.034 0.103 1
   m_sQuadName "pick-up-2"
@@ -55,20 +55,8 @@ $grp PS_ManualMarker : "{7B677FB61E410D0D}PrefabsEditable/Markers/ObjectiveMarke
   }
   m_bShowForAnyFaction 1
  }
- LZExtMarker2 {
+ LZExtMarkerC {
   coords 7209.692 141.155 2171.962
-  angleY 90
-  m_MarkerColor 0 0.034 0.103 1
-  m_sQuadName "pick-up-2"
-  m_fWorldSize 250
-  m_sDescription "LZ/Ext B"
-  m_aVisibleForFactions {
-   "INDFOR" "BLUFOR"
-  }
-  m_bShowForAnyFaction 1
- }
- LZExtMarker4 {
-  coords 7735.183 0 1291.619
   angleY 90
   m_MarkerColor 0 0.034 0.103 1
   m_sQuadName "pick-up-2"
@@ -79,19 +67,8 @@ $grp PS_ManualMarker : "{7B677FB61E410D0D}PrefabsEditable/Markers/ObjectiveMarke
   }
   m_bShowForAnyFaction 1
  }
- LZExtMarker6 {
-  coords 9208.38 202.058 1153.344
-  m_MarkerColor 0 0.034 0.103 1
-  m_sQuadName "pick-up-2"
-  m_fWorldSize 250
-  m_sDescription "LZ/Ext F"
-  m_aVisibleForFactions {
-   "INDFOR" "BLUFOR"
-  }
-  m_bShowForAnyFaction 1
- }
- LZExtMarker5 {
-  coords 7854.732 332.898 2858.594
+ LZExtMarkerD {
+  coords 7779.44 0 1332.186
   angleY 90
   m_MarkerColor 0 0.034 0.103 1
   m_sQuadName "pick-up-2"
@@ -102,13 +79,37 @@ $grp PS_ManualMarker : "{7B677FB61E410D0D}PrefabsEditable/Markers/ObjectiveMarke
   }
   m_bShowForAnyFaction 1
  }
- LZExtMarker8 {
-  coords 8632.782 274.657 1616.203
+ LZExtMarkerB {
+  coords 6633.396 5.297 3077.942
+  angleY 90
+  m_MarkerColor 0 0.034 0.103 1
+  m_sQuadName "pick-up-2"
+  m_fWorldSize 250
+  m_sDescription "LZ/Ext B"
+  m_aVisibleForFactions {
+   "INDFOR" "BLUFOR"
+  }
+  m_bShowForAnyFaction 1
+ }
+ LZExtMarkerE {
+  coords 7774.245 339.036 3085.674
   angleY 90
   m_MarkerColor 0 0.034 0.103 1
   m_sQuadName "pick-up-2"
   m_fWorldSize 250
   m_sDescription "LZ/Ext E"
+  m_aVisibleForFactions {
+   "INDFOR" "BLUFOR"
+  }
+  m_bShowForAnyFaction 1
+ }
+ LZExtMarkerF {
+  coords 8249.374 223.125 2161.099
+  angleY 90
+  m_MarkerColor 0 0.034 0.103 1
+  m_sQuadName "pick-up-2"
+  m_fWorldSize 250
+  m_sDescription "LZ/Ext F"
   m_aVisibleForFactions {
    "INDFOR" "BLUFOR"
   }

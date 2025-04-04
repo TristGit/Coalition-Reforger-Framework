@@ -76,6 +76,7 @@ CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et
    "- BLU can station/land the Chinook (AO or Ship) until needed"\
    "- IND/BLU must loosely use premarked LZ's for extraction"\
    "- LZ'S ARE KNOWN TO OPFOR. "\
+   "- ALL forces must remain in spawns until start"\
    ""\
    "Comms"\
    "- Enemy radio (Espionage) usage is possible, plan accordingly"
@@ -83,7 +84,7 @@ CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et
   }
   CRF_MissionDescriptor "{650861A35AED174F}" {
    m_sTitle "Win Conditions"
-   m_sTextData "BLUFOR/INDFOR"\
+   m_sTextData "BLUFOR/INDFOR (To Ship OR Land Ext.)"\
    "Major Victory: Extraction of 5+ SpecOps"\
    "Minor Victory: Extraction of 1-4 SpecOps"\
    ""\
@@ -224,7 +225,7 @@ $grp SCR_BaseTriggerEntity {
   "	"
  }
  extTrigger2 {
-  coords 6339.124 0.001 4731.802
+  coords 6329.063 0.001 4710.592
   angleY -6.672
   TriggerShapeType Sphere
   SphereRadius 352.8

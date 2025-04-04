@@ -46,8 +46,8 @@ class CRF_LoggingServerComponent: SCR_BaseGameModeComponent
 	override void OnWorldPostProcess(World world)
 	{
 		super.OnWorldPostProcess(world);
-		//if (RplSession.Mode() != RplMode.Dedicated || !GetGame().InPlayMode())
-			//return;
+		if ((RplSession.Mode() != RplMode.Dedicated && RplSession.Mode() != RplMode.Listen) || !GetGame().InPlayMode())
+			return;
 		
 		m_sMissionName = GetGame().GetMissionName();
 		m_iPlayerCount = GetGame().GetPlayerManager().GetPlayerCount();
@@ -83,15 +83,16 @@ class CRF_LoggingServerComponent: SCR_BaseGameModeComponent
 	}
 	
 	// Mission status messages 
-	void OnGamemodeStateChanged(CRF_GamemodeState state)
+	void OnGamemodeStateChanged()
 	{
-		//if (RplSession.Mode() != RplMode.Dedicated)
-			//return;
+		if (RplSession.Mode() != RplMode.Dedicated && RplSession.Mode() != RplMode.Listen)
+			return;
 		
-		PrintFormat("CRF: ", state);
+		//PrintFormat("CRF: %1", CRF_Gamemode.GetInstance().m_GamemodeState);
 		
 		m_iPlayerCount = GetGame().GetPlayerManager().GetPlayerCount();
-		switch (state)
+		
+		switch (CRF_Gamemode.GetInstance().m_GamemodeState)
 		{
 			case CRF_GamemodeState.SLOTTING:
 			{

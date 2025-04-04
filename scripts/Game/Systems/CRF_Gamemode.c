@@ -897,10 +897,10 @@ class CRF_Gamemode : SCR_BaseGameMode
 	//------------------------------------------------------------------------------------------------
 	void OnGamemodeStateChanged()
 	{
-		if (RplSession.Mode() == RplMode.Dedicated)
+		if (RplSession.Mode() == RplMode.Dedicated || RplSession.Mode() == RplMode.Listen)
 		{
 			if (m_OnStateChanged)
-				m_OnStateChanged.Invoke(m_GamemodeState);
+				m_OnStateChanged.Invoke();
 
 			foreach (CRF_GamemodeComponent component : m_aAdditionalCRFGamemodeComponents)
 			{

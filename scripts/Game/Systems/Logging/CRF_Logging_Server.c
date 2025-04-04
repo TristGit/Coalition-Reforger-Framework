@@ -46,8 +46,8 @@ class CRF_LoggingServerComponent: SCR_BaseGameModeComponent
 	override void OnWorldPostProcess(World world)
 	{
 		super.OnWorldPostProcess(world);
-		if (RplSession.Mode() != RplMode.Dedicated || !GetGame().InPlayMode())
-			return;
+		//if (RplSession.Mode() != RplMode.Dedicated || !GetGame().InPlayMode())
+			//return;
 		
 		m_sMissionName = GetGame().GetMissionName();
 		m_iPlayerCount = GetGame().GetPlayerManager().GetPlayerCount();
@@ -57,7 +57,6 @@ class CRF_LoggingServerComponent: SCR_BaseGameModeComponent
 		m_handle.WriteLine("mission" + SEPARATOR + "beginning" + SEPARATOR + m_sMissionName + SEPARATOR + m_iPlayerCount);
 		
 		CRF_Gamemode.GetInstance().GetOnStateChanged().Insert(OnGamemodeStateChanged);
-		OnGamemodeStateChanged(CRF_GamemodeState.INITIAL);
 	}
 	
 	// Player Connected
@@ -86,10 +85,10 @@ class CRF_LoggingServerComponent: SCR_BaseGameModeComponent
 	// Mission status messages 
 	void OnGamemodeStateChanged(CRF_GamemodeState state)
 	{
-		if (RplSession.Mode() != RplMode.Dedicated)
-			return;
+		//if (RplSession.Mode() != RplMode.Dedicated)
+			//return;
 		
-		//Print(state);
+		PrintFormat("CRF: ", state);
 		
 		m_iPlayerCount = GetGame().GetPlayerManager().GetPlayerCount();
 		switch (state)
@@ -97,11 +96,6 @@ class CRF_LoggingServerComponent: SCR_BaseGameModeComponent
 			case CRF_GamemodeState.SLOTTING:
 			{
 				m_handle.WriteLine("mission" + SEPARATOR + "slotting" + SEPARATOR + m_sMissionName + SEPARATOR + m_iPlayerCount);
-				break;
-			}
-			case CRF_GamemodeState.INITIAL:
-			{
-				m_handle.WriteLine("mission" + SEPARATOR + "briefing" + SEPARATOR + m_sMissionName + SEPARATOR + m_iPlayerCount);
 				break;
 			}
 			case CRF_GamemodeState.GAME:

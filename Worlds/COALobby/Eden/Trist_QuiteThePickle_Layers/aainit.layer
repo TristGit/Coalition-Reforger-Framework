@@ -166,3 +166,41 @@ CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et
   }
  }
 }
+SCR_BaseTriggerEntity extTrigger {
+ coords 4474.624 0 2545.949
+ TriggerShapeType Sphere
+ SphereRadius 120
+ DrawShape 1
+ TriggerActivationType "First change"
+ PeriodicQueries 1
+ UpdatePeriod 10
+ PrefabsFilter {
+  PrefabFilter "{6508206FA895E2C1}" {
+   Prefab "{ED774ED0660B2DCD}Prefabs/Characters/Factions/INDFOR/CRF_GS_INDFOR_Pilot_P.et"
+  }
+  PrefabFilter "{6508206FAF01DD07}" {
+   Prefab "{8949382562216B1E}Prefabs/Characters/Factions/INDFOR/CRF_GS_INDFOR_SL_P.et"
+  }
+  PrefabFilter "{6508206FAFE4A8E3}" {
+   Prefab "{2CCC80A8B667DF74}Prefabs/Characters/Factions/INDFOR/CRF_GS_INDFOR_AR_P.et"
+  }
+  PrefabFilter "{6508206FAFC0F7E7}" {
+   Prefab "{EED52618D358395A}Prefabs/Characters/Factions/INDFOR/CRF_GS_INDFOR_AAR_P.et"
+  }
+  PrefabFilter "{6508206FD70E884E}" {
+   Prefab "{5BCF0823FB56CF1C}Prefabs/Characters/Factions/INDFOR/CRF_GS_INDFOR_TL_P.et"
+  }
+  PrefabFilter "{6508206FD7E838E9}" {
+   Prefab "{911CD22FC97CC36A}Prefabs/Characters/Factions/INDFOR/CRF_GS_INDFOR_AT_P.et"
+  }
+  PrefabFilter "{6508206FD7D46272}" {
+   Prefab "{23546266D23BBE77}Prefabs/Characters/Factions/INDFOR/CRF_GS_INDFOR_Medic_P.et"
+  }
+  PrefabFilter "{6508206FD7B0AEA2}" {
+   Prefab "{0C86D510A52DF210}Prefabs/Characters/Factions/INDFOR/CRF_GS_INDFOR_Demo_P.et"
+  }
+ }
+ OnActivate ""\
+ "		SCR_PopUpNotification.GetInstance().PopupMsg(\"IND SF has extracted\", duration: 10);"\
+ "	"
+}

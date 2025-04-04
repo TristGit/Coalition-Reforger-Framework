@@ -30,27 +30,15 @@ CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et
    ""\
    "Time: 9:00 PM"
   }
-  CRF_MissionDescriptor "{650861A11219774F}" {
-   m_sTitle "Mission: Rules"
-   m_sTextData "LZ's/Extracting"\
-   "- BLU may initially insert loosely"\
-   "- BLU can permanently land the Chinook until needed"\
-   "- IND/BLU must loosely use premarked LZ's for extraction"\
-   "- LZ'S ARE KNOWN TO OPFOR. "\
-   ""\
-   "Comms"\
-   "- Enemy radio (Espionage) usage is possible, plan accordingly"
-   m_bShowForAnyFaction 1
-  }
   CRF_MissionDescriptor "{64425051F2E00216}" {
    m_sTextData "- Safely land teams/assets to Locate & Protect the SpecOps"\
-   "- Must loosely use established LZ zones and extract SpecOps"\
+   "- Must loosely use the LZ zones and extract SpecOps"\
    "(Contingency Land Route available)"\
    ""\
    ""\
    "Details: "\
-   "- IND has a several types of flares for comms method."\
-   "- Instruct squads as IND is the friendly SpecOps"
+   "- IND has a several types of flares for comms method"\
+   "- Instruct squads that IND is the friendly SpecOps"
    m_aFactionKeys + {
     "INDFOR"
    }
@@ -58,7 +46,7 @@ CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et
   CRF_MissionDescriptor "{64425051B9B5AF67}" {
    m_sTextData "- Find the crash site "\
    "- Find & Eliminate all SpecOps (IND) crash survivors "\
-   "- Prevent Rescue/Extraction by using radio espionage, zoning, or closing in on suspected LZ's or denying the Land Route"\
+   "- Prevent Rescue/Extract by using radio espionage & closing/zoning on suspected LZ's"\
    ""\
    "Details:"\
    "- Mi8 for scouting/aerial support"
@@ -78,8 +66,20 @@ CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et
    m_sTextData "The BLU/IND LAND extract zone is rendering those players out of play while OOB for OPF, they can loiter in that area. "\
    ""
   }
+  CRF_MissionDescriptor "{650861A11219774F}" {
+   m_sTitle "Rules"
+   m_sTextData "LZ's/Extracting"\
+   "- BLU may initially insert loosely"\
+   "- BLU can station/land the Chinook (AO or Ship) until needed"\
+   "- IND/BLU must loosely use premarked LZ's for extraction"\
+   "- LZ'S ARE KNOWN TO OPFOR. "\
+   ""\
+   "Comms"\
+   "- Enemy radio (Espionage) usage is possible, plan accordingly"
+   m_bShowForAnyFaction 1
+  }
   CRF_MissionDescriptor "{650861A35AED174F}" {
-   m_sTitle "Win/Loss Cond."
+   m_sTitle "Win Conditions"
    m_sTextData "BLUFOR/INDFOR"\
    "Major Victory: Extraction of 5+ SpecOps"\
    "Minor Victory: Extraction of 1-4 SpecOps"\
@@ -132,9 +132,6 @@ CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et
        SCR_CallsignInfo "{55CCB79287E901BC}" {
         m_sCallsign "COY"
        }
-       SCR_CallsignInfo "{650861A59364D903}" {
-        m_sCallsign "MED"
-       }
        SCR_CallsignInfo "{55CCB79287936EBD}" {
         m_sCallsign "1PLT"
        }
@@ -143,6 +140,9 @@ CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et
        }
        SCR_CallsignInfo "{55CCB79287A4D7B6}" {
         m_sCallsign "1-2"
+       }
+       SCR_CallsignInfo "{650861A59364D903}" {
+        m_sCallsign "MED"
        }
        SCR_CallsignInfo "{650557B00A9DDAC1}" {
         m_sCallsign "1-3"

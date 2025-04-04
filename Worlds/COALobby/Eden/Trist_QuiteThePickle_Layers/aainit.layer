@@ -3,6 +3,9 @@ SCR_AIWorld : "{70CCCF16487C927F}Prefabs/AI/SCR_AIWorld_Eden.et" {
 }
 CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et" {
  components {
+  SCR_CallsignManagerComponent "{56B6E8B2652E1419}" {
+   Enabled 0
+  }
   SCR_InitWeatherComponent "{64427EEC0AFF43EE}" {
    m_sInitialStartingWeatherId "Clear"
    m_iSetWeatherConstant 1

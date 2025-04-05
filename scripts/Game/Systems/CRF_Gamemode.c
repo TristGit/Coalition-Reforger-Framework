@@ -280,9 +280,9 @@ class CRF_Gamemode : SCR_BaseGameMode
 			return;
 
 		SCR_InstigatorContextData instigatorContextData = new SCR_InstigatorContextData(-1, entity, killerEntity, instigator);
-		
-		int playerId = instigatorContextData.GetVictimPlayerID();
 
+		int playerId = instigatorContextData.GetVictimPlayerID();
+		
 		if (playerId <= 0 || instigatorContextData.GetVictimCharacterControlType() == SCR_ECharacterControlType.POSSESSED_AI)
 			return;
 
@@ -317,15 +317,21 @@ class CRF_Gamemode : SCR_BaseGameMode
 		SCR_PlayerController pc = SCR_PlayerController.Cast(GetGame().GetPlayerManager().GetPlayerController(playerId));
 		
 		if(!pc || !initialEntity)
+		{	
+			GetGame().GetCallqueue().CallLater(EnterSpectator, 100, false, playerId, entity);
 			return;
+		}
 
 		GetGame().GetCallqueue().CallLater(pc.SetInitialMainEntity, 250, false, initialEntity);
 
 		SCR_AIGroup currentGroup = SCR_GroupsManagerComponent.GetInstance().GetPlayerGroup(playerId);
 		if (currentGroup)
 			currentGroup.RemovePlayer(playerId);
-
-		SCR_CharacterDamageManagerComponent.Cast(initialEntity.FindComponent(SCR_CharacterDamageManagerComponent)).EnableDamageHandling(false);
+		
+		SCR_CharacterDamageManagerComponent damManager = SCR_CharacterDamageManagerComponent.Cast(initialEntity.FindComponent(SCR_CharacterDamageManagerComponent)); 
+		if(damManager)
+			damManager.EnableDamageHandling(false);
+		
 		SCR_PlayerFactionAffiliationComponent.Cast(GetGame().GetPlayerManager().GetPlayerController(playerId).FindComponent(SCR_PlayerFactionAffiliationComponent)).RequestFaction(GetGame().GetFactionManager().GetFactionByKey("SPEC"));
 
 		vector cameraPos[4];

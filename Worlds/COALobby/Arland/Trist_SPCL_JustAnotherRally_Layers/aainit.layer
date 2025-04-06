@@ -1,0 +1,33 @@
+SCR_AIWorld : "{01DC74137CFDDB6A}Prefabs/AI/SCR_AIWorld_Arland.et" {
+ coords 663.832 39 2533.821
+}
+CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et" {
+ coords 671.719 39 2534.206
+ m_CIVILIANGearScriptSettings CRF_GearScriptContainer "{64570ACB9A9C5C52}" {
+  m_rGearScript "{01F5B5F6F4DA8408}Configs/Gearscripts/Custom/RandAlThor/Special/Rally/CRF_GS_RallyUS.conf"
+ }
+}
+Vehicle LAV25_MERDC1 : "{B7A8BAA37CB0AC2B}Prefabs/Vehicles/Wheeled/LAV25/LAV25_MERDC.et" {
+ components {
+  RigidBody "{51DAA09FECF52BBF}" {
+   Mass 6000
+  }
+  VehicleWheeledSimulation "{731B26FCA2F19855}" {
+   Simulation Wheeled "{4D8B26DEA5F25978}" {
+    Engine Engine Engine {
+     Inertia 5
+     MaxPower 1500
+     MaxTorque 900
+     Friction 8000
+    }
+    Gearbox Gearbox Gearbox {
+     Forward {
+      2.3 2 1.75 1.2 1
+     }
+    }
+   }
+  }
+ }
+ coords 658.285 39 2697.157
+ angleY -119.148
+}

@@ -1,0 +1,164 @@
+$grp SCR_DestructibleBuildingEntity : "{12981279D4DB92D3}Prefabs/Structures/Infrastructure/Bridges/ConcreteBridge_01/ConcreteBridge_01_Narrow_Base.et" {
+ {
+  coords 3164.932 3.937 1177.364
+  angleY 62.745
+  angleZ -8.003
+  scale 0.868
+ }
+ {
+  coords 3167.927 4.279 1171.533
+  angleY 62.745
+  angleZ -15.224
+  scale 0.868
+ }
+ {
+  coords 3169.092 3.54 1169.326
+  angleY 62.745
+  angleZ -24.616
+  scale 0.868
+ }
+}
+$grp GenericEntity : "{24DE47095BD6BE7B}Prefabs/Props/Agriculture/Farm/HayBale_01_square_big.et" {
+ {
+  components {
+   RigidBody "{5872F0EB7DFB5A9D}" {
+    ResponseIndex "LargeDestructible"
+   }
+   SCR_DestructionMultiPhaseComponent "{5624A88D86EFE8BA}" {
+    CollisionVelocityThreshold 250
+    m_fBaseHealth 6000
+    m_fForceToDamageScale 150
+    m_bPassDamageToChildren 0
+   }
+  }
+  coords 3156.337 5.793 1224.527
+  angleX -1.918
+  angleY -158.317
+  angleZ 0.44
+  scale 2.5
+ }
+ {
+  components {
+   RigidBody "{5872F0EB7DFB5A9D}" {
+    ResponseIndex "LargeDestructible"
+   }
+   SCR_DestructionMultiPhaseComponent "{5624A88D86EFE8BA}" {
+    CollisionVelocityThreshold 250
+    m_fBaseHealth 6000
+    m_fForceToDamageScale 150
+    m_bPassDamageToChildren 0
+   }
+  }
+  coords 3160.049 4.869 1207.231
+  angleY 161.471
+  angleZ 1.649
+  scale 2
+ }
+ {
+  components {
+   RigidBody "{5872F0EB7DFB5A9D}" {
+    ResponseIndex "LargeDestructible"
+   }
+   SCR_DestructionMultiPhaseComponent "{5624A88D86EFE8BA}" {
+    CollisionVelocityThreshold 250
+    m_fBaseHealth 6000
+    m_fForceToDamageScale 150
+    m_bPassDamageToChildren 0
+   }
+  }
+  coords 3142.32 4.847 1220.109
+  angleX 0.7
+  angleY 141.643
+  angleZ 1.527
+  scale 2.5
+ }
+ {
+  components {
+   RigidBody "{5872F0EB7DFB5A9D}" {
+    ResponseIndex "LargeDestructible"
+   }
+   SCR_DestructionMultiPhaseComponent "{5624A88D86EFE8BA}" {
+    CollisionVelocityThreshold 250
+    m_fBaseHealth 6000
+    m_fForceToDamageScale 150
+    m_bPassDamageToChildren 0
+   }
+  }
+  coords 3151.025 4.303 1197.233
+  angleX 0.342
+  angleY 154.504
+  angleZ 1.645
+  scale 2
+ }
+ {
+  components {
+   RigidBody "{5872F0EB7DFB5A9D}" {
+    ResponseIndex "LargeDestructible"
+   }
+   SCR_DestructionMultiPhaseComponent "{5624A88D86EFE8BA}" {
+    CollisionVelocityThreshold 250
+    m_fBaseHealth 6000
+    m_fForceToDamageScale 150
+    m_bPassDamageToChildren 0
+   }
+  }
+  coords 3153.284 3.998 1190.261
+  angleX -0.287
+  angleY 155.95
+  angleZ 1.423
+  scale 2
+ }
+ {
+  components {
+   RigidBody "{5872F0EB7DFB5A9D}" {
+    ResponseIndex "LargeDestructible"
+   }
+   SCR_DestructionMultiPhaseComponent "{5624A88D86EFE8BA}" {
+    CollisionVelocityThreshold 250
+    m_fBaseHealth 6000
+    m_fForceToDamageScale 150
+    m_bPassDamageToChildren 0
+   }
+  }
+  coords 3157.795 3.882 1179.265
+  angleY 144.56
+  angleZ 1.452
+  scale 2
+ }
+ {
+  components {
+   RigidBody "{5872F0EB7DFB5A9D}" {
+    ResponseIndex "LargeDestructible"
+   }
+   SCR_DestructionMultiPhaseComponent "{5624A88D86EFE8BA}" {
+    CollisionVelocityThreshold 250
+    m_fBaseHealth 6000
+    m_fForceToDamageScale 150
+    m_bPassDamageToChildren 0
+   }
+  }
+  coords 3162.308 4.823 1200.366
+  angleX 0.23
+  angleY 169.142
+  angleZ 1.69
+  scale 2
+ }
+ {
+  components {
+   RigidBody "{5872F0EB7DFB5A9D}" {
+    ResponseIndex "LargeDestructible"
+   }
+   SCR_DestructionMultiPhaseComponent "{5624A88D86EFE8BA}" {
+    CollisionVelocityThreshold 250
+    m_fBaseHealth 6000
+    m_fForceToDamageScale 150
+    m_bPassDamageToChildren 0
+   }
+  }
+  coords 3168.058 4.198 1184.287
+  angleX -5.642
+  angleY 166.346
+  angleZ 2.233
+  scale 2
+ }
+}

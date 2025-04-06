@@ -1,0 +1,627 @@
+$grp GenericEntity : "{061EFBBB385DAF01}Prefabs/Props/VehicleParts/Tires/Tire_UAZ469_pile.et" {
+ {
+  components {
+   RigidBody "{5872F0EB7DFB5A9D}" {
+    SimState Collision
+    ResponseIndex "Normal"
+   }
+  }
+  coords 876.137 39 2640.3
+  scale 1.6
+  {
+   GenericEntity {
+    ID "5216C470CA8B3802"
+    components {
+     RigidBody "{5872F0EB7DFB5A9D}" {
+      SimState Collision
+      ResponseIndex "Normal"
+     }
+    }
+   }
+   GenericEntity {
+    ID "5216C470CA8B3808"
+    components {
+     RigidBody "{5872F0EB7DFB5A9D}" {
+      SimState Collision
+      ResponseIndex "Normal"
+     }
+    }
+   }
+   GenericEntity {
+    ID "5216C470CA8B3817"
+    components {
+     RigidBody "{5872F0EB7DFB5A9D}" {
+      SimState Collision
+      ResponseIndex "Normal"
+     }
+    }
+   }
+   GenericEntity {
+    ID "5216C470CA8B3836"
+    components {
+     RigidBody "{5872F0EB7DFB5A9D}" {
+      SimState Collision
+      ResponseIndex "Normal"
+     }
+    }
+   }
+   GenericEntity {
+    ID "5216C470CA8B38E6"
+    components {
+     RigidBody "{5872F0EB7DFB5A9D}" {
+      SimState Collision
+      ResponseIndex "Normal"
+     }
+    }
+   }
+  }
+ }
+ {
+  components {
+   RigidBody "{5872F0EB7DFB5A9D}" {
+    SimState Collision
+    ResponseIndex "Normal"
+   }
+  }
+  coords 865.82 39 2642.905
+  scale 1.6
+  {
+   GenericEntity {
+    ID "5216C470CA8B3802"
+    components {
+     RigidBody "{5872F0EB7DFB5A9D}" {
+      SimState Collision
+      ResponseIndex "Normal"
+     }
+    }
+   }
+   GenericEntity {
+    ID "5216C470CA8B3808"
+    components {
+     RigidBody "{5872F0EB7DFB5A9D}" {
+      SimState Collision
+      ResponseIndex "Normal"
+     }
+    }
+   }
+   GenericEntity {
+    ID "5216C470CA8B3817"
+    components {
+     RigidBody "{5872F0EB7DFB5A9D}" {
+      SimState Collision
+      ResponseIndex "Normal"
+     }
+    }
+   }
+   GenericEntity {
+    ID "5216C470CA8B3836"
+    components {
+     RigidBody "{5872F0EB7DFB5A9D}" {
+      SimState Collision
+      ResponseIndex "Normal"
+     }
+    }
+   }
+   GenericEntity {
+    ID "5216C470CA8B38E6"
+    components {
+     RigidBody "{5872F0EB7DFB5A9D}" {
+      SimState Collision
+      ResponseIndex "Normal"
+     }
+    }
+   }
+  }
+ }
+ {
+  components {
+   RigidBody "{5872F0EB7DFB5A9D}" {
+    SimState Collision
+    ResponseIndex "Normal"
+   }
+  }
+  coords 886.932 39 2638.029
+  scale 1.6
+  {
+   GenericEntity {
+    ID "5216C470CA8B3802"
+    components {
+     RigidBody "{5872F0EB7DFB5A9D}" {
+      SimState Collision
+      ResponseIndex "Normal"
+     }
+    }
+   }
+   GenericEntity {
+    ID "5216C470CA8B3808"
+    components {
+     RigidBody "{5872F0EB7DFB5A9D}" {
+      SimState Collision
+      ResponseIndex "Normal"
+     }
+    }
+   }
+   GenericEntity {
+    ID "5216C470CA8B3817"
+    components {
+     RigidBody "{5872F0EB7DFB5A9D}" {
+      SimState Collision
+      ResponseIndex "Normal"
+     }
+    }
+   }
+   GenericEntity {
+    ID "5216C470CA8B3836"
+    components {
+     RigidBody "{5872F0EB7DFB5A9D}" {
+      SimState Collision
+      ResponseIndex "Normal"
+     }
+    }
+   }
+   GenericEntity {
+    ID "5216C470CA8B38E6"
+    components {
+     RigidBody "{5872F0EB7DFB5A9D}" {
+      SimState Collision
+      ResponseIndex "Normal"
+     }
+    }
+   }
+  }
+ }
+ {
+  components {
+   RigidBody "{5872F0EB7DFB5A9D}" {
+    SimState Collision
+    ResponseIndex "Normal"
+   }
+  }
+  coords 956.041 39 2677.998
+  scale 1.6
+  {
+   GenericEntity {
+    ID "5216C470CA8B3802"
+    components {
+     RigidBody "{5872F0EB7DFB5A9D}" {
+      SimState Collision
+      ResponseIndex "Normal"
+     }
+    }
+   }
+   GenericEntity {
+    ID "5216C470CA8B3808"
+    components {
+     RigidBody "{5872F0EB7DFB5A9D}" {
+      SimState Collision
+      ResponseIndex "Normal"
+     }
+    }
+   }
+   GenericEntity {
+    ID "5216C470CA8B3817"
+    components {
+     RigidBody "{5872F0EB7DFB5A9D}" {
+      SimState Collision
+      ResponseIndex "Normal"
+     }
+    }
+   }
+   GenericEntity {
+    ID "5216C470CA8B3836"
+    components {
+     RigidBody "{5872F0EB7DFB5A9D}" {
+      SimState Collision
+      ResponseIndex "Normal"
+     }
+    }
+   }
+   GenericEntity {
+    ID "5216C470CA8B38E6"
+    components {
+     RigidBody "{5872F0EB7DFB5A9D}" {
+      SimState Collision
+      ResponseIndex "Normal"
+     }
+    }
+   }
+  }
+ }
+ {
+  components {
+   RigidBody "{5872F0EB7DFB5A9D}" {
+    SimState Collision
+    ResponseIndex "Normal"
+   }
+  }
+  coords 1131.911 39 2386.601
+  scale 1.6
+  {
+   GenericEntity {
+    ID "5216C470CA8B3802"
+    components {
+     RigidBody "{5872F0EB7DFB5A9D}" {
+      SimState Collision
+      ResponseIndex "Normal"
+     }
+    }
+    coords -0.042 1.045 -0.035
+   }
+   GenericEntity {
+    ID "5216C470CA8B3808"
+    components {
+     RigidBody "{5872F0EB7DFB5A9D}" {
+      SimState Collision
+      ResponseIndex "Normal"
+     }
+    }
+    coords -0.011 0.212 0.011
+   }
+   GenericEntity {
+    ID "5216C470CA8B3817"
+    components {
+     RigidBody "{5872F0EB7DFB5A9D}" {
+      SimState Collision
+      ResponseIndex "Normal"
+     }
+    }
+    coords -0.024 0.841 0.016
+   }
+   GenericEntity {
+    ID "5216C470CA8B3836"
+    components {
+     RigidBody "{5872F0EB7DFB5A9D}" {
+      SimState Collision
+      ResponseIndex "Normal"
+     }
+    }
+    coords -0.01 0.425 0.02
+   }
+   GenericEntity {
+    ID "5216C470CA8B38E6"
+    components {
+     RigidBody "{5872F0EB7DFB5A9D}" {
+      SimState Collision
+      ResponseIndex "Normal"
+     }
+    }
+    coords -0.016 0.634 -0.008
+   }
+  }
+ }
+ {
+  components {
+   RigidBody "{5872F0EB7DFB5A9D}" {
+    SimState Collision
+    ResponseIndex "Normal"
+   }
+  }
+  coords 1128.629 39 2390.418
+  scale 1.6
+  {
+   GenericEntity {
+    ID "5216C470CA8B3802"
+    components {
+     RigidBody "{5872F0EB7DFB5A9D}" {
+      SimState Collision
+      ResponseIndex "Normal"
+     }
+    }
+    coords -0.042 1.045 -0.035
+   }
+   GenericEntity {
+    ID "5216C470CA8B3808"
+    components {
+     RigidBody "{5872F0EB7DFB5A9D}" {
+      SimState Collision
+      ResponseIndex "Normal"
+     }
+    }
+    coords -0.011 0.212 0.011
+   }
+   GenericEntity {
+    ID "5216C470CA8B3817"
+    components {
+     RigidBody "{5872F0EB7DFB5A9D}" {
+      SimState Collision
+      ResponseIndex "Normal"
+     }
+    }
+    coords -0.024 0.841 0.016
+   }
+   GenericEntity {
+    ID "5216C470CA8B3836"
+    components {
+     RigidBody "{5872F0EB7DFB5A9D}" {
+      SimState Collision
+      ResponseIndex "Normal"
+     }
+    }
+    coords -0.01 0.425 0.02
+   }
+   GenericEntity {
+    ID "5216C470CA8B38E6"
+    components {
+     RigidBody "{5872F0EB7DFB5A9D}" {
+      SimState Collision
+      ResponseIndex "Normal"
+     }
+    }
+    coords -0.016 0.634 -0.008
+   }
+  }
+ }
+}
+$grp SCR_DestructibleBuildingEntity : "{12981279D4DB92D3}Prefabs/Structures/Infrastructure/Bridges/ConcreteBridge_01/ConcreteBridge_01_Narrow_Base.et" {
+ {
+  coords 880.596 35.486 2608.56
+  angleX 0.158
+  angleY -33.17
+  angleZ -7.473
+  scale 3.8
+ }
+ {
+  coords 971.097 35.709 2668.401
+  angleX 0.185
+  angleY 146.277
+  angleZ -6.813
+  scale 3.8
+ }
+}
+$grp GenericEntity : "{24DE47095BD6BE7B}Prefabs/Props/Agriculture/Farm/HayBale_01_square_big.et" {
+ {
+  components {
+   RigidBody "{5872F0EB7DFB5A9D}" {
+    ResponseIndex "LargeDestructible"
+   }
+   SCR_DestructionMultiPhaseComponent "{5624A88D86EFE8BA}" {
+    CollisionVelocityThreshold 250
+    m_bPassDamageToChildren 0
+   }
+  }
+  coords 1192.009 38 2758.068
+  angleY -12.123
+  scale 2.5
+ }
+ {
+  components {
+   RigidBody "{5872F0EB7DFB5A9D}" {
+    ResponseIndex "LargeDestructible"
+   }
+   SCR_DestructionMultiPhaseComponent "{5624A88D86EFE8BA}" {
+    CollisionVelocityThreshold 250
+    m_bPassDamageToChildren 0
+   }
+  }
+  coords 1175.102 38 2836.46
+  angleY -60.665
+  scale 2.5
+ }
+ {
+  components {
+   RigidBody "{5872F0EB7DFB5A9D}" {
+    ResponseIndex "LargeDestructible"
+   }
+   SCR_DestructionMultiPhaseComponent "{5624A88D86EFE8BA}" {
+    CollisionVelocityThreshold 250
+    m_bPassDamageToChildren 0
+   }
+  }
+  coords 1162.554 38 2838.871
+  angleY -96.13
+  scale 2.5
+ }
+ {
+  components {
+   RigidBody "{5872F0EB7DFB5A9D}" {
+    ResponseIndex "LargeDestructible"
+   }
+   SCR_DestructionMultiPhaseComponent "{5624A88D86EFE8BA}" {
+    CollisionVelocityThreshold 250
+    m_fBaseHealth 8000
+    m_bPassDamageToChildren 0
+   }
+  }
+  coords 1277.453 39.107 2153.703
+  angleX 0.05
+  angleY 178.077
+  angleZ 0.03
+  scale 2.5
+ }
+ {
+  components {
+   RigidBody "{5872F0EB7DFB5A9D}" {
+    ResponseIndex "LargeDestructible"
+   }
+   SCR_DestructionMultiPhaseComponent "{5624A88D86EFE8BA}" {
+    CollisionVelocityThreshold 250
+    m_fBaseHealth 8000
+    m_bPassDamageToChildren 0
+   }
+  }
+  coords 1278.453 39.117 2142.52
+  angleX 0.05
+  angleY 177.006
+  angleZ 0.029
+  scale 2.5
+ }
+ {
+  components {
+   RigidBody "{5872F0EB7DFB5A9D}" {
+    ResponseIndex "LargeDestructible"
+   }
+   SCR_DestructionMultiPhaseComponent "{5624A88D86EFE8BA}" {
+    CollisionVelocityThreshold 250
+    m_fBaseHealth 8000
+    m_bPassDamageToChildren 0
+   }
+  }
+  coords 1258.171 39.096 2154.522
+  angleX 0.046
+  angleY -174.288
+  angleZ 0.036
+  scale 2.5
+ }
+ {
+  components {
+   RigidBody "{5872F0EB7DFB5A9D}" {
+    ResponseIndex "LargeDestructible"
+   }
+   SCR_DestructionMultiPhaseComponent "{5624A88D86EFE8BA}" {
+    CollisionVelocityThreshold 250
+    m_fBaseHealth 8000
+    m_bPassDamageToChildren 0
+   }
+  }
+  coords 1262.169 39.12 2127.53
+  angleX 0.058
+  angleY 139.51
+  angleZ -0.007
+  scale 2.5
+ }
+ {
+  components {
+   RigidBody "{5872F0EB7DFB5A9D}" {
+    ResponseIndex "LargeDestructible"
+   }
+   SCR_DestructionMultiPhaseComponent "{5624A88D86EFE8BA}" {
+    CollisionVelocityThreshold 250
+    m_bPassDamageToChildren 0
+   }
+  }
+  coords 1239.895 39.054 2189.89
+  angleX 0.027
+  angleY 85.32
+  angleZ -0.052
+  scale 2.5
+ }
+}
+$grp SCR_DestructibleBuildingEntity : "{8879853333086E52}Prefabs/Structures/Walls/Concrete/ConcreteRetainingWall_01/ConcreteRetainingWall_01_90.et" {
+ {
+  coords 1310.066 23.21 2772.422
+  angleX -0.035
+  angleY -16.535
+  angleZ -0.301
+  scale 7
+ }
+ {
+  coords 1322.3 23.229 2722.998
+  angleX -0.303
+  angleY -101.984
+  angleZ 0.011
+  scale 7
+ }
+ {
+  coords 1528.941 20.708 2793.093
+  angleX 0.302
+  angleY 75.536
+  angleZ -0.024
+  scale 6
+ }
+}
+$grp SCR_DestructibleBuildingEntity : "{F885365EEA3AD315}Prefabs/Structures/Walls/Concrete/ConcreteRetainingWall_01/ConcreteRetainingWall_01_End.et" {
+ {
+  coords 1084.156 20.633 2695.164
+  angleY 165.209
+  angleZ -5.674
+  scale 6
+ }
+ {
+  coords 1025.354 20.633 2660.426
+  angleY 165.209
+  angleZ -5.584
+  scale 6
+ }
+ {
+  coords 1038.277 -0.835 2459.962
+  angleY -124.952
+  angleZ 2.27
+  scale 11
+ }
+}
+$grp SCR_DestructibleBuildingEntity : "{FD1CE2903D41D4A7}Prefabs/Structures/Walls/Concrete/ConcreteRetainingWall_01/ConcreteRetainingWall_01_8m.et" {
+ {
+  coords 953.489 10.301 2688.397
+  angleY -15.01
+  scale 10
+ }
+ {
+  coords 1004.94 10.504 2627.538
+  angleY -15.01
+  scale 10
+ }
+ {
+  coords 1028.082 10.301 2708.656
+  angleY -15.01
+  scale 10
+ }
+ {
+  coords 1045.791 10.475 2638.298
+  angleY -15.01
+  scale 10
+ }
+ {
+  coords 1100.167 5.936 2727.99
+  angleY -15.01
+  angleZ 6.431
+  scale 10
+ }
+ {
+  coords 1120.01 8.049 2657.463
+  angleY -15.01
+  angleZ 3.395
+  scale 10
+ }
+ {
+  coords 883.471 11.016 2593.79
+  angleY -15.01
+  scale 10
+ }
+ {
+  coords 868.576 9.322 2662.111
+  angleY -15.01
+  scale 10
+ }
+ {
+  coords 1182.372 7.243 2158.47
+  angleX -2.536
+  angleY 59.625
+  angleZ 0.116
+  scale 11
+ }
+ {
+  coords 1365.929 11.768 2800.183
+  angleY -15.01
+  scale 10
+ }
+ {
+  coords 1442.615 11.768 2820.745
+  angleY -15.01
+  scale 10
+ }
+ {
+  coords 1379.945 19.558 2724.402
+  angleY -15.01
+  scale 8
+ }
+ {
+  coords 1390.63 20.376 2766.681
+  angleY -14.588
+  scale 6
+ }
+ {
+  coords 1436.166 20.376 2778.533
+  angleY -14.588
+  scale 6
+ }
+ {
+  coords 1482.359 20.376 2790.555
+  angleY -14.588
+  scale 6
+ }
+ {
+  coords 1441.998 19.558 2741.041
+  angleY -15.01
+  scale 8
+ }
+}

@@ -1,0 +1,121 @@
+GenericEntity : "{0B3312C6940005B9}Prefabs/Structures/FlagPoles/RespawnPoles/OPFOR_Respawn.et" {
+ coords 7121.682 145.457 4290.896
+ scale 3
+}
+SCR_AIGroup : "{2598DBB9C3E01AD3}Prefabs/Groups/OPFOR/Standard/Support/CRF_OPFOR_IndirectTeam_p.et" {
+ coords 7740.177 182.672 5105.614
+ angleY -137.248
+ {
+  SCR_AIGroup : "{E323E3D2E4952AF5}Prefabs/Groups/OPFOR/Standard/Support/CRF_OPFOR_MMGTeam_p.et" {
+   coords 117.511 -32.123 998.716
+   angleY -45.956
+   {
+    SCR_AIGroup : "{92F50F60726EB86D}Prefabs/Groups/OPFOR/Standard/Infantry/CRF_OPFOR_RifleSquad_p.et" {
+     components {
+      AIFormationComponent "{507E9DC12F541FE6}" {
+       DefaultFormation "Line"
+      }
+     }
+     coords -28.214 -1.757 1.682
+     angleY 6.194
+     m_aUnitPrefabSlots {
+      "{9CB623C7B62F4955}Prefabs/Characters/Factions/OPFOR/CRF_GS_OPFOR_SL_P.et" "{FC0904D71EF8DB6A}Prefabs/Characters/Factions/OPFOR/CRF_GS_OPFOR_Rifleman_P.et" "{FC0904D71EF8DB6A}Prefabs/Characters/Factions/OPFOR/CRF_GS_OPFOR_Rifleman_P.et" "{FC0904D71EF8DB6A}Prefabs/Characters/Factions/OPFOR/CRF_GS_OPFOR_Rifleman_P.et" "{FC0904D71EF8DB6A}Prefabs/Characters/Factions/OPFOR/CRF_GS_OPFOR_Rifleman_P.et" "{FC0904D71EF8DB6A}Prefabs/Characters/Factions/OPFOR/CRF_GS_OPFOR_Rifleman_P.et" "{FC0904D71EF8DB6A}Prefabs/Characters/Factions/OPFOR/CRF_GS_OPFOR_Rifleman_P.et" "{A7E13866EA953B26}Prefabs/Characters/Factions/OPFOR/CRF_GS_OPFOR_MMG_P.et" "{7043203A0D1F11AF}Prefabs/Characters/Factions/OPFOR/CRF_GS_OPFOR_LogiRunner_P.et" "{950F36099F77E571}Prefabs/Characters/Factions/OPFOR/CRF_GS_OPFOR_Gren_P.et"
+     }
+     {
+      SCR_AIGroup : "{92F50F60726EB86D}Prefabs/Groups/OPFOR/Standard/Infantry/CRF_OPFOR_RifleSquad_p.et" {
+       components {
+        AIFormationComponent "{507E9DC12F541FE6}" {
+         DefaultFormation "Line"
+        }
+       }
+       coords 0.38 -0 -3.752
+       m_aUnitPrefabSlots {
+        "{9CB623C7B62F4955}Prefabs/Characters/Factions/OPFOR/CRF_GS_OPFOR_SL_P.et" "{FC0904D71EF8DB6A}Prefabs/Characters/Factions/OPFOR/CRF_GS_OPFOR_Rifleman_P.et" "{FC0904D71EF8DB6A}Prefabs/Characters/Factions/OPFOR/CRF_GS_OPFOR_Rifleman_P.et" "{FC0904D71EF8DB6A}Prefabs/Characters/Factions/OPFOR/CRF_GS_OPFOR_Rifleman_P.et" "{FC0904D71EF8DB6A}Prefabs/Characters/Factions/OPFOR/CRF_GS_OPFOR_Rifleman_P.et" "{FC0904D71EF8DB6A}Prefabs/Characters/Factions/OPFOR/CRF_GS_OPFOR_Rifleman_P.et" "{FC0904D71EF8DB6A}Prefabs/Characters/Factions/OPFOR/CRF_GS_OPFOR_Rifleman_P.et" "{A7E13866EA953B26}Prefabs/Characters/Factions/OPFOR/CRF_GS_OPFOR_MMG_P.et" "{7043203A0D1F11AF}Prefabs/Characters/Factions/OPFOR/CRF_GS_OPFOR_LogiRunner_P.et" "{950F36099F77E571}Prefabs/Characters/Factions/OPFOR/CRF_GS_OPFOR_Gren_P.et"
+       }
+       {
+        SCR_AIGroup : "{92F50F60726EB86D}Prefabs/Groups/OPFOR/Standard/Infantry/CRF_OPFOR_RifleSquad_p.et" {
+         components {
+          AIFormationComponent "{507E9DC12F541FE6}" {
+           DefaultFormation "Line"
+          }
+         }
+         coords 1.427 0 -3.902
+         m_aUnitPrefabSlots {
+          "{9CB623C7B62F4955}Prefabs/Characters/Factions/OPFOR/CRF_GS_OPFOR_SL_P.et" "{FC0904D71EF8DB6A}Prefabs/Characters/Factions/OPFOR/CRF_GS_OPFOR_Rifleman_P.et" "{FC0904D71EF8DB6A}Prefabs/Characters/Factions/OPFOR/CRF_GS_OPFOR_Rifleman_P.et" "{FC0904D71EF8DB6A}Prefabs/Characters/Factions/OPFOR/CRF_GS_OPFOR_Rifleman_P.et" "{FC0904D71EF8DB6A}Prefabs/Characters/Factions/OPFOR/CRF_GS_OPFOR_Rifleman_P.et" "{FC0904D71EF8DB6A}Prefabs/Characters/Factions/OPFOR/CRF_GS_OPFOR_Rifleman_P.et" "{FC0904D71EF8DB6A}Prefabs/Characters/Factions/OPFOR/CRF_GS_OPFOR_Rifleman_P.et" "{A7E13866EA953B26}Prefabs/Characters/Factions/OPFOR/CRF_GS_OPFOR_MMG_P.et" "{7043203A0D1F11AF}Prefabs/Characters/Factions/OPFOR/CRF_GS_OPFOR_LogiRunner_P.et" "{950F36099F77E571}Prefabs/Characters/Factions/OPFOR/CRF_GS_OPFOR_Gren_P.et"
+         }
+         {
+          SCR_AIGroup : "{92F50F60726EB86D}Prefabs/Groups/OPFOR/Standard/Infantry/CRF_OPFOR_RifleSquad_p.et" {
+           components {
+            AIFormationComponent "{507E9DC12F541FE6}" {
+             DefaultFormation "Line"
+            }
+           }
+           coords 0.118 4.067 -3.883
+           m_aUnitPrefabSlots {
+            "{9CB623C7B62F4955}Prefabs/Characters/Factions/OPFOR/CRF_GS_OPFOR_SL_P.et" "{FC0904D71EF8DB6A}Prefabs/Characters/Factions/OPFOR/CRF_GS_OPFOR_Rifleman_P.et" "{FC0904D71EF8DB6A}Prefabs/Characters/Factions/OPFOR/CRF_GS_OPFOR_Rifleman_P.et" "{FC0904D71EF8DB6A}Prefabs/Characters/Factions/OPFOR/CRF_GS_OPFOR_Rifleman_P.et" "{FC0904D71EF8DB6A}Prefabs/Characters/Factions/OPFOR/CRF_GS_OPFOR_Rifleman_P.et" "{FC0904D71EF8DB6A}Prefabs/Characters/Factions/OPFOR/CRF_GS_OPFOR_Rifleman_P.et" "{FC0904D71EF8DB6A}Prefabs/Characters/Factions/OPFOR/CRF_GS_OPFOR_Rifleman_P.et" "{A7E13866EA953B26}Prefabs/Characters/Factions/OPFOR/CRF_GS_OPFOR_MMG_P.et" "{7043203A0D1F11AF}Prefabs/Characters/Factions/OPFOR/CRF_GS_OPFOR_LogiRunner_P.et" "{950F36099F77E571}Prefabs/Characters/Factions/OPFOR/CRF_GS_OPFOR_Gren_P.et"
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    }
+   }
+  }
+ }
+}
+$grp GenericEntity : "{28D63631873AA636}Prefabs/Compositions/Slotted/SlotFlatSmall/MortarPlacement_S_USSR_01.et" {
+ {
+  coords 7727.962 184.321 5120.833
+  angleY -147.275
+  {
+   GenericEntity {
+    ID "6186DB2F1DE37192"
+    {
+     GenericEntity {
+      ID "60B8D36A59BEEA13"
+      components {
+       SCR_ResourceComponent "{5E5ABDF371AE8B21}" {
+        m_aContainers {
+         SCR_ResourceContainerVirtual "{65137675C7C1B7F3}" {
+          m_eResourceRights ALL
+          m_eStorageType STORED
+          m_fResourceValueCurrent 250
+          m_fResourceValueMax 250
+         }
+        }
+       }
+      }
+     }
+    }
+   }
+  }
+ }
+ {
+  coords 7718.458 184.321 5127.408
+  angleY -147.275
+  {
+   GenericEntity {
+    ID "6186DB2F1DE37192"
+    {
+     GenericEntity {
+      ID "60B8D36A59BEEA13"
+      components {
+       SCR_ResourceComponent "{5E5ABDF371AE8B21}" {
+        m_aContainers {
+         SCR_ResourceContainerVirtual "{65137675C7C1B7F3}" {
+          m_eResourceRights ALL
+          m_eStorageType STORED
+          m_fResourceValueCurrent 250
+          m_fResourceValueMax 250
+         }
+        }
+       }
+      }
+     }
+    }
+   }
+  }
+ }
+}

@@ -1,0 +1,98 @@
+$grp PS_ManualMarker : "{BE9E1F90BFFBB48A}PrefabsEditable/Markers/GameZoneMarker.et" {
+ {
+  coords 6860 141.999 4116.561
+  angleY 0
+ }
+ {
+  coords 6929.48 141.999 4116.561
+  angleY 0
+ }
+ {
+  coords 6997.508 141.999 4116.561
+  angleY 0
+ }
+ {
+  coords 7074.763 141.999 4116.561
+  angleY 0
+ }
+ {
+  coords 7132.672 141.999 4116.561
+  angleY 0
+ }
+ {
+  coords 7203.382 141.999 4116.561
+  angleY 0
+ }
+ {
+  coords 7247.686 141.999 4116.561
+  angleY 0
+ }
+ {
+  coords 7247.686 141.999 4061.902
+  angleY 0
+ }
+ {
+  coords 7247.686 141.999 3976.285
+  angleY 0
+ }
+ {
+  coords 7247.686 141.999 3878.274
+  angleY 0
+ }
+ {
+  coords 7247.686 141.999 3769.747
+  angleY 0
+ }
+ {
+  coords 7247.686 141.999 3696.374
+  angleY 0
+ }
+ {
+  coords 7169.046 141.999 3696.374
+  angleY 0
+ }
+ {
+  coords 7096.778 141.999 3696.374
+  angleY 0
+ }
+ {
+  coords 7016.968 141.999 3696.374
+  angleY 0
+ }
+ {
+  coords 6951.958 141.999 3696.374
+  angleY 0
+ }
+ {
+  coords 6882.345 141.999 3696.374
+  angleY 0
+ }
+ {
+  coords 6860 141.999 4051.385
+  angleY 0
+ }
+ {
+  coords 6860 141.999 3998.514
+  angleY 0
+ }
+ {
+  coords 6860 141.999 3935.175
+  angleY 0
+ }
+ {
+  coords 6860 141.999 3883.986
+  angleY 0
+ }
+ {
+  coords 6860 141.999 3831.391
+  angleY 0
+ }
+ {
+  coords 6860 141.999 3768.747
+  angleY 0
+ }
+ {
+  coords 6860 141.999 3702.394
+  angleY 0
+ }
+}

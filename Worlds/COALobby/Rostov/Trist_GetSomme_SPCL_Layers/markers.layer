@@ -1,98 +1,208 @@
 $grp PS_ManualMarker : "{BE9E1F90BFFBB48A}PrefabsEditable/Markers/GameZoneMarker.et" {
  {
-  coords 6860 141.999 4116.561
+  coords 6828.661 141.999 4121.458
   angleY 0
+  m_fWorldSize 175
+  {
+   $grp PS_ManualMarker : "{BE9E1F90BFFBB48A}PrefabsEditable/Markers/GameZoneMarker.et" {
+    {
+     coords 0 0 -100
+     angleY 0
+     m_fWorldSize 175
+    }
+    {
+     coords 0 0 -200
+     angleY 0
+     m_fWorldSize 175
+    }
+    {
+     coords 0 0 -300
+     angleY 0
+     m_fWorldSize 175
+    }
+    {
+     coords 0 0 -422.024
+     angleY 0
+     m_fWorldSize 175
+    }
+    {
+     coords 100 0 -422.024
+     angleY 0
+     m_fWorldSize 175
+    }
+    {
+     coords 200 0 -422.024
+     angleY 0
+     m_fWorldSize 175
+    }
+    {
+     coords 300 0 -422.024
+     angleY 0
+     m_fWorldSize 175
+    }
+    {
+     coords 400 0 -422.024
+     angleY 0
+     m_fWorldSize 175
+    }
+    {
+     coords 400 0 -322.024
+     angleY 0
+     m_fWorldSize 175
+    }
+    {
+     coords 400 0 -222.024
+     angleY 0
+     m_fWorldSize 175
+    }
+    {
+     coords 400 0 -113.552
+     angleY 0
+     m_fWorldSize 175
+    }
+    {
+     coords 400 0 3.711
+     angleY 0
+     m_fWorldSize 175
+    }
+    {
+     coords 300 0 3.711
+     angleY 0
+     m_fWorldSize 175
+    }
+    {
+     coords 200 0 3.711
+     angleY 0
+     m_fWorldSize 175
+    }
+    {
+     coords 100 0 3.711
+     angleY 0
+     m_fWorldSize 175
+    }
+   }
+  }
  }
  {
-  coords 6929.48 141.999 4116.561
-  angleY 0
+  coords 6945.198 182.936 3735.202
+  angleY 90
+  m_MarkerColor 0 0.125 0.502 1
+  m_sQuadName "defend"
+  m_fWorldSize 100
+  m_sDescription "BLUFOR CACHE"
+  m_aVisibleForFactions {
+   "BLUFOR"
+  }
+  m_bShowForAnyFaction 0
  }
  {
-  coords 6997.508 141.999 4116.561
-  angleY 0
+  coords 7191.829 169.175 4069.816
+  angleY 90
+  m_MarkerColor 0.208 0.002 0 1
+  m_sQuadName "defend"
+  m_fWorldSize 100
+  m_sDescription "OPFOR CACHE"
+  m_aVisibleForFactions {
+   "OPFOR"
+  }
+  m_bShowForAnyFaction 0
  }
+}
+PS_ManualMarker : "{E8B2EB8EECE8491C}PrefabsEditable/Markers/GameZoneMarker_BLUFOR.et" {
+ coords 6828.661 141.999 3600
+ angleY 0
+ m_fWorldSize 175
  {
-  coords 7074.763 141.999 4116.561
-  angleY 0
+  $grp PS_ManualMarker : "{E8B2EB8EECE8491C}PrefabsEditable/Markers/GameZoneMarker_BLUFOR.et" {
+   {
+    coords 0 0 -100
+    angleY 0
+    m_fWorldSize 175
+   }
+   {
+    coords 0 0 -200
+    angleY 0
+    m_fWorldSize 175
+   }
+   {
+    coords 100 0 -200
+    angleY 0
+    m_fWorldSize 175
+   }
+   {
+    coords 200 0 -200
+    angleY 0
+    m_fWorldSize 175
+   }
+   {
+    coords 300 0 -200
+    angleY 0
+    m_fWorldSize 175
+   }
+   {
+    coords 400 0 -200
+    angleY 0
+    m_fWorldSize 175
+   }
+   {
+    coords 400 0 -100
+    angleY 0
+    m_fWorldSize 175
+   }
+   {
+    coords 400 0 0
+    angleY 0
+    m_fWorldSize 175
+   }
+  }
  }
+}
+PS_ManualMarker : "{FC557CF9344FF7A7}PrefabsEditable/Markers/GameZoneMarker_OPFOR.et" {
+ coords 6828.661 141.999 4220
+ angleY 0
+ m_fWorldSize 175
  {
-  coords 7132.672 141.999 4116.561
-  angleY 0
- }
- {
-  coords 7203.382 141.999 4116.561
-  angleY 0
- }
- {
-  coords 7247.686 141.999 4116.561
-  angleY 0
- }
- {
-  coords 7247.686 141.999 4061.902
-  angleY 0
- }
- {
-  coords 7247.686 141.999 3976.285
-  angleY 0
- }
- {
-  coords 7247.686 141.999 3878.274
-  angleY 0
- }
- {
-  coords 7247.686 141.999 3769.747
-  angleY 0
- }
- {
-  coords 7247.686 141.999 3696.374
-  angleY 0
- }
- {
-  coords 7169.046 141.999 3696.374
-  angleY 0
- }
- {
-  coords 7096.778 141.999 3696.374
-  angleY 0
- }
- {
-  coords 7016.968 141.999 3696.374
-  angleY 0
- }
- {
-  coords 6951.958 141.999 3696.374
-  angleY 0
- }
- {
-  coords 6882.345 141.999 3696.374
-  angleY 0
- }
- {
-  coords 6860 141.999 4051.385
-  angleY 0
- }
- {
-  coords 6860 141.999 3998.514
-  angleY 0
- }
- {
-  coords 6860 141.999 3935.175
-  angleY 0
- }
- {
-  coords 6860 141.999 3883.986
-  angleY 0
- }
- {
-  coords 6860 141.999 3831.391
-  angleY 0
- }
- {
-  coords 6860 141.999 3768.747
-  angleY 0
- }
- {
-  coords 6860 141.999 3702.394
-  angleY 0
+  $grp PS_ManualMarker : "{FC557CF9344FF7A7}PrefabsEditable/Markers/GameZoneMarker_OPFOR.et" {
+   {
+    coords 0 0 100
+    angleY 0
+    m_fWorldSize 175
+   }
+   {
+    coords 0 0 200
+    angleY 0
+    m_fWorldSize 175
+   }
+   {
+    coords 100 0 200
+    angleY 0
+    m_fWorldSize 175
+   }
+   {
+    coords 200 0 200
+    angleY 0
+    m_fWorldSize 175
+   }
+   {
+    coords 300 0 200
+    angleY 0
+    m_fWorldSize 175
+   }
+   {
+    coords 400 0 200
+    angleY 0
+    m_fWorldSize 175
+   }
+   {
+    coords 400 0 100
+    angleY 0
+    m_fWorldSize 175
+   }
+   {
+    coords 400 0 0
+    angleY 0
+    m_fWorldSize 175
+   }
+  }
  }
 }

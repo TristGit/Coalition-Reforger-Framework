@@ -7,9 +7,40 @@ SCR_AIWorld : "{998834C2F010C11A}Prefabs/AI/SCR_AIWorld_Rostov.et" {
  coords 7175.162 156.054 3892.802
 }
 CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et" {
+ components {
+  SCR_InitWeatherComponent "{64427EEC0AFF43EE}" {
+   m_sInitialStartingWeatherId "Cloudy"
+   m_iSetWeatherConstant 1
+  }
+  SCR_TimeAndWeatherHandlerComponent "{64427EEC304DD9A0}" {
+   m_iStartingHours 19
+   m_iRangeHoursStart 17
+   m_iRangeHoursEnd 19
+  }
+ }
  coords 7044.41 179.283 3467.173
  m_bAutoPlayerRespawn 1
  m_iTimeLimitMinutes 18
+ m_bDeleteJIPSlots 0
+ m_aMissionDescriptors {
+  CRF_MissionDescriptor "{644250503DF684C0}" {
+   m_sTextData "You are all reprobates sent with minimal gear that barely knows how to use their rifles to fight in a battle no one cares about to destroy a cache of stuff, within a tower nobody really cares about. Good luck."\
+   ""\
+   "BLUFOR: 2x Mortars - 1x MG Team - 4x Fodder Teams"\
+   ""\
+   "OPFOR: 2x Mortars - 1x MG Team - 4x Fodder Teams"\
+   ""\
+   ""\
+   "Time: 1800"\
+   "Weather: Cloudy"
+  }
+  CRF_MissionDescriptor "{64425051F2E00216}" {
+   m_sTextData "Destroy the cache in their tower while defending yours."
+  }
+  CRF_MissionDescriptor "{64425051B9B5AF67}" {
+   m_sTextData "Destroy the cache in their tower while defending yours."
+  }
+ }
  m_sFactionOneKey "BLU"
  m_sFactionTwoKey "OPF"
  m_BLUFORGearScriptSettings CRF_GearScriptContainer "{64570ACB9B419A7B}" {
@@ -20,11 +51,11 @@ CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et
  }
  m_bRespawnEnabled 1
  m_bWaveRespawn 1
- m_iTimeToRespawn 30
+ m_iTimeToRespawn 25
  m_iBLUFORTickets 100
  m_iOPFORTickets 100
  {
-  SCR_FactionManager {
+  SCR_FactionManager "651662F7A5038B27" {
    ID "632A77473B3CC3A8"
    Factions {
     SCR_Faction "{628B22E9B4056C88}" {
@@ -58,7 +89,7 @@ CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et
         m_sCallsign "Mortar"
        }
        SCR_CallsignInfo "{55CCB79287936EBD}" {
-        m_sCallsign "MMG"
+        m_sCallsign "MG"
        }
        SCR_CallsignInfo "{55CCB79287BAFBD6}" {
         m_sCallsign "Fodder 1"

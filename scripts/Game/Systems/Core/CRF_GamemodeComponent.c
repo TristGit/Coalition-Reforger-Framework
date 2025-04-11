@@ -1658,7 +1658,7 @@ class CRF_GamemodeComponent : SCR_BaseGameModeComponent
 	
 	override void OnPlayerAuditSuccess(int playerId)
 	{
-		if (!Replication.IsServer())
+		if (RplSession.Mode() == RplMode.Client)
 			return;
 		
 		string playerIdentity = GetGame().GetBackendApi().GetPlayerIdentityId(playerId);
@@ -1666,7 +1666,7 @@ class CRF_GamemodeComponent : SCR_BaseGameModeComponent
 			return;
 		
 		if (CRF_ModeratorConfig.IsModerator(playerIdentity))
-			GetGame().GetCallqueue().CallLater(SetPlayerModerator, 10000, false, playerId);
+			GetGame().GetCallqueue().CallLater(SetPlayerModerator, 5000, false, playerId);
 	};
 	
 	//------------------------------------------------------------------------------------------------

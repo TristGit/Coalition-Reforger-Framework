@@ -395,7 +395,8 @@ class CRF_GamemodeComponent : SCR_BaseGameModeComponent
 			if (CheckIfRoleInArray(m_WeaponConfig.m_aRolesThatGetHMGs, role))
 				SpawnWeapon(gearConfig.m_FactionWeapons.m_HMG.m_Weapon, gearConfig.m_FactionWeapons.m_HMG.m_Attachments, ConvertSpecMagArrayIntoMagArray(gearConfig.m_FactionWeapons.m_HMG.m_MagazineArray), spawnParams, inventory, inventoryManager);
 		} else
-			Print(string.Format("CRF GEAR SCRIPT ERROR: NO WEAPONS SET: %1", gearScriptResourceName), LogLevel.ERROR);
+			if (!gearConfig.m_FactionWeapons) 
+				Print(string.Format("CRF GEAR SCRIPT ERROR: NO WEAPONS SET: %1", gearScriptResourceName), LogLevel.ERROR);
 
 		// CUSTOM GEAR
 		if (gearConfig.m_CustomFactionGear)

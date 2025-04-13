@@ -395,7 +395,8 @@ class CRF_GamemodeComponent : SCR_BaseGameModeComponent
 			if (CheckIfRoleInArray(m_WeaponConfig.m_aRolesThatGetHMGs, role))
 				SpawnWeapon(gearConfig.m_FactionWeapons.m_HMG.m_Weapon, gearConfig.m_FactionWeapons.m_HMG.m_Attachments, ConvertSpecMagArrayIntoMagArray(gearConfig.m_FactionWeapons.m_HMG.m_MagazineArray), spawnParams, inventory, inventoryManager);
 		} else
-			Print(string.Format("CRF GEAR SCRIPT ERROR: NO WEAPONS SET: %1", gearScriptResourceName), LogLevel.ERROR);
+			if (!gearConfig.m_FactionWeapons) 
+				Print(string.Format("CRF GEAR SCRIPT ERROR: NO WEAPONS SET: %1", gearScriptResourceName), LogLevel.ERROR);
 
 		// CUSTOM GEAR
 		if (gearConfig.m_CustomFactionGear)
@@ -1657,7 +1658,7 @@ class CRF_GamemodeComponent : SCR_BaseGameModeComponent
 	
 	override void OnPlayerAuditSuccess(int playerId)
 	{
-		if (!Replication.IsServer())
+		if (RplSession.Mode() == RplMode.Client)
 			return;
 		
 		string playerIdentity = GetGame().GetBackendApi().GetPlayerIdentityId(playerId);
@@ -1665,7 +1666,7 @@ class CRF_GamemodeComponent : SCR_BaseGameModeComponent
 			return;
 		
 		if (CRF_ModeratorConfig.IsModerator(playerIdentity))
-			GetGame().GetCallqueue().CallLater(SetPlayerModerator, 10000, false, playerId);
+			GetGame().GetCallqueue().CallLater(SetPlayerModerator, 5000, false, playerId);
 	};
 	
 	//------------------------------------------------------------------------------------------------

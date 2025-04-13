@@ -269,6 +269,9 @@ class CRF_Gamemode : SCR_BaseGameMode
 
 		SCR_AIGroup.GetOnPlayerAdded().Insert(OnPlayerJoinedGroup);
 		SCR_AIGroup.GetOnPlayerRemoved().Insert(OnPlayerLeftGroup);
+		
+		if (RplSession.Mode() == RplMode.Dedicated)
+			CRF_ModeratorConfig.LoadConfig();
 	}
 
 	//------------------------------------------------------------------------------------------------

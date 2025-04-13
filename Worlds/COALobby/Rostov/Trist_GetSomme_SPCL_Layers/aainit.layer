@@ -24,7 +24,7 @@ CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et
  m_bDeleteJIPSlots 0
  m_aMissionDescriptors {
   CRF_MissionDescriptor "{644250503DF684C0}" {
-   m_sTextData "You are all reprobates sent with minimal gear that barely knows how to use their rifles to fight in a battle no one cares about to destroy a cache of stuff, within a tower nobody really cares about. Good luck."\
+   m_sTextData "You are all cannon fodder sent to destroy the other team's cache within their tower."\
    ""\
    "BLUFOR: 2x Mortars - 1x MG Team - 4x Fodder Teams"\
    ""\
@@ -109,4 +109,53 @@ CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et
    }
   }
  }
+}
+SCR_DestructibleBuildingEntity : "{07B7B618E3DEFBBF}Prefabs/Structures/Cultural/Castles/Castle_01_InnerWall_02.et" {
+ coords 7158.232 -4.842 4055.653
+ angleY 123.038
+ scale 1.2
+}
+SCR_DestructibleBuildingEntity : "{1321E90FE0CF8C3C}Prefabs/Structures/Cultural/Castles/Castle_01_OuterWall_03_d.et" {
+ coords 7168.113 -0.941 4058.969
+ angleX 0.104
+ angleY -51.293
+ angleZ -8.527
+ scale 0.643
+}
+SCR_DestructibleBuildingEntity : "{2C97FDC04C9E39C0}Prefabs/Structures/Cultural/Castles/Castle_01_InnerWall_Small_01.et" {
+ coords 7140.435 0.027 4046.49
+ angleY 31.549
+}
+GenericEntity : "{651E545B53BBD034}Prefabs/Structures/Military/Flags/FlagPole_02/FlagPole_02_V1_USSR.et" {
+ components {
+  SCR_FlagComponent "{5E3C95A1E1EE9681}" {
+   m_sDefaultMaterial "{362AC46447DBE58B}Assets/Props/Fabric/Flags/Data/Flag_1_2_Red.emat"
+  }
+ }
+ coords 7185.143 175.638 4069.385
+ scale 8
+}
+SCR_DestructibleBuildingEntity : "{6BE382F85F1A7491}Prefabs/Structures/Cultural/Castles/Castle_01_InnerWall_01.et" {
+ coords 7150.287 -3 4063.49
+ angleY -60.338
+}
+SCR_DestructibleBuildingEntity : "{85D22B7ED8C8024C}Prefabs/Structures/Cultural/Castles/Castle_01_InnerWall_Small_02.et" {
+ coords 7149.966 0.047 4061.879
+ angleY 67.641
+}
+GenericEntity : "{90B7CEB4C665B1E2}Prefabs/Structures/Military/Flags/FlagPole_02/FlagPole_02_V1.et" {
+ components {
+  SCR_FlagComponent "{5E3C95A1E1EE9681}" {
+   m_sDefaultMaterial "{5A1B3B1C76F584C8}Assets/Props/Fabric/Flags/Data/Flag_1_2_Blue.emat"
+  }
+ }
+ coords 6950.995 182.175 3738.527
+ scale 8
+}
+StaticModelEntity : "{9C7477A3F066F74F}Prefabs/Terrain/Erosion/ErodedEmbankment_01/ErodedEmbankment_01_forest_straight.et" {
+ coords 7171.885 153.993 4063.621
+ angleX -18.827
+ angleY -45.92
+ angleZ -6.008
+ scale 1.367
 }

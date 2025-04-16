@@ -15,9 +15,11 @@ CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et
    m_iEVValueNightMode 4
   }
   SCR_TimeAndWeatherHandlerComponent "{64427EEC304DD9A0}" {
-   m_iStartingHours 21
-   m_iRangeHoursStart 21
-   m_iRangeHoursEnd 5
+   m_iStartingHours 18
+   m_iStartingMinutes 40
+   m_iRangeHoursStart 18
+   m_iRangeMinutesStart 40
+   m_iRangeHoursEnd 18
   }
  }
  coords 7496.208 143.815 2298.846
@@ -32,9 +34,10 @@ CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et
    "BLUFOR Assets: 1x MH47 - 1x AH6"\
    ""\
    "OPFOR Comp.: 1x Inf. Company"\
-   "OPFOR Assets: 1x Mi8 - 4x UAZ (2x MG) - 4x Ural - 1x Med"\
+   "OPFOR Assets: 1x Mi8 (Optional)"\
+   " 4x UAZ (2x MG) - 4x Ural - 1x Med"\
    ""\
-   "Time: 9:00 PM"
+   "Time: 6 PM"
   }
   CRF_MissionDescriptor "{64425051F2E00216}" {
    m_sTextData "- Safely land teams/assets to Locate & Protect the SpecOps"\
@@ -107,7 +110,7 @@ CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et
   m_rGearScript "{3FCA1378C33401ED}Configs/Gearscripts/Standard/Modern/CRF_GS_RHSUSArmyMC.conf"
  }
  m_OPFORGearScriptSettings CRF_GearScriptContainer "{64570ACB9B11EAAD}" {
-  m_rGearScript "{B086179BD91E5999}Configs/Gearscripts/Custom/Trist/QuiteThePickle/CRF_GS_CHDKZ_semimodern.conf"
+  m_rGearScript "{142C727AFEAFE125}Configs/Gearscripts/Custom/Trist/QuiteThePickle/CRF_GS_CHDKZ_semimodern_alt.conf"
  }
  m_INDFORGearScriptSettings CRF_GearScriptContainer "{64570ACB9AE1C9ED}" {
   m_rGearScript "{7390ADBDED008392}Configs/Gearscripts/Custom/Trist/QuiteThePickle/CRF_GS_RHSWCS_USspecops.conf"

@@ -1,0 +1,341 @@
+CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et" {
+ coords 3374.031 107.689 2327.99
+}
+GenericEntity : "{01969A28078FCA69}Prefabs/Compositions/Misc/SubCompositions/BarrelClutter_02.et" {
+ coords 3412.179 109.086 2411.961
+ angleY -52.049
+}
+SCR_DestructibleBuildingEntity : "{05AF4DA50A1ABC83}Prefabs/Structures/Military/Bunkers/AirfieldBunker_E_01/AirfieldBunker_E_01_big_V2.et" {
+ coords 3387.061 107.608 2451.781
+ angleY -126.356
+}
+GenericEntity : "{06473ABB81176587}Prefabs/Props/Forest/WoodPile/WoodPile_02_end_B.et" {
+ coords 3402.298 108.87 2412.237
+ angleX -0.381
+ angleY 91.031
+ angleZ 20.27
+}
+$grp GenericEntity : "{17A78A0D3701386A}Prefabs/Compositions/Misc/SubCompositions/Garbage/Tire_Stack_Garbage_01.et" {
+ {
+  coords 3325.307 103.121 2413.439
+ }
+ {
+  coords 3219.047 100.123 2388.128
+ }
+ {
+  coords 3370.27 107.361 2410.174
+ }
+ {
+  coords 3405.838 108.931 2409.025
+ }
+}
+StaticModelEntity : "{17ACD64824F55EF8}Prefabs/Structures/Debris/Debris_HouseVillage/Debris_HouseVillage_Wood_Roof_v5.et" {
+ coords 3389.462 111.421 2412.494
+ scale 1.66
+}
+GenericEntity : "{190CC54D175F52CB}Prefabs/Props/Military/SupplyBox/SupplyShippingContainers/SupplyShippingContainers_01/SupplyShippingContainers_01_10ft.et" {
+ coords 3400.509 108.931 2412.718
+ angleY 4.741
+}
+GenericEntity : "{286212B6EFA9C01C}Prefabs/Compositions/Misc/SubCompositions/Garbage/Garbage_Vehicle_03.et" {
+ coords 3150.429 95.14 2480.522
+ angleY 0
+}
+StaticModelEntity : "{2A98F3705199D7CF}Prefabs/Structures/Debris/Debris_HouseVillage/Debris_HouseVillage_Wood_Roof_v2.et" {
+ coords 3397.952 110.556 2411.488
+ angleZ -44.473
+}
+GenericEntity : "{342E852E9A1847EA}Prefabs/Props/Industrial/Repair/VehicleGarbage_01_pile_medium.et" {
+ coords 3406.153 109.075 2411.436
+}
+GenericEntity : "{361EEFE7B91BF9E8}Prefabs/Compositions/Misc/SubCompositions/BarrelMetalGroup_01.et" {
+ coords 3366.811 107.184 2410.496
+ angleY -18.695
+}
+StaticModelEntity : "{39F7EE885940DC8F}Prefabs/Structures/Military/Fortifications/DirtCover_01/DirtCover_01_long_v1.et" {
+ coords 3148.393 1.283 2473.977
+ angleY -30.282
+ scale 2.592
+}
+GenericEntity : "{4D1517866E9C2362}Prefabs/Props/Forest/WoodPile/WoodPile_02_A.et" {
+ coords 3411.223 109.086 2415.388
+ angleY -89.026
+}
+$grp GenericEntity : "{58F0C4BE4655101A}Prefabs/Compositions/Misc/SubCompositions/VehicleGarbage_TireStack_02.et" {
+ {
+  coords 3140.452 94.738 2473.619
+  angleY 0
+ }
+ {
+  coords 3395.812 108.932 2410.198
+  angleY 107.72
+ }
+}
+$grp StaticModelEntity : "{5C290F8B9942A54E}Prefabs/Structures/Infrastructure/Culverts/DrainageChannelWood_01/DrainageChannelWood_01.et" {
+ {
+  coords 3398.551 1.447 2410.307
+  angleX 0.003
+  angleY 0.949
+  angleZ 89.802
+ }
+ {
+  coords 3398.585 1.446 2412.603
+  angleX 0.003
+  angleY 0.949
+  angleZ 89.802
+ }
+ {
+  coords 3384.316 1.477 2411.766
+  angleX 0.003
+  angleY 0.949
+  angleZ 89.802
+ }
+ {
+  coords 3389.21 1.432 2410.353
+  angleX 0.003
+  angleY 0.949
+  angleZ 89.802
+ }
+ {
+  coords 3389.387 1.115 2413.305
+  angleX 0.003
+  angleY 0.949
+  angleZ 89.802
+ }
+}
+SCR_DestructibleBuildingEntity : "{5D6D34810978F2D9}Prefabs/Structures/Houses/Village/Larger buildings/Brickbuilding01.et" {
+ coords 3245.289 0.248 2399.365
+ angleY -51.434
+}
+SCR_DestructibleBuildingEntity : "{6CDAFB08D5F88533}Prefabs/Structures/Infrastructure/Naval/Piers/Pier_Stairs01.et" {
+ coords 3393.278 0.864 2412.006
+ angleY -90.375
+ scale 1.11
+}
+StaticModelEntity : "{72BEAAAFAAB49846}Prefabs/Structures/Debris/DebrisPile/DebrisPile_Wood_01_Debris_01.et" {
+ coords 3383.022 111.447 2410.658
+ angleX 7.927
+ angleY -1.275
+ angleZ -3.541
+}
+$grp GenericEntity : "{72E42BEAFED9B5A7}Prefabs/Props/Garbage/Bins/GarbageContainer_01.et" {
+ {
+  coords 3384.17 107.849 2413.077
+  angleY -60.695
+  {
+   GenericEntity {
+    ID "5C64CC0693F240E3"
+    coords -0.018 0.82 0.1
+   }
+  }
+ }
+ {
+  coords 3408.496 108.932 2415.17
+  angleY -105.396
+ }
+ {
+  coords 3408.27 108.932 2413.184
+  angleY -47.426
+ }
+}
+GenericEntity : "{75D125481E2E0663}Prefabs/Compositions/Misc/SubCompositions/Barrel_ToolRack_01.et" {
+ coords 3413.004 109.086 2415.733
+ angleY 90.144
+}
+StaticModelEntity : "{7BF8E2A89831D1D6}Prefabs/Structures/Debris/Debris_HouseVillage/Debris_HouseVillage_Wood_Roof_v6.et" {
+ coords 3383.751 110.992 2413.587
+ angleX -31.256
+ angleY 3.594
+ angleZ -6.903
+}
+GenericEntity : "{7C42934FDC952EDF}Prefabs/Compositions/Misc/SubCompositions/VehicleGarbagePile_03.et" {
+ coords 3398.209 108.933 2409.72
+ angleY -31.185
+ {
+  GenericEntity {
+   ID "552C73931323CE08"
+   coords -1.091 0 -1.203
+   angleY -9.591
+  }
+ }
+}
+GenericEntity : "{7D52C517720EF2F6}Prefabs/Props/Industrial/BarrelMetal_01_grey.et" {
+ coords 3366.691 107.216 2413.03
+}
+$grp SCR_DestructibleBuildingEntity : "{7F0E9789EB7F1BCF}Prefabs/Structures/Military/Bunkers/AmmoDump_E_01/AmmoDump_E_01_cover.et" {
+ {
+  coords 3382.411 108.56 2414.459
+  angleZ -7.038
+ }
+ {
+  coords 3387.81 109.698 2414.382
+ }
+ {
+  coords 3390.714 109.698 2409.459
+  angleY 179.291
+ }
+ {
+  coords 3385.917 109.147 2409.4
+  angleX 0.072
+  angleY 179.295
+  angleZ 5.829
+ }
+ {
+  coords 3380.848 108.667 2409.295
+  angleX 0.053
+  angleY 179.293
+  angleZ 4.286
+ }
+ {
+  coords 3376.05 108.35 2409.236
+  angleY 179.291
+ }
+ {
+  coords 3373.151 109.119 2418.719
+  angleX -6.056
+  angleY -90.257
+  angleZ 0.027
+ }
+ {
+  coords 3379.125 109.132 2421.73
+  angleX -6.694
+  angleY 89.778
+  angleZ 0.026
+ }
+ {
+  coords 3365.795 108.761 2413.995
+  angleY -0.255
+ }
+ {
+  coords 3370.931 108.308 2409.159
+  angleX 0.038
+  angleY 179.292
+  angleZ 3.056
+ }
+}
+GenericEntity : "{7F59A8D992FBF5CA}Prefabs/Props/Military/MilitaryCrates/CrateStack_01/CrateStack_01_base.et" {
+ components {
+  SCR_DestructionMultiPhaseComponent "{5624A88D86EFE8BA}" {
+   m_fBaseHealth 30000
+  }
+ }
+ coords 3416.684 109.087 2412.807
+ angleY -90.061
+}
+$grp GenericEntity : "{8751F77B1038FC72}Prefabs/Props/Industrial/Repair/VehicleGarbage_01_pile_large.et" {
+ {
+  coords 3220.391 100.125 2386.753
+  angleY -21.733
+ }
+ {
+  coords 3406.538 108.938 2410.197
+ }
+}
+$grp SCR_DestructibleBuildingEntity : "{8A8A7A558772D718}Prefabs/Structures/Military/Bunkers/AirfieldBunker_E_01/AirfieldBunker_E_01_small.et" {
+ {
+  coords 3293.228 103.58 2300.268
+ }
+ {
+  coords 3294.761 97.305 2539.947
+  angleY -53.486
+ }
+}
+$grp GenericEntity : "{A240B5FCD17D5686}Prefabs/Props/Construction/GarbageStack_01/GarbageStack_01_Medium.et" {
+ {
+  coords 3322.319 103.247 2403.575
+  angleY -39.571
+ }
+ {
+  coords 3239.415 100.401 2364.23
+  angleY 35.151
+ }
+ {
+  coords 3354.642 106.55 2416.359
+  angleY 5.098
+  angleZ -3.9
+ }
+}
+$grp GenericEntity : "{B350840088390760}Prefabs/Compositions/Misc/SubCompositions/Decorations/Barrel_Group_Stack_01.et" {
+ {
+  coords 3413.424 109.069 2409.24
+  angleY -90.634
+ }
+ {
+  coords 3376.698 107.682 2416.983
+  angleY -85.527
+ }
+}
+GenericEntity : "{B423187F6C8DEFFD}Prefabs/Compositions/Misc/SubCompositions/Decorations/Barrel_Group_Tire_01.et" {
+ coords 3379.596 107.737 2410.302
+ angleY -81.707
+}
+SCR_DestructibleBuildingEntity : "{BE248D0B31D3B097}Prefabs/Structures/Military/Bunkers/AmmoDump_E_02/AmmoDump_E_02.et" {
+ coords 3391.285 108.953 2411.927
+ angleY -91.1
+}
+GenericEntity : "{C0B99D11761CA2AD}PrefabsEditable/Auto/Props/Military/SupplyBox/SupplyShippingContainers/SupplyShippingContainers_01/E_SupplyShippingContainers_01_10ft.et" {
+ coords 3409.958 108.933 2411.822
+ angleY 25.021
+}
+$grp GenericEntity : "{D5062960B7211EB4}Prefabs/Props/Construction/GarbageStack_01/GarbageStack_01_Long.et" {
+ {
+  coords 3324.933 103.16 2411.809
+  angleY 38.637
+ }
+ {
+  coords 3224.05 99.965 2400.904
+  angleY -43.54
+  angleZ -2.225
+ }
+ {
+  coords 3236.222 100.18 2371.423
+  angleY 46.618
+ }
+ {
+  coords 3237.535 101.23 2370.598
+  angleY -135.092
+ }
+ {
+  coords 3358.595 106.357 2400.299
+  angleY -38.798
+  angleZ -3.317
+ }
+ {
+  coords 3399.455 109.056 2410.584
+ }
+}
+GenericEntity : "{D93EF3E97E06D435}Prefabs/Compositions/Misc/SubCompositions/BarrelClutter_04.et" {
+ coords 3413.505 109.086 2411.933
+ angleY 162.545
+}
+GenericEntity : "{DA861447E6D426AE}Prefabs/Props/Industrial/Repair/VehicleGarbage_01_pile_small.et" {
+ coords 3397.569 108.93 2413.379
+ angleY -147.763
+}
+$grp GenericEntity : "{DE658AC78172D02E}Prefabs/Props/Construction/GarbageStack_01/GarbageStack_01_Short.et" {
+ {
+  coords 3316.048 103.066 2401.876
+ }
+ {
+  coords 3218.954 100.101 2390.489
+  angleY -108.666
+ }
+ {
+  coords 3238.762 100.317 2371.833
+  angleY -128.993
+  scale 1.25
+ }
+ {
+  coords 3396.71 108.724 2411.751
+  angleY -89.706
+ }
+}
+StaticModelEntity : "{F2309AB12810C993}Prefabs/Structures/Debris/Debris_HouseVillage/Debris_HouseVillage_Wood_Roof_v4.et" {
+ coords 3385.123 111.198 2410.489
+ angleX -2.592
+ angleY -86.582
+ angleZ 37.125
+}
+GenericEntity : "{F58AEB566CB4369A}Prefabs/Compositions/Misc/SubCompositions/VehicleGarbagePile_01.et" {
+ coords 3219.712 100.125 2385.473
+}

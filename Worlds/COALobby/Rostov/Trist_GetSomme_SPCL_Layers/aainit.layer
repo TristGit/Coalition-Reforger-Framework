@@ -24,7 +24,7 @@ CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et
  m_bDeleteJIPSlots 0
  m_aMissionDescriptors {
   CRF_MissionDescriptor "{644250503DF684C0}" {
-   m_sTextData "You are all reprobates sent with minimal gear that barely knows how to use their rifles to fight in a battle no one cares about to destroy a cache of stuff, within a tower nobody really cares about. Good luck."\
+   m_sTextData "You are all cannon fodder sent to destroy the other team's cache within their tower."\
    ""\
    "BLUFOR: 2x Mortars - 1x MG Team - 4x Fodder Teams"\
    ""\
@@ -109,4 +109,22 @@ CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et
    }
   }
  }
+}
+GenericEntity : "{651E545B53BBD034}Prefabs/Structures/Military/Flags/FlagPole_02/FlagPole_02_V1_USSR.et" {
+ components {
+  SCR_FlagComponent "{5E3C95A1E1EE9681}" {
+   m_sDefaultMaterial "{362AC46447DBE58B}Assets/Props/Fabric/Flags/Data/Flag_1_2_Red.emat"
+  }
+ }
+ coords 7185.143 175.638 4069.385
+ scale 8
+}
+GenericEntity : "{90B7CEB4C665B1E2}Prefabs/Structures/Military/Flags/FlagPole_02/FlagPole_02_V1.et" {
+ components {
+  SCR_FlagComponent "{5E3C95A1E1EE9681}" {
+   m_sDefaultMaterial "{5A1B3B1C76F584C8}Assets/Props/Fabric/Flags/Data/Flag_1_2_Blue.emat"
+  }
+ }
+ coords 6950.995 182.175 3738.527
+ scale 8
 }

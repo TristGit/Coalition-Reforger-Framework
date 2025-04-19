@@ -289,7 +289,7 @@ class CRF_Gamemode : SCR_BaseGameMode
 		if (playerId <= 0 || instigatorContextData.GetVictimCharacterControlType() == SCR_ECharacterControlType.POSSESSED_AI)
 			return;
 
-		int delay = 250;
+		int delay = 2000;
 		if (entity.GetPrefabData().GetPrefabName() == "{59886ECB7BBAF5BC}Prefabs/Characters/CRF_InitialEntity.et")
 			delay = 0;
 

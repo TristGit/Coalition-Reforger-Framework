@@ -244,9 +244,6 @@ modded class SCR_PlayerController
 		GetGame().GetMenuManager().CloseMenuByPreset(ChimeraMenuPreset.CRF_AARMenu);
 		GetGame().GetMenuManager().CloseMenuByPreset(ChimeraMenuPreset.CRF_RespawnMenu);
 
-		if (CRF_Gamemode.GetInstance().m_aSlots.Find(playerID) == -1)
-			CRF_ClientComponent.GetInstance().RequestSpectator(playerID);
-
 		Rpc(RpcDo_EnterGame, playerID);
 
 		ResetSettingsToStoredValues();

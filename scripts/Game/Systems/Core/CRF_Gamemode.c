@@ -361,17 +361,11 @@ class CRF_Gamemode : SCR_BaseGameMode
 	//------------------------------------------------------------------------------------------------
 	void EnterGame(int playerId)
 	{
-		// If player JIPs, put in spec
-		if (m_aSlots.Find(playerId) == -1 && GetGame().GetPlayerManager().GetPlayerControlledEntity(playerId).GetPrefabData().GetPrefabName() != "{59886ECB7BBAF5BC}Prefabs/Characters/CRF_InitialEntity.et") {
-			EnterSpectator(playerId);
-			return;
-		}
-
-		// If the entity has been killed already, put it in spec
-		if (m_aEntityDeathStatus.Get(m_aSlots.Find(playerId)))
-		{
-			EnterSpectator(playerId);
-			return;
+		if (m_aSlots.Find(playerId) == -1 
+			|| GetGame().GetPlayerManager().GetPlayerControlledEntity(playerId).GetPrefabData().GetPrefabName() != "{59886ECB7BBAF5BC}Prefabs/Characters/CRF_InitialEntity.et" 
+			|| m_aEntityDeathStatus.Get(m_aSlots.Find(playerId))) {
+				EnterSpectator(playerId);
+				return;
 		}
 
 		// WHAT THE FUCK IS THISSSSSSSSSSSSSSS

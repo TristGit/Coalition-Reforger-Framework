@@ -367,12 +367,14 @@ class CRF_Gamemode : SCR_BaseGameMode
 			return;
 		}
 
+		// If the entity has been killed already, put it in spec
 		if (m_aEntityDeathStatus.Get(m_aSlots.Find(playerId)))
 		{
 			EnterSpectator(playerId);
 			return;
 		}
 
+		// WHAT THE FUCK IS THISSSSSSSSSSSSSSS
 		RplId oldGroup = RplId.Invalid();
 		if (GetGame().GetPlayerManager().GetPlayerControlledEntity(playerId).GetPrefabData().GetPrefabName() != "{59886ECB7BBAF5BC}Prefabs/Characters/CRF_InitialEntity.et")
 			oldGroup = m_aActivePlayerGroupsIDs.Get(m_aGroupRplIDs.Find(m_aPlayerGroupIDs.Get(m_aEntitySlots.Find(RplComponent.Cast(GetGame().GetPlayerManager().GetPlayerControlledEntity(playerId).FindComponent(RplComponent)).Id()))));

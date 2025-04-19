@@ -316,14 +316,7 @@ class CRF_Gamemode : SCR_BaseGameMode
 	void EnterSpectator(int playerId, IEntity entity = null)
 	{
 		IEntity initialEntity = GetGame().SpawnEntityPrefab(Resource.Load("{59886ECB7BBAF5BC}Prefabs/Characters/CRF_InitialEntity.et"), GetGame().GetWorld());
-
 		SCR_PlayerController pc = SCR_PlayerController.Cast(GetGame().GetPlayerManager().GetPlayerController(playerId));
-		
-		if(!pc || !initialEntity)
-		{	
-			GetGame().GetCallqueue().CallLater(EnterSpectator, 100, false, playerId, entity);
-			return;
-		}
 
 		GetGame().GetCallqueue().CallLater(pc.SetInitialMainEntity, 250, false, initialEntity);
 

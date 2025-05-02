@@ -28,13 +28,20 @@ class CRF_LoggingServerComponent: SCR_BaseGameModeComponent
 	private ref FileHandle m_handle;
 	SCR_FactionManager m_FM;
 	
-	static CRF_LoggingServerComponent GetInstance() 
+	// Instance of this component (this method only works if you KNOW there will only ever be one instance of this component) 
+	protected static CRF_LoggingServerComponent s_Instance;
+	
+	//------------------------------------------------------------------------------------------------
+	void CRF_LoggingServerComponent(IEntityComponentSource src, IEntity ent, IEntity parent)
 	{
-		BaseGameMode gameMode = GetGame().GetGameMode();
-		if (gameMode)
-			return CRF_LoggingServerComponent.Cast(gameMode.FindComponent(CRF_LoggingServerComponent));
-		else
-			return null;
+		if (!s_Instance)
+			s_Instance = this;
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	static CRF_LoggingServerComponent GetInstance()
+	{
+		return s_Instance;
 	}
 	
 	FileHandle ReturnFileHandle()
@@ -46,6 +53,12 @@ class CRF_LoggingServerComponent: SCR_BaseGameModeComponent
 	override void OnWorldPostProcess(World world)
 	{
 		super.OnWorldPostProcess(world);
+	}
+	
+	override void OnPostInit(IEntity owner)
+	{
+		super.OnPostInit(owner);
+		
 		if ((RplSession.Mode() != RplMode.Dedicated && RplSession.Mode() != RplMode.Listen) || !GetGame().InPlayMode())
 			return;
 		
@@ -94,17 +107,17 @@ class CRF_LoggingServerComponent: SCR_BaseGameModeComponent
 		
 		switch (CRF_Gamemode.GetInstance().m_GamemodeState)
 		{
-			case CRF_GamemodeState.SLOTTING:
+			case CRF_EGamemodeState.SLOTTING:
 			{
 				m_handle.WriteLine("mission" + SEPARATOR + "slotting" + SEPARATOR + m_sMissionName + SEPARATOR + m_iPlayerCount);
 				break;
 			}
-			case CRF_GamemodeState.GAME:
+			case CRF_EGamemodeState.GAME:
 			{
 				m_handle.WriteLine("mission" + SEPARATOR + "safestart" + SEPARATOR + m_sMissionName + SEPARATOR + m_iPlayerCount);
 				break;
 			}
-			case CRF_GamemodeState.AAR:
+			case CRF_EGamemodeState.AAR:
 			{
 				m_handle.WriteLine("mission" + SEPARATOR + "ended" + SEPARATOR + m_sMissionName + SEPARATOR + m_iPlayerCount);
 				break;
@@ -154,27 +167,27 @@ class CRF_LoggingServerComponent: SCR_BaseGameModeComponent
 	private ref FileHandle m_handle;
 	
 	// Killfeed log
-    override void OnPlayerKilled(int playerId, IEntity playerEntity, IEntity killerEntity, notnull Instigator killer)
+    override void OnPlayerKilled(int playerID, IEntity playerEntity, IEntity killerEntity, notnull Instigator killer)
     {
-		super.OnPlayerKilled(playerId, playerEntity, killerEntity, killer);
+		super.OnPlayerKilled(playerID, playerEntity, killerEntity, killer);
 		
 		m_FM = SCR_FactionManager.Cast(GetGame().GetFactionManager());
 		m_handle = CRF_LoggingServerComponent.GetInstance().ReturnFileHandle();
 		
 		// Killer
 		// Check if killer is AI
-		if (GetGame().GetPlayerManager().GetPlayerIdFromControlledEntity(killerEntity) == 0)
+		if (GetGame().GetPlayerManager().GetplayerIDFromControlledEntity(killerEntity) == 0)
 		{
 			m_sKillerName = "AI";
 			m_sKillerFaction = "AI";
 		} else {
-			m_sKillerName = GetGame().GetPlayerManager().GetPlayerName(killer.GetInstigatorPlayerID());
-			m_sKillerFaction = m_FM.GetPlayerFaction(killer.GetInstigatorPlayerID()).GetFactionName();
+			m_sKillerName = GetGame().GetPlayerManager().GetPlayerName(killer.GetInstigatorplayerID());
+			m_sKillerFaction = m_FM.GetPlayerFaction(killer.GetInstigatorplayerID()).GetFactionName();
 		}
 		
 		// Killed
-		m_sKilledName = GetGame().GetPlayerManager().GetPlayerName(playerId);
-		m_sKilledFaction = m_FM.GetPlayerFaction(playerId).GetFactionName();
+		m_sKilledName = GetGame().GetPlayerManager().GetPlayerName(playerID);
+		m_sKilledFaction = m_FM.GetPlayerFaction(playerID).GetFactionName();
 		
 		// Range
 		m_fRange = vector.Distance(playerEntity.GetOrigin(),killerEntity.GetOrigin());

@@ -3,7 +3,7 @@
 	- Create the specified role across all character faction prefabs and name it with the method: CRF_GS_(Faction Key)_(Role)_P, ie: 
 		CRF_GS_BLUFOR_AAR_P
 
-	- Create a "Pretty Name" in all caps with spaces having underscores in the bellow enum class EGearRole, ie:
+	- Create a "Pretty Name" in all caps with spaces having underscores in the bellow enum class CRF_EGearRole, ie:
 		ASSISTANT_AUTOMATIC_RIFLEMAN
 	this is to make it easier to search when adding the role to a global/local gearscript array
 
@@ -26,7 +26,7 @@
 	There, you have added a role, good for you, now stop bothering me about adding in roles manually -Njpatman
 */
 
-enum EGearRole
+enum CRF_EGearRole
 {
 	UNARMED = 0,
 	//-------------------------------------------- LEADERSHIP --------------------------------------------
@@ -131,19 +131,70 @@ class CRF_RoleHelper
 		"_IndirectLoader_P"
 	};
 	
-	
-	static string RoleToString(EGearRole roleInt)
+	//------------------------------------------------------------------------------------------------
+	static string RoleToString(CRF_EGearRole roleInt)
 	{
 		return roleFileStrings.Get(roleInt);
 	}
 	
-	static EGearRole StringToRole(string roleString)
+	//------------------------------------------------------------------------------------------------
+	static CRF_EGearRole StringToRole(string roleString)
 	{
 		return roleFileStrings.Find(roleString);
 	}
 
-	static ResourceName RoleToResource(EGearRole roleInt, FactionKey faction)
+	//------------------------------------------------------------------------------------------------
+	static ResourceName RoleToResource(CRF_EGearRole roleInt, FactionKey faction)
 	{
-		return SCR_Global.GetResourceName("Prefabs/Characters/Factions/" + faction + "/CRF_GS_" + faction + RoleToString(roleInt) + ".et");
+		Resource resource = Resource.Load("Prefabs/Characters/Factions/" + faction + "/CRF_GS_" + faction + RoleToString(roleInt) + ".et");
+		return resource.GetResource().GetResourceName();
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	static bool IsValidGearscriptResource(ResourceName resource)
+	{
+		return resource.Contains("CRF_GS_");
+	};
+	
+	// Pulled from the respawn manager, need to find a better solution eventually^tm.
+	//------------------------------------------------------------------------------------------------
+	static bool IsSquadLeaderRole(IEntity entity)
+	{
+		ref TIntArray roles = {CRF_EGearRole.COMPANY_COMMANDER, CRF_EGearRole.PLATOON_LEADER, CRF_EGearRole.MEDICAL_OFFICER, CRF_EGearRole.SQUAD_LEAD, CRF_EGearRole.VEHICLE_LEAD, CRF_EGearRole.INDIRECT_LEAD, CRF_EGearRole.LOGI_LEAD};
+		ResourceName prefab = entity.GetPrefabData().GetPrefabName();
+		if (!IsValidGearscriptResource(prefab))
+			return false;
+
+		int role = StringToRole(PrefabToRole(prefab));
+
+		return roles.Contains(role);
+	}
+
+	// Pulled from the respawn manager, need to find a better solution eventually^tm.
+	//------------------------------------------------------------------------------------------------
+	static bool IsTeamLeaderRole(IEntity entity)
+	{
+		ResourceName prefab = entity.GetPrefabData().GetPrefabName();
+		if (!IsValidGearscriptResource(prefab))
+			return false;
+
+		int role = StringToRole(PrefabToRole(prefab));
+
+		return (role == CRF_EGearRole.TEAM_LEAD);
+	}
+
+	// Converts a full resource name to a role.
+	//------------------------------------------------------------------------------------------------
+	static string PrefabToRole(ResourceName prefab)
+	{
+		array<string> value = {};
+		prefab.Split("_", value, true);
+
+		string role = "_" + value[3] + "_" + value[4];
+
+		role.Split(".", value, true);
+		role = value[0];
+
+		return role;
 	}
 }

@@ -7,23 +7,111 @@ enum CRF_ESlotType
 
 class CRF_SlotDataContainer
 {
-	vector m_vSlotVectorOne;
-	vector m_vSlotVectorTwo;
-	vector m_vSlotVectorThree;
-	vector m_vSlotVectorFour;
+	protected vector m_vSlotVectorOne;
+	protected vector m_vSlotVectorTwo;
+	protected vector m_vSlotVectorThree;
+	protected vector m_vSlotVectorFour;
 	
-	int m_iSlotCurrentPlayerId = 0;
-	RplId m_iSlotCurrentGroup = RplId.Invalid();
-	RplId m_iSlotCurrentCharacter = RplId.Invalid();
-	CRF_ESlotType m_iSlotType = CRF_ESlotType.REGULAR;
+	protected int m_iSlotCurrentPlayerId;
+	protected RplId m_iSlotCurrentGroup = RplId.Invalid();
+	protected RplId m_iSlotCurrentCharacter = RplId.Invalid();
+	protected CRF_ESlotType m_iSlotType = CRF_ESlotType.REGULAR;
 	
-	string m_sSlotName = "";
-	ResourceName m_rSlotIconResource = "";
-	ResourceName m_rSlotResource = "";
-	FactionKey m_SlotFactionKey = "";
+	protected string m_sSlotName;
+	protected ResourceName m_rSlotIconResource;
+	protected ResourceName m_rSlotResource;
+	protected FactionKey m_SlotFactionKey;
 	
-	bool m_bIsLockedSlot = false;
-	bool m_bIsDeadSlot = false;
+	protected bool m_bIsLockedSlot = false;
+	protected bool m_bIsDeadSlot = false;
+	
+	//------------------------------------------------------------------------------------------------
+	// SETTERS
+	//------------------------------------------------------------------------------------------------
+	void SetSlotVector(vector tempVec[4])
+	{
+		m_vSlotVectorOne = tempVec[0];
+		m_vSlotVectorTwo = tempVec[1];
+		m_vSlotVectorThree = tempVec[2];
+		m_vSlotVectorFour = tempVec[3];
+	}	
+	
+	//------------------------------------------------------------------------------------------------
+	// GETTERS
+	//------------------------------------------------------------------------------------------------
+	
+	//------------------------------------------------------------------------------------------------
+	void GetSlotVector(out vector vec[4])
+	{
+		vec[0] = m_vSlotVectorOne;
+		vec[1] = m_vSlotVectorTwo;
+		vec[2] = m_vSlotVectorThree;
+		vec[3] = m_vSlotVectorFour;
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	int GetSlotCurrentPlayerId()
+	{
+		return m_iSlotCurrentPlayerId;
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	RplId GetSlotCurrentGroup()
+	{
+		return m_iSlotCurrentGroup;
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	RplId GetSlotCurrentCharacter()
+	{
+		return m_iSlotCurrentCharacter;
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	CRF_ESlotType GetSlotType()
+	{
+		return m_iSlotType;
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	string GetSlotName()
+	{
+		return m_sSlotName;
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	ResourceName GetSlotIconResource()
+	{
+		return m_rSlotIconResource;
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	ResourceName GetSlotResource()
+	{
+		return m_rSlotResource;
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	FactionKey GetSlotFactionKey()
+	{
+		return m_SlotFactionKey;
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	bool GetIsLockedSlot()
+	{
+		return m_bIsLockedSlot;
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	bool GetIsDeadSlot()
+	{
+		return m_bIsDeadSlot;
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	// REPLICATION STUFF
+	//------------------------------------------------------------------------------------------------
 	
 	//------------------------------------------------------------------------------------------------
 	bool RplSave(ScriptBitWriter writer)
@@ -34,8 +122,8 @@ class CRF_SlotDataContainer
 		writer.WriteVector(m_vSlotVectorFour);
 		
 		writer.WriteInt(m_iSlotCurrentPlayerId);
-		writer.WriteInt(m_iSlotCurrentGroup);
-		writer.WriteInt(m_iSlotCurrentCharacter);
+		writer.WriteRplId(m_iSlotCurrentGroup);
+		writer.WriteRplId(m_iSlotCurrentCharacter);
 		writer.WriteInt(m_iSlotType);
 		
 		writer.WriteString(m_sSlotName);
@@ -58,8 +146,8 @@ class CRF_SlotDataContainer
 		reader.ReadVector(m_vSlotVectorFour);
 		
 		reader.ReadInt(m_iSlotCurrentPlayerId);
-		reader.ReadInt(m_iSlotCurrentGroup);
-		reader.ReadInt(m_iSlotCurrentCharacter);
+		reader.ReadRplId(m_iSlotCurrentGroup);
+		reader.ReadRplId(m_iSlotCurrentCharacter);
 		reader.ReadInt(m_iSlotType);
 		
 		reader.ReadString(m_sSlotName);

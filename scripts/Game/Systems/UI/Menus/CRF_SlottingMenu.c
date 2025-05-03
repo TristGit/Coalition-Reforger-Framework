@@ -574,39 +574,39 @@ class CRF_SlottingMenuUI: ChimeraMenuBase
 		m_iTakenCivSlots = 0;
 		
 		// Get all slot data
-		map<int, ref CRF_SlotDataContainer> slotMap = CRF_SlottingManager.GetInstance().GetSlotMap();
+		map<int, CRF_SlotDataContainer> slotMap = CRF_SlottingManager.GetInstance().GetSlotMap();
 		
 		// Count slots for each faction
-		foreach (int slotId, ref CRF_SlotDataContainer slotData : slotMap)
+		foreach (int slotId, CRF_SlotDataContainer slotData : slotMap)
 		{			
 			// Skip locked or dead slots
-			if(slotData.m_bIsLockedSlot || slotData.m_bIsDeadSlot)
+			if(slotData.GetIsLockedSlot() || slotData.GetIsDeadSlot())
 				continue;
 			
 			// Increment appropriate faction counter
-			switch(slotData.m_SlotFactionKey)
+			switch(slotData.GetSlotFactionKey())
 			{
 				case "BLUFOR":
 					m_iBluforSlots++;
-					if(slotData.m_iSlotCurrentPlayerId > 0) 
+					if(slotData.GetSlotCurrentPlayerId() > 0) 
 						m_iTakenBluforSlots++;
 					break;
 					
 				case "OPFOR":
 					m_iOpforSlots++;
-					if(slotData.m_iSlotCurrentPlayerId > 0) 
+					if(slotData.GetSlotCurrentPlayerId() > 0) 
 						m_iTakenOpforSlots++;
 					break;
 					
 				case "INDFOR":
 					m_iIndforSlots++;
-					if(slotData.m_iSlotCurrentPlayerId > 0) 
+					if(slotData.GetSlotCurrentPlayerId() > 0) 
 						m_iTakenIndforSlots++;
 					break;
 					
 				case "CIV":
 					m_iCivSlots++;
-					if(slotData.m_iSlotCurrentPlayerId > 0) 
+					if(slotData.GetSlotCurrentPlayerId() > 0) 
 						m_iTakenCivSlots++;
 					break;
 			}
@@ -634,7 +634,7 @@ class CRF_SlottingMenuUI: ChimeraMenuBase
 		UpdateUIBorderColors();
 		
 		// Get slot data and groups for the selected faction
-		map<int, ref CRF_SlotDataContainer> slotMap = CRF_SlottingManager.GetInstance().GetSlotMap();
+		map<int, CRF_SlotDataContainer> slotMap = CRF_SlottingManager.GetInstance().GetSlotMap();
 		array<SCR_AIGroup> groups = GetPlayableGroupsForSelectedFaction();
 		
 		// Populate UI with groups and slots
@@ -678,7 +678,7 @@ class CRF_SlottingMenuUI: ChimeraMenuBase
 	 * @param groups - Array of groups to display
 	 * @param slotMap - Map of all slot data
 	 */
-	private void PopulateGroupsAndSlots(array<SCR_AIGroup> groups, map<int, ref CRF_SlotDataContainer> slotMap)
+	private void PopulateGroupsAndSlots(array<SCR_AIGroup> groups, map<int, CRF_SlotDataContainer> slotMap)
 	{
 		bool isAdmin = SCR_Global.IsAdmin(GetGame().GetPlayerController().GetPlayerId());
 		
@@ -747,49 +747,49 @@ class CRF_SlottingMenuUI: ChimeraMenuBase
 	 * @param deadPlayersInGroup - Counter for dead players in group
 	 * @param isAdmin - Whether current player is admin
 	 */
-	private void AddSlotsToGroup(SCR_AIGroup group, map<int, ref CRF_SlotDataContainer> slotMap, 
+	private void AddSlotsToGroup(SCR_AIGroup group, map<int, CRF_SlotDataContainer> slotMap, 
 		int groupIndex, int orbatGroupIndex, out int leadersInGroup, out int playersInGroup, 
 		out int deadPlayersInGroup, bool isAdmin)
 	{
 		int groupId = RplComponent.Cast(group.FindComponent(RplComponent)).Id();
 		
-		foreach(int slotId, ref CRF_SlotDataContainer slotData : slotMap)
+		foreach(int slotId, CRF_SlotDataContainer slotData : slotMap)
 		{	
 			// Skip slots not in this group or faction
-			if (slotData.m_iSlotCurrentGroup != groupId || 
-				GetGame().GetFactionManager().GetFactionByKey(slotData.m_SlotFactionKey) != m_fSelectedFaction)
+			if (slotData.GetSlotCurrentGroup() != groupId || 
+				GetGame().GetFactionManager().GetFactionByKey(slotData.GetSlotFactionKey()) != m_fSelectedFaction)
 				continue;
 			
 			// Skip locked slots for non-admins
-			if(slotData.m_bIsLockedSlot && !isAdmin && slotData.m_iSlotCurrentPlayerId <= 0)
+			if(slotData.GetIsLockedSlot() && !isAdmin && slotData.GetSlotCurrentPlayerId() <= 0)
 				continue;
 			
 			// Track dead slots but don't display them
-			if(slotData.m_bIsDeadSlot)
+			if(slotData.GetIsDeadSlot())
 			{
 				deadPlayersInGroup++;
 				continue;
 			}
 			
 			// Skip dead empty slots
-			if(slotData.m_iSlotCurrentPlayerId == 0 && slotData.m_bIsDeadSlot)
+			if(slotData.GetSlotCurrentPlayerId() == 0 && slotData.GetIsDeadSlot())
 				continue;
 			
 			// Add slot to UI
 			int slotIndex = m_cSlotListBoxComponent.AddItemSlot(null, slotId);
 			
 			// Count players
-			if(slotData.m_iSlotCurrentPlayerId >= 0)
+			if(slotData.GetSlotCurrentPlayerId() >= 0)
 				playersInGroup++;
 			
 			// Set player text if slot is taken
-			if(slotData.m_iSlotCurrentPlayerId > 0)
+			if(slotData.GetSlotCurrentPlayerId() > 0)
 			{
-				string playerName = GetGame().GetPlayerManager().GetPlayerName(slotData.m_iSlotCurrentPlayerId);
+				string playerName = GetGame().GetPlayerManager().GetPlayerName(slotData.GetSlotCurrentPlayerId());
 				m_cSlotListBoxComponent.GetCRFElementComponent(slotIndex).SetPlayerText(playerName);
 				
 				// Show disconnect indicator if player not connected
-				if(!GetGame().GetPlayerManager().IsPlayerConnected(slotData.m_iSlotCurrentPlayerId))
+				if(!GetGame().GetPlayerManager().IsPlayerConnected(slotData.GetSlotCurrentPlayerId()))
 					m_cSlotListBoxComponent.GetCRFElementComponent(slotIndex).GetDisconnectWidget().SetVisible(true);
 			}
 			
@@ -797,7 +797,7 @@ class CRF_SlottingMenuUI: ChimeraMenuBase
 			m_cSlotListBoxComponent.GetCRFElementComponent(slotIndex).GetSlotButton().m_OnClicked.Insert(SelectSlotDelay);				
 			
 			// Add leaders/medics to ORBAT view
-			if(slotData.m_iSlotType == CRF_ESlotType.LEADERORMEDIC && slotData.m_iSlotCurrentPlayerId > 0)
+			if(slotData.GetSlotType() == CRF_ESlotType.LEADERORMEDIC && slotData.GetSlotCurrentPlayerId() > 0)
 			{
 				AddLeaderToOrbat(slotData, slotId, orbatGroupIndex, leadersInGroup);
 				leadersInGroup++;
@@ -822,11 +822,11 @@ class CRF_SlottingMenuUI: ChimeraMenuBase
 			"{BD36FFAE9AB69175}UI/Listbox/PlayerSlotListboxOrbatElementNonAdmin.layout");
 		
 		// Set player text
-		string playerName = GetGame().GetPlayerManager().GetPlayerName(slotData.m_iSlotCurrentPlayerId);
+		string playerName = GetGame().GetPlayerManager().GetPlayerName(slotData.GetSlotCurrentPlayerId());
 		m_cOrbatListBoxComponent.GetCRFElementComponent(orbatIndex).SetPlayerText(playerName);
 		
 		// Show disconnect indicator if player not connected
-		if(!GetGame().GetPlayerManager().IsPlayerConnected(slotData.m_iSlotCurrentPlayerId))
+		if(!GetGame().GetPlayerManager().IsPlayerConnected(slotData.GetSlotCurrentPlayerId()))
 			m_cOrbatListBoxComponent.GetCRFElementComponent(orbatIndex).GetDisconnectWidget().SetVisible(true);
 		
 		// Hide slot button in orbat view
@@ -836,9 +836,9 @@ class CRF_SlottingMenuUI: ChimeraMenuBase
 		if(leadersInGroup == 0)
 		{
 			m_cOrbatListBoxComponent.GetCRFElementComponent(orbatGroupIndex).SetRoleImage(
-				slotData.m_rSlotIconResource, "groupRoleName");
+				slotData.GetSlotIconResource(), "groupRoleName");
 			
-			Color factionColor = GetGame().GetFactionManager().GetFactionByKey(slotData.m_SlotFactionKey).GetFactionColor();
+			Color factionColor = GetGame().GetFactionManager().GetFactionByKey(slotData.GetSlotFactionKey()).GetFactionColor();
 			m_cOrbatListBoxComponent.GetCRFElementComponent(orbatGroupIndex).SetGroupIconColor(factionColor);
 		}
 	}
@@ -853,7 +853,7 @@ class CRF_SlottingMenuUI: ChimeraMenuBase
 		m_cSlotListBoxComponent.GetCRFElementComponent(slotIndex).GetLockButton().m_OnClicked.Insert(LockSlotDelay);
 		m_cSlotListBoxComponent.GetCRFElementComponent(slotIndex).GetKickButton().m_OnClicked.Insert(KickSlotDelay);
 		
-		if(slotData.m_bIsLockedSlot)
+		if(slotData.GetIsLockedSlot())
 			m_cSlotListBoxComponent.GetCRFElementComponent(slotIndex).SetLockImage(
 				"{564794579B2DB679}UI/Textures/Editor/Attributes/Attribute_Locked.edds", "lockimage");
 	}
@@ -1023,7 +1023,7 @@ class CRF_SlottingMenuUI: ChimeraMenuBase
 		int selectedSlotId = m_cSlotListBoxComponent.GetCRFElementComponent(
 			m_cSlotListBoxComponent.GetSelectedItem()).m_iSlotId;
 		
-		bool isCurrentlyLocked = CRF_SlottingManager.GetInstance().GetSlotData(selectedSlotId).m_bIsLockedSlot;
+		bool isCurrentlyLocked = CRF_SlottingManager.GetInstance().GetSlotData(selectedSlotId).GetIsLockedSlot();
 		
 		// Toggle slot lock state
 		if(isCurrentlyLocked)
@@ -1350,7 +1350,7 @@ class CRF_SlottingMenuUI: ChimeraMenuBase
 		if (slotId == 0)
 			return;
 		
-		SCR_AIGroup tempGroup = SCR_AIGroup.Cast(RplComponent.Cast(Replication.FindItem(slottingManager.GetSlotData(slotId).m_iSlotCurrentGroup)).GetEntity());
+		SCR_AIGroup tempGroup = SCR_AIGroup.Cast(RplComponent.Cast(Replication.FindItem(slottingManager.GetSlotData(slotId).GetSlotCurrentGroup())).GetEntity());
 		if(tempGroup.IsPrivate())
 			return;
 		
@@ -1360,10 +1360,10 @@ class CRF_SlottingMenuUI: ChimeraMenuBase
 		
 		// Check slotting phase restrictions
 		bool leaderAndMedicPhase = m_Gamemode.m_SlottingState == 0;
-		bool slotNotLeaderOrMedic = slottingManager.GetSlotData(slotId).m_iSlotType != CRF_ESlotType.LEADERORMEDIC;
+		bool slotNotLeaderOrMedic = slottingManager.GetSlotData(slotId).GetSlotType() != CRF_ESlotType.LEADERORMEDIC;
 		bool specialtyPhase = m_Gamemode.m_SlottingState == 1;
-		bool slotNotSpecialtyOrLM = slottingManager.GetSlotData(slotId).m_iSlotType != CRF_ESlotType.LEADERORMEDIC && 
-								   slottingManager.GetSlotData(slotId).m_iSlotType != CRF_ESlotType.SPECIALTY;
+		bool slotNotSpecialtyOrLM = slottingManager.GetSlotData(slotId).GetSlotType() != CRF_ESlotType.LEADERORMEDIC && 
+								   slottingManager.GetSlotData(slotId).GetSlotType() != CRF_ESlotType.SPECIALTY;
 		
 		// Check phase restrictions (if not admin)
 		if (!isAdmin) {
@@ -1394,7 +1394,7 @@ class CRF_SlottingMenuUI: ChimeraMenuBase
 	 */
 	private void HandleAdminSlotSelection(int slotId, CRF_SlottingManager slottingManager)
 	{
-		int currentPlayerId = slottingManager.GetSlotData(slotId).m_iSlotCurrentPlayerId;
+		int currentPlayerId = slottingManager.GetSlotData(slotId).GetSlotCurrentPlayerId();
 		
 		// If selected player is already in this slot, unslot them
 		if (currentPlayerId == m_iSelectedplayerId)
@@ -1430,7 +1430,7 @@ class CRF_SlottingMenuUI: ChimeraMenuBase
 	 */
 	private void HandlePlayerSlotSelection(int slotId, CRF_SlottingManager slottingManager, int localPlayerId)
 	{
-		int currentPlayerId = slottingManager.GetSlotData(slotId).m_iSlotCurrentPlayerId;
+		int currentPlayerId = slottingManager.GetSlotData(slotId).GetSlotCurrentPlayerId();
 		
 		// Skip if slot is already taken by someone else
 		if (currentPlayerId != 0 && currentPlayerId != localPlayerId)

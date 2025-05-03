@@ -91,14 +91,11 @@ class CRF_PlayerControllerComponent : ScriptComponent
 	//------------------------------------------------------------------------------------------------
 	void SpecCameraInit(vector cameraPos[4])
 	{
-		if(!m_RplToAuthorityManager || !m_Gamemode)
-		{
-			m_RplToAuthorityManager = CRF_RplToAuthorityManager.GetInstance();
-			m_Gamemode = CRF_Gamemode.GetInstance();
-		};
+		m_RplToAuthorityManager = CRF_RplToAuthorityManager.GetInstance();
+		m_Gamemode = CRF_Gamemode.GetInstance();
 		
-		if (SCR_EditorManagerEntity.GetInstance().IsOpened())
-			return;
+		//if (SCR_EditorManagerEntity.GetInstance().IsOpened())
+			//return;
 
 		if (cameraPos[3] != vector.Zero && cameraPos[3] != m_Gamemode.m_vGenericSpawn[3])
 			m_vStoredCameraPos = cameraPos;
@@ -229,12 +226,9 @@ class CRF_PlayerControllerComponent : ScriptComponent
 	
 	//------------------------------------------------------------------------------------------------
 	void OpenCurrentStateMenu()
-	{
-		if(!m_RplToAuthorityManager || !m_Gamemode)
-		{
-			m_RplToAuthorityManager = CRF_RplToAuthorityManager.GetInstance();
-			m_Gamemode = CRF_Gamemode.GetInstance();
-		};
+	{	
+		m_RplToAuthorityManager = CRF_RplToAuthorityManager.GetInstance();
+		m_Gamemode = CRF_Gamemode.GetInstance();
 		
 		//Close any menu that wriggles its way in
 		MenuBase topMenu = GetGame().GetMenuManager().GetTopMenu();

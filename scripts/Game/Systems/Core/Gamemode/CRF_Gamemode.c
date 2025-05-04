@@ -199,7 +199,7 @@ class CRF_Gamemode : SCR_BaseGameMode
 	void AdvanceSlottingState()
 	{
 		m_SlottingState += 1;
-		m_SlottingManager.SendUpdateClient();
+		m_SlottingManager.RequestSlottingUpdate();
 		Replication.BumpMe();
 	}
 
@@ -246,9 +246,11 @@ class CRF_Gamemode : SCR_BaseGameMode
 				EnterAAR();
 		}
 		// Client-side UI update
-		else
+		else if (RplSession.Mode() != RplMode.Dedicated)
 		{
-			CRF_PlayerControllerComponent.GetInstance().OpenCurrentStateMenu();
+			CRF_PlayerControllerComponent playerControllerComp = CRF_PlayerControllerComponent.GetInstance();
+			if(playerControllerComp)
+				playerControllerComp.OpenCurrentStateMenu();
 		}
 	}
 	
@@ -394,9 +396,9 @@ class CRF_Gamemode : SCR_BaseGameMode
 		
 		// Set delay based on gamemode state
 		int delay = 150;
-		if (m_GamemodeState != CRF_EGamemodeState.GAME)
+		if (m_GamemodeState != CRF_EGamemodeState.GAME && !m_GamemodeManager.IsSpectator(entity))
 		{
-			entity.GetTransform(m_vGenericSpawn);
+			entity.GetWorldTransform(m_vGenericSpawn);
 			delay = 2000;
 		}
 		

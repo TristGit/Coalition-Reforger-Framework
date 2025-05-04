@@ -70,7 +70,11 @@ class CRF_PlayerControllerComponent : ScriptComponent
 		if (m_eCamera)
 			delete m_eCamera; 
 
-		GetGame().GetMenuManager().CloseAllMenus();
+		GetGame().GetMenuManager().CloseMenuByPreset(ChimeraMenuPreset.CRF_PreviewMenu);
+		GetGame().GetMenuManager().CloseMenuByPreset(ChimeraMenuPreset.CRF_SlottingMenu);
+		GetGame().GetMenuManager().CloseMenuByPreset(ChimeraMenuPreset.CRF_SpectatorMenu);
+		GetGame().GetMenuManager().CloseMenuByPreset(ChimeraMenuPreset.CRF_AARMenu);
+		GetGame().GetMenuManager().CloseMenuByPreset(ChimeraMenuPreset.CRF_RespawnMenu);
 		
 		GetGame().GetCallqueue().CallLater(ResetSettingsToStoredValues, 500, false);
 		GetGame().GetCallqueue().CallLater(SetupRadioFrequency, 1500, false);
@@ -93,14 +97,14 @@ class CRF_PlayerControllerComponent : ScriptComponent
 	{
 		m_RplToAuthorityManager = CRF_RplToAuthorityManager.GetInstance();
 		m_Gamemode = CRF_Gamemode.GetInstance();
-		
-		//if (SCR_EditorManagerEntity.GetInstance().IsOpened())
-			//return;
 
-		if (cameraPos[3] != vector.Zero && cameraPos[3] != m_Gamemode.m_vGenericSpawn[3])
+		if (SCR_EditorManagerEntity.GetInstance().IsOpened())
+			return;
+
+		if (cameraPos[3] != vector.Zero && cameraPos != m_Gamemode.m_vGenericSpawn)
 			m_vStoredCameraPos = cameraPos;
 
-		if (m_vStoredCameraPos[3] != vector.Zero && cameraPos[3] == m_Gamemode.m_vGenericSpawn[3])
+		if (m_vStoredCameraPos[3] != vector.Zero && m_vStoredCameraPos[3] != "0 10000 0" && cameraPos == m_Gamemode.m_vGenericSpawn)
 			cameraPos = m_vStoredCameraPos;
 
 		if (cameraPos[3] == vector.Zero || cameraPos[3] == "0 10000 0" || cameraPos[3][0] < 1 || cameraPos[3][2] < 1)
@@ -112,6 +116,8 @@ class CRF_PlayerControllerComponent : ScriptComponent
 
 		if (!m_eCamera)
 			m_eCamera = GetGame().SpawnEntityPrefab(Resource.Load("{E1FF38EC8894C5F3}Prefabs/Editor/Camera/ManualCameraSpectate.et"), GetGame().GetWorld(), cameraSpawnParams);
+		else
+			m_eCamera.SetWorldTransform(cameraPos);
 		
 		vector mat = m_eCamera.GetAngles();
 		m_eCamera.SetAngles(Vector(mat[0], mat[1], 0));

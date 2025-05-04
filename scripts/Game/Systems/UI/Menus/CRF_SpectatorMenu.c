@@ -357,11 +357,11 @@ class CRF_SpectatorMenuUI: ChimeraMenuBase
 		// ALL SLOT-BASED CHARACTERS
 		//------------------------------------------------------------------------------------------------
 		
-		array<ref CRF_SlotDataContainer> slotArray = CRF_SlottingManager.GetInstance().GetSlotArray();
+		map<int, CRF_SlotDataContainer> slotMap = CRF_SlottingManager.GetInstance().GetSlotMap();
 		
-		if (slotArray && !slotArray.IsEmpty())
+		if (slotMap && !slotMap.IsEmpty())
 		{
-			foreach (int slotId, CRF_SlotDataContainer slotData : slotArray)
+			foreach (int slotId, CRF_SlotDataContainer slotData : slotMap)
 			{		
 				RplId slotRplId = slotData.GetSlotCurrentCharacter();
 				
@@ -807,10 +807,10 @@ class CRF_SpectatorMenuUI: ChimeraMenuBase
 	void InitSlots()
 	{
 		// Get all slots from the slotting manager
-		array<ref CRF_SlotDataContainer> slotArray = CRF_SlottingManager.GetInstance().GetSlotArray();
+		map<int, CRF_SlotDataContainer> slotMap = CRF_SlottingManager.GetInstance().GetSlotMap();
 		
 		// Process each slot to count by faction
-		foreach (int slotId, CRF_SlotDataContainer slotData : slotArray)
+		foreach (int slotId, CRF_SlotDataContainer slotData : slotMap)
 		{
 			// Skip locked or empty slots
 			if(slotData.GetIsLockedSlot() || slotData.GetSlotCurrentPlayerId() == 0)
@@ -891,7 +891,7 @@ class CRF_SpectatorMenuUI: ChimeraMenuBase
 			m_iAliveCivSlots, m_iCivSlots);
 		
 		// Get slot and group data
-		array<ref CRF_SlotDataContainer> slotArray = CRF_SlottingManager.GetInstance().GetSlotArray();
+		map<int, CRF_SlotDataContainer> slotMap = CRF_SlottingManager.GetInstance().GetSlotMap();
 		array<SCR_AIGroup> factionGroups = CRF_SlottingManager.GetInstance().GetAllGroups(m_fSelectedFaction.GetFactionKey());
 		
 		if (factionGroups.IsEmpty())
@@ -938,7 +938,7 @@ class CRF_SpectatorMenuUI: ChimeraMenuBase
 			}
 			
 			// Process all slots in this group
-			foreach(int slotId, CRF_SlotDataContainer slotData : slotArray)
+			foreach(int slotId, CRF_SlotDataContainer slotData : slotMap)
 			{	
 				// Skip slots that don't belong to this group/faction
 				if (slotData.GetSlotCurrentGroup() != groupId || 

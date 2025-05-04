@@ -78,7 +78,7 @@ class CRF_PlayableCharacter : ScriptComponent
 		{
 			GetGame().GetCallqueue().CallLater(SetInitTime, 5000, false);
 			
-			SetEventMask(owner, EntityEvent.FRAME);
+			SetEventMask(owner, EntityEvent.FIXEDFRAME);
 			owner.SetOrigin("0 10000 0");
 			
 			if (!m_bIsHidden)
@@ -115,11 +115,11 @@ class CRF_PlayableCharacter : ScriptComponent
 	}
 	
 	//------------------------------------------------------------------------------------------------
-	override void EOnFrame(IEntity owner, float timeSlice)
+	override void EOnFixedFrame(IEntity owner, float timeSlice)
 	{
-		super.EOnFrame(owner, timeslice);
+		super.EOnFixedFrame(owner, timeslice);
 
-		if (!owner || !GetGame().InPlayMode())
+		if (!owner)
 		{
 			ClearEventMask(owner, EntityEvent.FRAME);
 			return;

@@ -574,10 +574,10 @@ class CRF_SlottingMenuUI: ChimeraMenuBase
 		m_iTakenCivSlots = 0;
 		
 		// Get all slot data
-		array<ref CRF_SlotDataContainer> slotArray = CRF_SlottingManager.GetInstance().GetSlotArray();
+		map<int, CRF_SlotDataContainer> slotMap = CRF_SlottingManager.GetInstance().GetSlotMap();
 		
 		// Count slots for each faction
-		foreach (int slotId, CRF_SlotDataContainer slotData : slotArray)
+		foreach (int slotId, CRF_SlotDataContainer slotData : slotMap)
 		{			
 			// Skip locked or dead slots
 			if(slotData.GetIsLockedSlot() || slotData.GetIsDeadSlot())
@@ -634,11 +634,11 @@ class CRF_SlottingMenuUI: ChimeraMenuBase
 		UpdateUIBorderColors();
 		
 		// Get slot data and groups for the selected faction
-		array<ref CRF_SlotDataContainer> slotArray = CRF_SlottingManager.GetInstance().GetSlotArray();
+		map<int, CRF_SlotDataContainer> slotMap = CRF_SlottingManager.GetInstance().GetSlotMap();
 		array<SCR_AIGroup> groups = GetPlayableGroupsForSelectedFaction();
 		
 		// Populate UI with groups and slots
-		PopulateGroupsAndSlots(groups, slotArray);
+		PopulateGroupsAndSlots(groups, slotMap);
 		
 		// Reset selected player if they are now in a slot
 		if(CRF_SlottingManager.GetInstance().IsPlayerInASlot(m_iSelectedplayerId))
@@ -676,9 +676,9 @@ class CRF_SlottingMenuUI: ChimeraMenuBase
 	/**
 	 * Populates the UI with groups and their slots
 	 * @param groups - Array of groups to display
-	 * @param slotArray - Array of all slot data
+	 * @param slotMap - Array of all slot data
 	 */
-	private void PopulateGroupsAndSlots(array<SCR_AIGroup> groups, array<ref CRF_SlotDataContainer> slotArray)
+	private void PopulateGroupsAndSlots(array<SCR_AIGroup> groups, map<int, CRF_SlotDataContainer> slotMap)
 	{
 		bool isAdmin = SCR_Global.IsAdmin(GetGame().GetPlayerController().GetPlayerId());
 		
@@ -717,7 +717,7 @@ class CRF_SlottingMenuUI: ChimeraMenuBase
 				m_cSlotListBoxComponent.GetCRFElementComponent(groupIndex).GetGroupIcon().Update(groupIdent.GetMilitarySymbol());
 			
 			// Add slots to this group
-			AddSlotsToGroup(group, slotArray, groupIndex, orbatGroupIndex, leadersInGroup, playersInGroup, deadPlayersInGroup, isAdmin);
+			AddSlotsToGroup(group, slotMap, groupIndex, orbatGroupIndex, leadersInGroup, playersInGroup, deadPlayersInGroup, isAdmin);
 			
 			// Clean up empty groups
 			RemoveEmptyGroups(groupIndex, orbatGroupIndex, leadersInGroup, playersInGroup, deadPlayersInGroup, isAdmin);
@@ -739,7 +739,7 @@ class CRF_SlottingMenuUI: ChimeraMenuBase
 	/**
 	 * Adds slots to a group in the UI
 	 * @param group - Group to add slots to
-	 * @param slotArray - Array of all slot data
+	 * @param slotMap - Array of all slot data
 	 * @param groupIndex - UI index of the group
 	 * @param orbatGroupIndex - UI index in orbat view
 	 * @param leadersInGroup - Counter for leaders in group
@@ -747,13 +747,13 @@ class CRF_SlottingMenuUI: ChimeraMenuBase
 	 * @param deadPlayersInGroup - Counter for dead players in group
 	 * @param isAdmin - Whether current player is admin
 	 */
-	private void AddSlotsToGroup(SCR_AIGroup group, array<ref CRF_SlotDataContainer> slotArray, 
+	private void AddSlotsToGroup(SCR_AIGroup group, map<int, CRF_SlotDataContainer> slotMap, 
 		int groupIndex, int orbatGroupIndex, out int leadersInGroup, out int playersInGroup, 
 		out int deadPlayersInGroup, bool isAdmin)
 	{
 		int groupId = RplComponent.Cast(group.FindComponent(RplComponent)).Id();
 		
-		foreach(int slotId, CRF_SlotDataContainer slotData : slotArray)
+		foreach(int slotId, CRF_SlotDataContainer slotData : slotMap)
 		{	
 			// Skip slots not in this group or faction
 			if (slotData.GetSlotCurrentGroup() != groupId || 

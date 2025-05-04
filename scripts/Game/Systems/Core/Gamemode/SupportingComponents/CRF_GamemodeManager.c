@@ -69,16 +69,12 @@ class CRF_GamemodeManager : SCR_BaseGameModeComponent
 		
 		if (!m_SlottingManager.IsPlayerInASlot(playerId) || m_SlottingManager.IsPlayerConsideredDead(playerId)) 
 		{
-			 IEntity playerEntity = GetGame().GetPlayerManager().GetPlayerControlledEntity(playerId);
+			IEntity playerEntity = GetGame().GetPlayerManager().GetPlayerControlledEntity(playerId);
 			
 			if(!IsSpectator(playerEntity))
 				EnterSpectator(playerId);
 			else if (IsSpectator(playerEntity))
-			{
-				vector cameraPos[4];
-				cameraPos[3] = m_Gamemode.m_vGenericSpawn[3];
-				m_RplBroadcastManager.SendSpecClientInit(playerId, cameraPos);
-			};
+				m_RplBroadcastManager.SendSpecClientInit(playerId, m_Gamemode.m_vGenericSpawn);
 			
 			return;
 		}
@@ -101,14 +97,13 @@ class CRF_GamemodeManager : SCR_BaseGameModeComponent
 			m_SlottingManager.UpdateSlotDeathState(m_SlottingManager.GetPlayerSlotID(playerId), false);
 			
 			CRF_PlayableCharacter playabeCharComp = CRF_PlayableCharacter.Cast(playerCharacter.FindComponent(CRF_PlayableCharacter));
-			
 			if(playabeCharComp)
 				playabeCharComp.SetIsSlotSpawned();
 		};
 
 		SCR_PlayerController playerController = SCR_PlayerController.Cast(GetGame().GetPlayerManager().GetPlayerController(playerId));
 		
-		GetGame().GetCallqueue().CallLater(playerController.SetInitialMainEntity, 150, false, playerCharacter);
+		GetGame().GetCallqueue().CallLater(playerController.SetInitialMainEntity, 250, false, playerCharacter);
 
 		SCR_PlayerFactionAffiliationComponent.Cast(playerController.FindComponent(SCR_PlayerFactionAffiliationComponent)).RequestFaction(m_SlottingManager.GetPlayerSlotFaction(playerId));
 
@@ -127,9 +122,10 @@ class CRF_GamemodeManager : SCR_BaseGameModeComponent
 	void EnterSpectator(int playerId, IEntity entity = null)
 	{
 		IEntity specEntity = GetGame().SpawnEntityPrefab(Resource.Load("{59886ECB7BBAF5BC}Prefabs/Characters/CRF_InitialEntity.et"), GetGame().GetWorld());
-		SCR_PlayerController pc = SCR_PlayerController.Cast(GetGame().GetPlayerManager().GetPlayerController(playerId));
-
-		GetGame().GetCallqueue().CallLater(pc.SetInitialMainEntity, 150, false, specEntity);
+		
+		SCR_PlayerController playerController = SCR_PlayerController.Cast(GetGame().GetPlayerManager().GetPlayerController(playerId));
+		if(playerController)
+			GetGame().GetCallqueue().CallLater(playerController.SetInitialMainEntity, 250, false, specEntity);
 
 		SCR_AIGroup currentGroup = m_GroupsManagerComponent.GetPlayerGroup(playerId);
 		if (currentGroup)

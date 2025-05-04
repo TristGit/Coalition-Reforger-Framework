@@ -114,61 +114,91 @@ class CRF_SlotDataContainer
 	//------------------------------------------------------------------------------------------------
 	int GetSlotCurrentPlayerId()
 	{
-		return m_iSlotCurrentPlayerId;
+		if(!m_iSlotCurrentPlayerId)
+			return 0;
+		else
+			return m_iSlotCurrentPlayerId;
 	}
 	
 	//------------------------------------------------------------------------------------------------
 	RplId GetSlotCurrentGroup()
 	{
-		return m_iSlotCurrentGroup;
+		if(!m_iSlotCurrentGroup)
+			return RplId.Invalid();
+		else
+			return m_iSlotCurrentGroup;
 	}
 	
 	//------------------------------------------------------------------------------------------------
 	RplId GetSlotCurrentCharacter()
 	{
-		return m_iSlotCurrentCharacter;
+		if(!m_iSlotCurrentCharacter)
+			return RplId.Invalid();
+		else
+			return m_iSlotCurrentCharacter;
 	}
 	
 	//------------------------------------------------------------------------------------------------
 	CRF_ESlotType GetSlotType()
 	{
-		return m_iSlotType;
+		if(!m_iSlotType)
+			return CRF_ESlotType.REGULAR;
+		else
+			return m_iSlotType;
 	}
 	
 	//------------------------------------------------------------------------------------------------
 	string GetSlotName()
 	{
-		return m_sSlotName;
+		if(!m_sSlotName)
+			return "Invalid Name";
+		else
+			return m_sSlotName;
 	}
 	
 	//------------------------------------------------------------------------------------------------
 	ResourceName GetSlotIconResource()
 	{
-		return m_rSlotIconResource;
+		if(!m_rSlotIconResource)
+			return "";
+		else
+			return m_rSlotIconResource;
 	}
 	
 	//------------------------------------------------------------------------------------------------
 	ResourceName GetSlotResource()
 	{
-		return m_rSlotResource;
+		if(!m_rSlotResource)
+			return "";
+		else
+			return m_rSlotResource;
 	}
 	
 	//------------------------------------------------------------------------------------------------
 	FactionKey GetSlotFactionKey()
 	{
-		return m_SlotFactionKey;
+		if(!m_SlotFactionKey)
+			return "";
+		else
+			return m_SlotFactionKey;
 	}
 	
 	//------------------------------------------------------------------------------------------------
 	bool GetIsLockedSlot()
 	{
-		return m_bIsLockedSlot;
+		if(!m_bIsLockedSlot)
+			return false;
+		else
+			return m_bIsLockedSlot;
 	}
 	
 	//------------------------------------------------------------------------------------------------
 	bool GetIsDeadSlot()
 	{
-		return m_bIsDeadSlot;
+		if(!m_bIsDeadSlot)
+			return false;
+		else
+			return m_bIsDeadSlot;
 	}
 	
 	//------------------------------------------------------------------------------------------------

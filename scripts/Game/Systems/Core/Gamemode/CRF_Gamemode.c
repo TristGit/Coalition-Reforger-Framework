@@ -248,7 +248,9 @@ class CRF_Gamemode : SCR_BaseGameMode
 		// Client-side UI update
 		else if (RplSession.Mode() != RplMode.Dedicated)
 		{
-			CRF_PlayerControllerComponent.GetInstance().OpenCurrentStateMenu();
+			CRF_PlayerControllerComponent playerControllerComp = CRF_PlayerControllerComponent.GetInstance();
+			if(playerControllerComp)
+				playerControllerComp.OpenCurrentStateMenu();
 		}
 	}
 	

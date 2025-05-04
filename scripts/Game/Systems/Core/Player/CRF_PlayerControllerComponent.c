@@ -94,11 +94,11 @@ class CRF_PlayerControllerComponent : ScriptComponent
 	 * Initializes the player client
 	 * Cleans up previous camera, closes menus, and sets up player-specific settings
 	 */
-	void InitilizePlayerClient()
+	void InitilizeClient(bool isSpectator, vector cameraPos)
 	{
 		// Clean up previous camera if exists
 		if (m_eCamera)
-			delete m_eCamera; 
+			delete m_eCamera;
 
 		// Close all menus
 		GetGame().GetMenuManager().CloseMenuByPreset(ChimeraMenuPreset.CRF_PreviewMenu);
@@ -110,6 +110,49 @@ class CRF_PlayerControllerComponent : ScriptComponent
 		// Schedule delayed initialization of player-specific settings
 		GetGame().GetCallqueue().CallLater(ResetSettingsToStoredValues, 500, false);
 		GetGame().GetCallqueue().CallLater(SetupRadioFrequency, 1500, false);
+		
+		if (isSpectator)
+		{
+			m_RplToAuthorityManager = CRF_RplToAuthorityManager.GetInstance();
+			m_Gamemode = CRF_Gamemode.GetInstance();
+		
+			// Skip if editor is open
+			if (SCR_EditorManagerEntity.GetInstance().IsOpened())
+				return;
+			
+			// Setup Camera Pos Vector
+			vector finalCameraPos[4];
+			finalCameraPos[3] = cameraPos;
+		
+			// Use stored position if current is generic spawn
+			if (m_vStoredCameraPos && finalCameraPos[3] == m_Gamemode.m_vGenericSpawn[3])
+				finalCameraPos = m_vStoredCameraPos;
+		
+			// Set up camera entity
+			EntitySpawnParams cameraSpawnParams = new EntitySpawnParams();
+			cameraSpawnParams.TransformMode = ETransformMode.WORLD;
+			cameraSpawnParams.Transform = finalCameraPos;
+		
+			// Spawn or reposition camera
+			if (!m_eCamera)
+				m_eCamera = GetGame().SpawnEntityPrefab(Resource.Load("{E1FF38EC8894C5F3}Prefabs/Editor/Camera/ManualCameraSpectate.et"), GetGame().GetWorld(), cameraSpawnParams);
+			else
+				m_eCamera.SetOrigin(finalCameraPos);
+			
+			// Level camera horizon
+			vector mat = m_eCamera.GetAngles();
+			m_eCamera.SetAngles(Vector(mat[0], mat[1], 0));
+		
+			// Register for VON (voice chat)
+			m_RplToAuthorityManager.CheckVONRegister(SCR_PlayerController.GetLocalPlayerId());
+			
+			// Open spectator menu if in game state
+			if (m_Gamemode.m_GamemodeState == CRF_EGamemodeState.GAME)
+				GetGame().GetMenuManager().OpenMenu(ChimeraMenuPreset.CRF_SpectatorMenu);
+			
+			// Switch to spectator camera
+			GetGame().GetCameraManager().SetCamera(CameraBase.Cast(m_eCamera));
+		};
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -134,52 +177,6 @@ class CRF_PlayerControllerComponent : ScriptComponent
 		m_vStoredCameraPos[1] = cameraPosToStoreTwo;
 		m_vStoredCameraPos[2] = cameraPosToStoreThree;
 		m_vStoredCameraPos[3] = cameraPosToStoreFour;
-	}
-
-	/**
-	 * Initializes spectator camera with proper positioning
-	 * Handles camera position recovery and fallback to generic spawn point
-	 * @param cameraPos - Desired camera position/transform
-	 */
-	void SpecCameraInit(vector cameraPos[4])
-	{
-		GetGame().GetCallqueue().CallLater(ResetSettingsToStoredValues, 500, false);
-		
-		m_RplToAuthorityManager = CRF_RplToAuthorityManager.GetInstance();
-		m_Gamemode = CRF_Gamemode.GetInstance();
-
-		// Skip if editor is open
-		if (SCR_EditorManagerEntity.GetInstance().IsOpened())
-			return;
-
-		// Use stored position if current is generic spawn
-		if (m_vStoredCameraPos && cameraPos == m_Gamemode.m_vGenericSpawn)
-			cameraPos = m_vStoredCameraPos;
-
-		// Set up camera entity
-		EntitySpawnParams cameraSpawnParams = new EntitySpawnParams();
-		cameraSpawnParams.TransformMode = ETransformMode.WORLD;
-		cameraSpawnParams.Transform = cameraPos;
-
-		// Spawn or reposition camera
-		if (!m_eCamera)
-			m_eCamera = GetGame().SpawnEntityPrefab(Resource.Load("{E1FF38EC8894C5F3}Prefabs/Editor/Camera/ManualCameraSpectate.et"), GetGame().GetWorld(), cameraSpawnParams);
-		else
-			m_eCamera.SetWorldTransform(cameraPos);
-		
-		// Level camera horizon
-		vector mat = m_eCamera.GetAngles();
-		m_eCamera.SetAngles(Vector(mat[0], mat[1], 0));
-
-		// Register for VON (voice chat)
-		m_RplToAuthorityManager.CheckVONRegister(SCR_PlayerController.GetLocalPlayerId());
-		
-		// Open spectator menu if in game state
-		if (m_Gamemode.m_GamemodeState == CRF_EGamemodeState.GAME)
-			GetGame().GetMenuManager().OpenMenu(ChimeraMenuPreset.CRF_SpectatorMenu);
-		
-		// Switch to spectator camera
-		GetGame().GetCameraManager().SetCamera(CameraBase.Cast(m_eCamera));
 	}
 
 	/**

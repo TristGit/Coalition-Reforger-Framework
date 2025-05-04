@@ -76,7 +76,7 @@ class CRF_GamemodeManager : SCR_BaseGameModeComponent
 			if(!IsSpectator(playerEntity))
 				EnterSpectator(playerId);
 			else if (IsSpectator(playerEntity))
-				m_RplBroadcastManager.SendSpecClientInit(playerId, m_Gamemode.m_vGenericSpawn);
+				m_RplBroadcastManager.InitilizePlayerBroadcast(playerId, true, m_Gamemode.m_vGenericSpawn[3]);
 
 			return;
 		}
@@ -117,7 +117,7 @@ class CRF_GamemodeManager : SCR_BaseGameModeComponent
 			SCR_PlayerControllerGroupComponent.GetPlayerControllerComponent(playerId).RequestJoinGroup(groupId);
 		}
 
-		m_RplBroadcastManager.InitilizePlayer(playerId);
+		m_RplBroadcastManager.InitilizePlayerBroadcast(playerId, false);
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -155,7 +155,7 @@ class CRF_GamemodeManager : SCR_BaseGameModeComponent
 		}
 		
 		m_RplBroadcastManager = CRF_RplBroadcastManager.GetInstance();
-		m_RplBroadcastManager.SendSpecClientInit(playerId, cameraPos);
+		m_RplBroadcastManager.InitilizePlayerBroadcast(playerId, true, cameraPos[3]);
 	}
 	
 	//------------------------------------------------------------------------------------------------

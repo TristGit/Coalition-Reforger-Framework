@@ -31,7 +31,7 @@ class CRF_PlayableCharacter : ScriptComponent
 
 		if (!GetGame().InPlayMode() 
 		 || !m_Gamemode 
-		 || (m_Gamemode.m_GamemodeState == CRF_EGamemodeState.GAME && m_Gamemode.EnableAIInGameState))
+		 || (m_Gamemode.m_GamemodeState == CRF_EGamemodeState.GAME && m_Gamemode.EnableAIInGameState && !CRF_GamemodeManager.IsSpectator(owner)))
 			return;
 
 		if (m_bIsPlayable)
@@ -132,17 +132,18 @@ class CRF_PlayableCharacter : ScriptComponent
 			return;
 		};
 
-		if (SCR_PlayerController.Cast(GetGame().GetPlayerController()).GetLocalControlledEntity() == owner)
+		if (m_PossessingManagerComponent.GetMainEntity(SCR_PlayerController.GetLocalPlayerId()) == owner)
 		{
 			if (m_PlayerControllerComponent.m_eCamera && m_Gamemode.m_GamemodeState == CRF_EGamemodeState.GAME)
 			{
 				vector mat[4];
-				m_PlayerControllerComponent.m_eCamera.GetTransform(mat);
-				mat[1] = vector.Up;
-				mat[2] = vector.Forward;
+				m_PlayerControllerComponent.m_eCamera.GetWorldTransform(mat);
+				
+				if (GetGame().GetCallqueue().GetRemainingTime(m_PlayerControllerComponent.UpdateStoredCameraPos) <= 0)
+					GetGame().GetCallqueue().CallLater(m_PlayerControllerComponent.UpdateStoredCameraPos, 1000, false, mat[0], mat[1], mat[2], mat[3]);
+				
 				mat[3][1] = mat[3][1] - 1.5;
 				m_PlayerControllerComponent.UpdateEntityPos(mat);
-				m_PlayerControllerComponent.UpdateStoredCameraPos(mat);
 			} else {
 				vector mat[4];
 				mat[1] = vector.Up;

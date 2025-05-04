@@ -199,24 +199,24 @@ class CRF_SlottingManager : ScriptComponent
 	//------------------------------------------------------------------------------------------------
 	SCR_AIGroup GetPlayerSlotGroup(int playerId)
 	{
-		CRF_SlotDataContainer data = GetPlayerSlotData(playerId);
+		CRF_SlotDataContainer slotData = GetPlayerSlotData(playerId);
 		
-		if(!data || !data.GetSlotCurrentGroup() || data.GetSlotCurrentGroup() == RplId.Invalid() || !Replication.FindItem(data.GetSlotCurrentGroup()))
+		if(!slotData || !slotData.GetSlotCurrentGroup() || slotData.GetSlotCurrentGroup() == RplId.Invalid() || !Replication.FindItem(slotData.GetSlotCurrentGroup()))
 			return null;
 		
-		return SCR_AIGroup.Cast(RplComponent.Cast(Replication.FindItem(data.GetSlotCurrentGroup())).GetEntity());
+		return SCR_AIGroup.Cast(RplComponent.Cast(Replication.FindItem(slotData.GetSlotCurrentGroup())).GetEntity());
 	}
 	
 	//------------------------------------------------------------------------------------------------
 	SCR_ChimeraCharacter GetPlayerSlotCharacter(int playerId)
 	{
-		CRF_SlotDataContainer data = GetPlayerSlotData(playerId);
+		CRF_SlotDataContainer slotData = GetPlayerSlotData(playerId);
 		
-		if(!data || !data.GetSlotCurrentCharacter() || data.GetSlotCurrentCharacter() == RplId.Invalid() || !Replication.FindItem(data.GetSlotCurrentCharacter()))
+		if(!slotData || !slotData.GetSlotCurrentCharacter() || slotData.GetSlotCurrentCharacter() == RplId.Invalid() || !Replication.FindItem(slotData.GetSlotCurrentCharacter()))
 			return null;
 		
 		// Get ChimeraCharacter so we can pull the controller
-		SCR_ChimeraCharacter character = SCR_ChimeraCharacter.Cast(RplComponent.Cast(Replication.FindItem(data.GetSlotCurrentCharacter())).GetEntity());
+		SCR_ChimeraCharacter character = SCR_ChimeraCharacter.Cast(RplComponent.Cast(Replication.FindItem(slotData.GetSlotCurrentCharacter())).GetEntity());
 		
 		if (!character)
 			return null;
@@ -323,21 +323,20 @@ class CRF_SlottingManager : ScriptComponent
 	void UpdateSlotPlayerID(int slotId, int playerId)
 	{
 		CRF_SlotDataContainer slotData = GetSlotData(slotId);
-		int prevPlayerId = slotData.GetSlotCurrentPlayerId();
 		slotData.SetSlotCurrentPlayerId(playerId);
 		
 		if(playerId <= 0)
 		{	
 			if(slotData && slotData.GetSlotCurrentCharacter() && slotData.GetSlotCurrentCharacter() != RplId.Invalid() && Replication.FindItem(slotData.GetSlotCurrentCharacter()))
 			{
-				SCR_EntityHelper.DeleteEntityAndChildren(SCR_ChimeraCharacter.Cast(RplComponent.Cast(Replication.FindItem(slotData.GetSlotCurrentCharacter())).GetEntity()));
-				UpdateSlotCharacter(slotId, RplId.Invalid());
 				
-				if(m_Gamemode.m_GamemodeState == CRF_EGamemodeState.GAME && prevPlayerId > 0)
-					m_GamemodeManager.InitilizePlayer(prevPlayerId);
+				SCR_ChimeraCharacter character = SCR_ChimeraCharacter.Cast(RplComponent.Cast(Replication.FindItem(slotData.GetSlotCurrentCharacter())).GetEntity());
+				 if(character)
+					SCR_EntityHelper.DeleteEntityAndChildren(character);
+				
+				UpdateSlotCharacter(slotId, RplId.Invalid());
 			};
 		}
-		
 		
 		RequestSlottingUpdate();
 	}

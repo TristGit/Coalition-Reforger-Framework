@@ -15,6 +15,7 @@ class CRF_GamemodeManager : SCR_BaseGameModeComponent
 	protected CRF_SafestartManager m_SafestartManager;
 	protected CRF_RplBroadcastManager m_RplBroadcastManager;
 	protected SCR_GroupsManagerComponent m_GroupsManagerComponent;
+	protected SCR_PossessingManagerComponent m_PossessingManagerComponent;
 	
 	//------------------------------------------------------------------------------------------------
 	static CRF_GamemodeManager GetInstance()
@@ -37,6 +38,7 @@ class CRF_GamemodeManager : SCR_BaseGameModeComponent
 		m_SafestartManager = CRF_SafestartManager.GetInstance();
 		m_RplBroadcastManager = CRF_RplBroadcastManager.GetInstance();
 		m_GroupsManagerComponent = SCR_GroupsManagerComponent.GetInstance();
+		m_PossessingManagerComponent = SCR_PossessingManagerComponent.GetInstance();
 	};
 	
 	//------------------------------------------------------------------------------------------------
@@ -69,13 +71,13 @@ class CRF_GamemodeManager : SCR_BaseGameModeComponent
 		
 		if (!m_SlottingManager.IsPlayerInASlot(playerId) || m_SlottingManager.IsPlayerConsideredDead(playerId)) 
 		{
-			IEntity playerEntity = GetGame().GetPlayerManager().GetPlayerControlledEntity(playerId);
+			IEntity playerEntity = m_PossessingManagerComponent.GetMainEntity(playerId);
 			
 			if(!IsSpectator(playerEntity))
 				EnterSpectator(playerId);
 			else if (IsSpectator(playerEntity))
 				m_RplBroadcastManager.SendSpecClientInit(playerId, m_Gamemode.m_vGenericSpawn);
-			
+
 			return;
 		}
 
@@ -146,7 +148,7 @@ class CRF_GamemodeManager : SCR_BaseGameModeComponent
 				entity.GetWorldTransform(cameraPos);
 				cameraPos[3][1] = cameraPos[3][1] + 1.5;
 			} else {
-				cameraPos[3] = m_Gamemode.m_vGenericSpawn[3];
+				cameraPos = m_Gamemode.m_vGenericSpawn;
 			}
 		} else {
 			cameraPos[3] = "0 10000 0";

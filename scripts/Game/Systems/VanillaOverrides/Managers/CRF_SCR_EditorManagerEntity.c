@@ -175,12 +175,7 @@ modded class SCR_EditorManagerEntity
 				bool isSameEntity = SCR_PlayerController.GetLocalControlledEntity() == SCR_PlayerController.GetLocalMainEntity();
 				
 				if (isSpectator && isSameEntity)
-				{
-					vector mat[4];
-					SCR_PlayerController.GetLocalMainEntity().GetWorldTransform(mat);
-					mat[3][1] = mat[3][1] + 1.5;
-					CRF_PlayerControllerComponent.GetInstance().SpecCameraInit(mat);
-				}
+					CRF_RplToAuthorityManager.GetInstance().RequestInitilizePlayer(SCR_PlayerController.GetLocalPlayerId());
 				
 				break;
 			}

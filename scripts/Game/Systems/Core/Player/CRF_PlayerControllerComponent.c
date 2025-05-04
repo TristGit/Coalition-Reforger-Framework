@@ -73,6 +73,7 @@ class CRF_PlayerControllerComponent : ScriptComponent
 		m_Gamemode = CRF_Gamemode.GetInstance();
 		m_GamemodeManager = CRF_GamemodeManager.GetInstance();
 		m_RplToAuthorityManager = CRF_RplToAuthorityManager.GetInstance();
+		m_vStoredCameraPos = m_Gamemode.m_vGenericSpawn;
 
 		// Register input action handlers
 		GetGame().GetInputManager().AddActionListener("CRF_ToggleSideReady", EActionTrigger.DOWN, ToggleSideReady);
@@ -127,9 +128,12 @@ class CRF_PlayerControllerComponent : ScriptComponent
 	 * Updates stored camera position for persistence between sessions
 	 * @param cameraPosToStore - Array of 4 vectors representing camera transform
 	 */
-	void UpdateStoredCameraPos(vector cameraPosToStore[4])
+	void UpdateStoredCameraPos(vector cameraPosToStoreOne, vector cameraPosToStoreTwo, vector cameraPosToStoreThree, vector cameraPosToStoreFour)
 	{
-		m_vStoredCameraPos = cameraPosToStore;
+		m_vStoredCameraPos[0] = cameraPosToStoreOne;
+		m_vStoredCameraPos[1] = cameraPosToStoreTwo;
+		m_vStoredCameraPos[2] = cameraPosToStoreThree;
+		m_vStoredCameraPos[3] = cameraPosToStoreFour;
 	}
 
 	/**
@@ -147,12 +151,8 @@ class CRF_PlayerControllerComponent : ScriptComponent
 			return;
 
 		// Use stored position if current is generic spawn
-		if (m_vStoredCameraPos[3] != vector.Zero && cameraPos == m_Gamemode.m_vGenericSpawn)
+		if (m_vStoredCameraPos && cameraPos == m_Gamemode.m_vGenericSpawn)
 			cameraPos = m_vStoredCameraPos;
-
-		// Fall back to generic spawn if no valid position
-		if (cameraPos[3] == vector.Zero || cameraPos[3] == "0 10000 0" || cameraPos[3][0] < 1 || cameraPos[3][2] < 1)
-			cameraPos = m_Gamemode.m_vGenericSpawn;
 
 		// Set up camera entity
 		EntitySpawnParams cameraSpawnParams = new EntitySpawnParams();

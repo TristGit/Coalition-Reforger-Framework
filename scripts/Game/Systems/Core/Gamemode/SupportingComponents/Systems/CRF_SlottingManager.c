@@ -26,6 +26,7 @@ class CRF_SlottingManager : ScriptComponent
 	protected int m_SlottingUpdate;
 	
 	protected CRF_Gamemode m_Gamemode;
+	protected CRF_GamemodeManager m_GamemodeManager;
 	
 	//------------------------------------------------------------------------------------------------
 	static CRF_SlottingManager GetInstance()
@@ -44,6 +45,7 @@ class CRF_SlottingManager : ScriptComponent
 		super.OnPostInit(owner);
 
 		m_Gamemode = CRF_Gamemode.GetInstance();
+		m_GamemodeManager = CRF_GamemodeManager.GetInstance();
 	};
 	
 	//Updates all players the slotting information has changed
@@ -320,19 +322,22 @@ class CRF_SlottingManager : ScriptComponent
 	//------------------------------------------------------------------------------------------------
 	void UpdateSlotPlayerID(int slotId, int playerId)
 	{
+		CRF_SlotDataContainer slotData = GetSlotData(slotId);
+		int prevPlayerId = slotData.GetSlotCurrentPlayerId();
+		slotData.SetSlotCurrentPlayerId(playerId);
+		
 		if(playerId <= 0)
-		{
-			CRF_SlotDataContainer data = GetSlotData(slotId);
-			
-			if(data && data.GetSlotCurrentCharacter() && data.GetSlotCurrentCharacter() != RplId.Invalid() && Replication.FindItem(data.GetSlotCurrentCharacter()))
+		{	
+			if(slotData && slotData.GetSlotCurrentCharacter() && slotData.GetSlotCurrentCharacter() != RplId.Invalid() && Replication.FindItem(slotData.GetSlotCurrentCharacter()))
 			{
-				SCR_EntityHelper.DeleteEntityAndChildren(SCR_ChimeraCharacter.Cast(RplComponent.Cast(Replication.FindItem(data.GetSlotCurrentCharacter())).GetEntity()));
+				SCR_EntityHelper.DeleteEntityAndChildren(SCR_ChimeraCharacter.Cast(RplComponent.Cast(Replication.FindItem(slotData.GetSlotCurrentCharacter())).GetEntity()));
 				UpdateSlotCharacter(slotId, RplId.Invalid());
+				
+				if(m_Gamemode.m_GamemodeState == CRF_EGamemodeState.GAME && prevPlayerId > 0)
+					m_GamemodeManager.InitilizePlayer(prevPlayerId);
 			};
 		}
-	
-		CRF_SlotDataContainer slotData = m_mSlotsMap.Get(slotId);
-		slotData.SetSlotCurrentPlayerId(playerId);
+		
 		
 		RequestSlottingUpdate();
 	}

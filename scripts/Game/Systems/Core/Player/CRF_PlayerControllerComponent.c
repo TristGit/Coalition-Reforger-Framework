@@ -146,12 +146,8 @@ class CRF_PlayerControllerComponent : ScriptComponent
 		if (SCR_EditorManagerEntity.GetInstance().IsOpened())
 			return;
 
-		// Store valid camera positions
-		if (cameraPos[3] != vector.Zero && cameraPos != m_Gamemode.m_vGenericSpawn)
-			m_vStoredCameraPos = cameraPos;
-
 		// Use stored position if current is generic spawn
-		if (m_vStoredCameraPos[3] != vector.Zero && m_vStoredCameraPos[3] != "0 10000 0" && cameraPos == m_Gamemode.m_vGenericSpawn)
+		if (m_vStoredCameraPos[3] != vector.Zero && cameraPos == m_Gamemode.m_vGenericSpawn)
 			cameraPos = m_vStoredCameraPos;
 
 		// Fall back to generic spawn if no valid position

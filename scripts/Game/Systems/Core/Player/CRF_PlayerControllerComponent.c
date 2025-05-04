@@ -143,6 +143,8 @@ class CRF_PlayerControllerComponent : ScriptComponent
 	 */
 	void SpecCameraInit(vector cameraPos[4])
 	{
+		GetGame().GetCallqueue().CallLater(ResetSettingsToStoredValues, 500, false);
+		
 		m_RplToAuthorityManager = CRF_RplToAuthorityManager.GetInstance();
 		m_Gamemode = CRF_Gamemode.GetInstance();
 

@@ -104,16 +104,6 @@ class CRF_RplBroadcastManager : ScriptComponent
 	}
 	
 	//------------------------------------------------------------------------------------------------
-	void SendSpecClientInit(int playerId, vector cameraPos[4])
-	{
-		#ifdef WORKBENCH
-		RpcDo_SendSpecClientInit(playerId, cameraPos);
-		#else
-		Rpc(RpcDo_SendSpecClientInit, playerId, cameraPos);
-		#endif
-	}
-	
-	//------------------------------------------------------------------------------------------------
 	void SendRespawnScreen(int playerId)
 	{
 		#ifdef WORKBENCH
@@ -124,12 +114,12 @@ class CRF_RplBroadcastManager : ScriptComponent
 	}
 
 	//------------------------------------------------------------------------------------------------
-	void InitilizePlayer(int playerId)
+	void InitilizePlayerBroadcast(int playerId, bool isSpectator, vector cameraPos = vector.Zero)
 	{
 		#ifdef WORKBENCH
-		RpcDo_InitilizePlayerBroadcast(playerId);
+		RpcDo_InitilizePlayerBroadcast(playerId, isSpectator, cameraPos);
 		#else
-		Rpc(RpcDo_InitilizePlayerBroadcast, playerId);
+		Rpc(RpcDo_InitilizePlayerBroadcast, playerId, isSpectator, cameraPos);
 		#endif
 	}
 	
@@ -287,17 +277,7 @@ class CRF_RplBroadcastManager : ScriptComponent
 			return;
 		chatComponent.ShowMessage(data);
 	}
-	
-	//------------------------------------------------------------------------------------------------
-	[RplRpc(RplChannel.Reliable, RplRcver.Broadcast)]
-	void RpcDo_SendSpecClientInit(int playerId, vector cameraPos[4])
-	{
-		if (SCR_PlayerController.GetLocalPlayerId() != playerId)
-			return;
 
-		CRF_PlayerControllerComponent.GetInstance().SpecCameraInit(cameraPos);
-	}
-	
 	//------------------------------------------------------------------------------------------------
 	[RplRpc(RplChannel.Reliable, RplRcver.Broadcast)]
 	void RpcDo_SendRespawnScreen(int playerId)
@@ -318,12 +298,12 @@ class CRF_RplBroadcastManager : ScriptComponent
 	
 	//------------------------------------------------------------------------------------------------
 	[RplRpc(RplChannel.Reliable, RplRcver.Broadcast)]
-	void RpcDo_InitilizePlayerBroadcast(int playerId)
+	void RpcDo_InitilizePlayerBroadcast(int playerId, bool isSpectator, vector cameraPos)
 	{
 		if (SCR_PlayerController.GetLocalPlayerId() != playerId)
 			return;
 
-		CRF_PlayerControllerComponent.GetInstance().InitilizePlayerClient();
+		CRF_PlayerControllerComponent.GetInstance().InitilizeClient(isSpectator, cameraPos);
 	}
 
 	//------------------------------------------------------------------------------------------------

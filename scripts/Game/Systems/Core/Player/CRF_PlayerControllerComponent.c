@@ -381,11 +381,17 @@ class CRF_PlayerControllerComponent : ScriptComponent
 		{
 			case CRF_EGamemodeState.BRIEFING: 
 			{
+				if(!m_GamemodeManager.IsSpectator(SCR_PlayerController.GetLocalMainEntity()))
+					m_RplToAuthorityManager.RequestInitilizePlayer(SCR_PlayerController.GetLocalPlayerId());
+				
 				GetGame().GetMenuManager().OpenMenu(ChimeraMenuPreset.CRF_PreviewMenu);
 				break;
 			}
 			case CRF_EGamemodeState.SLOTTING:
 			{
+				if(!m_GamemodeManager.IsSpectator(SCR_PlayerController.GetLocalMainEntity()))
+					m_RplToAuthorityManager.RequestInitilizePlayer(SCR_PlayerController.GetLocalPlayerId());
+				
 				GetGame().GetMenuManager().OpenMenu(ChimeraMenuPreset.CRF_SlottingMenu);
 				break;
 			}
@@ -396,6 +402,9 @@ class CRF_PlayerControllerComponent : ScriptComponent
 			}
 			case CRF_EGamemodeState.AAR: 
 			{
+				if(!m_GamemodeManager.IsSpectator(SCR_PlayerController.GetLocalMainEntity()))
+					m_RplToAuthorityManager.RequestInitilizePlayer(SCR_PlayerController.GetLocalPlayerId());
+				
 				GetGame().GetMenuManager().OpenMenu(ChimeraMenuPreset.CRF_AARMenu);
 				break;
 			}

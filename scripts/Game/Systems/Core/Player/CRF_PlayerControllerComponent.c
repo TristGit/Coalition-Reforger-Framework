@@ -320,7 +320,6 @@ class CRF_PlayerControllerComponent : ScriptComponent
 	{
 		video.Set("MaxFps", fps);
 		GetGame().UserSettingsChanged();
-		PrintFormat("[CRF] User FPS Set to 30");
 	}
 	
 	/**
@@ -330,7 +329,6 @@ class CRF_PlayerControllerComponent : ScriptComponent
 	void GetInitialUserFPSValue(BaseContainer video)
 	{
 		video.Get("MaxFps", m_iFPS);
-		PrintFormat("[CRF] m_iFPS updated: %1", m_iFPS);
 	}
 	
 	/**
@@ -341,7 +339,6 @@ class CRF_PlayerControllerComponent : ScriptComponent
 		if (m_iFPS != -1)
 			return;
 		
-		PrintFormat("[CRF] Init FPSLock");
 		BaseContainer video = GetGame().GetEngineUserSettings().GetModule("VideoUserSettings");
 		GetInitialUserFPSValue(video);
 		SetFPS(video, 30);
@@ -352,7 +349,6 @@ class CRF_PlayerControllerComponent : ScriptComponent
 	 */
 	void ResetSettingsToStoredValues()
 	{
-		PrintFormat("[CRF] Resetting to default user settings");
 		BaseContainer video = GetGame().GetEngineUserSettings().GetModule("VideoUserSettings");
 		
 		// Restore FPS if initialized
@@ -373,7 +369,6 @@ class CRF_PlayerControllerComponent : ScriptComponent
 	 */
 	void OpenCurrentStateMenu()
 	{	
-		PrintFormat("[CRF] OpenCurrentStateMenu Default FPS: %1", m_iFPS);
 		m_RplToAuthorityManager = CRF_RplToAuthorityManager.GetInstance();
 		m_Gamemode = CRF_Gamemode.GetInstance();
 		
@@ -442,12 +437,16 @@ class CRF_PlayerControllerComponent : ScriptComponent
 	void AddMsgAction()
 	{
 		SCR_ChatPanelManager chatPanelManager = SCR_ChatPanelManager.GetInstance();
+		
 		ChatCommandInvoker invoker = chatPanelManager.GetCommandInvoker("admin");
 		invoker.Insert(SendAdminMessage);
+		
 		ChatCommandInvoker invoker2 = chatPanelManager.GetCommandInvoker("a");
 		invoker2.Insert(SendAdminMessage);
+		
 		ChatCommandInvoker invoker3 = chatPanelManager.GetCommandInvoker("r");
 		invoker3.Insert(ReplyAdminMessage);
+		
 		ChatCommandInvoker invoker4 = chatPanelManager.GetCommandInvoker("reply");
 		invoker4.Insert(ReplyAdminMessage);
 	}

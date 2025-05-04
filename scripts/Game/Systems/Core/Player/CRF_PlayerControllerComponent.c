@@ -16,8 +16,8 @@ class CRF_PlayerControllerComponent : ScriptComponent
 	IEntity m_eCamera;
 
 	bool m_bActivated = false;
-	int m_iFPS = -1;
-	int m_iAudioSetting = -1;
+	protected int m_iFPS = -1;
+	protected int m_iAudioSetting = -1;
 	private vector m_vStoredCameraPos[4];
 	Widget m_wSavedHintWidget;
 	
@@ -42,7 +42,6 @@ class CRF_PlayerControllerComponent : ScriptComponent
 	//------------------------------------------------------------------------------------------------
 	void InitilizePlayerControllerComp()
 	{
-
 		if (!GetGame().InPlayMode() || RplSession.Mode() == RplMode.Dedicated)
 			return;
 		
@@ -60,10 +59,12 @@ class CRF_PlayerControllerComponent : ScriptComponent
 		GetGame().GetCallqueue().CallLater(AddAdvanceAction, 1000, false);
 		
 		GetGame().GetCallqueue().CallLater(OpenCurrentStateMenu, 500, false);
+		GetGame().GetCallqueue().CallLater(InitFPSLock, 500, false);
+		GetGame().GetCallqueue().CallLater(InitAudioLock, 500, false);
 	}
 
 	//------------------------------------------------------------------------------------------------
-	void InitilizePlayer()
+	void InitilizePlayerClient()
 	{
 		//Call to server to enter slot and or get put into a initial entity to spectate
 		if (m_eCamera)
@@ -71,8 +72,7 @@ class CRF_PlayerControllerComponent : ScriptComponent
 
 		GetGame().GetMenuManager().CloseAllMenus();
 		
-		ResetSettingsToStoredValues();
-
+		GetGame().GetCallqueue().CallLater(ResetSettingsToStoredValues, 500, false);
 		GetGame().GetCallqueue().CallLater(SetupRadioFrequency, 1500, false);
 	}
 	
@@ -159,21 +159,6 @@ class CRF_PlayerControllerComponent : ScriptComponent
 		else
 			SCR_ScreenEffectsManager.GetScreenEffectsDisplay().RHS_SetHDR("{765A5E642D09A4B8}Common/Postprocess/HDR_Vanila.emat", false);
 	}
-	
-	//------------------------------------------------------------------------------------------------
-	void ResetSettingsToStoredValues()
-	{
-		BaseContainer video = GetGame().GetEngineUserSettings().GetModule("VideoUserSettings");
-		
-		if (m_iFPS != -1)
-			video.Set("MaxFps", m_iFPS);
-		GetGame().UserSettingsChanged();
-
-		if (m_iAudioSetting == -1)
-			AudioSystem.SetMasterVolume(AudioSystem.SFX, 100);
-		else
-			AudioSystem.SetMasterVolume(AudioSystem.SFX, m_iAudioSetting);
-	}
 
 	//------------------------------------------------------------------------------------------------
 	void SetupRadioFrequency()
@@ -224,9 +209,61 @@ class CRF_PlayerControllerComponent : ScriptComponent
 			von.SetTransmitRadio(pltTsv);
 	}
 	
+	void InitAudioLock()
+	{
+		if (m_iAudioSetting != -1)
+			return;
+		
+		m_iAudioSetting = AudioSystem.GetMasterVolume(AudioSystem.SFX);
+		SetSFXVolume(0);
+	}
+	void SetSFXVolume(int volume)
+	{
+		AudioSystem.SetMasterVolume(AudioSystem.SFX, volume);
+	}
+	
+	void SetFPS(BaseContainer video, int fps)
+	{
+		video.Set("MaxFps", fps);
+		GetGame().UserSettingsChanged();
+		PrintFormat("[CRF] User FPS Set to 30");
+	}
+	void GetInitialUserFPSValue(BaseContainer video)
+	{
+		video.Get("MaxFps", m_iFPS);
+		PrintFormat("[CRF] m_iFPS updated: %1",m_iFPS);
+	}
+	void InitFPSLock()
+	{
+		if (m_iFPS != -1)
+			return;
+		
+		PrintFormat("[CRF] Init FPSLock");
+		BaseContainer video = GetGame().GetEngineUserSettings().GetModule("VideoUserSettings");
+		GetInitialUserFPSValue(video);
+		SetFPS(video,30);
+	}
+	
+	void ResetSettingsToStoredValues()
+	{
+		PrintFormat("[CRF] Resetting to default user settings");
+		BaseContainer video = GetGame().GetEngineUserSettings().GetModule("VideoUserSettings");
+		
+		if (m_iFPS == -1)
+			return;
+		else
+			SetFPS(video, m_iFPS);
+		
+		if (m_iAudioSetting == -1)
+			return;
+		else
+			SetSFXVolume(m_iAudioSetting);
+	}
+	
 	//------------------------------------------------------------------------------------------------
 	void OpenCurrentStateMenu()
 	{	
+		PrintFormat("[CRF] OpenCurrentStateMenu Default FPS: %1",m_iFPS);
 		m_RplToAuthorityManager = CRF_RplToAuthorityManager.GetInstance();
 		m_Gamemode = CRF_Gamemode.GetInstance();
 		
@@ -238,24 +275,10 @@ class CRF_PlayerControllerComponent : ScriptComponent
 		//Opens menu based on current game state : )
 		switch (m_Gamemode.m_GamemodeState)
 		{
-			case CRF_EGamemodeState.BRIEFING: {GetGame().GetMenuManager().OpenMenu(ChimeraMenuPreset.CRF_PreviewMenu);						break; }
+			case CRF_EGamemodeState.BRIEFING: {GetGame().GetMenuManager().OpenMenu(ChimeraMenuPreset.CRF_PreviewMenu);					break; }
 			case CRF_EGamemodeState.SLOTTING:	{GetGame().GetMenuManager().OpenMenu(ChimeraMenuPreset.CRF_SlottingMenu);					break; }
 			case CRF_EGamemodeState.GAME: 	{m_RplToAuthorityManager.RequestInitilizePlayer(SCR_PlayerController.GetLocalPlayerId());		break; }
 			case CRF_EGamemodeState.AAR: 		{GetGame().GetMenuManager().OpenMenu(ChimeraMenuPreset.CRF_AARMenu);						break; }
-		}
-		if (m_Gamemode.m_GamemodeState != CRF_EGamemodeState.GAME)
-		{
-			BaseContainer video = GetGame().GetEngineUserSettings().GetModule("VideoUserSettings");
-			if (m_iFPS == -1)
-				video.Get("MaxFps", m_iFPS);
-			
-			video.Set("MaxFps", 30);
-			GetGame().UserSettingsChanged();
-			
-			if (m_iAudioSetting == -1)
-				m_iAudioSetting = AudioSystem.GetMasterVolume(AudioSystem.SFX);
-			
-			AudioSystem.SetMasterVolume(AudioSystem.SFX, 0);
 		}
 	}
 	
@@ -274,21 +297,6 @@ class CRF_PlayerControllerComponent : ScriptComponent
 				GetGame().GetMenuManager().CloseMenu(topMenu);
 
 		GetGame().GetMenuManager().OpenMenu(ChimeraMenuPreset.CRF_SlottingMenu);
-		if (m_Gamemode.m_GamemodeState != CRF_EGamemodeState.GAME)
-		{
-			BaseContainer video = GetGame().GetEngineUserSettings().GetModule("VideoUserSettings");
-			
-			if (m_iFPS)
-				video.Get("MaxFps", m_iFPS);
-			
-			video.Set("MaxFps", 30);
-			GetGame().UserSettingsChanged();
-			
-			if (m_iAudioSetting)
-				m_iAudioSetting = AudioSystem.GetMasterVolume(AudioSystem.SFX);
-			
-			AudioSystem.SetMasterVolume(AudioSystem.SFX, 0);
-		}
 	}	
 
 	//------------------------------------------------------------------------------------------------

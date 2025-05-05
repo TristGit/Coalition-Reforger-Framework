@@ -13,6 +13,11 @@ $grp Tank : "{24223D0679CDD612}Prefabs/Vehicles/Tracked/BFV/M2A2_OD.et" {
  }
 }
 Vehicle M923A1_engineer1 : "{2D74C39A650A3030}Prefabs/Vehicles/Wheeled/M923A1/M923A1_engineer.et" {
+ components {
+  SCR_VehicleFactionAffiliationComponent "{5882CBD9AC741CEC}" {
+   "faction affiliation" "BLUFOR"
+  }
+ }
  coords 3626.188 76.101 4331.586
  angleX 6.168
  angleY -0.677
@@ -63,6 +68,11 @@ SCR_AIGroup : "{3D4D53B053964445}Prefabs/Groups/BLUFOR/Standard/Command/CRF_BLUF
  }
 }
 Vehicle M923A1_ammo1 : "{92264FF932676C13}Prefabs/Vehicles/Wheeled/M923A1/M923A1_ammo.et" {
+ components {
+  SCR_VehicleFactionAffiliationComponent "{5882CBD9AC741CEC}" {
+   "faction affiliation" "BLUFOR"
+  }
+ }
  coords 3621.222 75.574 4331.571
  angleX 6.146
  angleY -0.771

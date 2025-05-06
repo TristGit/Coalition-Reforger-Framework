@@ -215,20 +215,7 @@ class CRF_SlottingManager : ScriptComponent
 		if(!slotData || !slotData.GetSlotCurrentCharacter() || slotData.GetSlotCurrentCharacter() == RplId.Invalid() || !Replication.FindItem(slotData.GetSlotCurrentCharacter()))
 			return null;
 		
-		// Get ChimeraCharacter so we can pull the controller
-		SCR_ChimeraCharacter character = SCR_ChimeraCharacter.Cast(RplComponent.Cast(Replication.FindItem(slotData.GetSlotCurrentCharacter())).GetEntity());
-		
-		if (!character)
-			return null;
-	
-		// Get the controller from the character
-		CharacterControllerComponent controller = character.GetCharacterController();
-	
-		// If the character is a valid character and is not dead then return that this guys character
-		if (controller && !controller.IsDead())
-			return character;
-		else
-			return null;
+		return SCR_ChimeraCharacter.Cast(RplComponent.Cast(Replication.FindItem(slotData.GetSlotCurrentCharacter())).GetEntity());
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -406,6 +393,31 @@ class CRF_SlottingManager : ScriptComponent
 			if (playersInGroup == 0)
 				group.SetPrivate(true);
 		}
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	SCR_ChimeraCharacter SpawnPlayableEntity(int playerId, vector overrideLocation)
+	{
+		int slotId = GetPlayerSlotID(playerId);
+
+		EntitySpawnParams spawnParams = new EntitySpawnParams();
+		spawnParams.TransformMode = ETransformMode.WORLD;
+		
+		if (overrideLocation != vector.Zero)
+			spawnParams.Transform[3] = overrideLocation;
+		else
+			GetPlayerSlotVector(playerId, spawnParams.Transform);
+		
+		SCR_ChimeraCharacter playerCharacter = SCR_ChimeraCharacter.Cast(GetGame().SpawnEntityPrefab(Resource.Load(GetPlayerSlotResource(playerId)), GetGame().GetWorld(), spawnParams));
+	
+		UpdateSlotCharacter(slotId, RplComponent.Cast(playerCharacter.FindComponent(RplComponent)).Id());
+		UpdateSlotDeathState(slotId, false);
+		
+		CRF_PlayableCharacter playabeCharComp = CRF_PlayableCharacter.Cast(playerCharacter.FindComponent(CRF_PlayableCharacter));
+		if (playabeCharComp)
+			playabeCharComp.SetIsSlotSpawned();
+		
+		return playerCharacter;
 	}
 	
 	//------------------------------------------------------------------------------------------------

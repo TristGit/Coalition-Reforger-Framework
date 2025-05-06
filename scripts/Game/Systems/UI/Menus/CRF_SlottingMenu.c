@@ -1023,6 +1023,10 @@ class CRF_SlottingMenuUI: ChimeraMenuBase
 		int selectedSlotId = m_cSlotListBoxComponent.GetCRFElementComponent(
 			m_cSlotListBoxComponent.GetSelectedItem()).m_iSlotId;
 		
+		SCR_AIGroup tempGroup = SCR_AIGroup.Cast(RplComponent.Cast(Replication.FindItem(CRF_SlottingManager.GetInstance().GetSlotData(selectedSlotId).GetSlotCurrentGroup())).GetEntity());
+		if(tempGroup.IsPrivate())
+			return;
+		
 		bool isCurrentlyLocked = CRF_SlottingManager.GetInstance().GetSlotData(selectedSlotId).GetIsLockedSlot();
 		
 		// Toggle slot lock state

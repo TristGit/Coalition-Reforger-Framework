@@ -283,7 +283,8 @@ class CRF_RespawnManager : ScriptComponent
 		// If no spawn location found, enter spectator mode
 		if (spawnLocation == vector.Zero)
 		{
-			m_GamemodeManager.EnterSpectator(playerId);
+			m_SlottingManager.UpdateSlotDeathState(m_SlottingManager.GetPlayerSlotID(playerId), true);
+			m_GamemodeManager.InitilizePlayer(playerId);
 			return;
 		}
 
@@ -291,6 +292,7 @@ class CRF_RespawnManager : ScriptComponent
 		SCR_WorldTools.FindEmptyTerrainPosition(finalSpawnLocation, spawnLocation, 10);
 		
 		// Respawn the player
+		m_SlottingManager.UpdateSlotDeathState(m_SlottingManager.GetPlayerSlotID(playerId), false);
 		m_GamemodeManager.InitilizePlayer(playerId, finalSpawnLocation);
 	}
 }

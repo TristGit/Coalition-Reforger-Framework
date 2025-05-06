@@ -8,6 +8,7 @@ CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et
   }
  }
  coords 1006.725 2.844 6030.713
+ EnableAIInGameState 1
  m_aMissionDescriptors {
   CRF_MissionDescriptor "{644250503DF684C0}" {
    m_sTextData "Everonian insurgents have kidnapped a high ranking political figure. SIGINT reports phone calls have been recorded and we believe he is being tortured at or near the church in Motignac. "\
@@ -30,7 +31,7 @@ CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et
   m_rGearScript "{6B7654B579240E36}Configs/Gearscripts/Standard/Modern/CRF_GS_CHDKz.conf"
  }
  {
-  SCR_FactionManager {
+  SCR_FactionManager "65497637934C2FFD" {
    ID "632A77473B3CC3A8"
    Factions {
     SCR_Faction "{628B22E9B4056C88}" {

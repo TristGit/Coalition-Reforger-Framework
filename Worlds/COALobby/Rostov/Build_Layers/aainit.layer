@@ -16,6 +16,7 @@ CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et
  }
  coords 3964.747 117.719 4002.939
  m_iTimeLimitMinutes 60
+ EnableAIInGameState 1
  m_aMissionDescriptors {
   CRF_MissionDescriptor "{632771FB5C619E1C}" {
    m_sTitle "Welcome / How to Play"

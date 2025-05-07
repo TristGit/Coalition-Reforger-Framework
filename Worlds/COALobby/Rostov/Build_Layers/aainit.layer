@@ -15,7 +15,7 @@ CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et
   }
  }
  coords 3964.747 117.719 4002.939
- m_iTimeLimitMinutes 60
+ m_iTimeLimitMinutes 70
  EnableAIInGameState 1
  m_aMissionDescriptors {
   CRF_MissionDescriptor "{632771FB5C619E1C}" {
@@ -411,16 +411,16 @@ CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et
       }
       m_aSquadNames {
        SCR_CallsignInfo "{55CCB79287E901BC}" {
-        m_sCallsign "1PLT"
+        m_sCallsign "OPFOR"
        }
        SCR_CallsignInfo "{55CCB79287936EBD}" {
-        m_sCallsign "1-1"
+        m_sCallsign "OPFOR"
        }
        SCR_CallsignInfo "{55CCB79287BAFBD6}" {
-        m_sCallsign "1-2"
+        m_sCallsign "OPFOR"
        }
        SCR_CallsignInfo "{55CCB79287A4D7B6}" {
-        m_sCallsign "1-3"
+        m_sCallsign "OPFOR"
        }
       }
       m_sCallsignGroupFormat "%3"
@@ -673,7 +673,12 @@ PS_ManualMarker : "{7B677FB61E410D0D}PrefabsEditable/Markers/ObjectiveMarker.et"
  m_MarkerColor 0.812 0.016 0.01 1
  m_sDescription "Soviet HQ"
  m_bUseWorldScale 0
+ m_bVisibleForEmptyFaction 1
+ m_bShowForAnyFaction 1
 }
 PS_ManualMarker : "{E256B56F799AEB41}PrefabsEditable/Markers/BLUFORSpawnMarker.et" {
  coords 3660.928 77.123 4306.247
+ m_bUseWorldScale 0
+ m_bVisibleForEmptyFaction 1
+ m_bShowForAnyFaction 1
 }

@@ -105,7 +105,7 @@ class CRF_PlayerControllerComponent : ScriptComponent
 		
 			// Schedule delayed initialization of player-specific settings
 			GetGame().GetCallqueue().CallLater(ResetSettingsToStoredValues, 500, false);
-			GetGame().GetCallqueue().CallLater(SetupRadioFrequency, 2500, false);
+			GetGame().GetCallqueue().CallLater(SetupRadioFrequency, 2750, false);
 		};
 		
 		if (IsSpectator)
@@ -151,10 +151,6 @@ class CRF_PlayerControllerComponent : ScriptComponent
 			// Clean up previous camera if exists
 			if (m_eCamera)
 				delete m_eCamera;
-			
-			int groupId = CRF_SlottingManager.GetInstance().GetPlayerSlotGroup(SCR_PlayerController.GetLocalPlayerId()).GetGroupID();
-			
-			SCR_PlayerControllerGroupComponent.GetPlayerControllerComponent(SCR_PlayerController.GetLocalPlayerId()).RequestJoinGroup(groupId);
 			
 			// Reset Stored Pos
 			GetGame().GetCallqueue().CallLater(UpdateStoredCameraPos, 1275, false, vector.Zero, vector.Zero, vector.Zero, vector.Zero);
@@ -619,7 +615,7 @@ class CRF_PlayerControllerComponent : ScriptComponent
 	 */
 	void Advance_Callback(SCR_ChatPanel panel, string data)
 	{
-		m_RplToAuthorityManager.RequestAdvanceGamemodeState();
+		m_RplToAuthorityManager.RequestAdvanceGamemodeState(true);
 	}
 	
 	//------------------------------------------------------------------------------------------------

@@ -94,8 +94,6 @@ class CRF_GamemodeManager : SCR_BaseGameModeComponent
 				playerCharacter = m_SlottingManager.SpawnPlayableEntity(playerId, overrideLocation);
 			
 			faction = m_SlottingManager.GetPlayerSlotFaction(playerId);
-			
-			SCR_PlayerControllerGroupComponent.GetPlayerControllerComponent(playerId).RequestJoinGroup(m_SlottingManager.GetPlayerSlotGroup(playerId).GetGroupID());
 		}
 		
 		if (playerCharacter && playerController)
@@ -104,6 +102,17 @@ class CRF_GamemodeManager : SCR_BaseGameModeComponent
 		if (faction && playerController)
 			SCR_PlayerFactionAffiliationComponent.Cast(playerController.FindComponent(SCR_PlayerFactionAffiliationComponent)).RequestFaction(faction);
 
+		if(!isSpectator)
+		{
+			int groupId = m_SlottingManager.GetPlayerSlotGroup(playerId).GetGroupID();
+			
+			if (groupId != -1)
+			{
+				m_GroupsManagerComponent.AddPlayerToGroup(groupId, playerId);
+				SCR_PlayerControllerGroupComponent.GetPlayerControllerComponent(playerId).RequestJoinGroup(groupId);
+			};
+		};
+		
 		m_RplBroadcastManager.InitilizePlayerBroadcast(playerId, isSpectator);
 	}
 	

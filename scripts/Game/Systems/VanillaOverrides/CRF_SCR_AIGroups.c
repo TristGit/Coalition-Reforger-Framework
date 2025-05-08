@@ -1,5 +1,11 @@
 modded class SCR_AIGroup
 {
+	[Attribute("0", category: "Group")]
+	protected bool m_bIsPlayable;
+	
+	[Attribute("0", UIWidgets.SearchComboBox, enums: ParamEnumArray.FromEnum(CRF_EFlagType), category: "Group")]
+	protected CRF_EFlagType m_FlagType;
+	
 	protected bool m_bIsPlayableGroup;
 	protected SCR_AIGroup m_NewGroup;
 	
@@ -13,7 +19,7 @@ modded class SCR_AIGroup
 		SCR_GroupsManagerComponent groupsManager = SCR_GroupsManagerComponent.GetInstance();
 		
 		// Skip processing if not in play mode or if gamemode doesn't exist
-		if (!GetGame().InPlayMode() || !gamemode || !groupsManager || !Replication.IsServer())
+		if (!m_bIsPlayable || !GetGame().InPlayMode() || !gamemode || !groupsManager || !Replication.IsServer())
 			return;
 		
 		// In GAME state and AI is enabled in GAME state
@@ -26,46 +32,45 @@ modded class SCR_AIGroup
 			SetDeleteWhenEmpty(true);
 		} else {
 			GetOnAllDelayedEntitySpawned().Insert(AllMembersSpawned);
-			GetGame().GetCallqueue().CallLater(ConvertGroupToPlayable, 250, false);
+			GetGame().GetCallqueue().CallLater(CreateNewGroup, 150, false);
 		};
 	}
 	
 	//------------------------------------------------------------------------------------------------
-	void ConvertGroupToPlayable()
+	void CreateNewGroup()
 	{
 		if(m_bIsPlayableGroup)
 			return;
 		
+		SCR_Faction scrFaction = SCR_Faction.Cast(GetFaction());
+		if(scrFaction)
+		{
+			TStringArray flagArray = {};
+			scrFaction.GetFlagNames(flagArray);
+			if((flagArray.Count() - 1) < m_FlagType)
+				m_FlagType = CRF_EFlagType.INFANTRY
+		}
+		
 		m_NewGroup = SCR_GroupsManagerComponent.GetInstance().CreateNewPlayableGroup(GetFaction());
 		m_NewGroup.SetFaction(GetFaction());
+		m_NewGroup.SetGroupFlag(m_FlagType, true);
 		m_NewGroup.SetCanDeleteIfNoPlayer(false);
 		m_NewGroup.SetDeleteWhenEmpty(false);
 		m_NewGroup.SetMaxMembers(GetMaxMembers());
 		m_NewGroup.SetIsPlayableGroup();
-		
-		/*
-		SCR_GroupIdentityComponent oldGroupIdent = SCR_GroupIdentityComponent.Cast(this.FindComponent(SCR_GroupIdentityComponent));
-		SCR_GroupIdentityComponent newGroupIdent = SCR_GroupIdentityComponent.Cast(m_NewGroup.FindComponent(SCR_GroupIdentityComponent));
-		
-		if (oldGroupIdent && newGroupIdent)
-		{			
-			newGroupIdent.GetMilitarySymbol().CopyFrom(oldGroupIdent.GetMilitarySymbol());
-			newGroupIdent.UpdateIdentity();
-		};
-		*/
 	}
 	
 	//------------------------------------------------------------------------------------------------
 	void AllMembersSpawned(SCR_AIGroup group)
 	{
-		GetGame().GetCallqueue().CallLater(ConvertSlotsToPlayableGroup, 350, false);
+		GetGame().GetCallqueue().CallLater(ConvertSlotsToNewGroup, 350, false);
 		GetOnAllDelayedEntitySpawned().Remove(AllMembersSpawned);
 	};
 	
 	//------------------------------------------------------------------------------------------------
-	void ConvertSlotsToPlayableGroup()
+	void ConvertSlotsToNewGroup()
 	{
-		if (m_bIsPlayableGroup && m_NewGroup)
+		if (m_bIsPlayableGroup)
 			return;
 		
 		CRF_SlottingManager slottingManager = CRF_SlottingManager.GetInstance();
@@ -168,4 +173,32 @@ modded class SCR_AIGroup
 			}
 		}
 	}
+}
+
+enum CRF_EFlagType
+{
+	INFANTRY = 0,
+	AMPHIBIOUS,
+	ANTI_AIR,
+	ANTI_AIR_ARTILERY,
+	ANTI_ARMOR_MOTORIZED,
+	ANTI_ARMOR,
+	ARMORED,
+	ARTILLERY,
+	COMBINED,
+	HELICOPER,
+	ATTACK_HELICOPTER,
+	INFANTRY_AIR,
+	MACHINEGUN,
+	MAINTENANCE,
+	MEDICAL,
+	MORTAR,
+	MOTORIZED,
+	MOTORIZED_INFANTRY,
+	RECON,
+	RECON_MOTORIZED,
+	SIGNAL,
+	SNIPER,
+	SUPPLY_MOTORIZED,
+	UNDEFINED,
 }

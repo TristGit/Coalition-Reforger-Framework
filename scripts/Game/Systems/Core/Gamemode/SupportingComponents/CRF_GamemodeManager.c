@@ -80,6 +80,10 @@ class CRF_GamemodeManager : SCR_BaseGameModeComponent
 			faction = GetGame().GetFactionManager().GetFactionByKey("SPEC");
 			isSpectator = true;
 			
+			SCR_AIGroup currentGroup = m_GroupsManagerComponent.GetPlayerGroup(playerId);
+			if (currentGroup)
+				currentGroup.RemovePlayer(playerId);
+			
 			SCR_CharacterDamageManagerComponent damManager = SCR_CharacterDamageManagerComponent.Cast(playerCharacter.FindComponent(SCR_CharacterDamageManagerComponent)); 
 			if (damManager)
 				damManager.EnableDamageHandling(false);
@@ -90,6 +94,8 @@ class CRF_GamemodeManager : SCR_BaseGameModeComponent
 				playerCharacter = m_SlottingManager.SpawnPlayableEntity(playerId, overrideLocation);
 			
 			faction = m_SlottingManager.GetPlayerSlotFaction(playerId);
+			
+			SCR_PlayerControllerGroupComponent.GetPlayerControllerComponent(playerId).RequestJoinGroup(m_SlottingManager.GetPlayerSlotGroup(playerId).GetGroupID());
 		}
 		
 		if (playerCharacter && playerController)

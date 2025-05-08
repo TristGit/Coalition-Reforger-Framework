@@ -105,7 +105,7 @@ class CRF_PlayerControllerComponent : ScriptComponent
 		
 			// Schedule delayed initialization of player-specific settings
 			GetGame().GetCallqueue().CallLater(ResetSettingsToStoredValues, 500, false);
-			GetGame().GetCallqueue().CallLater(SetupRadioFrequency, 1500, false);
+			GetGame().GetCallqueue().CallLater(SetupRadioFrequency, 2500, false);
 		};
 		
 		if (IsSpectator)

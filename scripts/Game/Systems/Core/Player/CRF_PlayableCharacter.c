@@ -29,18 +29,16 @@ class CRF_PlayableCharacter : ScriptComponent
 
 		if (!GetGame().InPlayMode() 
 		 || !m_Gamemode 
+		 || !m_bIsPlayable
 		 || (m_Gamemode.m_GamemodeState == CRF_EGamemodeState.GAME && m_Gamemode.EnableAIInGameState && !CRF_GamemodeManager.IsSpectator(owner)))
 			return;
 
-		if (m_bIsPlayable)
-		{
-			// Get all managers we need
-			m_SlottingManager = CRF_SlottingManager.GetInstance();
-			m_PlayerControllerComponent = CRF_PlayerControllerComponent.GetInstance();
-			m_PossessingManagerComponent = SCR_PossessingManagerComponent.GetInstance();
-			
-			GetGame().GetCallqueue().CallLater(SetInitialEntity, 100, false, owner);
-		};
+		// Get all managers we need
+		m_SlottingManager = CRF_SlottingManager.GetInstance();
+		m_PlayerControllerComponent = CRF_PlayerControllerComponent.GetInstance();
+		m_PossessingManagerComponent = SCR_PossessingManagerComponent.GetInstance();
+		
+		GetGame().GetCallqueue().CallLater(SetInitialEntity, 100, false, owner);
 	}
 	
 	//------------------------------------------------------------------------------------------------

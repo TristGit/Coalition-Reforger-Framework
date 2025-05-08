@@ -1,27 +1,7 @@
 //------------------------------------------------------------------------------------
 // CRF_GamemodeClass: Base class definition for the Coalition Reforger Framework Gamemode
 //------------------------------------------------------------------------------------
-class CRF_GamemodeClass : SCR_BaseGameModeClass
-{
-}
-
-//------------------------------------------------------------------------------------
-// Enumerations for game state tracking
-//------------------------------------------------------------------------------------
-enum CRF_EGamemodeState
-{
-	BRIEFING,   // Initial mission briefing phase
-	SLOTTING,   // Player role selection phase
-	GAME,       // Active gameplay phase
-	AAR         // After Action Report phase
-}
-
-enum CRF_ESlottingState
-{
-	LEADERSANDMEDICS,  // Only leaders and medics can select slots
-	SPECIALTIES,       // Specialist roles become available
-	EVERYONE           // All roles available to all players
-}
+class CRF_GamemodeClass : SCR_BaseGameModeClass {}
 
 //------------------------------------------------------------------------------------
 // Mission briefing descriptor for displaying mission information

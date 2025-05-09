@@ -83,8 +83,8 @@ class CRF_PlayerControllerComponent : ScriptComponent
 		
 		// Schedule delayed initialization
 		GetGame().GetCallqueue().CallLater(AddMsgAction, 1000, false);
-		GetGame().GetCallqueue().CallLater(InitFPSLock, 500, false);
-		GetGame().GetCallqueue().CallLater(InitAudioLock, 500, false);
+		GetGame().GetCallqueue().CallLater(InitFPSLock, 100, false);
+		GetGame().GetCallqueue().CallLater(InitAudioLock, 100, false);
 		GetGame().GetCallqueue().CallLater(OpenCurrentStateMenu, 500, false);
 	}
 
@@ -104,7 +104,7 @@ class CRF_PlayerControllerComponent : ScriptComponent
 			GetGame().GetMenuManager().CloseAllMenus();
 		
 			// Schedule delayed initialization of player-specific settings
-			GetGame().GetCallqueue().CallLater(ResetSettingsToStoredValues, 500, false);
+			GetGame().GetCallqueue().CallLater(ResetSettingsToStoredValues, 100, false);
 			GetGame().GetCallqueue().CallLater(SetupRadioFrequency, 2750, false);
 		};
 		
@@ -333,11 +333,8 @@ class CRF_PlayerControllerComponent : ScriptComponent
 	 */
 	void InitFPSLock()
 	{
-		if (m_iFPS != -1)
-			return;
-		
 		BaseContainer video = GetGame().GetEngineUserSettings().GetModule("VideoUserSettings");
-		GetInitialUserFPSValue(video);
+		//GetInitialUserFPSValue(video);
 		SetFPS(video, 30);
 	}
 	
@@ -349,12 +346,10 @@ class CRF_PlayerControllerComponent : ScriptComponent
 		BaseContainer video = GetGame().GetEngineUserSettings().GetModule("VideoUserSettings");
 		
 		// Restore FPS if initialized
-		if (m_iFPS != -1)
-			SetFPS(video, m_iFPS);
+		SetFPS(video, 0);
 		
 		// Restore audio if initialized
-		if (m_iAudioSetting != -1)
-			SetSFXVolume(m_iAudioSetting);
+		SetSFXVolume(m_iAudioSetting);
 	}
 	
 	//------------------------------------------------------------------------------------------------

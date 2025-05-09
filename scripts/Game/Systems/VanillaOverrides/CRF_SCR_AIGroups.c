@@ -9,6 +9,7 @@ modded class SCR_AIGroup
 	protected bool m_bIsPlayableGroup;
 	protected SCR_AIGroup m_NewGroup;
 	
+	//------------------------------------------------------------------------------------------------
 	//! Called when the entity is initialized
 	override void EOnInit(IEntity owner)
 	{
@@ -19,7 +20,7 @@ modded class SCR_AIGroup
 		SCR_GroupsManagerComponent groupsManager = SCR_GroupsManagerComponent.GetInstance();
 		
 		// Skip processing if not in play mode or if gamemode doesn't exist
-		if (!m_bIsPlayable || !GetGame().InPlayMode() || !gamemode || !groupsManager || !Replication.IsServer())
+		if (!IsGroupPlayable() || !GetGame().InPlayMode() || !gamemode || !groupsManager || !Replication.IsServer())
 			return;
 		
 		// In GAME state and AI is enabled in GAME state
@@ -37,13 +38,19 @@ modded class SCR_AIGroup
 	}
 	
 	//------------------------------------------------------------------------------------------------
+	bool IsGroupPlayable()
+	{
+		return m_bIsPlayable;
+	}
+	
+	//------------------------------------------------------------------------------------------------
 	void CreateNewGroup()
 	{
 		if(m_bIsPlayableGroup)
 			return;
 		
 		SCR_Faction scrFaction = SCR_Faction.Cast(GetFaction());
-		if(scrFaction)
+		if(scrFaction && scrFaction.GetFlagName(0))
 		{
 			TStringArray flagArray = {};
 			scrFaction.GetFlagNames(flagArray);

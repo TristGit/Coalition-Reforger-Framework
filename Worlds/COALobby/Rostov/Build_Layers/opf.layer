@@ -1,5 +1,6 @@
 SCR_AIGroup : "{4A33E944FA83F988}Prefabs/Groups/CIV/Zeus/CRF_CIV_Zeus.et" {
  coords 5207.7 166.729 3203.007
+ m_bIsPlayable 1
 }
 $grp Vehicle : "{6E9142CD2471741C}Prefabs/Vehicles/Wheeled/Ural4320/Ural4320_engineer.et" {
  Ural4320_engineer1 {

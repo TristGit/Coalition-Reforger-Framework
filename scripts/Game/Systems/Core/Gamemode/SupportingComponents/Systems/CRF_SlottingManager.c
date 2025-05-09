@@ -434,6 +434,9 @@ class CRF_SlottingManager : ScriptComponent
 		SCR_EditableCharacterComponent editableCharComp = SCR_EditableCharacterComponent.Cast(entity.FindComponent(SCR_EditableCharacterComponent));
 		SCR_AIGroup group = SCR_AIGroup.Cast(ChimeraAIControlComponent.Cast(entity.FindComponent(ChimeraAIControlComponent)).GetControlAIAgent().GetParentGroup());
 		
+		if(!group.IsGroupPlayable())
+			return;
+		
 		CRF_SlotDataContainer slotData = new CRF_SlotDataContainer;
 		
 		if(group)

@@ -292,9 +292,6 @@ class CRF_PlayerControllerComponent : ScriptComponent
 	 */
 	void InitAudioLock()
 	{
-		if (m_iAudioSetting != -1)
-			return;
-		
 		m_iAudioSetting = AudioSystem.GetMasterVolume(AudioSystem.SFX);
 		SetSFXVolume(0);
 	}
@@ -349,7 +346,7 @@ class CRF_PlayerControllerComponent : ScriptComponent
 		SetFPS(video, 0);
 		
 		// Restore audio if initialized
-		SetSFXVolume(m_iAudioSetting);
+		SetSFXVolume(100);
 	}
 	
 	//------------------------------------------------------------------------------------------------

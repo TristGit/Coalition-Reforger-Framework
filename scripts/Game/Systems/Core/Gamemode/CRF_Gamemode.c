@@ -370,26 +370,19 @@ class CRF_Gamemode : SCR_BaseGameMode
 	{
 		super.OnControllableSpawned(entity);
 		
-		// Ensure gearscript manager is available
-		if (!m_GearscriptManager)
-			m_GearscriptManager = CRF_GearscriptManager.GetInstance();
-		
-		// Set delay based on gamemode state
-		int delay = 150;
-		if (m_GamemodeState != CRF_EGamemodeState.GAME && !m_GamemodeManager.IsSpectator(entity))
-		{
-			entity.GetWorldTransform(m_vGenericSpawn);
-			delay = 2000;
-		}
-		
 		// Apply gearscript if in play mode and not on client
-		if (GetGame().InPlayMode() && RplSession.Mode() != RplMode.Client && entity && entity.GetPrefabData())
+		if (GetGame().InPlayMode() && RplSession.Mode() != RplMode.Client && entity && entity.GetPrefabData() && !m_GamemodeManager.IsSpectator(entity))
 		{
+			// Ensure gearscript manager is available
+			if (!m_GearscriptManager)
+				m_GearscriptManager = CRF_GearscriptManager.GetInstance();
+			
+			// Update generic spawnpoint for spectator cameras
+			entity.GetWorldTransform(m_vGenericSpawn);
+			
 			// Schedule gear setup with appropriate delay
-			GetGame().GetCallqueue().CallLater(
-				m_GearscriptManager.SetupAddGearToEntity, 
-				delay, 
-				false, 
+			GetGame().GetCallqueue().Call(
+				m_GearscriptManager.SetEntityGear, 
 				entity, 
 				entity.GetPrefabData().GetPrefabName()
 			);

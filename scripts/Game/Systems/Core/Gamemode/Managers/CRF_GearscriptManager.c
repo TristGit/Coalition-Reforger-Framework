@@ -560,6 +560,17 @@ class CRF_GearscriptManager : ScriptComponent
 				SCR_EntityHelper.DeleteEntityAndChildren(resourceSpawned);
 				continue;
 			};
+			
+			if (isThrowable)
+			{
+				bool spawned = inventoryManager.TrySpawnPrefabToStorage(item, null, -1, EStoragePurpose.PURPOSE_WEAPON_PROXY);
+				if(!spawned)
+					InsertInventoryItem(resourceSpawned, inventory, inventoryManager, role, isAssistant, isThrowable);
+				else 
+					SCR_EntityHelper.DeleteEntityAndChildren(resourceSpawned);
+				
+				continue;
+			};
 
 			if (inventoryManager.CanInsertItem(resourceSpawned, EStoragePurpose.PURPOSE_EQUIPMENT_ATTACHMENT))
 			{
@@ -569,22 +580,6 @@ class CRF_GearscriptManager : ScriptComponent
 			};
 
 			InsertInventoryItem(resourceSpawned, inventory, inventoryManager, role, isAssistant, isThrowable);
-
-			if (isThrowable)
-			{
-				CharacterGrenadeSlotComponent grenadeSlot = CharacterGrenadeSlotComponent.Cast(inventoryManager.GetOwner().FindComponent(CharacterGrenadeSlotComponent));
-
-				if (grenadeSlot && !grenadeSlot.GetWeaponEntity())
-				{
-					if (WeaponComponent.Cast(resourceSpawned.FindComponent(WeaponComponent)).GetWeaponType() == EWeaponType.WT_FRAGGRENADE)
-					{
-						grenadeSlot.SetWeapon(resourceSpawned);
-					} else {
-						if (WeaponComponent.Cast(resourceSpawned.FindComponent(WeaponComponent)).GetWeaponType() == EWeaponType.WT_SMOKEGRENADE && !grenadeSlot.GetWeaponEntity())
-							grenadeSlot.SetWeapon(resourceSpawned);
-					};
-				};
-			};
 		}
 	}
 

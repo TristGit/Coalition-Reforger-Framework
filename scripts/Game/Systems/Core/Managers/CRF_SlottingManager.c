@@ -224,7 +224,7 @@ class CRF_SlottingManager : ScriptComponent
 		if(GetPlayerSlotData(playerId) && (!(GetPlayerSlotData(playerId).GetSlotFactionKey()).IsEmpty()))
 			return GetGame().GetFactionManager().GetFactionByKey(GetPlayerSlotData(playerId).GetSlotFactionKey());
 		else
-			return null;
+			return GetGame().GetFactionManager().GetFactionByKey("CIV");
 	}
 	
 	//------------------------------------------------------------------------------------------------

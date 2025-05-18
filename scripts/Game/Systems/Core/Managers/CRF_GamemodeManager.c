@@ -97,12 +97,12 @@ class CRF_GamemodeManager : SCR_BaseGameModeComponent
 			
 			faction = m_SlottingManager.GetPlayerSlotFaction(playerId);
 		}
-		
-		if (playerCharacter && playerController)
-			playerController.SetInitialMainEntity(playerCharacter);
 
 		if (faction && playerController)
 			SCR_PlayerFactionAffiliationComponent.Cast(playerController.FindComponent(SCR_PlayerFactionAffiliationComponent)).RequestFaction(faction);
+		
+		if (playerCharacter && playerController)
+			playerController.SetInitialMainEntity(playerCharacter);
 
 		if(!isSpectator)
 		{

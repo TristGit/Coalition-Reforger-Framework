@@ -319,7 +319,7 @@ class CRF_RplBroadcastManager : ScriptComponent
 		if (!widget)
 			return;
 		
-		CRF_PlayerControllerComponent playerControllerComp = CRF_PlayerControllerComponent.GetInstance();
+		CRF_PlayerControllerManager playerControllerComp = CRF_PlayerControllerManager.GetInstance();
 
 		if (playerControllerComp.m_wSavedHintWidget)
 			delete playerControllerComp.m_wSavedHintWidget;
@@ -379,7 +379,7 @@ class CRF_RplBroadcastManager : ScriptComponent
 		if (SCR_PlayerController.GetLocalPlayerId() != playerId)
 			return;
 
-		CRF_PlayerControllerComponent.GetInstance().InitilizePlayerClient(isSpectator);
+		CRF_PlayerControllerManager.GetInstance().InitilizePlayerClient(isSpectator);
 	}
 
 	//------------------------------------------------------------------------------------------------

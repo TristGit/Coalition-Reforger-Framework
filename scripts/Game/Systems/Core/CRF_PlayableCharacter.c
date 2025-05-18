@@ -17,7 +17,7 @@ class CRF_PlayableCharacter : ScriptComponent
 	
 	protected CRF_Gamemode m_Gamemode;
 	protected CRF_SlottingManager m_SlottingManager;
-	protected CRF_PlayerControllerComponent m_PlayerControllerComponent;
+	protected CRF_PlayerControllerManager m_PlayerControllerComponent;
 	protected SCR_PossessingManagerComponent m_PossessingManagerComponent;
 
 	//------------------------------------------------------------------------------------------------
@@ -35,7 +35,7 @@ class CRF_PlayableCharacter : ScriptComponent
 
 		// Get all managers we need
 		m_SlottingManager = CRF_SlottingManager.GetInstance();
-		m_PlayerControllerComponent = CRF_PlayerControllerComponent.GetInstance();
+		m_PlayerControllerComponent = CRF_PlayerControllerManager.GetInstance();
 		m_PossessingManagerComponent = SCR_PossessingManagerComponent.GetInstance();
 		
 		GetGame().GetCallqueue().CallLater(SetInitialEntity, 100, false, owner);

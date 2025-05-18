@@ -183,7 +183,7 @@ class CRF_SpectatorMenuUI: ChimeraMenuBase
 	void UpdateCompass()
 	{
 		// Get camera yaw angle
-		float yaw = -CRF_PlayerControllerComponent.GetInstance().m_eCamera.GetYawPitchRoll()[0];
+		float yaw = -CRF_PlayerControllerManager.GetInstance().m_eCamera.GetYawPitchRoll()[0];
 		float yawFloat = -yaw;
 		
 		// Convert negative angles to 0-360 range
@@ -244,7 +244,7 @@ class CRF_SpectatorMenuUI: ChimeraMenuBase
 	 */
 	protected void UpdateSpectatorCamera(float tDelta)
 	{
-		CRF_PlayerControllerComponent playerControllerComp = CRF_PlayerControllerComponent.GetInstance();
+		CRF_PlayerControllerManager playerControllerComp = CRF_PlayerControllerManager.GetInstance();
 		
 		if (m_eSpecEntity)
 		{

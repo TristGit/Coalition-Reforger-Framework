@@ -14,7 +14,7 @@ class CRF_AdminMenu : ChimeraMenuBase
 	//-----------------------------------------------------------------------------
 	
 	// Core components
-	protected CRF_PlayerControllerComponent m_clientComponent;
+	protected CRF_PlayerControllerManager m_clientComponent;
 	protected InputManager m_InputManager;
 	protected SCR_ChatPanel m_ChatPanel;
 	protected bool m_bFocused = true;
@@ -92,7 +92,7 @@ class CRF_AdminMenu : ChimeraMenuBase
 		m_InputManager = GetGame().GetInputManager();
 		m_playerManager = GetGame().GetPlayerManager();
 		m_groupManagerComponent = SCR_GroupsManagerComponent.GetInstance();
-		m_clientComponent = CRF_PlayerControllerComponent.GetInstance();
+		m_clientComponent = CRF_PlayerControllerManager.GetInstance();
 		m_AdminMenuManager= CRF_AdminMenuManager.GetInstance();
 
 		// Setup menu roots

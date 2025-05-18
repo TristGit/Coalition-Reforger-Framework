@@ -10,12 +10,12 @@
  * - Map markers and gameplay indicators
  */
 [ComponentEditorProps(category: "Player Controller Components", description: "")]
-class CRF_PlayerControllerComponentClass : ScriptComponentClass
+class CRF_PlayerControllerManagerClass : ScriptComponentClass
 {
 
 }
 
-class CRF_PlayerControllerComponent : ScriptComponent
+class CRF_PlayerControllerManager : ScriptComponent
 {
 	// UI and Display
 	string m_sHintText = "Type Here";      // Text displayed for hints to player
@@ -45,12 +45,12 @@ class CRF_PlayerControllerComponent : ScriptComponent
 
 	/**
 	 * Returns the instance of this component from the player controller
-	 * @return CRF_PlayerControllerComponent - The player controller component instance or null if unavailable
+	 * @return CRF_PlayerControllerManager - The player controller component instance or null if unavailable
 	 */
-	static CRF_PlayerControllerComponent GetInstance()
+	static CRF_PlayerControllerManager GetInstance()
 	{
 		if (GetGame().GetPlayerController())
-			return CRF_PlayerControllerComponent.Cast(GetGame().GetPlayerController().FindComponent(CRF_PlayerControllerComponent));
+			return CRF_PlayerControllerManager.Cast(GetGame().GetPlayerController().FindComponent(CRF_PlayerControllerManager));
 		else
 			return null;
 	}

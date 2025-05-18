@@ -8,12 +8,12 @@
 *	Server only
 */
 [ComponentEditorProps(category: "CRF Logging Component", description: "")]
-class CRF_LoggingServerComponentClass: SCR_BaseGameModeComponentClass
+class CRF_LoggingManagerClass: SCR_BaseGameModeComponentClass
 {
 	
 }
 
-class CRF_LoggingServerComponent: SCR_BaseGameModeComponent
+class CRF_LoggingManager: SCR_BaseGameModeComponent
 {	
 	const string SEPARATOR = ",";
 	const string m_sLogPath = "$profile:COAServerLog.txt";
@@ -29,17 +29,17 @@ class CRF_LoggingServerComponent: SCR_BaseGameModeComponent
 	SCR_FactionManager m_FM;
 	
 	// Instance of this component (this method only works if you KNOW there will only ever be one instance of this component) 
-	protected static CRF_LoggingServerComponent s_Instance;
+	protected static CRF_LoggingManager s_Instance;
 	
 	//------------------------------------------------------------------------------------------------
-	void CRF_LoggingServerComponent(IEntityComponentSource src, IEntity ent, IEntity parent)
+	void CRF_LoggingManager(IEntityComponentSource src, IEntity ent, IEntity parent)
 	{
 		if (!s_Instance)
 			s_Instance = this;
 	}
 	
 	//------------------------------------------------------------------------------------------------
-	static CRF_LoggingServerComponent GetInstance()
+	static CRF_LoggingManager GetInstance()
 	{
 		return s_Instance;
 	}
@@ -172,7 +172,7 @@ class CRF_LoggingServerComponent: SCR_BaseGameModeComponent
 		super.OnPlayerKilled(playerID, playerEntity, killerEntity, killer);
 		
 		m_FM = SCR_FactionManager.Cast(GetGame().GetFactionManager());
-		m_handle = CRF_LoggingServerComponent.GetInstance().ReturnFileHandle();
+		m_handle = CRF_LoggingManager.GetInstance().ReturnFileHandle();
 		
 		// Killer
 		// Check if killer is AI

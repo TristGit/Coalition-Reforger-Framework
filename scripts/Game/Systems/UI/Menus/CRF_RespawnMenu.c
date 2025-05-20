@@ -36,7 +36,7 @@ class CRF_RespawnMenu: ChimeraMenuBase
 	override void OnMenuOpen()
 	{
 		// Start timer update loop
-		GetGame().GetCallqueue().CallLater(UpdateTimer, 500, true);
+		GetGame().GetCallqueue().CallLater(UpdateTimer, 1000, true);
 
 		// Initialize map if available
 		if (m_MapEntity)

@@ -57,13 +57,6 @@ class CRF_LoggingManager: SCR_BaseGameModeComponent
 	{
 		return m_LogFileHandle;
 	}
-
-	//------------------------------------------------------------------------------------------------
-	// Setup
-	override void OnWorldPostProcess(World world)
-	{
-		super.OnWorldPostProcess(world);
-	}
 	
 	//------------------------------------------------------------------------------------------------
 	// Component initialization

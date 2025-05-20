@@ -209,7 +209,7 @@ class CRF_RplBroadcastManager : ScriptComponent
 		else
 		{
 			// Check if its a new ticket and let admins know
-			if (!m_AdminMenuManager.isNewTicket(playerID))
+			if (!m_AdminMenuManager.TicketExists(playerID))
 			{	
 				chatComponent.ShowMessage(string.Format("%1 has created a ticket", playerName));
 			}

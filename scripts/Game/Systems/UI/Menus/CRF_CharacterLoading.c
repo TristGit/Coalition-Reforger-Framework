@@ -7,7 +7,7 @@ class CRF_CharacterLoading: ChimeraMenuBase
 	 */
 	override void OnMenuOpen()
 	{	
-		super.OnMenuOpen()
+		super.OnMenuOpen();
 		
 		GetGame().GetCallqueue().CallLater(ActivateFailsafe, 5000, false);
 	}
@@ -17,7 +17,7 @@ class CRF_CharacterLoading: ChimeraMenuBase
 	 */
 	override void OnMenuClose()
 	{
-		super.OnMenuClose()
+		super.OnMenuClose();
 		
 		GetGame().GetCallqueue().Remove(ActivateFailsafe);
 	};

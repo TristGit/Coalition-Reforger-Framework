@@ -240,6 +240,7 @@ class CRF_Gamemode : SCR_BaseGameMode
 	 */
 	protected void EnterAAR()
 	{
+		//Print("[CRF] EnterAAR()");
 		array<int> players = {};
 		GetGame().GetPlayerManager().GetAllPlayers(players);
 		
@@ -270,31 +271,15 @@ class CRF_Gamemode : SCR_BaseGameMode
 				defaultHitZone.SetHealth(0);
 
 			// Process player statistics data
-			if (!m_PlayerData)
-			{
-				SCR_DataCollectorComponent dataCollector = GetGame().GetDataCollector();
-				if (!dataCollector)
-				{
-					Print("SCR_CareerEndScreenUI: No data collector was found.", LogLevel.ERROR);
-					return;
-				}
-		
-				m_PlayerData = dataCollector.GetPlayerData(player, false);
-		
-				// If player data isn't available yet, register for notification when it arrives
-				if (!m_PlayerData)
-				{
-					SCR_DataCollectorCommunicationComponent communicationComponent = SCR_DataCollectorCommunicationComponent.Cast(
-						GetGame().GetPlayerManager().GetPlayerController(player).FindComponent(SCR_DataCollectorCommunicationComponent)
-					);
-					
-					if (communicationComponent)
-						communicationComponent.GetOnDataReceived().Insert(OnDataReceived);
-				}
-				else if (!m_PlayerData.IsDataProgressionReady())
-				{
-					m_PlayerData.CalculateStatsChange();
-				}
+			SCR_DataCollectorComponent dataCollector = GetGame().GetDataCollector();
+			if (!dataCollector)
+				return;
+			
+			m_PlayerData = dataCollector.GetPlayerData(player, false);
+			//Print("[CRF] player data");
+			if (m_PlayerData) {
+				//PrintFormat("[CRF] Calc stats for player %1",player);
+				m_PlayerData.CalculateStatsChange();
 			}
 		}
 	}

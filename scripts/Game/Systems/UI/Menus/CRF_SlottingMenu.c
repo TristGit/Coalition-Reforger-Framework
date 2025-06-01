@@ -887,7 +887,9 @@ class CRF_SlottingMenuUI: ChimeraMenuBase
 	 */
 	private void UpdateUnslottedPlayersList()
 	{
+		Print("[CRF] UpdateUnslottedPlayersList");
 		m_cUnslotPlayerListBoxComponent.Clear();
+		Print("[CRF] UpdateUnslottedPlayersList Cleared");
 		
 		// Get all player IDs
 		array<int> playerIds = {};
@@ -898,13 +900,13 @@ class CRF_SlottingMenuUI: ChimeraMenuBase
 		foreach(int playerId : playerIds)
 		{	
 			// Skip invalid players, players without faction, already slotted players, or disconnected players
-			if(playerId <= 0)
+			if (playerId <= 0)
 				continue;
 			
-			if(slottingManager.GetPlayerSlotFaction(playerId))
+			if (slottingManager.GetPlayerSlotFaction(playerId).GetFactionKey() != "CIV")
 				continue;
 				
-			if(!GetGame().GetPlayerManager().IsPlayerConnected(playerId))
+			if (!GetGame().GetPlayerManager().IsPlayerConnected(playerId))
 				continue;
 			
 			// Add player to unslotted list

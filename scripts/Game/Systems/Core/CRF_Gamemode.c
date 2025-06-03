@@ -156,9 +156,12 @@ class CRF_Gamemode : SCR_BaseGameMode
 	{
 		super.EOnInit(owner);
 		
-		// Load moderator config on dedicated server
-		if (RplSession.Mode() == RplMode.Dedicated)
+		// Load configs on dedicated server
+		if (RplSession.Mode() == RplMode.Dedicated) {
 			CRF_ModeratorConfig.LoadConfig();	
+			CRF_DonatorConfig.LoadConfig();
+		}
+			
 	
 		// Initialize all manager references
 		m_RespawnManager = CRF_RespawnManager.GetInstance();
@@ -217,21 +220,19 @@ class CRF_Gamemode : SCR_BaseGameMode
 	protected void OnGamemodeStateChanged()
 	{
 		// Server-side state change handling
-		if (RplSession.Mode() == RplMode.Dedicated || RplSession.Mode() == RplMode.Listen)
+		if (Replication.IsServer())
 		{
 			if (m_OnStateChanged)
 				m_OnStateChanged.Invoke();
-
+			
 			if (m_GamemodeState == CRF_EGamemodeState.AAR)
 				EnterAAR();
 		}
-		// Client-side UI update
-		else if (RplSession.Mode() != RplMode.Dedicated)
-		{
-			CRF_PlayerControllerManager playerControllerComp = CRF_PlayerControllerManager.GetInstance();
-			if(playerControllerComp)
-				playerControllerComp.OpenCurrentStateMenu();
-		}
+		
+		CRF_PlayerControllerManager playerControllerComp = CRF_PlayerControllerManager.GetInstance();
+		if (playerControllerComp)
+			playerControllerComp.OpenCurrentStateMenu();
+		
 	}
 	
 	/**
@@ -272,11 +273,12 @@ class CRF_Gamemode : SCR_BaseGameMode
 
 			// Process player statistics data
 			SCR_DataCollectorComponent dataCollector = GetGame().GetDataCollector();
+			//PrintFormat("[CRF] dataCollector: %1",dataCollector);
 			if (!dataCollector)
 				return;
 			
-			m_PlayerData = dataCollector.GetPlayerData(player, false);
-			//Print("[CRF] player data");
+			m_PlayerData = dataCollector.GetPlayerData(player, true);
+			//PrintFormat("[CRF] m_PlayerData: %1",m_PlayerData);
 			if (m_PlayerData) {
 				//PrintFormat("[CRF] Calc stats for player %1",player);
 				m_PlayerData.CalculateStatsChange();
@@ -318,11 +320,14 @@ class CRF_Gamemode : SCR_BaseGameMode
 			m_GamemodeManager.InitilizePlayer(iPlayerID);
 		}
 		
-		// Check if player is a moderator and set privileges
+		// Check if player is a moderator/donator and set privileges
 		string playerIdentity = GetGame().GetBackendApi().GetPlayerIdentityId(iPlayerID);
-		if (!playerIdentity.IsEmpty() && CRF_ModeratorConfig.IsModerator(playerIdentity))
-		{
-			GetGame().GetCallqueue().CallLater(m_GamemodeManager.SetPlayerModerator, 5000, false, iPlayerID);
+		if (!playerIdentity.IsEmpty()) {
+			if (CRF_ModeratorConfig.IsModerator(playerIdentity))
+				m_GamemodeManager.SetPlayerStatus(iPlayerID, "mod");
+			
+			if (CRF_DonatorConfig.IsDonator(playerIdentity))
+				m_GamemodeManager.SetPlayerStatus(iPlayerID, "don");
 		}
 	}
 	

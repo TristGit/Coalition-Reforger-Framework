@@ -20,6 +20,9 @@ CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et
   }
  }
  m_sFactionOneKey "CIV"
+ m_BLUFORGearScriptSettings CRF_GearScriptContainer "{64570ACB9B419A7B}" {
+  m_rGearScript "{01F5B5F6F4DA8408}Configs/Gearscripts/Standard/Specials/Rally/CRF_GS_RallyUS.conf"
+ }
  m_INDFORGearScriptSettings CRF_GearScriptContainer "{64570ACB9AE1C9ED}" {
  }
  m_CIVILIANGearScriptSettings CRF_GearScriptContainer "{64570ACB9A9C5C52}" {
@@ -37,6 +40,15 @@ CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et
        SCR_CallsignInfo "{55CCB792D10AD8F4}" {
         m_sCallsign "Race Car"
        }
+       SCR_CallsignInfo "{55CCB792D13759D8}" {
+        m_sCallsign "Race Car"
+       }
+       SCR_CallsignInfo "{55CCB792D1218E95}" {
+        m_sCallsign "Race Car"
+       }
+       SCR_CallsignInfo "{55CCB792D0C8B3CE}" {
+        m_sCallsign "Race Car"
+       }
        SCR_CallsignInfo "{658832F4BFA9E86D}" {
         m_sCallsign "Race Car"
        }
@@ -47,15 +59,6 @@ CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et
         m_sCallsign "Race Car"
        }
        SCR_CallsignInfo "{658832F4BDCF2AA8}" {
-        m_sCallsign "Race Car"
-       }
-       SCR_CallsignInfo "{55CCB792D13759D8}" {
-        m_sCallsign "Race Car"
-       }
-       SCR_CallsignInfo "{55CCB792D1218E95}" {
-        m_sCallsign "Race Car"
-       }
-       SCR_CallsignInfo "{55CCB792D0C8B3CE}" {
         m_sCallsign "Race Car"
        }
       }

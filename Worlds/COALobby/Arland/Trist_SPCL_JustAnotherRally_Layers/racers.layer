@@ -1,482 +1,1220 @@
-$grp SCR_AIGroup : "{7EF1B92B982EF78F}Prefabs/Groups/Special/Rally/CRF_CIV_RallyTeam_p.et" {
+SCR_FactionManager "5EA8C932C68D400F" : "{4A188E44289B9A50}Prefabs/MP/Managers/Factions/FactionManager_Editor.et" {
+ coords -2.731 10000.573 4.149
+ Factions {
+  SCR_Faction "{56DEAC40D2DBC8B1}" {
+   UIInfo SCR_FactionUIInfo "{528C961236B7DCD3}" {
+    Name "BLUFOR"
+    m_sNameUpper "BLUFOR"
+   }
+   "Identity of soldiers" FactionIdentity "{570D128F4022EF5A}" {
+    SocialIdentity SocialIdentity "{56E4EBD9F0C03530}" {
+     NamesConfig {
+      "Was"
+     }
+     AliasesConfig {
+      "1337llama" "Arkangel" "Whale" "Baron" "Battlebeav" "Cal" "Carcool12" "CollectiveS" "Collige" "Dagger" "Delfer" "DV" "Embrodak" "Flora" "Frans" "Geek-X" "Kaltag" "Gummi" "JLaw" "Johnstipation" "Kenji" "Lazz" "LookitsDante" "Master T 117" "Njpatman" "Nufflicks" "Philbilly" "PI23263" "Hawk" "RandAlThor" "Reckless" "Salami" "Shimavitz" "SkurtBird" "Slendersnipes" "Sonia" "Svir" "StalinForPresident" "Tanaka" "Techniker" "The Canadian" "TheCrazyCanuck" "Topher" "Uncle_Gavin" "Schmidtstorm" "Vampyrcat" "Votra" "Wandering_Blade"
+     }
+     SurnamesConfig {
+      "Here"
+     }
+    }
+   }
+   m_iOrder 10
+   m_CallsignInfo SCR_FactionCallsignInfo "{5DA0F2A6677ADA9E}" {
+    m_aSquadNames {
+     SCR_CallsignInfo "{55CCB792D10AD8F4}" {
+      m_sCallsign "1PLT"
+     }
+     SCR_CallsignInfo "{55CCB792D13759D8}" {
+      m_sCallsign "1-1"
+     }
+     SCR_CallsignInfo "{55CCB792D1218E95}" {
+      m_sCallsign "1-2"
+     }
+     SCR_CallsignInfo "{55CCB792D0C8B3CE}" {
+      m_sCallsign "1-3"
+     }
+    }
+    m_sCallsignGroupFormat "%3"
+   }
+  }
+  SCR_Faction "{56DEAC40D3C2E623}" {
+   UIInfo SCR_FactionUIInfo "{528C96127F8B6B08}" {
+    Name "OPFOR"
+    m_sNameUpper "OPFOR"
+   }
+   m_iOrder 9
+   m_CallsignInfo SCR_FactionCallsignInfo "{5DA0F2A67DFB8809}" {
+    m_bIsAssignedRandomly 0
+    m_aSquadNames {
+     SCR_CallsignInfo "{55CCB79287E901BC}" {
+      m_sCallsign "1PLT"
+     }
+     SCR_CallsignInfo "{55CCB79287936EBD}" {
+      m_sCallsign "1-1"
+     }
+     SCR_CallsignInfo "{55CCB79287BAFBD6}" {
+      m_sCallsign "1-2"
+     }
+     SCR_CallsignInfo "{55CCB79287A4D7B6}" {
+      m_sCallsign "1-3"
+     }
+    }
+    m_sCallsignGroupFormat "%3"
+   }
+  }
+  SCR_Faction "{56DEAC40D132400B}" {
+   UIInfo SCR_FactionUIInfo "{5570936866E0AD08}" {
+    Name "INDFOR"
+    Icon "{FB266CDD4502D60B}UI/Textures/Editor/EditableEntities/Factions/EditableEntity_Faction_Fia.edds"
+    m_sNameUpper "INDFOR"
+   }
+   m_iOrder 8
+   m_sFactionFlag "{FB266CDD4502D60B}UI/Textures/Editor/EditableEntities/Factions/EditableEntity_Faction_Fia.edds"
+   m_FactionFlagMaterial "{B7A02313829700F9}Assets/Props/Fabric/Flags/Data/Flag_1_2_Green.emat"
+   m_CallsignInfo SCR_FactionCallsignInfo "{60A6B21E18F28741}" {
+    m_bIsAssignedRandomly 0
+    m_aSquadNames {
+     SCR_CallsignInfo "{58B2B630FDD64B6D}" {
+      m_sCallsign "Cell Lead"
+     }
+     SCR_CallsignInfo "{58B2B630FDD64B53}" {
+      m_sCallsign "Cell 1"
+     }
+     SCR_CallsignInfo "{58B2B630FDD64B51}" {
+      m_sCallsign "Cell 2"
+     }
+     SCR_CallsignInfo "{58B2B630FDD64B50}" {
+      m_sCallsign "Cell 3"
+     }
+    }
+    m_sCallsignGroupFormat "%3"
+   }
+  }
+  SCR_Faction "{607AA5C7A94496DA}" {
+   UIInfo SCR_FactionUIInfo "{56B49118D8D0A9C5}" {
+    Icon "{C8565602E0F422C5}Images/UI/Zeus GearScript Factions/CIV_NATO.edds"
+   }
+   "Identity of soldiers" FactionIdentity "{60DCEDE56D10632C}" : "{7BE453211ACB5F01}Configs/Identities/FactionIdentity_COAL.conf" {
+   }
+   m_iOrder 7
+   m_sFactionFlag "{C8565602E0F422C5}Images/UI/Zeus GearScript Factions/CIV_NATO.edds"
+   m_FactionFlagMaterial "{936E6C67A71A9421}Assets/Props/Fabric/Flags/Data/Flag_2_3_White.emat"
+   m_CallsignInfo SCR_FactionCallsignInfo "{607A9A9E40D70F6E}" {
+    m_sCallsignGroupFormat "%3"
+   }
+   m_sFactionRadioEncryptionKey "chickenNuggets"
+  }
+  SCR_Faction "{5978B9CE6585BBE8}" {
+   UIInfo SCR_FactionUIInfo "{5977478D568C0938}" {
+    Name "OPFOR"
+    m_sNameUpper "OPFOR"
+   }
+   m_iOrder 6
+   m_CallsignInfo SCR_FactionCallsignInfo "{5977478D568C093C}" {
+    m_bIsAssignedRandomly 0
+    m_aSquadNames {
+     SCR_CallsignInfo "{5977478D568C092E}" {
+      m_sCallsign "1PLT"
+     }
+     SCR_CallsignInfo "{5977478D568C092D}" {
+      m_sCallsign "1-1"
+     }
+     SCR_CallsignInfo "{5977478D568D935E}" {
+      m_sCallsign "1-2"
+     }
+     SCR_CallsignInfo "{5977478D568D935F}" {
+      m_sCallsign "1-3"
+     }
+    }
+    m_sCallsignGroupFormat "%3"
+   }
+  }
+  SCR_Faction "{5CC8DE37E1FF0F7A}" {
+   UIInfo SCR_FactionUIInfo "{5CC8B5EDA0CDBD62}" {
+    Name "BLUFOR"
+    m_sNameUpper "BLUFOR"
+   }
+   m_iOrder 5
+   m_CallsignInfo SCR_FactionCallsignInfo "{5CC8BB97E017CDBC}" {
+    m_aSquadNames {
+     SCR_CallsignInfo "{55CCB792D10AD8F4}" {
+      m_sCallsign "1PLT"
+     }
+     SCR_CallsignInfo "{55CCB792D13759D8}" {
+      m_sCallsign "1-1"
+     }
+     SCR_CallsignInfo "{55CCB792D1218E95}" {
+      m_sCallsign "1-2"
+     }
+     SCR_CallsignInfo "{55CCB792D0C8B3CE}" {
+      m_sCallsign "1-3"
+     }
+    }
+    m_sCallsignGroupFormat "%3"
+   }
+  }
+  SCR_Faction "{623962205CE2B89C}" {
+   UIInfo SCR_FactionUIInfo "{62394AA4B52816D2}" {
+    Name "INDFOR"
+    m_sNameUpper "INDFOR"
+   }
+   m_iOrder 4
+   m_sFactionRadioEncryptionKey "candleSauce"
+  }
+  SCR_Faction "{61500924662B6062}" {
+   FactionKey "SPEC"
+   FactionColor 0.392 0.157 0.624 1
+   UIInfo SCR_FactionUIInfo "{615009275A4B9FE7}" {
+    Name "Spectator"
+    Icon "{BB790255945032F8}UI/data/Spec_Eye_BCR.edds"
+    m_sNameUpper "SPECTATOR"
+   }
+   "Identity of soldiers" FactionIdentity "{570D128F4022EF5A}" {
+    VisualIdentityArray {
+     VisualIdentity "{570CE64C784286B5}" {
+      Head "{2FC2A1CE68435471}Prefabs/Characters/Heads/Head_Invisible.et"
+      Body "{E25DCEC549E17067}Prefabs/Characters/Basebody/CharacterBasebody_Invisible.et"
+     }
+     VisualIdentity "{570CFDC06CAAD480}" {
+      Head "{2FC2A1CE68435471}Prefabs/Characters/Heads/Head_Invisible.et"
+      Body "{E25DCEC549E17067}Prefabs/Characters/Basebody/CharacterBasebody_Invisible.et"
+     }
+     VisualIdentity "{570CFDC05A2BFCE8}" {
+      Head "{2FC2A1CE68435471}Prefabs/Characters/Heads/Head_Invisible.et"
+      Body "{E25DCEC549E17067}Prefabs/Characters/Basebody/CharacterBasebody_Invisible.et"
+     }
+     VisualIdentity "{570CE64C790A3C7D}" {
+      Head "{2FC2A1CE68435471}Prefabs/Characters/Heads/Head_Invisible.et"
+      Body "{E25DCEC549E17067}Prefabs/Characters/Basebody/CharacterBasebody_Invisible.et"
+     }
+     VisualIdentity "{570CFDC037CCBCD3}" {
+      Head "{2FC2A1CE68435471}Prefabs/Characters/Heads/Head_Invisible.et"
+      Body "{E25DCEC549E17067}Prefabs/Characters/Basebody/CharacterBasebody_Invisible.et"
+     }
+     VisualIdentity "{570CFDC1C8B17A43}" {
+      Head "{2FC2A1CE68435471}Prefabs/Characters/Heads/Head_Invisible.et"
+      Body "{E25DCEC549E17067}Prefabs/Characters/Basebody/CharacterBasebody_Invisible.et"
+     }
+     VisualIdentity "{570EDB838B8AC563}" {
+      Head "{2FC2A1CE68435471}Prefabs/Characters/Heads/Head_Invisible.et"
+      Body "{E25DCEC549E17067}Prefabs/Characters/Basebody/CharacterBasebody_Invisible.et"
+     }
+     VisualIdentity "{588508C19AA51746}" {
+      Head "{2FC2A1CE68435471}Prefabs/Characters/Heads/Head_Invisible.et"
+      Body "{E25DCEC549E17067}Prefabs/Characters/Basebody/CharacterBasebody_Invisible.et"
+     }
+     VisualIdentity "{588508C199AD5966}" {
+      Head "{2FC2A1CE68435471}Prefabs/Characters/Heads/Head_Invisible.et"
+      Body "{E25DCEC549E17067}Prefabs/Characters/Basebody/CharacterBasebody_Invisible.et"
+     }
+    }
+   }
+   m_iOrder 3
+   m_OutlineFactionColor 0.392 0.157 0.624 1
+   m_NotificationFactionColor 0.392 0.157 0.624 1
+   m_NotificationTextFactionColor 0.392 0.157 0.624 1
+   m_bIsPlayable 0
+   m_bShowInWelcomeScreenIfNonPlayable 0
+   m_bIsMilitary 0
+   m_sFactionFlag "{BB790255945032F8}UI/data/Spec_Eye_BCR.edds"
+   m_FactionFlagMaterial "{E3BB2EF7F600DD28}Assets/Props/Fabric/Flags/Data/Flag_2_3_CIVILIAN.emat"
+   m_FactionLabel FACTION_CIV
+   m_aFriendlyFactionsIds {
+    "USSR" "FIA"
+   }
+   m_sFactionRadioEncryptionKey "Sandbox"
+   m_iFactionRadioFrequency 58000
+   m_aEntityCatalogs {
+    SCR_EntityCatalogMultiList "{607A9A9FE55EDF5F}" {
+     m_eEntityCatalogType ITEM
+    }
+    SCR_EntityCatalogMultiList "{607A9A9FFA54DFE9}" {
+     m_eEntityCatalogType CHARACTER
+    }
+    SCR_EntityCatalogMultiList "{61C8ED1193902596}" {
+     m_eEntityCatalogType VEHICLE
+    }
+    SCR_EntityCatalogMultiList "{61C8ED1182211903}" {
+     m_eEntityCatalogType GROUP
+    }
+    SCR_EntityCatalogMultiList "{607A9A9FFBDA2F92}" {
+     m_eEntityCatalogType WEAPONS_TRIPOD
+    }
+   }
+   m_sGroupFlagsImageSet "{D7E06968B5F9FC92}UI/Textures/GroupManagement/FlagIcons/GroupFlagsCivilian.imageset"
+   m_sGroupFlagsImageSetOutlines "{824ADD5E7A28B03E}UI/Textures/GroupManagement/FlagIcons/GroupFlagsCivilian-outline.imageset"
+   m_aFlagNames {
+    "land" "helicopter" "maintenance" "medical"
+   }
+   m_sFactionBackground "{781301447441F404}UI/Textures/DeployMenu/Loadout-BG/Loadout_BG_Civilian.imageset"
+  }
+  SCR_Faction "{628B22E9B4056C88}" {
+   FactionKey "BLUFOR"
+   FactionColor 0.016 0.552 0.905 1
+   UIInfo SCR_FactionUIInfo "{528C961236B7DCD3}" {
+    Name "BLUFOR"
+    Icon "{E5DECCCA6F4B7416}Images/UI/Zeus GearScript Factions/BLUFOR_NATO.edds"
+    m_sNameUpper "BLUFOR"
+   }
+   "Identity of soldiers" FactionIdentity "{62D8F84F18596BBF}" : "{7BE453211ACB5F01}Configs/Identities/FactionIdentity_COAL.conf" {
+   }
+   m_OutlineFactionColor 0.005 0.044 0.114 1
+   m_NotificationFactionColor 0.016 0.552 0.905 1
+   m_NotificationTextFactionColor 0.013 0.395 0.651 1
+   m_bIsPlayable 0
+   m_sFactionFlag "{E5DECCCA6F4B7416}Images/UI/Zeus GearScript Factions/BLUFOR_NATO.edds"
+   m_FactionFlagMaterial "{DB52C2D4463AA0A0}Assets/Props/Fabric/Flags/Data/Flag_2_3_Blue.emat"
+   m_FactionLabel FACTION_US
+   m_CallsignInfo SCR_FactionCallsignInfo "{5DA0F2A6677ADA9E}" {
+    m_bIsAssignedRandomly 0
+    m_aCompanyNames {
+     SCR_CallsignInfo "{55CCB792CD021D5C}" {
+     }
+     SCR_CallsignInfo "{55CCB792CCD598D3}" {
+     }
+     SCR_CallsignInfo "{55CCB792CC9C7AD6}" {
+     }
+     SCR_CallsignInfo "{55CCB792CCB4D441}" {
+     }
+     SCR_CallsignInfo "{55CCB792CC5F08F3}" {
+     }
+     SCR_CallsignInfo "{55CCB792CC49B7DB}" {
+     }
+     SCR_CallsignInfo "{55CCB792CC711A37}" {
+     }
+     SCR_CallsignInfo "{55CCB792CC33211C}" {
+     }
+    }
+    m_aPlatoonNames {
+     SCR_CallsignInfo "{55CCB792CE6E998D}" {
+     }
+     SCR_CallsignInfo "{55CCB792CE18FB44}" {
+     }
+     SCR_CallsignInfo "{55CCB792CE02ECFA}" {
+     }
+     SCR_CallsignInfo "{55CCB792CE2A44BD}" {
+     }
+    }
+    m_aSquadNames {
+     SCR_CallsignInfo "{55CCB792D10AD8F4}" {
+      m_sCallsign "Race Team"
+     }
+     SCR_CallsignInfo "{658832F49D69ABC3}" {
+      m_sCallsign "Race Team"
+     }
+     SCR_CallsignInfo "{658832F49AE0DD02}" {
+      m_sCallsign "Race Team"
+     }
+     SCR_CallsignInfo "{658832F49A1CAEBE}" {
+      m_sCallsign "Race Team"
+     }
+     SCR_CallsignInfo "{658832F49B83FF20}" {
+      m_sCallsign "Race Team"
+     }
+     SCR_CallsignInfo "{658832F49B2F6F26}" {
+      m_sCallsign "Race Team"
+     }
+     SCR_CallsignInfo "{658832F49896D096}" {
+      m_sCallsign "Race Team"
+     }
+     SCR_CallsignInfo "{658832F49813AA44}" {
+      m_sCallsign "Race Team"
+     }
+     SCR_CallsignInfo "{658832F4999A7161}" {
+      m_sCallsign "Race Team"
+     }
+     SCR_CallsignInfo "{658832F4991B4C51}" {
+      m_sCallsign "Race Team"
+     }
+     SCR_CallsignInfo "{658832F4A6965398}" {
+      m_sCallsign "Race Team"
+     }
+     SCR_CallsignInfo "{658832F4A6221FA0}" {
+      m_sCallsign "Race Team"
+     }
+     SCR_CallsignInfo "{658832F4A7A5E233}" {
+      m_sCallsign "Race Team"
+     }
+     SCR_CallsignInfo "{658832F4A4C8AED6}" {
+      m_sCallsign "Race Team"
+     }
+     SCR_CallsignInfo "{658832F4A45DCF28}" {
+      m_sCallsign "Race Team"
+     }
+     SCR_CallsignInfo "{658832F4A5DBD60E}" {
+      m_sCallsign "Race Team"
+     }
+     SCR_CallsignInfo "{658832F4A551385F}" {
+      m_sCallsign "Race Team"
+     }
+     SCR_CallsignInfo "{658832F4A2D08CCC}" {
+      m_sCallsign "Race Team"
+     }
+     SCR_CallsignInfo "{658832F4A2576A22}" {
+      m_sCallsign "Race Team"
+     }
+     SCR_CallsignInfo "{658832F4A3C938CC}" {
+      m_sCallsign "Race Team"
+     }
+     SCR_CallsignInfo "{658832F4A3B1C9EB}" {
+      m_sCallsign "Race Team"
+     }
+     SCR_CallsignInfo "{658832F4A09A5B22}" {
+      m_sCallsign "Race Team"
+     }
+     SCR_CallsignInfo "{658832F4A14C1F24}" {
+      m_sCallsign "Race Team"
+     }
+     SCR_CallsignInfo "{658832F4AED325DC}" {
+      m_sCallsign "Race Team"
+     }
+     SCR_CallsignInfo "{658832F4AE43E300}" {
+      m_sCallsign "Race Team"
+     }
+     SCR_CallsignInfo "{658832F4AF8FB34E}" {
+      m_sCallsign "Race Team"
+     }
+     SCR_CallsignInfo "{658832F4AF2C734E}" {
+      m_sCallsign "Race Team"
+     }
+     SCR_CallsignInfo "{658832F4AC50833B}" {
+      m_sCallsign "Race Team"
+     }
+     SCR_CallsignInfo "{658832F4ADED414C}" {
+      m_sCallsign "Race Team"
+     }
+     SCR_CallsignInfo "{658832F4AD6A52F8}" {
+      m_sCallsign "Race Team"
+     }
+     SCR_CallsignInfo "{658832F4AAD78BC8}" {
+      m_sCallsign "Race Team"
+     }
+     SCR_CallsignInfo "{658832F4AA643694}" {
+      m_sCallsign "Race Team"
+     }
+     SCR_CallsignInfo "{658832F4ABA90B9F}" {
+      m_sCallsign "Race Team"
+     }
+     SCR_CallsignInfo "{658832F4A8CD5F07}" {
+      m_sCallsign "Race Team"
+     }
+     SCR_CallsignInfo "{658832F4A8658996}" {
+      m_sCallsign "Race Team"
+     }
+     SCR_CallsignInfo "{658832F4A9FC3F48}" {
+      m_sCallsign "Race Team"
+     }
+     SCR_CallsignInfo "{658832F4A919AF07}" {
+      m_sCallsign "Race Team"
+     }
+     SCR_CallsignInfo "{55CCB792D13759D8}" {
+      m_sCallsign "Race Team"
+     }
+     SCR_CallsignInfo "{55CCB792D1218E95}" {
+      m_sCallsign "Race Team"
+     }
+     SCR_CallsignInfo "{55CCB792D0C8B3CE}" {
+      m_sCallsign "Race Team"
+     }
+    }
+    m_sCallsignGroupFormat "%3"
+    m_sCallsignCharacterFormat "%1 %2 %3: %4"
+    m_sCallsignCharacterWithRoleFormat "%1 %2 %3: %4"
+    m_aCharacterRoleCallsigns {
+     SCR_LeaderRoleCallsign "{55CA746925A7EB29}" {
+     }
+     SCR_RadioOperatorRoleCallsign "{55CA79ECD4CC1F73}" {
+     }
+     SCR_PlayerLeaderRoleCallsign "{5D9E9ECA7C7EBEA2}" {
+     }
+    }
+   }
+   m_sFactionRadioEncryptionKey "chickenNuggets"
+   m_iFactionRadioFrequency 48000
+   m_aRanks {
+    SCR_CharacterRank "{528E9D967C251E5F}" {
+    }
+    SCR_CharacterRank "{528E9D967C638136}" {
+    }
+    SCR_CharacterRank "{528E9D967CA0C01E}" {
+    }
+    SCR_CharacterRank "{528E9D967C9A9530}" {
+    }
+    SCR_CharacterRank "{528E9D967CD71D35}" {
+    }
+    SCR_CharacterRank "{528E9D967D0F747E}" {
+    }
+    SCR_CharacterRank "{528E9D967D8EBCCC}" {
+    }
+   }
+   m_aEntityCatalogs {
+    SCR_EntityCatalogMultiList "{5C68A0EE815FA292}" {
+     m_eEntityCatalogType ITEM
+    }
+    SCR_EntityCatalog "{62AD6CEE4E96B098}" {
+     m_eEntityCatalogType CHARACTER
+    }
+    SCR_EntityCatalog "{62AD6CEE4E329421}" {
+     m_eEntityCatalogType VEHICLE
+    }
+    SCR_EntityCatalog "{62AD6CEE4F88E80E}" {
+     m_eEntityCatalogType GROUP
+    }
+    SCR_EntityCatalog "{62AD6CEE4F18E678}" {
+     m_eEntityCatalogType WEAPONS_TRIPOD
+    }
+   }
+   m_sGroupFlagsImageSet "{1228936E5DB30403}UI/Textures/GroupManagement/FlagIcons/GroupFlagsBlufor.imageset"
+   m_sGroupFlagsImageSetOutlines "{D1BFDF90DD7A4E01}UI/Textures/GroupManagement/FlagIcons/GroupFlagsBlufor-outline.imageset"
+   m_aFlagNames {
+    "infantry" "amphibious" "anti-air" "anti-air-artilery" "anti-armor-motorized" "antiarmor" "armored" "artillery" "combined" "helicopter" "helicopter-attack" "infantry-air" "machinegun" "maintenance" "medical" "mortar" "motorized" "motorized-infantry" "recon" "recon-motorized" "signal" "sniper" "supply-motorized" "undefined"
+   }
+   m_sFactionBackground "{F8AC305446D5D480}UI/Textures/DeployMenu/Loadout-BG/Loadout_US_BG.imageset"
+   m_aBaseCallsigns {
+    SCR_MilitaryBaseCallsign "{5C90D92F493E764B}" {
+    }
+    SCR_MilitaryBaseCallsign "{5C90D92F49F79967}" {
+    }
+    SCR_MilitaryBaseCallsign "{5C90D92F482DA59B}" {
+    }
+    SCR_MilitaryBaseCallsign "{5C90D92F483330D2}" {
+    }
+    SCR_MilitaryBaseCallsign "{5C90D92F48170DA8}" {
+    }
+    SCR_MilitaryBaseCallsign "{5C90D92F487834E8}" {
+    }
+    SCR_MilitaryBaseCallsign "{5C90D92F48410A86}" {
+    }
+    SCR_MilitaryBaseCallsign "{5C90D92F48A4E31F}" {
+    }
+    SCR_MilitaryBaseCallsign "{5C90D92F488C6B57}" {
+    }
+    SCR_MilitaryBaseCallsign "{5C90D92F4896F764}" {
+    }
+    SCR_MilitaryBaseCallsign "{5C90D92F48FBD90E}" {
+    }
+    SCR_MilitaryBaseCallsign "{5C90D92F48DFF562}" {
+    }
+    SCR_MilitaryBaseCallsign "{5C90D92F7724C851}" {
+    }
+    SCR_MilitaryBaseCallsign "{5C90D92F77097F3F}" {
+    }
+    SCR_MilitaryBaseCallsign "{5C90D92F77102B55}" {
+    }
+    SCR_MilitaryBaseCallsign "{5C90D92F777ABD04}" {
+    }
+    SCR_MilitaryBaseCallsign "{5C90D92F775EBBC1}" {
+    }
+    SCR_MilitaryBaseCallsign "{5C90D92F77A28EB6}" {
+    }
+    SCR_MilitaryBaseCallsign "{5C90D92F77871C23}" {
+    }
+    SCR_MilitaryBaseCallsign "{5C90D92F77EB96A0}" {
+    }
+    SCR_MilitaryBaseCallsign "{5C90D92F77CC2518}" {
+    }
+    SCR_MilitaryBaseCallsign "{5C90D92F77D3715B}" {
+    }
+    SCR_MilitaryBaseCallsign "{5C90D92F7635D418}" {
+    }
+    SCR_MilitaryBaseCallsign "{5C90D92F761C3FF2}" {
+    }
+    SCR_MilitaryBaseCallsign "{5C90D92F7660CFAA}" {
+    }
+    SCR_MilitaryBaseCallsign "{5C90D92F764A6E6B}" {
+    }
+    SCR_MilitaryBaseCallsign "{5C90D92F76AD4D35}" {
+    }
+    SCR_MilitaryBaseCallsign "{5C90D92F76B1EF3A}" {
+    }
+    SCR_MilitaryBaseCallsign "{5C90D92F7695FF2F}" {
+    }
+    SCR_MilitaryBaseCallsign "{5C90D92F76FF94B1}" {
+    }
+    SCR_MilitaryBaseCallsign "{5C90D92F76C68EED}" {
+    }
+    SCR_MilitaryBaseCallsign "{5C90D92F752A9F29}" {
+    }
+    SCR_MilitaryBaseCallsign "{5C90D92F750E6FB9}" {
+    }
+    SCR_MilitaryBaseCallsign "{5C90D92F7517240F}" {
+    }
+    SCR_MilitaryBaseCallsign "{5C90D92F7574D867}" {
+    }
+    SCR_MilitaryBaseCallsign "{5C90D92F755C4871}" {
+    }
+    SCR_MilitaryBaseCallsign "{5C90D92F75A0502B}" {
+    }
+    SCR_MilitaryBaseCallsign "{5C90D92F758ABFD3}" {
+    }
+    SCR_MilitaryBaseCallsign "{5C90D92F75EF8263}" {
+    }
+    SCR_MilitaryBaseCallsign "{5C90D92F75F0F224}" {
+    }
+   }
+  }
+  SCR_Faction "{628C2D2BFC8C6447}" {
+   FactionKey "OPFOR"
+   FactionColor 0.855 0.031 0.028 1
+   UIInfo SCR_FactionUIInfo "{528C96127F8B6B08}" {
+    Name "OPFOR"
+    Icon "{11112420EEC8576C}Images/UI/Zeus GearScript Factions/OPFOR_NATO.edds"
+    m_sNameUpper "OPFOR"
+   }
+   "Identity of soldiers" FactionIdentity "{62D8F84F060C0F95}" : "{7BE453211ACB5F01}Configs/Identities/FactionIdentity_COAL.conf" {
+   }
+   m_iOrder 1
+   m_OutlineFactionColor 0.168 0.006 0.007 1
+   m_NotificationFactionColor 0.855 0.031 0.028 1
+   m_NotificationTextFactionColor 0.521 0.021 0.019 1
+   m_bIsPlayable 0
+   m_sFactionFlag "{11112420EEC8576C}Images/UI/Zeus GearScript Factions/OPFOR_NATO.edds"
+   m_FactionFlagMaterial "{362AC46447DBE58B}Assets/Props/Fabric/Flags/Data/Flag_1_2_Red.emat"
+   m_FactionLabel FACTION_USSR
+   m_CallsignInfo SCR_FactionCallsignInfo "{5DA0F2A67DFB8809}" {
+    m_bIsAssignedRandomly 0
+    m_aCompanyNames {
+     SCR_CallsignInfo "{55CCB79282FF010C}" {
+     }
+     SCR_CallsignInfo "{55CCB792829053B0}" {
+     }
+     SCR_CallsignInfo "{55CCB79282A19687}" {
+     }
+     SCR_CallsignInfo "{55CCB792821E9332}" {
+     }
+     SCR_CallsignInfo "{55CCB7928223BB00}" {
+     }
+     SCR_CallsignInfo "{55CCB79285FF31DB}" {
+     }
+     SCR_CallsignInfo "{55CCB79285E2C8BA}" {
+     }
+     SCR_CallsignInfo "{55CCB7928553B8DC}" {
+     }
+    }
+    m_aPlatoonNames {
+     SCR_CallsignInfo "{55CCB7928490AEEE}" {
+     }
+     SCR_CallsignInfo "{55CCB79284BA6D27}" {
+     }
+     SCR_CallsignInfo "{55CCB79284A2F6C9}" {
+     }
+     SCR_CallsignInfo "{55CCB792844D665F}" {
+     }
+    }
+    m_aSquadNames {
+     SCR_CallsignInfo "{55CCB79287E901BC}" {
+      m_sCallsign "1PLT"
+     }
+     SCR_CallsignInfo "{55CCB79287936EBD}" {
+      m_sCallsign "1-1"
+     }
+     SCR_CallsignInfo "{55CCB79287BAFBD6}" {
+      m_sCallsign "1-2"
+     }
+     SCR_CallsignInfo "{55CCB79287A4D7B6}" {
+      m_sCallsign "1-3"
+     }
+    }
+    m_sCallsignGroupFormat "%3"
+    m_sCallsignCharacterFormat "%1-%2%3%4"
+    m_sCallsignCharacterWithRoleFormat "%1-%2%3 %4"
+    m_aCharacterRoleCallsigns {
+     SCR_PlayerLeaderRoleCallsign "{5D9E9EC98A0C9F91}" {
+     }
+    }
+   }
+   m_sFactionRadioEncryptionKey "coldBorscht"
+   m_iFactionRadioFrequency 42000
+   m_aRanks {
+    SCR_CharacterRank "{528E9D9FAAB617C6}" {
+    }
+    SCR_CharacterRank "{528E9D9FAB192253}" {
+    }
+    SCR_CharacterRank "{528E9D9FAB87F519}" {
+    }
+    SCR_CharacterRank "{528E9D9FA4EA5C39}" {
+    }
+    SCR_CharacterRank "{528E9D9FA563C005}" {
+    }
+    SCR_CharacterRank "{528E9D9FA64A043C}" {
+    }
+    SCR_CharacterRank "{528E9D9FA77F696E}" {
+    }
+   }
+   m_aEntityCatalogs {
+    SCR_EntityCatalogMultiList "{5C68A0E9BD5E5DD9}" {
+     m_eEntityCatalogType ITEM
+    }
+    SCR_EntityCatalog "{62AD6CE9AD7F5DC0}" {
+     m_eEntityCatalogType CHARACTER
+    }
+    SCR_EntityCatalog "{62AD6CEE5039F2D3}" {
+     m_eEntityCatalogType VEHICLE
+    }
+    SCR_EntityCatalog "{62AD6CEE51AAFFF6}" {
+     m_eEntityCatalogType GROUP
+    }
+    SCR_EntityCatalog "{62AD6CEE57E86581}" {
+     m_eEntityCatalogType WEAPONS_TRIPOD
+    }
+   }
+   m_sGroupFlagsImageSet "{7CD99D22C7AE8195}UI/Textures/GroupManagement/FlagIcons/GroupFlagsOpfor.imageset"
+   m_sGroupFlagsImageSetOutlines "{B9356E7B2E974DCD}UI/Textures/GroupManagement/FlagIcons/GroupFlagsOpfor-outline.imageset"
+   m_aFlagNames {
+    "infantry" "amphibious" "anti-air" "anti-air-artilery" "anti-armor-motorized" "antiarmor" "armored" "artillery" "combined" "helicopter" "helicopter-attack" "infantry-air" "machinegun" "maintenance" "medical" "mortar" "motorized" "motorized-infantry" "recon" "recon-motorized" "signal" "sniper" "supply-motorized" "undefined"
+   }
+   m_sFactionBackground "{21533F2089005056}UI/Textures/DeployMenu/Loadout-BG/Loadout_BG_USSR.imageset"
+   m_aBaseCallsigns {
+    SCR_MilitaryBaseCallsign "{5C9108F95F3FB520}" {
+    }
+    SCR_MilitaryBaseCallsign "{5C9108F95F0034DB}" {
+    }
+    SCR_MilitaryBaseCallsign "{5C9108F95F6514E7}" {
+    }
+    SCR_MilitaryBaseCallsign "{5C9108F95F4EE8BF}" {
+    }
+    SCR_MilitaryBaseCallsign "{5C9108F95F5021F9}" {
+    }
+    SCR_MilitaryBaseCallsign "{5C9108F95FBA4C89}" {
+    }
+    SCR_MilitaryBaseCallsign "{5C9108F95F9C00A9}" {
+    }
+    SCR_MilitaryBaseCallsign "{5C9108F95FE17E10}" {
+    }
+    SCR_MilitaryBaseCallsign "{5C9108F95FCBA475}" {
+    }
+    SCR_MilitaryBaseCallsign "{5C9108F95E2B2963}" {
+    }
+    SCR_MilitaryBaseCallsign "{5C9108F95E3040F5}" {
+    }
+    SCR_MilitaryBaseCallsign "{5C9108F95E17C67D}" {
+    }
+    SCR_MilitaryBaseCallsign "{5C9108F95E797F8A}" {
+    }
+    SCR_MilitaryBaseCallsign "{5C9108F95E431F83}" {
+    }
+    SCR_MilitaryBaseCallsign "{5C9108F95EA7F87E}" {
+    }
+    SCR_MilitaryBaseCallsign "{5C9108F95E88C6B9}" {
+    }
+    SCR_MilitaryBaseCallsign "{5C9108F95EEDE322}" {
+    }
+    SCR_MilitaryBaseCallsign "{5C9108F95EF6244A}" {
+    }
+    SCR_MilitaryBaseCallsign "{5C9108F95EDAF04A}" {
+    }
+    SCR_MilitaryBaseCallsign "{5C9108F95D3CCF27}" {
+    }
+    SCR_MilitaryBaseCallsign "{5C9108F95D076483}" {
+    }
+    SCR_MilitaryBaseCallsign "{5C9108F95D68D0F3}" {
+    }
+    SCR_MilitaryBaseCallsign "{5C9108F95D4C0F8E}" {
+    }
+    SCR_MilitaryBaseCallsign "{5C9108F95D56EEEE}" {
+    }
+    SCR_MilitaryBaseCallsign "{5C9108F95DBA92EE}" {
+    }
+    SCR_MilitaryBaseCallsign "{5C9108F95C69680D}" {
+    }
+    SCR_MilitaryBaseCallsign "{5C9108F95C4FD930}" {
+    }
+    SCR_MilitaryBaseCallsign "{5C9108F95C5255FD}" {
+    }
+    SCR_MilitaryBaseCallsign "{5C9108F95CB621AE}" {
+    }
+    SCR_MilitaryBaseCallsign "{5C9108F95C9545BC}" {
+    }
+    SCR_MilitaryBaseCallsign "{5C9108F95CFE26C3}" {
+    }
+    SCR_MilitaryBaseCallsign "{5C9108F95CDD263C}" {
+    }
+    SCR_MilitaryBaseCallsign "{5C9108F95B27128C}" {
+    }
+    SCR_MilitaryBaseCallsign "{5C9108F95B08D83D}" {
+    }
+    SCR_MilitaryBaseCallsign "{5C9108F95B6D3FC2}" {
+    }
+    SCR_MilitaryBaseCallsign "{5C9108F95B712949}" {
+    }
+    SCR_MilitaryBaseCallsign "{5C9108F95B57D185}" {
+    }
+    SCR_MilitaryBaseCallsign "{5C9108F95BB17114}" {
+    }
+    SCR_MilitaryBaseCallsign "{5C9108F95B97C054}" {
+    }
+    SCR_MilitaryBaseCallsign "{5C9108F95BFC33E5}" {
+    }
+   }
+  }
+  SCR_Faction "{628CDE9209CA3FF9}" {
+   FactionKey "INDFOR"
+   FactionColor 0 0.44 0.078 1
+   UIInfo SCR_FactionUIInfo "{5570936866E0AD08}" {
+    Name "INDFOR"
+    Icon "{EFA0BA63504B1230}Images/UI/Zeus GearScript Factions/INDFOR_NATO.edds"
+    m_sNameUpper "INDFOR"
+   }
+   "Identity of soldiers" FactionIdentity "{62D8F84F08F0FEAC}" : "{7BE453211ACB5F01}Configs/Identities/FactionIdentity_COAL.conf" {
+   }
+   m_iOrder 2
+   m_OutlineFactionColor 0.001 0.082 0.023 1
+   m_NotificationFactionColor 0 0.44 0.078 1
+   m_NotificationTextFactionColor 0 0.296 0.055 1
+   m_bIsPlayable 0
+   m_sFactionFlag "{EFA0BA63504B1230}Images/UI/Zeus GearScript Factions/INDFOR_NATO.edds"
+   m_FactionFlagMaterial "{B7A02313829700F9}Assets/Props/Fabric/Flags/Data/Flag_1_2_Green.emat"
+   m_FactionLabel FACTION_FIA
+   m_CallsignInfo SCR_FactionCallsignInfo "{60A6B21E18F28741}" {
+    m_bIsAssignedRandomly 0
+    m_aCompanyNames {
+     SCR_CallsignInfo "{58B2B630FDD64B73}" {
+     }
+     SCR_CallsignInfo "{58B2B630FDD64B7A}" {
+     }
+     SCR_CallsignInfo "{58B2B630FDD64B78}" {
+     }
+     SCR_CallsignInfo "{58B2B630FDD64B7E}" {
+     }
+     SCR_CallsignInfo "{58B2B630FDD64B7C}" {
+     }
+     SCR_CallsignInfo "{58B2B630FDD64B63}" {
+     }
+     SCR_CallsignInfo "{58B2B630FDD64B61}" {
+     }
+     SCR_CallsignInfo "{58B2B630FDD64B67}" {
+     }
+    }
+    m_aPlatoonNames {
+     SCR_CallsignInfo "{58B2B630FDD64B65}" {
+     }
+     SCR_CallsignInfo "{58B2B630FDD64B6B}" {
+     }
+     SCR_CallsignInfo "{58B2B630FDD64B69}" {
+     }
+     SCR_CallsignInfo "{58B2B630FDD64B6F}" {
+     }
+     SCR_CallsignInfo "{61C8F1ACD8ABED54}" {
+     }
+     SCR_CallsignInfo "{61C8F1ACD8E1FFD7}" {
+     }
+     SCR_CallsignInfo "{61C8F1ACD8255922}" {
+     }
+     SCR_CallsignInfo "{61C8F1ACD876D68B}" {
+     }
+     SCR_CallsignInfo "{61C8F1AC8D5F6E16}" {
+     }
+    }
+    m_aSquadNames {
+     SCR_CallsignInfo "{58B2B630FDD64B6D}" {
+      m_sCallsign "Cell Lead"
+     }
+     SCR_CallsignInfo "{58B2B630FDD64B53}" {
+      m_sCallsign "Cell 1"
+     }
+     SCR_CallsignInfo "{58B2B630FDD64B51}" {
+      m_sCallsign "Cell 2"
+     }
+     SCR_CallsignInfo "{58B2B630FDD64B50}" {
+      m_sCallsign "Cell 3"
+     }
+    }
+    m_sCallsignGroupFormat "%3"
+    m_sCallsignCharacterFormat "%1-%2%3%4"
+    m_sCallsignCharacterWithRoleFormat "%1-%2%3 %4"
+    m_aCharacterRoleCallsigns {
+     SCR_PlayerLeaderRoleCallsign "{5D9E9ECA7323CF3E}" {
+     }
+    }
+   }
+   m_sFactionRadioEncryptionKey "candleSauce"
+   m_iFactionRadioFrequency 52000
+   m_aEntityCatalogs {
+    SCR_EntityCatalogMultiList "{5C68A0EABE8B7B2A}" {
+     m_eEntityCatalogType ITEM
+    }
+    SCR_EntityCatalog "{62AD6CEE79E1F794}" {
+     m_eEntityCatalogType CHARACTER
+    }
+    SCR_EntityCatalog "{62AD6CEE7975FCA2}" {
+     m_eEntityCatalogType VEHICLE
+    }
+    SCR_EntityCatalog "{62AD6CEE7ECC0787}" {
+     m_eEntityCatalogType WEAPONS_TRIPOD
+    }
+    SCR_EntityCatalog "{62AD6CEE7DED463C}" {
+     m_eEntityCatalogType GROUP
+    }
+   }
+   m_sGroupFlagsImageSet "{301FC1A2A46D3E0D}UI/Textures/GroupManagement/FlagIcons/GroupFlagsIndfor.imageset"
+   m_sGroupFlagsImageSetOutlines "{C07D82625600BA21}UI/Textures/GroupManagement/FlagIcons/GroupFlagsIndfor-outline.imageset"
+   m_aFlagNames {
+    "infantry" "amphibious" "anti-air" "anti-air-artilery" "anti-armor-motorized" "antiarmor" "armored" "artillery" "combined" "helicopter" "helicopter-attack" "infantry-air" "machinegun" "maintenance" "medical" "mortar" "motorized" "motorized-infantry" "recon" "recon-motorized" "signal" "sniper" "supply-motorized" "undefined"
+   }
+   m_sFactionBackground "{81BF3B1DCC106577}UI/Textures/DeployMenu/Loadout-BG/Loadout_BG_FIA.imageset"
+  }
+ }
+}
+$grp SCR_AIGroup : "{469E163DC55AE9A4}Prefabs/Groups/Special/Rally/CRF_BLUFOR_RallyTeam_p.et" {
  {
   components {
    AIFormationComponent "{507E9DC12F541FE6}" {
     DefaultFormation "Line"
    }
-   SCR_AIGroupMovementComponent "{6126A0E02097C7FF}" {
-    DefaultFormation "Line"
-   }
   }
-  coords 640.229 40.792 2570.314
-  angleY -17.529
+  coords 635.404 40.796 2589.421
+  angleY -13.117
  }
  {
   components {
    AIFormationComponent "{507E9DC12F541FE6}" {
     DefaultFormation "Line"
    }
-   SCR_AIGroupMovementComponent "{6126A0E02097C7FF}" {
-    DefaultFormation "Line"
-   }
   }
-  coords 639.199 40.792 2575.533
-  angleY -17.529
+  coords 636.875 40.796 2585.243
+  angleY -13.117
  }
  {
   components {
    AIFormationComponent "{507E9DC12F541FE6}" {
     DefaultFormation "Line"
    }
-   SCR_AIGroupMovementComponent "{6126A0E02097C7FF}" {
-    DefaultFormation "Line"
-   }
   }
-  coords 638.063 40.792 2580.089
-  angleY -17.529
+  coords 638.051 40.796 2580.785
+  angleY -13.117
  }
  {
   components {
    AIFormationComponent "{507E9DC12F541FE6}" {
     DefaultFormation "Line"
    }
-   SCR_AIGroupMovementComponent "{6126A0E02097C7FF}" {
-    DefaultFormation "Line"
-   }
   }
-  coords 636.491 40.792 2584.267
-  angleY -17.529
+  coords 639.926 40.796 2575.913
+  angleY -13.117
  }
  {
   components {
    AIFormationComponent "{507E9DC12F541FE6}" {
     DefaultFormation "Line"
    }
-   SCR_AIGroupMovementComponent "{6126A0E02097C7FF}" {
-    DefaultFormation "Line"
-   }
   }
-  coords 635.07 40.792 2588.858
-  angleY -17.529
+  coords 640.142 40.796 2570.916
+  angleY -13.117
  }
  {
   components {
    AIFormationComponent "{507E9DC12F541FE6}" {
     DefaultFormation "Line"
    }
-   SCR_AIGroupMovementComponent "{6126A0E02097C7FF}" {
-    DefaultFormation "Line"
-   }
   }
-  coords 647.518 40.792 2572.675
-  angleY -17.529
+  coords 644.461 40.796 2586.692
+  angleY -13.117
  }
  {
   components {
    AIFormationComponent "{507E9DC12F541FE6}" {
     DefaultFormation "Line"
    }
-   SCR_AIGroupMovementComponent "{6126A0E02097C7FF}" {
-    DefaultFormation "Line"
-   }
   }
-  coords 646.695 40.792 2577.364
-  angleY -17.529
+  coords 645.637 40.796 2582.234
+  angleY -13.117
  }
  {
   components {
    AIFormationComponent "{507E9DC12F541FE6}" {
     DefaultFormation "Line"
    }
-   SCR_AIGroupMovementComponent "{6126A0E02097C7FF}" {
-    DefaultFormation "Line"
-   }
   }
-  coords 645.945 40.792 2582.354
-  angleY -17.529
+  coords 647.512 40.796 2577.362
+  angleY -13.117
  }
  {
   components {
    AIFormationComponent "{507E9DC12F541FE6}" {
     DefaultFormation "Line"
    }
-   SCR_AIGroupMovementComponent "{6126A0E02097C7FF}" {
-    DefaultFormation "Line"
-   }
   }
-  coords 644.641 40.792 2586.768
-  angleY -17.529
+  coords 647.728 40.796 2572.365
+  angleY -13.117
  }
  {
   components {
    AIFormationComponent "{507E9DC12F541FE6}" {
     DefaultFormation "Line"
    }
-   SCR_AIGroupMovementComponent "{6126A0E02097C7FF}" {
-    DefaultFormation "Line"
-   }
   }
-  coords 643.678 40.792 2590.386
-  angleY -17.529
+  coords 642.99 40.796 2590.87
+  angleY -13.117
  }
  {
   components {
    AIFormationComponent "{507E9DC12F541FE6}" {
     DefaultFormation "Line"
    }
-   SCR_AIGroupMovementComponent "{6126A0E02097C7FF}" {
-    DefaultFormation "Line"
-   }
   }
-  coords 649.781 40.792 2594.413
-  angleY -17.529
+  coords 651.635 40.796 2591.486
+  angleY -13.117
  }
  {
   components {
    AIFormationComponent "{507E9DC12F541FE6}" {
     DefaultFormation "Line"
    }
-   SCR_AIGroupMovementComponent "{6126A0E02097C7FF}" {
-    DefaultFormation "Line"
-   }
   }
-  coords 650.413 40.792 2590.862
-  angleY -17.529
+  coords 652.811 40.796 2587.028
+  angleY -13.117
  }
  {
   components {
    AIFormationComponent "{507E9DC12F541FE6}" {
     DefaultFormation "Line"
    }
-   SCR_AIGroupMovementComponent "{6126A0E02097C7FF}" {
-    DefaultFormation "Line"
-   }
   }
-  coords 652.329 40.792 2586.919
-  angleY -17.529
+  coords 654.686 40.796 2582.156
+  angleY -13.117
  }
  {
   components {
    AIFormationComponent "{507E9DC12F541FE6}" {
     DefaultFormation "Line"
    }
-   SCR_AIGroupMovementComponent "{6126A0E02097C7FF}" {
-    DefaultFormation "Line"
-   }
   }
-  coords 653.215 40.792 2582.76
-  angleY -17.529
+  coords 654.902 40.796 2577.159
+  angleY -13.117
  }
  {
   components {
    AIFormationComponent "{507E9DC12F541FE6}" {
     DefaultFormation "Line"
    }
-   SCR_AIGroupMovementComponent "{6126A0E02097C7FF}" {
-    DefaultFormation "Line"
-   }
   }
-  coords 654.439 40.792 2577.923
-  angleY -17.529
+  coords 650.164 40.796 2595.664
+  angleY -13.117
  }
  {
   components {
    AIFormationComponent "{507E9DC12F541FE6}" {
     DefaultFormation "Line"
    }
-   SCR_AIGroupMovementComponent "{6126A0E02097C7FF}" {
-    DefaultFormation "Line"
-   }
   }
-  coords 655.576 40.792 2573.385
-  angleY -17.529
+  coords 659.438 40.796 2591.078
+  angleY -13.117
  }
  {
   components {
    AIFormationComponent "{507E9DC12F541FE6}" {
     DefaultFormation "Line"
    }
-   SCR_AIGroupMovementComponent "{6126A0E02097C7FF}" {
-    DefaultFormation "Line"
-   }
   }
-  coords 658.253 40.792 2595.045
-  angleY -17.529
+  coords 660.614 40.796 2586.62
+  angleY -13.117
  }
  {
   components {
    AIFormationComponent "{507E9DC12F541FE6}" {
     DefaultFormation "Line"
    }
-   SCR_AIGroupMovementComponent "{6126A0E02097C7FF}" {
-    DefaultFormation "Line"
-   }
   }
-  coords 659.696 40.792 2590.87
-  angleY -17.529
+  coords 662.489 40.796 2581.748
+  angleY -13.117
  }
  {
   components {
    AIFormationComponent "{507E9DC12F541FE6}" {
     DefaultFormation "Line"
    }
-   SCR_AIGroupMovementComponent "{6126A0E02097C7FF}" {
-    DefaultFormation "Line"
-   }
   }
-  coords 660.801 40.792 2586.716
-  angleY -17.529
+  coords 662.705 40.796 2576.751
+  angleY -13.117
  }
  {
   components {
    AIFormationComponent "{507E9DC12F541FE6}" {
     DefaultFormation "Line"
    }
-   SCR_AIGroupMovementComponent "{6126A0E02097C7FF}" {
-    DefaultFormation "Line"
-   }
   }
-  coords 662.05 40.792 2581.948
-  angleY -17.529
+  coords 657.967 40.796 2595.256
+  angleY -13.117
  }
  {
   components {
    AIFormationComponent "{507E9DC12F541FE6}" {
     DefaultFormation "Line"
    }
-   SCR_AIGroupMovementComponent "{6126A0E02097C7FF}" {
-    DefaultFormation "Line"
-   }
   }
-  coords 663.716 40.792 2577.725
-  angleY -17.529
+  coords 656.116 40.796 2573.598
+  angleY -13.117
  }
  {
   components {
    AIFormationComponent "{507E9DC12F541FE6}" {
     DefaultFormation "Line"
    }
-   SCR_AIGroupMovementComponent "{6126A0E02097C7FF}" {
-    DefaultFormation "Line"
-   }
   }
-  coords 667.167 40.792 2564.118
-  angleY -17.529
+  coords 644.208 40.796 2558.488
+  angleY -13.117
  }
  {
   components {
    AIFormationComponent "{507E9DC12F541FE6}" {
     DefaultFormation "Line"
    }
-   SCR_AIGroupMovementComponent "{6126A0E02097C7FF}" {
-    DefaultFormation "Line"
-   }
   }
-  coords 668.398 40.792 2559.436
-  angleY -17.529
+  coords 645.679 40.796 2554.31
+  angleY -13.117
  }
  {
   components {
    AIFormationComponent "{507E9DC12F541FE6}" {
     DefaultFormation "Line"
    }
-   SCR_AIGroupMovementComponent "{6126A0E02097C7FF}" {
-    DefaultFormation "Line"
-   }
   }
-  coords 669.926 40.792 2554.953
-  angleY -17.529
+  coords 646.855 40.796 2549.852
+  angleY -13.117
  }
  {
   components {
    AIFormationComponent "{507E9DC12F541FE6}" {
     DefaultFormation "Line"
    }
-   SCR_AIGroupMovementComponent "{6126A0E02097C7FF}" {
-    DefaultFormation "Line"
-   }
   }
-  coords 670.727 40.792 2550.937
-  angleY -17.529
+  coords 648.73 40.796 2544.98
+  angleY -13.117
  }
  {
   components {
    AIFormationComponent "{507E9DC12F541FE6}" {
     DefaultFormation "Line"
    }
-   SCR_AIGroupMovementComponent "{6126A0E02097C7FF}" {
-    DefaultFormation "Line"
-   }
   }
-  coords 671.988 40.792 2546.817
-  angleY -17.529
+  coords 648.946 40.796 2539.983
+  angleY -13.117
  }
  {
   components {
    AIFormationComponent "{507E9DC12F541FE6}" {
     DefaultFormation "Line"
    }
-   SCR_AIGroupMovementComponent "{6126A0E02097C7FF}" {
-    DefaultFormation "Line"
-   }
   }
-  coords 660.445 40.792 2559.824
-  angleY -17.529
+  coords 653.599 40.796 2555.065
+  angleY -13.117
  }
  {
   components {
    AIFormationComponent "{507E9DC12F541FE6}" {
     DefaultFormation "Line"
    }
-   SCR_AIGroupMovementComponent "{6126A0E02097C7FF}" {
-    DefaultFormation "Line"
-   }
   }
-  coords 662.005 40.792 2555.254
-  angleY -17.529
+  coords 654.775 40.796 2550.607
+  angleY -13.117
  }
  {
   components {
    AIFormationComponent "{507E9DC12F541FE6}" {
     DefaultFormation "Line"
    }
-   SCR_AIGroupMovementComponent "{6126A0E02097C7FF}" {
-    DefaultFormation "Line"
-   }
   }
-  coords 663.191 40.792 2550.809
-  angleY -17.529
+  coords 656.65 40.796 2545.735
+  angleY -13.117
  }
  {
   components {
    AIFormationComponent "{507E9DC12F541FE6}" {
     DefaultFormation "Line"
    }
-   SCR_AIGroupMovementComponent "{6126A0E02097C7FF}" {
-    DefaultFormation "Line"
-   }
   }
-  coords 664.601 40.792 2546.921
-  angleY -17.529
+  coords 656.866 40.796 2540.738
+  angleY -13.117
  }
  {
   components {
    AIFormationComponent "{507E9DC12F541FE6}" {
     DefaultFormation "Line"
    }
-   SCR_AIGroupMovementComponent "{6126A0E02097C7FF}" {
-    DefaultFormation "Line"
-   }
   }
-  coords 652.952 40.792 2559.718
-  angleY -17.529
+  coords 652.128 40.796 2559.243
+  angleY -13.117
  }
  {
   components {
    AIFormationComponent "{507E9DC12F541FE6}" {
     DefaultFormation "Line"
    }
-   SCR_AIGroupMovementComponent "{6126A0E02097C7FF}" {
-    DefaultFormation "Line"
-   }
   }
-  coords 653.196 40.792 2554.825
-  angleY -17.529
+  coords 660.95 40.796 2555.158
+  angleY -13.117
  }
  {
   components {
    AIFormationComponent "{507E9DC12F541FE6}" {
     DefaultFormation "Line"
    }
-   SCR_AIGroupMovementComponent "{6126A0E02097C7FF}" {
-    DefaultFormation "Line"
-   }
   }
-  coords 655.266 40.792 2550.616
-  angleY -17.529
+  coords 662.126 40.796 2550.7
+  angleY -13.117
  }
  {
   components {
    AIFormationComponent "{507E9DC12F541FE6}" {
     DefaultFormation "Line"
    }
-   SCR_AIGroupMovementComponent "{6126A0E02097C7FF}" {
-    DefaultFormation "Line"
-   }
   }
-  coords 655.955 40.792 2546.062
-  angleY -17.529
+  coords 664.001 40.796 2545.828
+  angleY -13.117
  }
  {
   components {
    AIFormationComponent "{507E9DC12F541FE6}" {
     DefaultFormation "Line"
    }
-   SCR_AIGroupMovementComponent "{6126A0E02097C7FF}" {
-    DefaultFormation "Line"
-   }
   }
-  coords 657.258 40.792 2542.016
-  angleY -17.529
+  coords 659.479 40.796 2559.336
+  angleY -13.117
  }
  {
   components {
    AIFormationComponent "{507E9DC12F541FE6}" {
     DefaultFormation "Line"
    }
-   SCR_AIGroupMovementComponent "{6126A0E02097C7FF}" {
-    DefaultFormation "Line"
-   }
   }
-  coords 645.306 40.792 2558.746
-  angleY -17.529
+  coords 666.827 40.796 2563.107
+  angleY -13.117
  }
  {
   components {
    AIFormationComponent "{507E9DC12F541FE6}" {
     DefaultFormation "Line"
    }
-   SCR_AIGroupMovementComponent "{6126A0E02097C7FF}" {
-    DefaultFormation "Line"
-   }
   }
-  coords 645.143 40.792 2554.486
-  angleY -17.529
+  coords 667.78 40.796 2558.981
+  angleY -13.117
  }
  {
   components {
    AIFormationComponent "{507E9DC12F541FE6}" {
     DefaultFormation "Line"
    }
-   SCR_AIGroupMovementComponent "{6126A0E02097C7FF}" {
-    DefaultFormation "Line"
-   }
   }
-  coords 646.1 40.792 2549.222
-  angleY -17.529
+  coords 669.112 40.796 2554.7
+  angleY -13.117
  }
  {
   components {
    AIFormationComponent "{507E9DC12F541FE6}" {
     DefaultFormation "Line"
    }
-   SCR_AIGroupMovementComponent "{6126A0E02097C7FF}" {
-    DefaultFormation "Line"
-   }
   }
-  coords 647.019 40.792 2544.969
-  angleY -17.529
+  coords 670.273 40.796 2550.628
+  angleY -13.117
  }
  {
   components {
    AIFormationComponent "{507E9DC12F541FE6}" {
     DefaultFormation "Line"
    }
-   SCR_AIGroupMovementComponent "{6126A0E02097C7FF}" {
-    DefaultFormation "Line"
-   }
   }
-  coords 648.328 40.792 2540.691
-  angleY -17.529
+  coords 671.141 40.796 2546.406
+  angleY -13.117
  }
 }

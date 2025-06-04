@@ -4,251 +4,479 @@ $grp SCR_AIGroup : "{7EF1B92B982EF78F}Prefabs/Groups/Special/Rally/CRF_CIV_Rally
    AIFormationComponent "{507E9DC12F541FE6}" {
     DefaultFormation "Line"
    }
+   SCR_AIGroupMovementComponent "{6126A0E02097C7FF}" {
+    DefaultFormation "Line"
+   }
   }
-  coords 660.638 38.102 2600.551
-  angleY 166.08
+  coords 640.229 40.792 2570.314
+  angleY -17.529
  }
  {
   components {
    AIFormationComponent "{507E9DC12F541FE6}" {
     DefaultFormation "Line"
    }
+   SCR_AIGroupMovementComponent "{6126A0E02097C7FF}" {
+    DefaultFormation "Line"
+   }
   }
-  coords 662.088 38.102 2596.153
-  angleY 166.08
+  coords 639.199 40.792 2575.533
+  angleY -17.529
  }
  {
   components {
    AIFormationComponent "{507E9DC12F541FE6}" {
     DefaultFormation "Line"
    }
+   SCR_AIGroupMovementComponent "{6126A0E02097C7FF}" {
+    DefaultFormation "Line"
+   }
   }
-  coords 663.505 38.102 2591.366
-  angleY 166.08
+  coords 638.063 40.792 2580.089
+  angleY -17.529
  }
  {
   components {
    AIFormationComponent "{507E9DC12F541FE6}" {
     DefaultFormation "Line"
    }
+   SCR_AIGroupMovementComponent "{6126A0E02097C7FF}" {
+    DefaultFormation "Line"
+   }
   }
-  coords 664.593 38.102 2586.717
-  angleY 166.08
+  coords 636.491 40.792 2584.267
+  angleY -17.529
  }
  {
   components {
    AIFormationComponent "{507E9DC12F541FE6}" {
     DefaultFormation "Line"
    }
+   SCR_AIGroupMovementComponent "{6126A0E02097C7FF}" {
+    DefaultFormation "Line"
+   }
   }
-  coords 666.195 38.102 2581.945
-  angleY 166.08
+  coords 635.07 40.792 2588.858
+  angleY -17.529
  }
  {
   components {
    AIFormationComponent "{507E9DC12F541FE6}" {
     DefaultFormation "Line"
    }
+   SCR_AIGroupMovementComponent "{6126A0E02097C7FF}" {
+    DefaultFormation "Line"
+   }
   }
-  coords 669.842 38.102 2568.413
-  angleY 166.08
+  coords 647.518 40.792 2572.675
+  angleY -17.529
  }
  {
   components {
    AIFormationComponent "{507E9DC12F541FE6}" {
     DefaultFormation "Line"
    }
+   SCR_AIGroupMovementComponent "{6126A0E02097C7FF}" {
+    DefaultFormation "Line"
+   }
   }
-  coords 671.205 38.102 2563.723
-  angleY 166.08
+  coords 646.695 40.792 2577.364
+  angleY -17.529
  }
  {
   components {
    AIFormationComponent "{507E9DC12F541FE6}" {
     DefaultFormation "Line"
    }
+   SCR_AIGroupMovementComponent "{6126A0E02097C7FF}" {
+    DefaultFormation "Line"
+   }
   }
-  coords 672.187 38.102 2559.676
-  angleY 166.08
+  coords 645.945 40.792 2582.354
+  angleY -17.529
  }
  {
   components {
    AIFormationComponent "{507E9DC12F541FE6}" {
     DefaultFormation "Line"
    }
+   SCR_AIGroupMovementComponent "{6126A0E02097C7FF}" {
+    DefaultFormation "Line"
+   }
   }
-  coords 673.567 38.102 2555.469
-  angleY 166.08
+  coords 644.641 40.792 2586.768
+  angleY -17.529
  }
  {
   components {
    AIFormationComponent "{507E9DC12F541FE6}" {
     DefaultFormation "Line"
    }
+   SCR_AIGroupMovementComponent "{6126A0E02097C7FF}" {
+    DefaultFormation "Line"
+   }
   }
-  coords 674.732 38.102 2550.591
-  angleY 166.08
+  coords 643.678 40.792 2590.386
+  angleY -17.529
  }
  {
   components {
    AIFormationComponent "{507E9DC12F541FE6}" {
     DefaultFormation "Line"
    }
+   SCR_AIGroupMovementComponent "{6126A0E02097C7FF}" {
+    DefaultFormation "Line"
+   }
   }
-  coords 653.294 38.102 2599.964
-  angleY 166.08
+  coords 649.781 40.792 2594.413
+  angleY -17.529
  }
  {
   components {
    AIFormationComponent "{507E9DC12F541FE6}" {
     DefaultFormation "Line"
    }
+   SCR_AIGroupMovementComponent "{6126A0E02097C7FF}" {
+    DefaultFormation "Line"
+   }
   }
-  coords 654.136 38.102 2596.564
-  angleY 166.08
+  coords 650.413 40.792 2590.862
+  angleY -17.529
  }
  {
   components {
    AIFormationComponent "{507E9DC12F541FE6}" {
     DefaultFormation "Line"
    }
+   SCR_AIGroupMovementComponent "{6126A0E02097C7FF}" {
+    DefaultFormation "Line"
+   }
   }
-  coords 655.338 38.102 2591.716
-  angleY 166.08
+  coords 652.329 40.792 2586.919
+  angleY -17.529
  }
  {
   components {
    AIFormationComponent "{507E9DC12F541FE6}" {
     DefaultFormation "Line"
    }
+   SCR_AIGroupMovementComponent "{6126A0E02097C7FF}" {
+    DefaultFormation "Line"
+   }
   }
-  coords 656.474 38.102 2587.132
-  angleY 166.08
+  coords 653.215 40.792 2582.76
+  angleY -17.529
  }
  {
   components {
    AIFormationComponent "{507E9DC12F541FE6}" {
     DefaultFormation "Line"
    }
+   SCR_AIGroupMovementComponent "{6126A0E02097C7FF}" {
+    DefaultFormation "Line"
+   }
   }
-  coords 657.635 38.102 2582.449
-  angleY 166.08
+  coords 654.439 40.792 2577.923
+  angleY -17.529
  }
  {
   components {
    AIFormationComponent "{507E9DC12F541FE6}" {
     DefaultFormation "Line"
    }
+   SCR_AIGroupMovementComponent "{6126A0E02097C7FF}" {
+    DefaultFormation "Line"
+   }
   }
-  coords 658.763 38.102 2577.897
-  angleY 166.08
+  coords 655.576 40.792 2573.385
+  angleY -17.529
  }
  {
   components {
    AIFormationComponent "{507E9DC12F541FE6}" {
     DefaultFormation "Line"
    }
+   SCR_AIGroupMovementComponent "{6126A0E02097C7FF}" {
+    DefaultFormation "Line"
+   }
   }
-  coords 662.49 38.102 2564.262
-  angleY 166.08
+  coords 658.253 40.792 2595.045
+  angleY -17.529
  }
  {
   components {
    AIFormationComponent "{507E9DC12F541FE6}" {
     DefaultFormation "Line"
    }
+   SCR_AIGroupMovementComponent "{6126A0E02097C7FF}" {
+    DefaultFormation "Line"
+   }
   }
-  coords 663.597 38.102 2559.797
-  angleY 166.08
+  coords 659.696 40.792 2590.87
+  angleY -17.529
  }
  {
   components {
    AIFormationComponent "{507E9DC12F541FE6}" {
     DefaultFormation "Line"
    }
+   SCR_AIGroupMovementComponent "{6126A0E02097C7FF}" {
+    DefaultFormation "Line"
+   }
   }
-  coords 664.743 38.102 2555.174
-  angleY 166.08
+  coords 660.801 40.792 2586.716
+  angleY -17.529
  }
  {
   components {
    AIFormationComponent "{507E9DC12F541FE6}" {
     DefaultFormation "Line"
    }
+   SCR_AIGroupMovementComponent "{6126A0E02097C7FF}" {
+    DefaultFormation "Line"
+   }
   }
-  coords 665.826 38.102 2550.806
-  angleY 166.08
+  coords 662.05 40.792 2581.948
+  angleY -17.529
  }
  {
   components {
    AIFormationComponent "{507E9DC12F541FE6}" {
     DefaultFormation "Line"
    }
+   SCR_AIGroupMovementComponent "{6126A0E02097C7FF}" {
+    DefaultFormation "Line"
+   }
   }
-  coords 645.741 38.102 2596.119
-  angleY 166.08
+  coords 663.716 40.792 2577.725
+  angleY -17.529
  }
  {
   components {
    AIFormationComponent "{507E9DC12F541FE6}" {
     DefaultFormation "Line"
    }
+   SCR_AIGroupMovementComponent "{6126A0E02097C7FF}" {
+    DefaultFormation "Line"
+   }
   }
-  coords 647.111 38.102 2591.826
-  angleY 166.08
+  coords 667.167 40.792 2564.118
+  angleY -17.529
  }
  {
   components {
    AIFormationComponent "{507E9DC12F541FE6}" {
     DefaultFormation "Line"
    }
+   SCR_AIGroupMovementComponent "{6126A0E02097C7FF}" {
+    DefaultFormation "Line"
+   }
   }
-  coords 648.678 38.102 2587.223
-  angleY 166.08
+  coords 668.398 40.792 2559.436
+  angleY -17.529
  }
  {
   components {
    AIFormationComponent "{507E9DC12F541FE6}" {
     DefaultFormation "Line"
    }
+   SCR_AIGroupMovementComponent "{6126A0E02097C7FF}" {
+    DefaultFormation "Line"
+   }
   }
-  coords 649.815 38.102 2582.477
-  angleY 166.08
+  coords 669.926 40.792 2554.953
+  angleY -17.529
  }
  {
   components {
    AIFormationComponent "{507E9DC12F541FE6}" {
     DefaultFormation "Line"
    }
+   SCR_AIGroupMovementComponent "{6126A0E02097C7FF}" {
+    DefaultFormation "Line"
+   }
   }
-  coords 650.292 38.102 2577.756
-  angleY 166.08
+  coords 670.727 40.792 2550.937
+  angleY -17.529
  }
  {
   components {
    AIFormationComponent "{507E9DC12F541FE6}" {
     DefaultFormation "Line"
    }
+   SCR_AIGroupMovementComponent "{6126A0E02097C7FF}" {
+    DefaultFormation "Line"
+   }
   }
-  coords 654.208 38.102 2564.596
-  angleY 166.08
+  coords 671.988 40.792 2546.817
+  angleY -17.529
  }
  {
   components {
    AIFormationComponent "{507E9DC12F541FE6}" {
     DefaultFormation "Line"
    }
+   SCR_AIGroupMovementComponent "{6126A0E02097C7FF}" {
+    DefaultFormation "Line"
+   }
   }
-  coords 656.912 38.102 2555.246
-  angleY 166.08
+  coords 660.445 40.792 2559.824
+  angleY -17.529
  }
  {
   components {
    AIFormationComponent "{507E9DC12F541FE6}" {
     DefaultFormation "Line"
    }
+   SCR_AIGroupMovementComponent "{6126A0E02097C7FF}" {
+    DefaultFormation "Line"
+   }
   }
-  coords 655.775 38.102 2559.992
-  angleY 166.08
+  coords 662.005 40.792 2555.254
+  angleY -17.529
+ }
+ {
+  components {
+   AIFormationComponent "{507E9DC12F541FE6}" {
+    DefaultFormation "Line"
+   }
+   SCR_AIGroupMovementComponent "{6126A0E02097C7FF}" {
+    DefaultFormation "Line"
+   }
+  }
+  coords 663.191 40.792 2550.809
+  angleY -17.529
+ }
+ {
+  components {
+   AIFormationComponent "{507E9DC12F541FE6}" {
+    DefaultFormation "Line"
+   }
+   SCR_AIGroupMovementComponent "{6126A0E02097C7FF}" {
+    DefaultFormation "Line"
+   }
+  }
+  coords 664.601 40.792 2546.921
+  angleY -17.529
+ }
+ {
+  components {
+   AIFormationComponent "{507E9DC12F541FE6}" {
+    DefaultFormation "Line"
+   }
+   SCR_AIGroupMovementComponent "{6126A0E02097C7FF}" {
+    DefaultFormation "Line"
+   }
+  }
+  coords 652.952 40.792 2559.718
+  angleY -17.529
+ }
+ {
+  components {
+   AIFormationComponent "{507E9DC12F541FE6}" {
+    DefaultFormation "Line"
+   }
+   SCR_AIGroupMovementComponent "{6126A0E02097C7FF}" {
+    DefaultFormation "Line"
+   }
+  }
+  coords 653.196 40.792 2554.825
+  angleY -17.529
+ }
+ {
+  components {
+   AIFormationComponent "{507E9DC12F541FE6}" {
+    DefaultFormation "Line"
+   }
+   SCR_AIGroupMovementComponent "{6126A0E02097C7FF}" {
+    DefaultFormation "Line"
+   }
+  }
+  coords 655.266 40.792 2550.616
+  angleY -17.529
+ }
+ {
+  components {
+   AIFormationComponent "{507E9DC12F541FE6}" {
+    DefaultFormation "Line"
+   }
+   SCR_AIGroupMovementComponent "{6126A0E02097C7FF}" {
+    DefaultFormation "Line"
+   }
+  }
+  coords 655.955 40.792 2546.062
+  angleY -17.529
+ }
+ {
+  components {
+   AIFormationComponent "{507E9DC12F541FE6}" {
+    DefaultFormation "Line"
+   }
+   SCR_AIGroupMovementComponent "{6126A0E02097C7FF}" {
+    DefaultFormation "Line"
+   }
+  }
+  coords 657.258 40.792 2542.016
+  angleY -17.529
+ }
+ {
+  components {
+   AIFormationComponent "{507E9DC12F541FE6}" {
+    DefaultFormation "Line"
+   }
+   SCR_AIGroupMovementComponent "{6126A0E02097C7FF}" {
+    DefaultFormation "Line"
+   }
+  }
+  coords 645.306 40.792 2558.746
+  angleY -17.529
+ }
+ {
+  components {
+   AIFormationComponent "{507E9DC12F541FE6}" {
+    DefaultFormation "Line"
+   }
+   SCR_AIGroupMovementComponent "{6126A0E02097C7FF}" {
+    DefaultFormation "Line"
+   }
+  }
+  coords 645.143 40.792 2554.486
+  angleY -17.529
+ }
+ {
+  components {
+   AIFormationComponent "{507E9DC12F541FE6}" {
+    DefaultFormation "Line"
+   }
+   SCR_AIGroupMovementComponent "{6126A0E02097C7FF}" {
+    DefaultFormation "Line"
+   }
+  }
+  coords 646.1 40.792 2549.222
+  angleY -17.529
+ }
+ {
+  components {
+   AIFormationComponent "{507E9DC12F541FE6}" {
+    DefaultFormation "Line"
+   }
+   SCR_AIGroupMovementComponent "{6126A0E02097C7FF}" {
+    DefaultFormation "Line"
+   }
+  }
+  coords 647.019 40.792 2544.969
+  angleY -17.529
+ }
+ {
+  components {
+   AIFormationComponent "{507E9DC12F541FE6}" {
+    DefaultFormation "Line"
+   }
+   SCR_AIGroupMovementComponent "{6126A0E02097C7FF}" {
+    DefaultFormation "Line"
+   }
+  }
+  coords 648.328 40.792 2540.691
+  angleY -17.529
  }
 }

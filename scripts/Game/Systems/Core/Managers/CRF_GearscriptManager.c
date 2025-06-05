@@ -200,7 +200,8 @@ class CRF_GearscriptManager : ScriptComponent
 
 		foreach (IEntity item : items)
 		{
-			SCR_EntityHelper.DeleteEntityAndChildren(item);
+			if(item)
+				SCR_EntityHelper.DeleteEntityAndChildren(item);
 		}
 	}
 	

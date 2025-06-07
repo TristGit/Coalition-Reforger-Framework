@@ -17,7 +17,6 @@ CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et
  "		"\
  "		super.OnControllableDestroyed(entity, killerEntity, instigator);"\
  "	}"
- m_bSafestartInstantlyEnabled 0
  m_bRespawnEnabled 1
  m_iTimeToRespawn 10
  m_iBLUFORTickets 999

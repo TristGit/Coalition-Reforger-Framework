@@ -26,12 +26,12 @@ PolylineShapeEntity {
     CRF_PolyZoneMeshComponent "{658635BE82F382BC}" {
      m_fHeight 25
      m_fUndergroundHeight 15
-     m_Material "{DD4DF8DD2A3A1EAE}Assets/Editor/VirtualArea/GameBoundry.emat"
-    }
-    Hierarchy "{658635BE8590CCDD}" {
+     m_Material "{0A94C84B94134E73}Assets/Characters/Spectator/InvisibiltyGoesSoHard.emat"
     }
     RplComponent "{658C1920B090D61A}" {
      Streamable Disabled
+    }
+    Hierarchy "{658635BE8590CCDD}" {
     }
    }
    coords 0 0 0
@@ -46,7 +46,7 @@ PolylineShapeEntity {
     "SCR_ChimeraCharacter"
    }
    m_polyZoneEffect CRF_PolyZoneEffectRestricted "{658653B579355FE5}" {
-    m_fKillTime 15
+    m_fKillTime 25
    }
    m_bReversed 1
    m_bAliveOnly 1

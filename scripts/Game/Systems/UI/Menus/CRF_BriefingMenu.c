@@ -315,8 +315,15 @@ class CRF_PreviewMenuUI: ChimeraMenuBase
 			
 			// Highlight talking players
 			if (m_MenuManager.m_aPlayersTalking.Contains(player))
-				comp.SetColor(Color.FromRGBA(255, 183, 0, 255));
+				comp.SetTalking();
 		}
+	}
+	
+	void SetTalking() {
+		ImageWidget wid = ImageWidget.Cast(m_wRoot.FindAnyWidget("VONSpeaker"));
+		
+		if (wid)
+			wid.SetVisible(true);
 	}
 	
 	private void SetPlayerStatusColor(int playerId, SCR_ListBoxElementComponent comp)

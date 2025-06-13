@@ -390,4 +390,9 @@ class CRF_GamemodeManager : SCR_BaseGameModeComponent
 	{
 		return m_aDonators.Contains(SCR_PlayerController.GetLocalPlayerId());
 	}
+	
+	bool IsDonator(int playerId)
+	{
+		return m_aDonators.Contains(playerId);
+	}
 }

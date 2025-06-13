@@ -35,9 +35,15 @@ Vehicle : "{1BABF6B33DA0AEB6}Prefabs/Vehicles/Wheeled/Ural4320/Ural4320_command.
   SCR_EditableVehicleComponent "{50DEB7C26B5EB312}" {
    m_UIInfo SCR_EditableVehicleUIInfo "{5298E609432D192D}" {
     m_Image "{33B7DAA960E4F866}UI/Textures/EditorPreviews/Vehicles/Wheeled/Ural4320/Ural4320_FIA_command.edds"
-    m_sFaction "FIA"
+    m_sFaction "INDFOR"
     m_aAutoLabels {
-     12 122 54
+     51872 122 54
+    }
+    m_EntityBudgetCost {
+     SCR_EntityBudgetValue "{5EF07CE024FADC8C}" {
+      m_BudgetType RANK_PRIVATE
+      m_Value 1
+     }
     }
    }
   }

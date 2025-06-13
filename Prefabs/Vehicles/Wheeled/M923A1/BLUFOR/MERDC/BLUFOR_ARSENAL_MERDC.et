@@ -7,7 +7,15 @@ Vehicle : "{EC657C9B3C73E192}Prefabs/Vehicles/Wheeled/M923A1/M923A1_ammo_MERDC.e
     Description "#AR-EditableEntity_ArsenalTruck_Description"
     Icon "{992690F7B5CBE7D0}UI/Textures/Editor/EditableEntities/Vehicles/EditableEntity_Arsenal_Truck.edds"
     m_Image "{3030F36609E2CA22}UI/Textures/EditorPreviews/Vehicles/Wheeled/M923A1/M923A1_arsenal_MERDC.edds"
-    m_aAutoLabels +{
+    m_sFaction "BLUFOR"
+    m_aAutoLabels {
+     51870 122 54
+    }
+    m_EntityBudgetCost {
+     SCR_EntityBudgetValue "{5EF07CF434919DE2}" {
+      m_BudgetType RANK_PRIVATE
+      m_Value 1
+     }
     }
     m_aOccupantFillCompartmentTypes +{
     }

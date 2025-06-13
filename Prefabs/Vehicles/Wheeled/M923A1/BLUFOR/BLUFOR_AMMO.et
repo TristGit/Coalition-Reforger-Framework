@@ -13,19 +13,16 @@ Vehicle : "{9A0D72816DFFDB7F}Prefabs/Vehicles/Wheeled/M923A1/M923A1.et" {
     Icon "{9EBE212C91B36BBE}UI/Textures/Editor/EditableEntities/Vehicles/EditableEntity_Vehicle_Truck.edds"
     IconSetName ""
     m_Image "{4C3B89AE70636D52}UI/Textures/EditorPreviews/Vehicles/Wheeled/M923A1/M923A1_ammo.edds"
-    m_sFaction "US"
+    m_sFaction "BLUFOR"
     m_aAuthoredLabels + {
      27 280 210
     }
-    m_aAutoLabels +{
+    m_aAutoLabels {
+     51870 122 54
     }
     m_EntityBudgetCost {
      SCR_EntityBudgetValue "{5EDC86E4AF8908B6}" {
       m_Value 380
-     }
-     SCR_EntityBudgetValue "{65990AF0D50CCBDB}" {
-      m_BudgetType RANK_CORPORAL
-      m_Value 2
      }
     }
     m_aOccupantFillCompartmentTypes +{

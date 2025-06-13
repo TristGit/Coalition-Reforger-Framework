@@ -6,11 +6,12 @@ Vehicle : "{4597626AF36C0858}Prefabs/Vehicles/Wheeled/Ural4320/Ural4320.et" {
     Name "#AR-Vehicle_Ural4320_Engineer_Name"
     Icon "{9EBE212C91B36BBE}UI/Textures/Editor/EditableEntities/Vehicles/EditableEntity_Vehicle_Truck.edds"
     m_Image "{3FBEA815D47B4382}UI/Textures/EditorPreviews/Vehicles/Wheeled/Ural4320/Ural4320_engineer.edds"
-    m_sFaction "USSR"
+    m_sFaction "OPFOR"
     m_aAuthoredLabels + {
      240 210
     }
-    m_aAutoLabels +{
+    m_aAutoLabels {
+     51871 122 54
     }
     m_EntityBudgetCost {
      SCR_EntityBudgetValue "{5EDC86E4AF8908B6}" {

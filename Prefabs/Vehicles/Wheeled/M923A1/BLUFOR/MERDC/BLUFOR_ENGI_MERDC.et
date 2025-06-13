@@ -13,7 +13,9 @@ Vehicle : "{2D74C39A650A3030}Prefabs/Vehicles/Wheeled/M923A1/M923A1_engineer.et"
    m_UIInfo SCR_EditableVehicleUIInfo "{5298E609432D192D}" {
     Icon "{9EBE212C91B36BBE}UI/Textures/Editor/EditableEntities/Vehicles/EditableEntity_Vehicle_Truck.edds"
     m_Image "{34DD9D596A1064E1}UI/Textures/EditorPreviews/Vehicles/Wheeled/M923A1/M923A1_engineer_MERDC.edds"
-    m_aAutoLabels +{
+    m_sFaction "BLUFOR"
+    m_aAutoLabels {
+     51870 122 54
     }
     m_aOccupantFillCompartmentTypes +{
     }

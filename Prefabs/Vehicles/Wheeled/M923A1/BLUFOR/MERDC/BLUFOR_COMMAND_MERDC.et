@@ -13,8 +13,15 @@ Vehicle : "{36BDCC88B17B3BFA}Prefabs/Vehicles/Wheeled/M923A1/M923A1_command.et" 
    m_UIInfo SCR_EditableVehicleUIInfo "{5298E609432D192D}" {
     Name "#AR-Vehicle_M934A1_Name"
     m_Image "{7D5BB592D13883B8}UI/Textures/EditorPreviews/Vehicles/Wheeled/M923A1/M923A1_command_MERDC.edds"
-    m_sFaction "US"
-    m_aAutoLabels +{
+    m_sFaction "BLUFOR"
+    m_aAutoLabels {
+     51870 122 54
+    }
+    m_EntityBudgetCost {
+     SCR_EntityBudgetValue "{5EF07CF50B7A126F}" {
+      m_BudgetType RANK_PRIVATE
+      m_Value 1
+     }
     }
    }
   }

@@ -225,14 +225,26 @@ class CRF_Gamemode : SCR_BaseGameMode
 			if (m_OnStateChanged)
 				m_OnStateChanged.Invoke();
 			
-			if (m_GamemodeState == CRF_EGamemodeState.AAR)
-				EnterAAR();
+			// Set basic game mode states for basegamemode
+			// useful for default components that reference it like datacollector
+			switch (m_GamemodeState) {
+				case CRF_EGamemodeState.GAME: {
+					SetGameState(SCR_EGameModeState.GAME);
+					break;
+				}
+				
+				case CRF_EGamemodeState.AAR: {
+					//SetGameState(SCR_EGameModeState.POSTGAME);
+					EnterAAR();
+					break;
+				}
+				
+			}	
 		}
 		
 		CRF_PlayerControllerManager playerControllerComp = CRF_PlayerControllerManager.GetInstance();
 		if (playerControllerComp)
 			playerControllerComp.OpenCurrentStateMenu();
-		
 	}
 	
 	/**
@@ -242,11 +254,16 @@ class CRF_Gamemode : SCR_BaseGameMode
 	protected void EnterAAR()
 	{
 		//Print("[CRF] EnterAAR()");
+		SCR_DataCollectorComponent dataCollector = GetGame().GetDataCollector();
+		dataCollector.OnGameModeEnd(GetEndGameData());
 		array<int> players = {};
 		GetGame().GetPlayerManager().GetAllPlayers(players);
 		
 		foreach (int player : players)
 		{
+			// Process player statistics data
+			ProcessStats(dataCollector,player);
+			
 			// Skip disconnected players
 			if (!GetGame().GetPlayerManager().IsPlayerConnected(player))
 				continue;
@@ -270,17 +287,34 @@ class CRF_Gamemode : SCR_BaseGameMode
 			HitZone defaultHitZone = damageManager.GetDefaultHitZone();
 			if (defaultHitZone)
 				defaultHitZone.SetHealth(0);
-
-			// Process player statistics data
-			SCR_DataCollectorComponent dataCollector = GetGame().GetDataCollector();
-			//PrintFormat("[CRF] dataCollector: %1",dataCollector);
+		}
+	}
+	
+	void ProcessStats(SCR_DataCollectorComponent dataCollector, int player)
+	{
+		// Process player statistics data
+		if (!m_PlayerData)
+		{
 			if (!dataCollector)
+			{
+				Print("[CRF] CRF_Gamemode SCR_DataCollectorComponent: No data collector was found.", LogLevel.ERROR);
 				return;
-			
-			m_PlayerData = dataCollector.GetPlayerData(player, true);
-			//PrintFormat("[CRF] m_PlayerData: %1",m_PlayerData);
-			if (m_PlayerData) {
-				//PrintFormat("[CRF] Calc stats for player %1",player);
+			}
+	
+			m_PlayerData = dataCollector.GetPlayerData(player, false);
+	
+			// If player data isn't available yet, register for notification when it arrives
+			if (!m_PlayerData)
+			{
+				SCR_DataCollectorCommunicationComponent communicationComponent = SCR_DataCollectorCommunicationComponent.Cast(
+					GetGame().GetPlayerManager().GetPlayerController(player).FindComponent(SCR_DataCollectorCommunicationComponent)
+				);
+				
+				if (communicationComponent)
+					communicationComponent.GetOnDataReceived().Insert(OnDataReceived);
+			}
+			else if (!m_PlayerData.IsDataProgressionReady())
+			{
 				m_PlayerData.CalculateStatsChange();
 			}
 		}
@@ -311,7 +345,7 @@ class CRF_Gamemode : SCR_BaseGameMode
 		// Skip processing on client
 		if (RplSession.Mode() == RplMode.Client)
 			return;
-		
+			
 		// Initialize player if not in GAME state
 		if (m_GamemodeState == CRF_EGamemodeState.BRIEFING || 
 			m_GamemodeState == CRF_EGamemodeState.SLOTTING || 
@@ -330,6 +364,7 @@ class CRF_Gamemode : SCR_BaseGameMode
 				m_GamemodeManager.SetPlayerStatus(iPlayerID, "don");
 		}
 	}
+	
 	
 	//------------------------------------------------------------------------------------------------
 	/*!
@@ -400,6 +435,14 @@ class CRF_Gamemode : SCR_BaseGameMode
 		// Skip processing on client
 		if (RplSession.Mode() == RplMode.Client)
 			return;
+		
+		// Data collector stuff for stats
+		SCR_DataCollectorComponent dc = GetGame().GetDataCollector();
+		SCR_InstigatorContextData inst = new SCR_InstigatorContextData(GetGame().GetPlayerManager().GetPlayerIdFromControlledEntity(entity), entity, killerEntity, instigator);
+		if (inst.GetVictimPlayerID() == 0) // AI
+			dc.OnAIKilledCRF(entity, killerEntity, instigator, inst);
+		else // player
+			dc.OnPlayerKilled(inst);
 
 		// Create instigator context for tracking kill details
 		SCR_InstigatorContextData instigatorContextData = new SCR_InstigatorContextData(-1, entity, killerEntity, instigator);
@@ -439,7 +482,7 @@ class CRF_Gamemode : SCR_BaseGameMode
 				false, 
 				playerId
 			);
-		} 
+		}
 
 		// Update slot death state so player gets put into spec
 		int slotID = m_SlottingManager.GetCharacterSlotID(entity);
@@ -480,5 +523,14 @@ modded class SCR_ManualCamera
 		
 		// Allow camera control in editor and spectator menus
 		return topMenu && (!topMenu.IsInherited(EditorMenuUI) && !topMenu.IsInherited(CRF_SpectatorMenuUI));
+	}
+}
+
+modded class SCR_BaseGameMode
+{
+	void SetGameState(SCR_EGameModeState state)
+	{
+		m_eGameState = state;
+		Replication.BumpMe();
 	}
 }

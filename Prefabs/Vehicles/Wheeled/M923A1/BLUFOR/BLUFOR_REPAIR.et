@@ -8,11 +8,12 @@ Vehicle : "{9A0D72816DFFDB7F}Prefabs/Vehicles/Wheeled/M923A1/M923A1.et" {
     Icon "{B2F6F389EB78D030}UI/Textures/Editor/EditableEntities/Vehicles/EditableEntity_Repair_Truck.edds"
     IconSetName ""
     m_Image "{51E748C34660D11E}UI/Textures/EditorPreviews/Vehicles/Wheeled/M923A1/M923A1_repair.edds"
-    m_sFaction "US"
+    m_sFaction "BLUFOR"
     m_aAuthoredLabels + {
      39 280 210 291
     }
-    m_aAutoLabels +{
+    m_aAutoLabels {
+     51870 122 54
     }
     m_EntityBudgetCost {
      SCR_EntityBudgetValue "{5EDC86E4AF8908B6}" {

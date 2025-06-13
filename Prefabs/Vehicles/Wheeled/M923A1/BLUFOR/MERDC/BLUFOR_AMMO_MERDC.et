@@ -13,7 +13,15 @@ Vehicle : "{92264FF932676C13}Prefabs/Vehicles/Wheeled/M923A1/M923A1_ammo.et" {
    m_UIInfo SCR_EditableVehicleUIInfo "{5298E609432D192D}" {
     Name "#AR-Vehicle_M923A1_Ammo_Name"
     m_Image "{52ADF02CE596BA43}UI/Textures/EditorPreviews/Vehicles/Wheeled/M923A1/M923A1_ammo_MERDC.edds"
-    m_aAutoLabels +{
+    m_sFaction "BLUFOR"
+    m_aAutoLabels {
+     51870 122 54
+    }
+    m_EntityBudgetCost {
+     SCR_EntityBudgetValue "{5EF07CF434919DE2}" {
+      m_BudgetType RANK_PRIVATE
+      m_Value 1
+     }
     }
     m_aOccupantFillCompartmentTypes +{
     }

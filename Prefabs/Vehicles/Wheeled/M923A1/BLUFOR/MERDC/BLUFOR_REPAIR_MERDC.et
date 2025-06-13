@@ -14,9 +14,11 @@ Vehicle : "{A042ACE5C2B13206}Prefabs/Vehicles/Wheeled/M923A1/M923A1_repair.et" {
     Name "#AR-Vehicle_M923A1_Repair_Name"
     Description "#AR-EditableEntity_SupportStationSystem_Repair_Description"
     m_Image "{C0CF176DD594C4A4}UI/Textures/EditorPreviews/Vehicles/Wheeled/M923A1/M923A1_repair_MERDC.edds"
+    m_sFaction "BLUFOR"
     m_aAuthoredLabels +{
     }
-    m_aAutoLabels +{
+    m_aAutoLabels {
+     51870 122 54
     }
     m_aOccupantFillCompartmentTypes +{
     }

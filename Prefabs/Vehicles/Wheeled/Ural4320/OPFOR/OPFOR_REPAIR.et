@@ -14,11 +14,12 @@ Vehicle : "{4597626AF36C0858}Prefabs/Vehicles/Wheeled/Ural4320/Ural4320.et" {
     Description "#AR-EditableEntity_SupportStationSystem_Repair_Description"
     Icon "{B2F6F389EB78D030}UI/Textures/Editor/EditableEntities/Vehicles/EditableEntity_Repair_Truck.edds"
     m_Image "{9136012CA0383A48}UI/Textures/EditorPreviews/Vehicles/Wheeled/Ural4320/Ural4320_repair.edds"
-    m_sFaction "USSR"
+    m_sFaction "OPFOR"
     m_aAuthoredLabels + {
      39 210 291
     }
-    m_aAutoLabels +{
+    m_aAutoLabels {
+     51871 122 54
     }
     m_EntityBudgetCost {
      SCR_EntityBudgetValue "{5EDC86E4AF8908B6}" {

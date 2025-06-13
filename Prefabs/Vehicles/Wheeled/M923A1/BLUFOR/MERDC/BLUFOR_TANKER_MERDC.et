@@ -13,9 +13,9 @@ Vehicle : "{2BE1F8B9299B67C1}Prefabs/Vehicles/Wheeled/M923A1/M923A1_tanker.et" {
    m_UIInfo SCR_EditableVehicleUIInfo "{5298E609432D192D}" {
     Name "#AR-Vehicle_M923A1_Fuel_Name"
     m_Image "{F73A7173D14FDB31}UI/Textures/EditorPreviews/Vehicles/Wheeled/M923A1/M923A1_tanker_MERDC.edds"
-    m_sFaction "US"
+    m_sFaction "BLUFOR"
     m_aAutoLabels {
-     11 122 54 51870
+     51870 122 54
     }
    }
   }

@@ -1,13 +1,13 @@
-Vehicle : "{A5647958579A4149}Prefabs/Vehicles/Wheeled/Ural4320/Ural4320_repair.et" {
+Vehicle : "{3336BE330C4F355B}Prefabs/Vehicles/Wheeled/Ural4320/Ural4320_ammo.et" {
  ID "BBCBA43A9778AE21"
  components {
   MeshObject "{51DAA09FEFBFC0E7}" {
    Materials {
-    MaterialAssignClass "{65990AF3652CA180}" {
+    MaterialAssignClass "{65990AF0A278F54C}" {
      SourceMaterial "Ural_Body"
      AssignedMaterial "{0ABA717F21E466CE}Assets/Vehicles/Wheeled/Ural4320/Data/Ural_4320_Body_FIA.emat"
     }
-    MaterialAssignClass "{65990AF3652CA1AF}" {
+    MaterialAssignClass "{65990AF0A278F57E}" {
      SourceMaterial "Ural_Details"
      AssignedMaterial "{C798CD16F802F339}Assets/Vehicles/Wheeled/Ural4320/Data/Ural_4320_Details_FIA.emat"
     }
@@ -15,14 +15,20 @@ Vehicle : "{A5647958579A4149}Prefabs/Vehicles/Wheeled/Ural4320/Ural4320_repair.e
   }
   SCR_EditableVehicleComponent "{50DEB7C26B5EB312}" {
    m_UIInfo SCR_EditableVehicleUIInfo "{5298E609432D192D}" {
-    Name "#AR-Vehicle_Ural4320_Repair_Name"
-    Icon "{B2F6F389EB78D030}UI/Textures/Editor/EditableEntities/Vehicles/EditableEntity_Repair_Truck.edds"
-    m_Image "{8C0B416C41DC91D2}UI/Textures/EditorPreviews/Vehicles/Wheeled/Ural4320/Ural4320_repair_FIA.edds"
-    m_sFaction "FIA"
+    Name "#AR-Vehicle_Ural4320_Ammo_Name"
+    Icon "{9EBE212C91B36BBE}UI/Textures/Editor/EditableEntities/Vehicles/EditableEntity_Vehicle_Truck.edds"
+    m_Image "{83E2FB1E05DFF395}UI/Textures/EditorPreviews/Vehicles/Wheeled/Ural4320/Ural4320_ammo_FIA.edds"
+    m_sFaction "INDFOR"
     m_aAuthoredLabels +{
     }
     m_aAutoLabels {
-     12 122 54
+     51872 122 54
+    }
+    m_EntityBudgetCost {
+     SCR_EntityBudgetValue "{5EF07CE051E72289}" {
+      m_BudgetType RANK_PRIVATE
+      m_Value 1
+     }
     }
     m_aOccupantFillCompartmentTypes +{
     }
@@ -33,9 +39,8 @@ Vehicle : "{A5647958579A4149}Prefabs/Vehicles/Wheeled/Ural4320/Ural4320_repair.e
   }
   SlotManagerComponent "{55BCE45E438E4CFF}" {
    Slots {
-    RegisteringComponentSlotInfo RepairBox {
-     Prefab "{2096570A3B9E831E}Prefabs/Vehicles/Wheeled/Ural4320/VehParts/Ural4320_FIA_repair_box.et"
-     InheritParentSkeleton 1
+    RegisteringComponentSlotInfo Ammo {
+     Prefab "{24ADE3A278D243EB}Prefabs/Vehicles/Wheeled/Ural4320/VehParts/Ural4320_FIA_ammo_box.et"
     }
    }
   }

@@ -163,8 +163,7 @@ class CRF_PlayerControllerManager : ScriptComponent
 			m_Gamemode.GetOnPlayerSpawned().Invoke(SCR_PlayerController.GetLocalPlayerId(), SCR_PlayerController.GetLocalMainEntity());
 			
 			// Reset Stored Pos
-			// GetGame().GetCallqueue().CallLater(UpdateStoredCameraPos, 1275, false, vector.Zero, vector.Zero, vector.Zero, vector.Zero);
-			UpdateStoredCameraPos(vector.Zero, vector.Zero, vector.Zero, vector.Zero);
+			GetGame().GetCallqueue().CallLater(UpdateStoredCameraPos, 1275, false, vector.Zero, vector.Zero, vector.Zero, vector.Zero);
 		};
 	}
 	

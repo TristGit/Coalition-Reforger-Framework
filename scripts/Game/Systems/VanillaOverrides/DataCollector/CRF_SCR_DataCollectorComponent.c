@@ -101,15 +101,15 @@ modded class SCR_DataCollectorComponent
 	
 	override void OnPlayerKilled(notnull SCR_InstigatorContextData instigatorContextData)
 	{
-		int playerId = instigatorContextData.GetVictimPlayerID();
-		IEntity playerEntity = instigatorContextData.GetVictimEntity();
-		IEntity killerEntity = instigatorContextData.GetKillerEntity();
-		Instigator instigator = instigatorContextData.GetInstigator();
-		
 		if (instigatorContextData.GetVictimPlayerID() <= 0) {
 			OnAIKilledCRF(playerEntity,killerEntity,instigator,instigatorContextData);
 			return;
 		}
+		
+		int playerId = instigatorContextData.GetVictimPlayerID();
+		IEntity playerEntity = instigatorContextData.GetVictimEntity();
+		IEntity killerEntity = instigatorContextData.GetKillerEntity();
+		Instigator instigator = instigatorContextData.GetInstigator();
 			
 		foreach (SCR_DataCollectorModule module : m_aModules)
 		{

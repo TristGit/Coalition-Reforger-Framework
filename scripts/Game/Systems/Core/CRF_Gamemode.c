@@ -253,6 +253,10 @@ class CRF_Gamemode : SCR_BaseGameMode
 	 */
 	protected void EnterAAR()
 	{
+		// Server only just in case
+		if (Replication.IsClient())
+			return;
+		
 		//Print("[CRF] EnterAAR()");
 		SCR_DataCollectorComponent dataCollector = GetGame().GetDataCollector();
 		dataCollector.OnGameModeEnd(GetEndGameData());
@@ -313,10 +317,10 @@ class CRF_Gamemode : SCR_BaseGameMode
 				if (communicationComponent)
 					communicationComponent.GetOnDataReceived().Insert(OnDataReceived);
 			}
-			else if (!m_PlayerData.IsDataProgressionReady())
-			{
-				m_PlayerData.CalculateStatsChange();
-			}
+			
+			m_PlayerData.StoreProfile();
+			m_PlayerData.CalculateStatsChange();
+			
 		}
 	}
 	

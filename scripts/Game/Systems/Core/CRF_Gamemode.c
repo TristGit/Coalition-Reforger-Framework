@@ -458,7 +458,7 @@ class CRF_Gamemode : SCR_BaseGameMode
 		Faction faction = CRF_SlottingManager.GetInstance().GetPlayerSlotFaction(playerId);
 		FactionKey factionKey;
 		
-		if(faction)
+		if (faction)
 			factionKey = faction.GetFactionKey();
 
 		// Handle respawn if enabled and tickets available

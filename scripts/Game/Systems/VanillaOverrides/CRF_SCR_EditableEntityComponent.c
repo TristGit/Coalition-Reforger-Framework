@@ -12,7 +12,7 @@ modded class SCR_EditableEntityComponent
 		ResourceName resourceName = m_Owner.GetPrefabData().GetPrefabName();
 		
 		//--- From Role Config
-		if (CRF_RoleHelper.IsValidGearscriptResource(resourceName))
+		if (CRF_RoleHelper.IsValidGearscriptResource(resourceName) && GetGame().GetMenuManager().GetTopMenu().IsInherited(CRF_SpectatorMenuUI))
 		{
 			CRF_GearScriptRolesConfig rolesConfig = CRF_GamemodeManager.RolesConfig();
 			CRF_EGearRole role = CRF_RoleHelper.ResourceToRole(resourceName);

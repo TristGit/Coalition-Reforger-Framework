@@ -122,6 +122,12 @@ CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et
   }
  }
 }
+Vehicle BLUFOR_ENGI1 : "{07E3B7FA0B81F197}Prefabs/Vehicles/Wheeled/M923A1/BLUFOR/BLUFOR_ENGI.et" {
+ coords 5607.927 144.929 5140.415
+ angleX 5.044
+ angleY -131.977
+ angleZ 0.266
+}
 GenericEntity : "{1FE6CA907FA552E7}Prefabs/Compositions/Slotted/SlotFlatSmall/SupplyCache_S_FIA_04.et" {
  coords 5636.136 141.684 5177.957
 }

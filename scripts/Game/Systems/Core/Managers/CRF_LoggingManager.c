@@ -285,7 +285,7 @@ class CRF_LoggingManager: SCR_BaseGameModeComponent
 			return;
 		
 		// Victim info
-		m_PlayerChimera = SCR_ChimeraCharacter.Cast(m_PlayerManager.GetPlayerControlledEntity(instiContext.GetKillerPlayerID()));
+		m_PlayerChimera = SCR_ChimeraCharacter.Cast(m_PlayerManager.GetPlayerControlledEntity(instiContext.GetVictimPlayerID()));
 		m_sVictimFaction = m_PlayerChimera.GetFactionKey();
 		m_sVictimGUID = GetGame().GetBackendApi().GetPlayerIdentityId(instiContext.GetVictimPlayerID());
 		if (instiContext.GetVictimPlayerID() > 0) // if it's a player

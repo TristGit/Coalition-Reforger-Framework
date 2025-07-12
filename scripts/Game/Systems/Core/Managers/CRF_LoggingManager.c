@@ -61,6 +61,7 @@ class CRF_LoggingManager: SCR_BaseGameModeComponent
 	private FactionManager m_FM;
 	private SCR_FactionManager m_SFM;
 	private Faction m_Faction;
+	private CRF_Gamemode m_GM;
 	
 	// Singleton instance
 	private static CRF_LoggingManager s_Instance;
@@ -101,6 +102,7 @@ class CRF_LoggingManager: SCR_BaseGameModeComponent
 			return;
 		
 		m_PlayerManager = GetGame().GetPlayerManager();
+		m_GM = CRF_Gamemode.GetInstance();
 		
 		InitializeLogging();
 	}
@@ -284,11 +286,14 @@ class CRF_LoggingManager: SCR_BaseGameModeComponent
 		if (!m_LogFileHandle)
 			return;
 		
+		if (m_GM.m_GamemodeState != CRF_EGamemodeState.GAME) // ignore aar deaths
+			return;
+		
 		// Victim info
 		m_PlayerChimera = SCR_ChimeraCharacter.Cast(m_PlayerManager.GetPlayerControlledEntity(instiContext.GetVictimPlayerID()));
 		m_sVictimFaction = m_PlayerChimera.GetFactionKey();
 		m_sVictimGUID = GetGame().GetBackendApi().GetPlayerIdentityId(instiContext.GetVictimPlayerID());
-		if (instiContext.GetVictimPlayerID() > 0 && m_sVictimFaction != "SPEC") // if it's a player
+		if (instiContext.GetVictimPlayerID() > 0) // if it's a player 
 			m_sVictimName = GetGame().GetPlayerManager().GetPlayerName(instiContext.GetVictimPlayerID());
 		else 
 			m_sVictimName = "AI";
@@ -298,7 +303,7 @@ class CRF_LoggingManager: SCR_BaseGameModeComponent
 		m_PlayerChimera = SCR_ChimeraCharacter.Cast(m_PlayerManager.GetPlayerControlledEntity(instiContext.GetKillerPlayerID()));
 		m_sKillerFaction = m_PlayerChimera.GetFactionKey();
 		m_sKillerGUID = GetGame().GetBackendApi().GetPlayerIdentityId(instiContext.GetKillerPlayerID());
-		if (instiContext.GetKillerPlayerID() > 0 && m_sKillerFaction != "SPEC") // if it's a player and ignore aar killings
+		if (instiContext.GetKillerPlayerID() > 0) // if it's a player and ignore aar killings
 			m_sKillerName = GetGame().GetPlayerManager().GetPlayerName(instiContext.GetKillerPlayerID());
 		else
 			m_sKillerName = "AI";

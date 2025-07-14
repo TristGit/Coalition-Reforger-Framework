@@ -299,7 +299,7 @@ class CRF_Gamemode : SCR_BaseGameMode
 		dataCollector.OnGameEnd();
 		
 		// Make sure we close logging memory leak
-		m_LoggingManager.OnGameModeEnd();
+		m_LoggingManager.OnGameModeEnd(GetEndGameData());
 	}
 	
 	void ProcessStats(SCR_DataCollectorComponent dataCollector, int player)

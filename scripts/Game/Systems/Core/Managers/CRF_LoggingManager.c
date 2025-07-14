@@ -127,6 +127,7 @@ class CRF_LoggingManager: SCR_BaseGameModeComponent
 		m_LogFileHandle = FileIO.OpenFile(LOG_PATH, FileMode.APPEND);
 		// Mission-specific log
 		m_MissionLog = FileIO.OpenFile("profile:/KillData/" + m_sMissionName, FileMode.WRITE);
+		Print(m_MissionLog);
 		
 		// Log mission beginning
 		UpdatePlayerCount();
@@ -345,18 +346,19 @@ class CRF_LoggingManager: SCR_BaseGameModeComponent
 	}
 	
 	// TODO: Implement these on EH where grenade is thrown
-	void LogGrenadeThrown()
+	/*void LogGrenadeThrown()
 	{
 		if (!m_LogFileHandle)
 			return;
 		
-		m_LogFileHandle.WriteLine("grenade" + SEPARATOR + eventType + SEPARATOR + m_sMissionName + SEPARATOR + m_iPlayerCount + SEPARATOR + m_sMaxPlayers + m_sAuthorName + SEPARATOR + m_sMissionDetails + SEPARATOR + m_sGameMode);
+		// TODO: Add username and guid to both loggers
+		m_LogFileHandle.WriteLine("grenade" + SEPARATOR + );
 		
 		if (!m_MissionLog)
 			return;
 		
 		m_MissionLog.WriteLine("grenade" + SEPARATOR + m_sMissionName + SEPARATOR + m_sAuthorName + SEPARATOR + m_sGameMode + SEPARATOR + m_sPlayerCountMax + SEPARATOR + m_aSideCounts);
-	}
+	}*/
 	
 	void LogShots()
 	{

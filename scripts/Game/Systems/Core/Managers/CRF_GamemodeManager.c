@@ -13,6 +13,8 @@ class CRF_GamemodeManager : SCR_BaseGameModeComponent
 	[RplProp()]
 	protected string m_sServerWorldTime;
 	
+	static ref CRF_GearScriptRolesConfig m_RolesConfig;
+	
 	protected CRF_Gamemode m_Gamemode;
 	protected CRF_SlottingManager m_SlottingManager;
 	protected CRF_SafestartManager m_SafestartManager;
@@ -40,6 +42,25 @@ class CRF_GamemodeManager : SCR_BaseGameModeComponent
 		
 		// Initialize all required manager references
 		InitializeManagers();
+		LoadConfigurations();
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	/**
+	 * @brief Load necessary configurations for gearscript
+	 */
+	protected void LoadConfigurations()
+	{
+		const ResourceName rolesConfigPath = "{4388548E9F600148}Configs/Gearscripts/CRF_Global_Roles_Config.conf";
+		
+		m_RolesConfig = CRF_GearScriptRolesConfig.Cast(BaseContainerTools.CreateInstanceFromContainer(
+			BaseContainerTools.LoadContainer(rolesConfigPath).GetResource().ToBaseContainer()));
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	static CRF_GearScriptRolesConfig RolesConfig()
+	{
+		return m_RolesConfig;
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -130,8 +151,7 @@ class CRF_GamemodeManager : SCR_BaseGameModeComponent
 		if (playerCharacter)
 		{
 			AssignFactionToPlayer(playerController, faction);
-			
-			GetGame().GetCallqueue().Call(InitilizePlayerCharacter, playerId, playerController, playerCharacter, isSpectator);
+			GetGame().GetCallqueue().CallLater(InitilizePlayerCharacter, 100, false, playerId, playerController, playerCharacter, isSpectator);
 		};
 	}
 	
@@ -208,6 +228,9 @@ class CRF_GamemodeManager : SCR_BaseGameModeComponent
 			alreadyCreated = false;
 			CRF_RplBroadcastManager.GetInstance().SendCharacterLoadingScreen(playerId);
 			playerCharacter = m_SlottingManager.SpawnPlayableEntity(playerId, overrideLocation);
+			// Run datacollector for stats
+			SCR_DataCollectorComponent dc = GetGame().GetDataCollector();
+			dc.OnPlayerSpawned(playerId, playerCharacter);
 		}
 			
 		return playerCharacter;
@@ -386,5 +409,10 @@ class CRF_GamemodeManager : SCR_BaseGameModeComponent
 	bool IsDonator()
 	{
 		return m_aDonators.Contains(SCR_PlayerController.GetLocalPlayerId());
+	}
+	
+	bool IsDonator(int playerId)
+	{
+		return m_aDonators.Contains(playerId);
 	}
 }

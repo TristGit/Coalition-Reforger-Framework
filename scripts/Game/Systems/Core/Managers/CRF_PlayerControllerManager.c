@@ -104,7 +104,7 @@ class CRF_PlayerControllerManager : ScriptComponent
 		m_RplToAuthorityManager = CRF_RplToAuthorityManager.GetInstance();
 		
 		// Close all menus
-		if(m_Gamemode.m_GamemodeState == CRF_EGamemodeState.GAME)
+		if (m_Gamemode.m_GamemodeState == CRF_EGamemodeState.GAME)
 		{
 			GetGame().GetMenuManager().CloseAllMenus();
 		
@@ -121,8 +121,7 @@ class CRF_PlayerControllerManager : ScriptComponent
 			vector cameraPos[4];
 			SCR_ChimeraCharacter char = CRF_SlottingManager.GetInstance().GetPlayerSlotCharacter(SCR_PlayerController.GetLocalPlayerId());
 			
-			if (char && m_vStoredCameraPos[3] == vector.Zero)
-			{
+			if (char && m_vStoredCameraPos[3] == vector.Zero) {
 				char.GetWorldTransform(cameraPos);
 				cameraPos[3][1] = cameraPos[3][1] + 1.5;
 			} else if (m_vStoredCameraPos[3] != vector.Zero) {
@@ -155,15 +154,31 @@ class CRF_PlayerControllerManager : ScriptComponent
 			
 			// Switch to spectator camera
 			GetGame().GetCameraManager().SetCamera(CameraBase.Cast(m_eCamera));
+			
+			// Turn on killfeed for specs
+			SCR_NotificationSenderComponent sender = SCR_NotificationSenderComponent.Cast(
+				GetGame().GetGameMode().FindComponent(SCR_NotificationSenderComponent)
+			);
+			if (sender)
+				sender.SetKillFeedTypeDeadLocal();
 		} else { 
 			// Clean up previous camera if exists
 			if (m_eCamera)
 				delete m_eCamera;
 			
+			// Originally added for data collector
+			m_Gamemode.GetOnPlayerSpawned().Invoke(SCR_PlayerController.GetLocalPlayerId(), SCR_PlayerController.GetLocalMainEntity());
+			
 			// Reset Stored Pos
-			// GetGame().GetCallqueue().CallLater(UpdateStoredCameraPos, 1275, false, vector.Zero, vector.Zero, vector.Zero, vector.Zero);
-			UpdateStoredCameraPos(vector.Zero, vector.Zero, vector.Zero, vector.Zero);
-		};
+			GetGame().GetCallqueue().CallLater(UpdateStoredCameraPos, 200, false, vector.Zero, vector.Zero, vector.Zero, vector.Zero);
+			
+			// Reset kill feed type to default
+			SCR_NotificationSenderComponent sender = SCR_NotificationSenderComponent.Cast(
+				GetGame().GetGameMode().FindComponent(SCR_NotificationSenderComponent)
+			);
+			if (sender)
+				sender.SetKillFeedTypeNoneLocal();
+		}
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -647,11 +662,11 @@ class CRF_PlayerControllerManager : ScriptComponent
 	 * @param zOrder - Display order/priority
 	 * @param markerColor - ARGB color value
 	 */
-	void AddScriptedMarker(string markerEntityName, vector markerOffset, int timeDelay, string markerText, string markerImage, int zOrder, int markerColor)
+	void AddScriptedMarker(string markerEntityName, string markerOffset, int timeDelay, string markerText, string markerImage, int zOrder, int markerColor)
 	{
 		m_aScriptedMarkers.Insert(string.Format("%1||%2||%3||%4||%5||%6||%7", 
 			markerEntityName, 
-			markerOffset.ToString(), 
+			markerOffset, 
 			timeDelay.ToString(), 
 			markerText, 
 			markerImage, 
@@ -669,11 +684,11 @@ class CRF_PlayerControllerManager : ScriptComponent
 	 * @param zOrder - Display order/priority
 	 * @param markerColor - ARGB color value
 	 */
-	void RemoveScriptedMarker(string markerEntityName, vector markerOffset, int timeDelay, string markerText, string markerImage, int zOrder, int markerColor)
+	void RemoveScriptedMarker(string markerEntityName, string markerOffset, int timeDelay, string markerText, string markerImage, int zOrder, int markerColor)
 	{
 		m_aScriptedMarkers.RemoveItemOrdered(string.Format("%1||%2||%3||%4||%5||%6||%7", 
 			markerEntityName, 
-			markerOffset.ToString(), 
+			markerOffset, 
 			timeDelay.ToString(), 
 			markerText, 
 			markerImage, 

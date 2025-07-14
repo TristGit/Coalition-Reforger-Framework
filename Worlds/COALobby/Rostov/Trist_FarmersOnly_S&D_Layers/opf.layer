@@ -1,0 +1,214 @@
+GenericEntity : "{0B3312C6940005B9}Prefabs/Structures/FlagPoles/RespawnPoles/OPFOR_Respawn.et" {
+ coords 2024.889 134.504 3331.072
+}
+$grp Vehicle : "{2B15F98903994DA3}Prefabs/Vehicles/Wheeled/Ural4320/Ural4320_transport_covered_camo1.et" {
+ Ural4320_transport_covered_camo1 {
+  coords 2107.829 132.909 3333.206
+  angleY -34.492
+ }
+ Ural4320_transport_covered_camo2 {
+  coords 2114.891 132.587 3330.688
+  angleY -34.492
+ }
+ Ural4320_transport_covered_camo3 {
+  coords 2114.779 132.25 3323.19
+  angleY -34.492
+ }
+ Ural4320_transport_covered_camo4 {
+  coords 2121.5 132.098 3319.84
+  angleY -34.492
+ }
+ Ural4320_transport_covered_camo5 {
+  coords 2089.558 132.357 3314.883
+  angleY 38.66
+ }
+ Ural4320_transport_covered_camo6 {
+  coords 2091.782 132.858 3322.545
+  angleY 40.521
+ }
+ Ural4320_transport_covered_camo7 {
+  coords 2081.446 132.391 3312.41
+  angleY 40.069
+ }
+ Ural4320_transport_covered_camo9 {
+  coords 2099.14 132.746 3325.051
+  angleY 41.58
+ }
+}
+Vehicle Ural4320_ammo1 : "{3336BE330C4F355B}Prefabs/Vehicles/Wheeled/Ural4320/Ural4320_ammo.et" {
+ components {
+  SCR_ResourceComponent "{65DC074352D6A2FF}" {
+   m_aContainers {
+    SCR_ResourceContainerVirtual "{65DC074356BB651C}" {
+     m_eResourceRights ALL
+     m_eStorageType CARGO_VEHICLE
+     m_fResourceValueCurrent 1
+     m_fResourceValueMax 50
+     m_bEnableResourceGain 1
+     m_fResourceGain 1
+     m_fResourceGainTickrate 90
+    }
+   }
+  }
+  SCR_UniversalInventoryStorageComponent "{5916C58171230A92}" {
+   MultiSlots {
+    MultiSlotConfiguration "{5A60D38EDB3709A9}" {
+     NumSlots 5
+    }
+   }
+  }
+ }
+ coords 2132.291 130.399 3300.589
+ angleY -31.404
+}
+Vehicle UAZ452_ambulance1 : "{43C4AF1EEBD001CE}Prefabs/Vehicles/Wheeled/UAZ452/UAZ452_ambulance.et" {
+ coords 2123.369 131.176 3310.744
+ angleX 2.127
+ angleY -35.297
+}
+SCR_AIGroup : "{5BFC01F79A5A8C68}Prefabs/Groups/OPFOR/Standard/Command/CRF_OPFOR_Company_p.et" {
+ components {
+  AIFormationComponent "{507E9DC12F541FE6}" {
+   DefaultFormation "Line"
+  }
+ }
+ coords 2125.428 132.73 3343.611
+ angleY 37.949
+ {
+  SCR_AIGroup : "{24DA56B34E727840}Prefabs/Groups/OPFOR/Standard/Support/CRF_OPFOR_MedicTeam_p.et" {
+   components {
+    AIFormationComponent "{507E9DC12F541FE6}" {
+     DefaultFormation "Row"
+    }
+   }
+   coords 0.627 0.354 7.938
+   angleY 0.921
+   m_aUnitPrefabSlots + {
+    "{9E37DD66E77861A4}Prefabs/Characters/Factions/OPFOR/CRF_GS_OPFOR_Medic_P.et" "{9E37DD66E77861A4}Prefabs/Characters/Factions/OPFOR/CRF_GS_OPFOR_Medic_P.et"
+   }
+   {
+    SCR_AIGroup : "{6524B6A6C69BD3EE}Prefabs/Groups/OPFOR/Standard/Command/CRF_OPFOR_Platoon_p.et" {
+     components {
+      AIFormationComponent "{507E9DC12F541FE6}" {
+       DefaultFormation "Row"
+      }
+     }
+     coords 17.176 0.495 0.577
+     angleY -2.374
+     {
+      SCR_AIGroup : "{92F50F60726EB86D}Prefabs/Groups/OPFOR/Standard/Infantry/CRF_OPFOR_RifleSquad_p.et" {
+       components {
+        AIFormationComponent "{507E9DC12F541FE6}" {
+         DefaultFormation "Row"
+        }
+       }
+       coords -28.308 -0.017 8.85
+       angleY 178.67
+       {
+        SCR_AIGroup : "{92F50F60726EB86D}Prefabs/Groups/OPFOR/Standard/Infantry/CRF_OPFOR_RifleSquad_p.et" {
+         components {
+          AIFormationComponent "{507E9DC12F541FE6}" {
+           DefaultFormation "Row"
+          }
+         }
+         coords 0 0 -4.323
+         {
+          SCR_AIGroup : "{92F50F60726EB86D}Prefabs/Groups/OPFOR/Standard/Infantry/CRF_OPFOR_RifleSquad_p.et" {
+           components {
+            AIFormationComponent "{507E9DC12F541FE6}" {
+             DefaultFormation "Row"
+            }
+           }
+           coords -34.55 0 -1.086
+           {
+            SCR_AIGroup : "{6524B6A6C69BD3EE}Prefabs/Groups/OPFOR/Standard/Command/CRF_OPFOR_Platoon_p.et" {
+             components {
+              AIFormationComponent "{507E9DC12F541FE6}" {
+               DefaultFormation "Row"
+              }
+             }
+             coords 39.438 0.017 14.149
+             angleY -178.67
+             {
+              SCR_AIGroup : "{92F50F60726EB86D}Prefabs/Groups/OPFOR/Standard/Infantry/CRF_OPFOR_RifleSquad_p.et" {
+               components {
+                AIFormationComponent "{507E9DC12F541FE6}" {
+                 DefaultFormation "Row"
+                }
+               }
+               coords 40.263 -0.017 9.934
+               angleY 178.67
+               {
+                SCR_AIGroup : "{92F50F60726EB86D}Prefabs/Groups/OPFOR/Standard/Infantry/CRF_OPFOR_RifleSquad_p.et" {
+                 components {
+                  AIFormationComponent "{507E9DC12F541FE6}" {
+                   DefaultFormation "Row"
+                  }
+                 }
+                 coords 35.55 -0.908 -9.924
+                 {
+                  SCR_AIGroup : "{803383BB28D07BB9}Prefabs/Groups/OPFOR/Standard/Vehicle/CRF_OPFOR_2manVehicleCrew_p.et" {
+                   coords 15.413 1.62 25.202
+                   angleY -139.075
+                   {
+                    SCR_AIGroup : "{803383BB28D07BB9}Prefabs/Groups/OPFOR/Standard/Vehicle/CRF_OPFOR_2manVehicleCrew_p.et" {
+                     coords 15.453 0 0.01
+                     {
+                      SCR_AIGroup : "{E5143827D374F6DD}Prefabs/Groups/OPFOR/Standard/Vehicle/CRF_OPFOR_3manVehicleCrew_p.et" {
+                       coords 43.276 0 18.129
+                       angleY -58.4
+                       m_aUnitPrefabSlots {
+                        "{E5250C1BEBC038A2}Prefabs/Characters/Factions/OPFOR/CRF_GS_OPFOR_LogiLead_P.et" "{7043203A0D1F11AF}Prefabs/Characters/Factions/OPFOR/CRF_GS_OPFOR_LogiRunner_P.et" "{7043203A0D1F11AF}Prefabs/Characters/Factions/OPFOR/CRF_GS_OPFOR_LogiRunner_P.et"
+                       }
+                      }
+                     }
+                    }
+                   }
+                  }
+                 }
+                }
+               }
+              }
+             }
+            }
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    }
+   }
+  }
+ }
+}
+GenericEntity SupplyGen : "{687A661759E0249B}Prefabs/Props/Military/SupplyBox/SupplyShippingContainers/SupplyShippingContainers_01/SupplyShippingContainers_01_10ft_Base.et" {
+ components {
+  RigidBody "{5872F0EB7DFB5A9D}" {
+   ResponseIndex "NoCollision"
+  }
+  SCR_ResourceComponent "{5D247A59598D71AE}" {
+   m_aContainers {
+    SCR_ResourceContainer "{5D3CDAE74F1A6127}" {
+     m_fResourceValueCurrent 5
+     m_fResourceValueMax 50
+     m_bEnableResourceGain 1
+     m_fResourceGain 1
+     m_fResourceGainTickrate 30
+    }
+   }
+  }
+ }
+ coords 2135.964 129.909 3294.877
+ angleY 57.098
+ angleZ 3.6
+}
+Vehicle UAZ469_KORD_Woodland1 : "{735FEB56D85058B9}Prefabs/Vehicles/Wheeled/UAZ469/AFRF/UAZ469_KORD_Woodland.et" {
+ coords 2106.877 133.785 3348.203
+ angleY -101.176
+}
+Vehicle BTR70_Woodland1 : "{DA18F1E16F6CAD49}Prefabs/Vehicles/Wheeled/BTR70/AFRF/BTR70_Woodland.et" {
+ coords 2103.732 133.936 3351.768
+ angleY -90.474
+}

@@ -1,341 +1,229 @@
+SCR_MapEntity MapEntity_Rostov1 : "{FDC3842C6A17F2D9}Prefabs/World/Game/Rostov/MapEntity_Rostov.et" {
+ coords 683.138 116.285 3045.946
+}
+SCR_AIWorld : "{998834C2F010C11A}Prefabs/AI/SCR_AIWorld_Rostov.et" {
+ coords 1325.113 24.733 1846.542
+}
 CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et" {
+ components {
+  SCR_InitWeatherComponent "{64427EEC0AFF43EE}" {
+   m_sInitialStartingWeatherId "Cloudy"
+  }
+  SCR_TimeAndWeatherHandlerComponent "{64427EEC304DD9A0}" {
+   m_iStartingHours 5
+   m_iStartingMinutes 30
+   m_iRangeHoursStart 5
+   m_iRangeMinutesStart 30
+   m_iRangeHoursEnd 5
+   m_iRangeMinutesEnd 30
+  }
+ }
  coords 3374.031 107.689 2327.99
-}
-GenericEntity : "{01969A28078FCA69}Prefabs/Compositions/Misc/SubCompositions/BarrelClutter_02.et" {
- coords 3412.179 109.086 2411.961
- angleY -52.049
-}
-SCR_DestructibleBuildingEntity : "{05AF4DA50A1ABC83}Prefabs/Structures/Military/Bunkers/AirfieldBunker_E_01/AirfieldBunker_E_01_big_V2.et" {
- coords 3387.061 107.608 2451.781
- angleY -126.356
-}
-GenericEntity : "{06473ABB81176587}Prefabs/Props/Forest/WoodPile/WoodPile_02_end_B.et" {
- coords 3402.298 108.87 2412.237
- angleX -0.381
- angleY 91.031
- angleZ 20.27
-}
-$grp GenericEntity : "{17A78A0D3701386A}Prefabs/Compositions/Misc/SubCompositions/Garbage/Tire_Stack_Garbage_01.et" {
- {
-  coords 3325.307 103.121 2413.439
+ m_iTimeLimitMinutes 50
+ m_bLockSlotsAfterSafestart 0
+ m_bSafestartInstantlyEnabled 0
+ m_aMissionDescriptors {
+  CRF_MissionDescriptor "{644250503DF684C0}" {
+   m_sTextData "A NATO detachment has supplied/integrated with local armed farmers intent on preventing RUS destruction of key locations."\
+   "(2 Stage Rush)"\
+   ""\
+   "BLUFOR Composition: 1x Mixed NATO/CIV Plt."\
+   "BLUFOR Assets: 1x Dual MG Recce Vic."\
+   ""\
+   "OPFOR Composition: 1x Mech. Inf. Co."\
+   "OPFOR Assets: 1x BTR - 1x UAZ (KORD)"\
+   ""\
+   "Time: 5:30 P.M."\
+   ""\
+   "Weather: Cloudy"
+  }
+  CRF_MissionDescriptor "{64425051F2E00216}" {
+   m_sTextData "- Defend MCOMs Alpha & Bravo"\
+   "- Rapid R&R"\
+   "- Defend MCOMs Charlie & Delta"\
+   ""\
+   ""
+  }
+  CRF_MissionDescriptor "{64425051B9B5AF67}" {
+   m_sTextData "- Destroy MCOMs Alpha & Bravo"\
+   "- Rapid R&R"\
+   "- Destroy MCOMs Charlie & Delta"
+  }
+  CRF_MissionDescriptor "{6442505149CF6C93}" {
+   m_sTextData ""
+  }
+ }
+ m_iFactionOneRatio 2
+ m_sFactionOneKey "BLU"
+ m_iFactionTwoRatio 3
+ m_sFactionTwoKey "OPF"
+ m_BLUFORGearScriptSettings CRF_GearScriptContainer "{64570ACB9B419A7B}" {
+  m_rGearScript "{A26357E6AA886A95}Configs/Gearscripts/Custom/Trist/FarmersOnly/CRF_GS_RHSUSMixedCIV.conf"
+ }
+ m_OPFORGearScriptSettings CRF_GearScriptContainer "{64570ACB9B11EAAD}" {
+  m_rGearScript "{EFD528B059E0EA4B}Configs/Gearscripts/Standard/Modern/CRF_GS_RHSMSV_TracersOnly.conf"
+ }
+ m_INDFORGearScriptSettings CRF_GearScriptContainer "{64570ACB9AE1C9ED}" {
  }
  {
-  coords 3219.047 100.123 2388.128
- }
- {
-  coords 3370.27 107.361 2410.174
- }
- {
-  coords 3405.838 108.931 2409.025
- }
-}
-StaticModelEntity : "{17ACD64824F55EF8}Prefabs/Structures/Debris/Debris_HouseVillage/Debris_HouseVillage_Wood_Roof_v5.et" {
- coords 3389.462 111.421 2412.494
- scale 1.66
-}
-GenericEntity : "{190CC54D175F52CB}Prefabs/Props/Military/SupplyBox/SupplyShippingContainers/SupplyShippingContainers_01/SupplyShippingContainers_01_10ft.et" {
- coords 3400.509 108.931 2412.718
- angleY 4.741
-}
-GenericEntity : "{286212B6EFA9C01C}Prefabs/Compositions/Misc/SubCompositions/Garbage/Garbage_Vehicle_03.et" {
- coords 3150.429 95.14 2480.522
- angleY 0
-}
-StaticModelEntity : "{2A98F3705199D7CF}Prefabs/Structures/Debris/Debris_HouseVillage/Debris_HouseVillage_Wood_Roof_v2.et" {
- coords 3397.952 110.556 2411.488
- angleZ -44.473
-}
-GenericEntity : "{342E852E9A1847EA}Prefabs/Props/Industrial/Repair/VehicleGarbage_01_pile_medium.et" {
- coords 3406.153 109.075 2411.436
-}
-GenericEntity : "{361EEFE7B91BF9E8}Prefabs/Compositions/Misc/SubCompositions/BarrelMetalGroup_01.et" {
- coords 3366.811 107.184 2410.496
- angleY -18.695
-}
-StaticModelEntity : "{39F7EE885940DC8F}Prefabs/Structures/Military/Fortifications/DirtCover_01/DirtCover_01_long_v1.et" {
- coords 3148.393 1.283 2473.977
- angleY -30.282
- scale 2.592
-}
-GenericEntity : "{4D1517866E9C2362}Prefabs/Props/Forest/WoodPile/WoodPile_02_A.et" {
- coords 3411.223 109.086 2415.388
- angleY -89.026
-}
-$grp GenericEntity : "{58F0C4BE4655101A}Prefabs/Compositions/Misc/SubCompositions/VehicleGarbage_TireStack_02.et" {
- {
-  coords 3140.452 94.738 2473.619
-  angleY 0
- }
- {
-  coords 3395.812 108.932 2410.198
-  angleY 107.72
- }
-}
-$grp StaticModelEntity : "{5C290F8B9942A54E}Prefabs/Structures/Infrastructure/Culverts/DrainageChannelWood_01/DrainageChannelWood_01.et" {
- {
-  coords 3398.551 1.447 2410.307
-  angleX 0.003
-  angleY 0.949
-  angleZ 89.802
- }
- {
-  coords 3398.585 1.446 2412.603
-  angleX 0.003
-  angleY 0.949
-  angleZ 89.802
- }
- {
-  coords 3384.316 1.477 2411.766
-  angleX 0.003
-  angleY 0.949
-  angleZ 89.802
- }
- {
-  coords 3389.21 1.432 2410.353
-  angleX 0.003
-  angleY 0.949
-  angleZ 89.802
- }
- {
-  coords 3389.387 1.115 2413.305
-  angleX 0.003
-  angleY 0.949
-  angleZ 89.802
- }
-}
-SCR_DestructibleBuildingEntity : "{5D6D34810978F2D9}Prefabs/Structures/Houses/Village/Larger buildings/Brickbuilding01.et" {
- coords 3245.289 0.248 2399.365
- angleY -51.434
-}
-SCR_DestructibleBuildingEntity : "{6CDAFB08D5F88533}Prefabs/Structures/Infrastructure/Naval/Piers/Pier_Stairs01.et" {
- coords 3393.278 0.864 2412.006
- angleY -90.375
- scale 1.11
-}
-StaticModelEntity : "{72BEAAAFAAB49846}Prefabs/Structures/Debris/DebrisPile/DebrisPile_Wood_01_Debris_01.et" {
- coords 3383.022 111.447 2410.658
- angleX 7.927
- angleY -1.275
- angleZ -3.541
-}
-$grp GenericEntity : "{72E42BEAFED9B5A7}Prefabs/Props/Garbage/Bins/GarbageContainer_01.et" {
- {
-  coords 3384.17 107.849 2413.077
-  angleY -60.695
-  {
-   GenericEntity {
-    ID "5C64CC0693F240E3"
-    coords -0.018 0.82 0.1
+  SCR_FactionManager "65DAC0E4A87708E5" {
+   ID "632A77473B3CC3A8"
+   Factions {
+    SCR_Faction "{628B22E9B4056C88}" {
+     m_aFriendlyFactionsIds {
+      "INDFOR"
+     }
+     m_CallsignInfo SCR_FactionCallsignInfo "{5DA0F2A6677ADA9E}" {
+      m_aSquadNames {
+       SCR_CallsignInfo "{55CCB792D13759D8}" {
+        m_sCallsign "MED"
+       }
+       SCR_CallsignInfo "{55CCB792D1218E95}" {
+        m_sCallsign "1-1"
+       }
+       SCR_CallsignInfo "{55CCB792D0C8B3CE}" {
+        m_sCallsign "1-2"
+       }
+       SCR_CallsignInfo "{65DAC0EB3EC3D742}" {
+        m_sCallsign "1-3"
+       }
+       SCR_CallsignInfo "{65DAC0EB310501F6}" {
+        m_sCallsign "MMG"
+       }
+       SCR_CallsignInfo "{65DCCA11DA8A2BA5}" {
+        m_sCallsign "Sniper"
+       }
+      }
+     }
+     m_sFactionRadioEncryptionKey "candleSauce"
+    }
+    SCR_Faction "{628C2D2BFC8C6447}" {
+     m_CallsignInfo SCR_FactionCallsignInfo "{5DA0F2A67DFB8809}" {
+      m_aSquadNames {
+       SCR_CallsignInfo "{55CCB79287E901BC}" {
+        m_sCallsign "COY"
+       }
+       SCR_CallsignInfo "{55CCB79287936EBD}" {
+        m_sCallsign "MED"
+       }
+       SCR_CallsignInfo "{55CCB79287BAFBD6}" {
+        m_sCallsign "1PLT"
+       }
+       SCR_CallsignInfo "{55CCB79287A4D7B6}" {
+        m_sCallsign "1-1"
+       }
+       SCR_CallsignInfo "{65DAC0EB73C55281}" {
+        m_sCallsign "1-2"
+       }
+       SCR_CallsignInfo "{65DAC0EB72222835}" {
+        m_sCallsign "1-3"
+       }
+       SCR_CallsignInfo "{65DAC0EB7200AD6F}" {
+        m_sCallsign "2PLT"
+       }
+       SCR_CallsignInfo "{65DAC0EB727B92D5}" {
+        m_sCallsign "2-1"
+       }
+       SCR_CallsignInfo "{65DAC0EB72565D43}" {
+        m_sCallsign "2-2"
+       }
+       SCR_CallsignInfo "{65DAC0EB555C2E03}" {
+        m_sCallsign "BTR"
+       }
+       SCR_CallsignInfo "{65DAC0EB559807B6}" {
+        m_sCallsign "UAZ (PKP)"
+       }
+       SCR_CallsignInfo "{65DAC0EB56A2DE56}" {
+        m_sCallsign "Logi"
+       }
+      }
+     }
+    }
+    SCR_Faction "{628CDE9209CA3FF9}" {
+     m_aFriendlyFactionsIds {
+      "BLUFOR"
+     }
+     m_iFactionRadioFrequency 48000
+    }
    }
   }
  }
- {
-  coords 3408.496 108.932 2415.17
-  angleY -105.396
- }
- {
-  coords 3408.27 108.932 2413.184
-  angleY -47.426
- }
 }
-GenericEntity : "{75D125481E2E0663}Prefabs/Compositions/Misc/SubCompositions/Barrel_ToolRack_01.et" {
- coords 3413.004 109.086 2415.733
- angleY 90.144
-}
-StaticModelEntity : "{7BF8E2A89831D1D6}Prefabs/Structures/Debris/Debris_HouseVillage/Debris_HouseVillage_Wood_Roof_v6.et" {
- coords 3383.751 110.992 2413.587
- angleX -31.256
- angleY 3.594
- angleZ -6.903
-}
-GenericEntity : "{7C42934FDC952EDF}Prefabs/Compositions/Misc/SubCompositions/VehicleGarbagePile_03.et" {
- coords 3398.209 108.933 2409.72
- angleY -31.185
- {
-  GenericEntity {
-   ID "552C73931323CE08"
-   coords -1.091 0 -1.203
-   angleY -9.591
+PolylineShapeEntity : "{318DDE6633C34CF1}PrefabsEditable/PolyZone/GameBoundry.et" {
+ coords 1280.684 55.938 1970.128
+ Points {
+  ShapePoint "{65D70C7396A9FB44}" {
+   Position 173.944 0 -1423.985
+  }
+  ShapePoint "{65D70C73D588BE28}" {
+   Position -491.518 0 -746.572
+  }
+  ShapePoint "{65D70C73CF55F35B}" {
+   Position -432.803 0 607.529
+  }
+  ShapePoint "{65D70C732F970F5C}" {
+   Position 1002.596 0 1889.58
+  }
+  ShapePoint "{65D70C7323D3ED6B}" {
+   Position 1748.495 0 1106.369
+  }
+  ShapePoint "{65D70C7324E99D76}" {
+   Position 339.051 0 -171.793
+  }
+  ShapePoint "{65D70C735B2EB24F}" {
+   Position 299.004 0 -389.854
+  }
+  ShapePoint "{65D70C738C19D1C8}" {
+   Position 699.439 0 -909.903
   }
  }
 }
-GenericEntity : "{7D52C517720EF2F6}Prefabs/Props/Industrial/BarrelMetal_01_grey.et" {
- coords 3366.691 107.216 2413.03
-}
-$grp SCR_DestructibleBuildingEntity : "{7F0E9789EB7F1BCF}Prefabs/Structures/Military/Bunkers/AmmoDump_E_01/AmmoDump_E_01_cover.et" {
- {
-  coords 3382.411 108.56 2414.459
-  angleZ -7.038
- }
- {
-  coords 3387.81 109.698 2414.382
- }
- {
-  coords 3390.714 109.698 2409.459
-  angleY 179.291
- }
- {
-  coords 3385.917 109.147 2409.4
-  angleX 0.072
-  angleY 179.295
-  angleZ 5.829
- }
- {
-  coords 3380.848 108.667 2409.295
-  angleX 0.053
-  angleY 179.293
-  angleZ 4.286
- }
- {
-  coords 3376.05 108.35 2409.236
-  angleY 179.291
- }
- {
-  coords 3373.151 109.119 2418.719
-  angleX -6.056
-  angleY -90.257
-  angleZ 0.027
- }
- {
-  coords 3379.125 109.132 2421.73
-  angleX -6.694
-  angleY 89.778
-  angleZ 0.026
- }
- {
-  coords 3365.795 108.761 2413.995
-  angleY -0.255
- }
- {
-  coords 3370.931 108.308 2409.159
-  angleX 0.038
-  angleY 179.292
-  angleZ 3.056
- }
-}
-GenericEntity : "{7F59A8D992FBF5CA}Prefabs/Props/Military/MilitaryCrates/CrateStack_01/CrateStack_01_base.et" {
- components {
-  SCR_DestructionMultiPhaseComponent "{5624A88D86EFE8BA}" {
-   m_fBaseHealth 30000
+PolylineShapeEntity : "{8AE1D02BC25C93C5}PrefabsEditable/PolyZone/BLUFORSafestartBoundry.et" {
+ coords 1221.232 98.905 961.454
+ Points {
+  ShapePoint "{65DC074604EDDFD1}" {
+   Position 232.752 28.671 -412.285
+  }
+  ShapePoint "{65DC0746435AF205}" {
+   Position -120.995 0 -65.522
+  }
+  ShapePoint "{65DC074679364A47}" {
+   Position -433.5 0 260.552
+  }
+  ShapePoint "{65DC07466CB4AD0F}" {
+   Position -375.383 0 1487.507
+  }
+  ShapePoint "{65DC0747A815AD1E}" {
+   Position 97.081 0 1300.134
+  }
+  ShapePoint "{65DC074665863162}" {
+   Position 629.421 0 1055.1
+  }
+  ShapePoint "{65DC07466615C916}" {
+   Position 394.997 0 834.001
+  }
+  ShapePoint "{65DC0746597F7708}" {
+   Position 354.858 0 629.406
+  }
+  ShapePoint "{65DC07465BF9B5EE}" {
+   Position 766.455 0 79.962
   }
  }
- coords 3416.684 109.087 2412.807
- angleY -90.061
 }
-$grp GenericEntity : "{8751F77B1038FC72}Prefabs/Props/Industrial/Repair/VehicleGarbage_01_pile_large.et" {
- {
-  coords 3220.391 100.125 2386.753
-  angleY -21.733
+PolylineShapeEntity : "{D8E7812AC12E29EB}PrefabsEditable/PolyZone/OPFORSafestartBoundry.et" {
+ coords 2148.072 131.462 3332.596
+ Points {
+  ShapePoint "{65DC0747572E5DD9}" {
+   Position -28.965 0 -148.375
+  }
+  ShapePoint "{65DC074756231F3F}" {
+   Position -140.299 0 -75.405
+  }
+  ShapePoint "{65DC074748BE17F7}" {
+   Position -14.917 0 98.214
+  }
+  ShapePoint "{65DC07474B408692}" {
+   Position 119.432 0 12.947
+  }
  }
- {
-  coords 3406.538 108.938 2410.197
- }
-}
-$grp SCR_DestructibleBuildingEntity : "{8A8A7A558772D718}Prefabs/Structures/Military/Bunkers/AirfieldBunker_E_01/AirfieldBunker_E_01_small.et" {
- {
-  coords 3293.228 103.58 2300.268
- }
- {
-  coords 3294.761 97.305 2539.947
-  angleY -53.486
- }
-}
-$grp GenericEntity : "{A240B5FCD17D5686}Prefabs/Props/Construction/GarbageStack_01/GarbageStack_01_Medium.et" {
- {
-  coords 3322.319 103.247 2403.575
-  angleY -39.571
- }
- {
-  coords 3239.415 100.401 2364.23
-  angleY 35.151
- }
- {
-  coords 3354.642 106.55 2416.359
-  angleY 5.098
-  angleZ -3.9
- }
-}
-$grp GenericEntity : "{B350840088390760}Prefabs/Compositions/Misc/SubCompositions/Decorations/Barrel_Group_Stack_01.et" {
- {
-  coords 3413.424 109.069 2409.24
-  angleY -90.634
- }
- {
-  coords 3376.698 107.682 2416.983
-  angleY -85.527
- }
-}
-GenericEntity : "{B423187F6C8DEFFD}Prefabs/Compositions/Misc/SubCompositions/Decorations/Barrel_Group_Tire_01.et" {
- coords 3379.596 107.737 2410.302
- angleY -81.707
-}
-SCR_DestructibleBuildingEntity : "{BE248D0B31D3B097}Prefabs/Structures/Military/Bunkers/AmmoDump_E_02/AmmoDump_E_02.et" {
- coords 3391.285 108.953 2411.927
- angleY -91.1
-}
-GenericEntity : "{C0B99D11761CA2AD}PrefabsEditable/Auto/Props/Military/SupplyBox/SupplyShippingContainers/SupplyShippingContainers_01/E_SupplyShippingContainers_01_10ft.et" {
- coords 3409.958 108.933 2411.822
- angleY 25.021
-}
-$grp GenericEntity : "{D5062960B7211EB4}Prefabs/Props/Construction/GarbageStack_01/GarbageStack_01_Long.et" {
- {
-  coords 3324.933 103.16 2411.809
-  angleY 38.637
- }
- {
-  coords 3224.05 99.965 2400.904
-  angleY -43.54
-  angleZ -2.225
- }
- {
-  coords 3236.222 100.18 2371.423
-  angleY 46.618
- }
- {
-  coords 3237.535 101.23 2370.598
-  angleY -135.092
- }
- {
-  coords 3358.595 106.357 2400.299
-  angleY -38.798
-  angleZ -3.317
- }
- {
-  coords 3399.455 109.056 2410.584
- }
-}
-GenericEntity : "{D93EF3E97E06D435}Prefabs/Compositions/Misc/SubCompositions/BarrelClutter_04.et" {
- coords 3413.505 109.086 2411.933
- angleY 162.545
-}
-GenericEntity : "{DA861447E6D426AE}Prefabs/Props/Industrial/Repair/VehicleGarbage_01_pile_small.et" {
- coords 3397.569 108.93 2413.379
- angleY -147.763
-}
-$grp GenericEntity : "{DE658AC78172D02E}Prefabs/Props/Construction/GarbageStack_01/GarbageStack_01_Short.et" {
- {
-  coords 3316.048 103.066 2401.876
- }
- {
-  coords 3218.954 100.101 2390.489
-  angleY -108.666
- }
- {
-  coords 3238.762 100.317 2371.833
-  angleY -128.993
-  scale 1.25
- }
- {
-  coords 3396.71 108.724 2411.751
-  angleY -89.706
- }
-}
-StaticModelEntity : "{F2309AB12810C993}Prefabs/Structures/Debris/Debris_HouseVillage/Debris_HouseVillage_Wood_Roof_v4.et" {
- coords 3385.123 111.198 2410.489
- angleX -2.592
- angleY -86.582
- angleZ 37.125
-}
-GenericEntity : "{F58AEB566CB4369A}Prefabs/Compositions/Misc/SubCompositions/VehicleGarbagePile_01.et" {
- coords 3219.712 100.125 2385.473
 }

@@ -31,7 +31,7 @@ CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et
    "BLUFOR Assets: 1x Dual MG Recce Vic."\
    ""\
    "OPFOR Composition: 1x Mech. Inf. Co."\
-   "OPFOR Assets: 1x BTR - 1x UAZ (KORD)"\
+   "OPFOR Assets: 2x Armd. GAZ TIGRs"\
    ""\
    "Time: 5:30 P.M."\
    ""\
@@ -149,6 +149,10 @@ CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et
   }
  }
 }
+Vehicle GAZ_TIGR_v2_PKM_Shield1 : "{2297AAC5FB2CF134}Prefabs/Vehicles/Wheeled/TIGR/PKP/GAZ_TIGR_v2_PKM_Shield.et" {
+ coords 2106.003 133.783 3347.841
+ angleY -87.563
+}
 PolylineShapeEntity : "{318DDE6633C34CF1}PrefabsEditable/PolyZone/GameBoundry.et" {
  coords 1280.684 55.938 1970.128
  Points {
@@ -177,6 +181,10 @@ PolylineShapeEntity : "{318DDE6633C34CF1}PrefabsEditable/PolyZone/GameBoundry.et
    Position 699.439 0 -909.903
   }
  }
+}
+Vehicle GAZ_TIGR_v2_PKM1 : "{7BC76F92B882889D}Prefabs/Vehicles/Wheeled/TIGR/PKP/GAZ_TIGR_v2_PKM.et" {
+ coords 2104.352 134.09 3351.491
+ angleY -91.824
 }
 PolylineShapeEntity : "{8AE1D02BC25C93C5}PrefabsEditable/PolyZone/BLUFORSafestartBoundry.et" {
  coords 1221.232 98.905 961.454

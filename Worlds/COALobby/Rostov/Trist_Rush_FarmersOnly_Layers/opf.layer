@@ -204,11 +204,3 @@ GenericEntity SupplyGen : "{687A661759E0249B}Prefabs/Props/Military/SupplyBox/Su
  angleY 57.098
  angleZ 3.6
 }
-Vehicle UAZ469_KORD_Woodland1 : "{735FEB56D85058B9}Prefabs/Vehicles/Wheeled/UAZ469/AFRF/UAZ469_KORD_Woodland.et" {
- coords 2106.877 133.785 3348.203
- angleY -101.176
-}
-Vehicle BTR70_Woodland1 : "{DA18F1E16F6CAD49}Prefabs/Vehicles/Wheeled/BTR70/AFRF/BTR70_Woodland.et" {
- coords 2103.732 133.936 3351.768
- angleY -90.474
-}

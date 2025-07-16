@@ -46,10 +46,3 @@ CRF_ManualMarker : "{E8B2EB8EECE8491C}PrefabsEditable/Markers/GameZoneMarker_BLU
   }
  }
 }
-SCR_DestructibleBuildingEntity : "{FD1CE2903D41D4A7}Prefabs/Structures/Walls/Concrete/ConcreteRetainingWall_01/ConcreteRetainingWall_01_8m.et" {
- coords 4116.602 -115.276 10653.723
- angleX -1.865
- angleY 88.827
- angleZ -3.597
- scale 34.526
-}

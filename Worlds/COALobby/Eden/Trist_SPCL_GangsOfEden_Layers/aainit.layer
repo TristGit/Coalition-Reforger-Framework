@@ -112,7 +112,7 @@ CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et
  "	}; "\
  ""\
  ""\
- "	int totalSpawnPoints = 265;"\
+ "	int totalSpawnPoints = 276;"\
  ""\
  "	void SpawnWeaponsAndMags()"\
  "	{"\

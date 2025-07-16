@@ -1,38 +1,41 @@
 SCR_AIGroup : "{29CA3A88FC500B66}Prefabs/Groups/CIV/Standard/Dev/CRF_CIV_DevRifleman_p.et" {
  components {
   AIFormationComponent "{507E9DC12F541FE6}" {
-   DefaultFormation "Row"
+   DefaultFormation "Line"
   }
  }
- coords 4406.897 14.844 10751.531
- angleY 115.914
+ coords 4406.732 10.358 10746.086
+ angleY 109.173
  m_aUnitPrefabSlots {
   "{4061B7E9D7858628}Prefabs/Characters/Factions/Special/Trist/GangsOfEden/CRF_GS_CIV_COY_P_gang.et" "{4061B7E9D7858628}Prefabs/Characters/Factions/Special/Trist/GangsOfEden/CRF_GS_CIV_COY_P_gang.et" "{4061B7E9D7858628}Prefabs/Characters/Factions/Special/Trist/GangsOfEden/CRF_GS_CIV_COY_P_gang.et" "{4061B7E9D7858628}Prefabs/Characters/Factions/Special/Trist/GangsOfEden/CRF_GS_CIV_COY_P_gang.et" "{4061B7E9D7858628}Prefabs/Characters/Factions/Special/Trist/GangsOfEden/CRF_GS_CIV_COY_P_gang.et" "{4061B7E9D7858628}Prefabs/Characters/Factions/Special/Trist/GangsOfEden/CRF_GS_CIV_COY_P_gang.et" "{4061B7E9D7858628}Prefabs/Characters/Factions/Special/Trist/GangsOfEden/CRF_GS_CIV_COY_P_gang.et" "{4061B7E9D7858628}Prefabs/Characters/Factions/Special/Trist/GangsOfEden/CRF_GS_CIV_COY_P_gang.et" "{4061B7E9D7858628}Prefabs/Characters/Factions/Special/Trist/GangsOfEden/CRF_GS_CIV_COY_P_gang.et" "{4061B7E9D7858628}Prefabs/Characters/Factions/Special/Trist/GangsOfEden/CRF_GS_CIV_COY_P_gang.et"
  }
+ m_bSnapToTerrain 0
  {
   SCR_AIGroup : "{29CA3A88FC500B66}Prefabs/Groups/CIV/Standard/Dev/CRF_CIV_DevRifleman_p.et" {
    components {
     AIFormationComponent "{507E9DC12F541FE6}" {
-     DefaultFormation "Row"
+     DefaultFormation "Line"
     }
    }
-   coords 0 0 -1.763
+   coords -0.448 0 -1.397
    angleY 0
    m_aUnitPrefabSlots {
     "{4061B7E9D7858628}Prefabs/Characters/Factions/Special/Trist/GangsOfEden/CRF_GS_CIV_COY_P_gang.et" "{4061B7E9D7858628}Prefabs/Characters/Factions/Special/Trist/GangsOfEden/CRF_GS_CIV_COY_P_gang.et" "{4061B7E9D7858628}Prefabs/Characters/Factions/Special/Trist/GangsOfEden/CRF_GS_CIV_COY_P_gang.et" "{4061B7E9D7858628}Prefabs/Characters/Factions/Special/Trist/GangsOfEden/CRF_GS_CIV_COY_P_gang.et" "{4061B7E9D7858628}Prefabs/Characters/Factions/Special/Trist/GangsOfEden/CRF_GS_CIV_COY_P_gang.et" "{4061B7E9D7858628}Prefabs/Characters/Factions/Special/Trist/GangsOfEden/CRF_GS_CIV_COY_P_gang.et" "{4061B7E9D7858628}Prefabs/Characters/Factions/Special/Trist/GangsOfEden/CRF_GS_CIV_COY_P_gang.et" "{4061B7E9D7858628}Prefabs/Characters/Factions/Special/Trist/GangsOfEden/CRF_GS_CIV_COY_P_gang.et" "{4061B7E9D7858628}Prefabs/Characters/Factions/Special/Trist/GangsOfEden/CRF_GS_CIV_COY_P_gang.et" "{4061B7E9D7858628}Prefabs/Characters/Factions/Special/Trist/GangsOfEden/CRF_GS_CIV_COY_P_gang.et"
    }
+   m_bSnapToTerrain 0
    {
     SCR_AIGroup : "{29CA3A88FC500B66}Prefabs/Groups/CIV/Standard/Dev/CRF_CIV_DevRifleman_p.et" {
      components {
       AIFormationComponent "{507E9DC12F541FE6}" {
-       DefaultFormation "Row"
+       DefaultFormation "Line"
       }
      }
-     coords 0.002 0 -1.937
+     coords 0.202 0 -1.608
      angleY 0
      m_aUnitPrefabSlots {
       "{4061B7E9D7858628}Prefabs/Characters/Factions/Special/Trist/GangsOfEden/CRF_GS_CIV_COY_P_gang.et" "{4061B7E9D7858628}Prefabs/Characters/Factions/Special/Trist/GangsOfEden/CRF_GS_CIV_COY_P_gang.et" "{4061B7E9D7858628}Prefabs/Characters/Factions/Special/Trist/GangsOfEden/CRF_GS_CIV_COY_P_gang.et" "{4061B7E9D7858628}Prefabs/Characters/Factions/Special/Trist/GangsOfEden/CRF_GS_CIV_COY_P_gang.et" "{4061B7E9D7858628}Prefabs/Characters/Factions/Special/Trist/GangsOfEden/CRF_GS_CIV_COY_P_gang.et" "{4061B7E9D7858628}Prefabs/Characters/Factions/Special/Trist/GangsOfEden/CRF_GS_CIV_COY_P_gang.et" "{4061B7E9D7858628}Prefabs/Characters/Factions/Special/Trist/GangsOfEden/CRF_GS_CIV_COY_P_gang.et" "{4061B7E9D7858628}Prefabs/Characters/Factions/Special/Trist/GangsOfEden/CRF_GS_CIV_COY_P_gang.et" "{4061B7E9D7858628}Prefabs/Characters/Factions/Special/Trist/GangsOfEden/CRF_GS_CIV_COY_P_gang.et" "{4061B7E9D7858628}Prefabs/Characters/Factions/Special/Trist/GangsOfEden/CRF_GS_CIV_COY_P_gang.et"
      }
+     m_bSnapToTerrain 0
     }
    }
   }

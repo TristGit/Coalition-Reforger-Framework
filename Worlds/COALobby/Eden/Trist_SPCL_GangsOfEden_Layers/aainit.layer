@@ -1,0 +1,320 @@
+SCR_AIWorld : "{70CCCF16487C927F}Prefabs/AI/SCR_AIWorld_Eden.et" {
+ coords 4348.068 4.408 10778.98
+}
+CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et" {
+ components {
+  SCR_InitWeatherComponent "{64427EEC0AFF43EE}" {
+   m_sInitialStartingWeatherId "Cloudy"
+  }
+  SCR_TimeAndWeatherHandlerComponent "{64427EEC304DD9A0}" {
+   m_iStartingHours 16
+   m_bRandomStartingDaytimeRange 1
+   m_iRangeHoursStart 16
+   m_iRangeHoursEnd 20
+   m_iRangeMinutesEnd 30
+  }
+ }
+ coords 4341.53 4.508 10771.377
+ userScript "	// effortless and shameless attempt at gutting the infection script for seting blufor, didnt bother cleaning"\
+ "		protected override void OnControllableDestroyed(IEntity entity, IEntity killerEntity, notnull Instigator instigator)"\
+ "	{"\
+ "		SCR_InstigatorContextData instigatorContextData = new SCR_InstigatorContextData(-1, entity, killerEntity, instigator);"\
+ "		int playerId = instigatorContextData.GetVictimPlayerID();"\
+ ""\
+ "		CRF_SlottingManager sm = CRF_SlottingManager.GetInstance();"\
+ "		CRF_SlotDataContainer slotData = sm.GetPlayerSlotData(playerId);"\
+ "		if (!slotData)"\
+ "			return;"\
+ ""\
+ "		string currentFaction = slotData.GetSlotFactionKey();"\
+ ""\
+ "	// specific factions to convert"\
+ "		if (currentFaction == \"CIV\" || currentFaction == \"OPFOR\" || currentFaction == \"INDFOR\")"\
+ "		{"\
+ "			slotData.SetSlotFactionKey(\"BLUFOR\");"\
+ "			slotData.SetSlotResource(\"{1E08ED0385C765CC}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_TL_P.et\");"\
+ "		}"\
+ ""\
+ "		super.OnControllableDestroyed(entity, killerEntity, instigator);"\
+ "	}	"\
+ "	"\
+ ""\
+ "	// RANDOM WEAPON SPAWN - couldve done this easier //"\
+ "	// May break w/o WCS RU, British, RHS Core, WCS NATO Mods"\
+ "	ref array<string> weapons = {"\
+ "		\"{FA5C25BF66A53DCF}Prefabs/Weapons/Rifles/AK74/Rifle_AK74.et\", // 1"\
+ "		\"{BFEA719491610A45}Prefabs/Weapons/Rifles/AKS74U/Rifle_AKS74U.et\", // 2"\
+ "		\"{3E413771E1834D2F}Prefabs/Weapons/Rifles/M16/Rifle_M16A2.et\", // 3"\
+ "		\"{ADDB4062CA2910CB}Prefabs/Weapons/Rifles/L2A3/Rifle_L2A3_Sterling.et\", // 4"\
+ "		\"{24FFA508861139C9}Prefabs/Weapons/Rifles/L42A1/Rifle_L8.et\", // 5"\
+ "		\"{24FFA508861139C9}Prefabs/Weapons/Rifles/L42A1/Rifle_L8.et\","\
+ "		\"{24FFA508861139C9}Prefabs/Weapons/Rifles/L42A1/Rifle_L8.et\","\
+ "		\"{880A80C1FD1AE546}Prefabs/Weapons/Handguns/APS/Handgun_APS.et\", //6"\
+ "		\"{880A80C1FD1AE546}Prefabs/Weapons/Handguns/APS/Handgun_APS.et\","\
+ "		\"{FD0DE25AC213EC9E}Prefabs/Weapons/Rifles/MP5/Rifle_MP5K.et\", //7"\
+ "		\"{D9889FC9DB8C06C0}Prefabs/Weapons/Handguns/HiPower/Handgun_HiPower.et\", //8"\
+ "		\"{D9889FC9DB8C06C0}Prefabs/Weapons/Handguns/HiPower/Handgun_HiPower.et\","\
+ "		\"{D9889FC9DB8C06C0}Prefabs/Weapons/Handguns/HiPower/Handgun_HiPower.et\","\
+ "		\"{1353C6EAD1DCFE43}Prefabs/Weapons/Handguns/M9/Handgun_M9.et\", //9"\
+ "		\"{1353C6EAD1DCFE43}Prefabs/Weapons/Handguns/M9/Handgun_M9.et\","\
+ "		\"{1353C6EAD1DCFE43}Prefabs/Weapons/Handguns/M9/Handgun_M9.et\","\
+ "		\"{E093E637AE693F14}Prefabs/Weapons/Handguns/Welrod/Welrod.et\", //10"\
+ "		\"{E998FA484B0C4BFF}Prefabs/Weapons/Handguns/Glock/Handgun_Glock17.et\",//11"\
+ "		\"{FD74541D9A39832C}Prefabs/Weapons/Rifles/VSK94/Rifle_VSK94.et\", //12"\
+ "		\"{C0F7DD85A86B2900}Prefabs/Weapons/Handguns/PM/Handgun_PM.et\", //13"\
+ "		\"{C0F7DD85A86B2900}Prefabs/Weapons/Handguns/PM/Handgun_PM.et\","\
+ "		\"{C0F7DD85A86B2900}Prefabs/Weapons/Handguns/PM/Handgun_PM.et\","\
+ "		\"{C0F7DD85A86B2900}Prefabs/Weapons/Handguns/PM/Handgun_PM.et\","\
+ "		\"{A8B4089ACB473848}Prefabs/Weapons/Handguns/MP443/Handgun_MP443.et\", //14"\
+ "		\"{A8B4089ACB473848}Prefabs/Weapons/Handguns/MP443/Handgun_MP443.et\","\
+ "		\"{8069A3DF6410FDDF}Prefabs/Weapons/Handguns/M17/Handgun_M17.et\", //15"\
+ "		\"{8069A3DF6410FDDF}Prefabs/Weapons/Handguns/M17/Handgun_M17.et\","\
+ "		\"{3EB02CDAD5F23C82}Prefabs/Weapons/Rifles/SVD/Rifle_SVD.et\" // 16 "\
+ "		"\
+ "		//\"{}gun.et\" //"\
+ "		//\"{}gun.et\" //"\
+ "		"\
+ "	};"\
+ ""\
+ "	ref array<string> magazines = {"\
+ "		\"{0A84AA5A3884176F}Prefabs/Weapons/Magazines/Magazine_545x39_AK_30rnd_Last_5Tracer.et\", // 1"\
+ "		\"{0A84AA5A3884176F}Prefabs/Weapons/Magazines/Magazine_545x39_AK_30rnd_Last_5Tracer.et\", //2"\
+ "		\"{FB5EB0F6D447E858}Prefabs/Weapons/Magazines/Magazine_556x45_STANAG_30rnd_M193_Ball.et\", // 3"\
+ "		\"{199C2938EA99A6C4}Prefabs/Weapons/Magazines/Magazine_9x19_L2A3_34rnd_Tracer.et\", // 4"\
+ "		\"{4F4439BAA80A7A66}Prefabs/Weapons/Magazines/Magazine_762x51_L42a1_10rnd_Base.et\", //5 "\
+ "		\"{4F4439BAA80A7A66}Prefabs/Weapons/Magazines/Magazine_762x51_L42a1_10rnd_Base.et\","\
+ "		\"{4F4439BAA80A7A66}Prefabs/Weapons/Magazines/Magazine_762x51_L42a1_10rnd_Base.et\","\
+ "		\"{DFC0532A49E17C39}Prefabs/Weapons/Magazines/aps_magazine/Magazine_9x18_APS_20rnd_Ball.et\",//6"\
+ "		\"{DFC0532A49E17C39}Prefabs/Weapons/Magazines/aps_magazine/Magazine_9x18_APS_20rnd_Ball.et\","\
+ "		\"{046AA0F20A54842A}Prefabs/Weapons/Magazines/Magazine_9x19_MP5_30rnd_Ball.et\", //7"\
+ "		\"{1E7D876C06089E21}Prefabs/Weapons/Magazines/Magazine_9x19_HiPower_13rnd_Ball.et\", //8"\
+ "		\"{1E7D876C06089E21}Prefabs/Weapons/Magazines/Magazine_9x19_HiPower_13rnd_Ball.et\","\
+ "		\"{1E7D876C06089E21}Prefabs/Weapons/Magazines/Magazine_9x19_HiPower_13rnd_Ball.et\","\
+ "		\"{9C05543A503DB80E}Prefabs/Weapons/Magazines/Magazine_9x19_M9_15rnd_Ball.et\", //9"\
+ "		\"{9C05543A503DB80E}Prefabs/Weapons/Magazines/Magazine_9x19_M9_15rnd_Ball.et\","\
+ "		\"{9C05543A503DB80E}Prefabs/Weapons/Magazines/Magazine_9x19_M9_15rnd_Ball.et\","\
+ "		\"{06AE280848A84E47}Prefabs/Weapons/Magazines/Magazine_9x19_Welrod_6rnd.et\", //10"\
+ "		\"{F20D1122BC5CD9F2}Prefabs/Weapons/Magazines/glock_magazine/Magazine_9x19_Glock_17rnd.et\", //11"\
+ "		\"{4DEB62CC1499F434}Prefabs/Weapons/Magazines/Magazine_9x39_9A91_20rnd_SP6.et\", //12"\
+ "		\"{8B853CDD11BA916E}Prefabs/Weapons/Magazines/Magazine_9x18_PM_8rnd_Ball.et\", //13"\
+ "		\"{8B853CDD11BA916E}Prefabs/Weapons/Magazines/Magazine_9x18_PM_8rnd_Ball.et\","\
+ "		\"{8B853CDD11BA916E}Prefabs/Weapons/Magazines/Magazine_9x18_PM_8rnd_Ball.et\","\
+ "		\"{8B853CDD11BA916E}Prefabs/Weapons/Magazines/Magazine_9x18_PM_8rnd_Ball.et\","\
+ "		\"{A5E373A524710040}Prefabs/Weapons/Magazines/MP443/Magazine_9x19_MP443_17rnd_7N31.et\", //14"\
+ "		\"{A5E373A524710040}Prefabs/Weapons/Magazines/MP443/Magazine_9x19_MP443_17rnd_7N31.et\","\
+ "		\"{8FF49793853DB2F9}Prefabs/Weapons/Magazines/m17_magazines/Magazine_9x19_m17_17rnd.et\", //15"\
+ "		\"{8FF49793853DB2F9}Prefabs/Weapons/Magazines/m17_magazines/Magazine_9x19_m17_17rnd.et\","\
+ "		\"{4A3649DFF8A3F0E3}Prefabs/Weapons/Magazines/Magazine_762x54_SVD_10rnd_Tracer.et\" // 16 "\
+ "		"\
+ "		//\"{}mag.et\" //"\
+ "		//\"{}mag.et\" //"\
+ "		"\
+ "	}; "\
+ ""\
+ ""\
+ "	int totalSpawnPoints = 265;"\
+ ""\
+ "	void SpawnWeaponsAndMags()"\
+ "	{"\
+ "		EntitySpawnParams spawnParams = new EntitySpawnParams();"\
+ "	spawnParams.TransformMode = ETransformMode.WORLD;"\
+ ""\
+ "		for (int i = 1; i <= totalSpawnPoints; i++)"\
+ "		{"\
+ "			string spawnPointName = \"weaponSpawn\" + i.ToString();"\
+ "			IEntity spawnPoint = GetGame().GetWorld().FindEntityByName(spawnPointName);"\
+ "			if (!spawnPoint)"\
+ "			continue;"\
+ ""\
+ "			// spawn chance"\
+ "			float chanceToSpawn = 0.60;"\
+ "			if (Math.RandomFloat01() > chanceToSpawn)"\
+ "				continue;"\
+ ""\
+ "			int idx = Math.RandomInt(0, weapons.Count());"\
+ ""\
+ "			spawnParams.Transform[3] = spawnPoint.GetOrigin();"\
+ ""\
+ "			GetGame().SpawnEntityPrefab(Resource.Load(weapons[idx]), GetGame().GetWorld(), spawnParams);"\
+ "			GetGame().SpawnEntityPrefab(Resource.Load(magazines[idx]), GetGame().GetWorld(), spawnParams);"\
+ "		}"\
+ "	}"\
+ ""\
+ "	override void EOnInit(IEntity owner)"\
+ "	{"\
+ "		super.EOnInit(owner);"\
+ "		GetGame().GetCallqueue().CallLater(SpawnWeaponsAndMags, 100, false);"\
+ "	}"
+ m_bAutoPlayerRespawn 1
+ m_iTimeLimitMinutes 18
+ m_aMissionDescriptors {
+  CRF_MissionDescriptor "{644250503DF684C0}" {
+   m_sTextData "Arena Looter w/ Infection"\
+   ""\
+   "- 3 Faction Gangs must loot around the town to kill off ONLY OTHER gangs and police"\
+   "- ANY deaths are converted to more police"\
+   "- Police conversion/respawn eats BLUFOR tickets (35 Tickets Total)"\
+   ""\
+   "Goal: Kill/Outlast other gangs/police"\
+   ""\
+   "Rules:"\
+   "- NO STEALING OTHER TEAMS APPAREL (Only Weapons)"\
+   "- Camping with spawns in view is shitty"\
+   ""
+  }
+  CRF_MissionDescriptor "{6442505149CF6C93}" {
+   m_aFactionKeys + {
+    "CIV"
+   }
+  }
+ }
+ m_BLUFORGearScriptSettings CRF_GearScriptContainer "{64570ACB9B419A7B}" {
+  m_rGearScript "{35225B459ACDB60D}Configs/Gearscripts/Custom/Trist/GangsOfEden/CRF_GS_Gang_BLUFORpolice.conf"
+ }
+ m_OPFORGearScriptSettings CRF_GearScriptContainer "{64570ACB9B11EAAD}" {
+  m_rGearScript "{5BF90E70F56DBBA8}Configs/Gearscripts/Custom/Trist/GangsOfEden/CRF_GS_Gang_LARPers.conf"
+ }
+ m_INDFORGearScriptSettings CRF_GearScriptContainer "{64570ACB9AE1C9ED}" {
+  m_rGearScript "{F109AB5D89480018}Configs/Gearscripts/Custom/Trist/GangsOfEden/CRF_GS_Gang_CattleRastlers.conf"
+ }
+ m_CIVILIANGearScriptSettings CRF_GearScriptContainer "{64570ACB9A9C5C52}" {
+  m_rGearScript "{A5AC69449A45499C}Configs/Gearscripts/Custom/Trist/GangsOfEden/CRF_GS_Gang_Freaks.conf"
+ }
+ m_bRespawnEnabled 1
+ m_bWaveRespawn 1
+ m_iTimeToRespawn 45
+ m_iBLUFORTickets 35
+}
+PolylineShapeEntity : "{2150339CD6D25BF2}PrefabsEditable/PolyZone/CIVSafestartBoundry.et" {
+ coords 4401.915 27.097 10748.341
+ Points {
+  ShapePoint "{65DE7C5FF10F5A27}" {
+   Position -5.886 0.006 8.57
+  }
+  ShapePoint "{65DE7C5FEDCAE5AC}" {
+   Position -3.87 0.009 -14.505
+  }
+  ShapePoint "{65DE7C5FEFB57155}" {
+   Position 13.486 0.126 -12.368
+  }
+  ShapePoint "{65DE7C5FF188D229}" {
+   Position 11.43 0.001 18.437
+  }
+ }
+}
+PolylineShapeEntity : "{318DDE6633C34CF1}PrefabsEditable/PolyZone/GameBoundry.et" {
+ coords 4445.581 12.588 10716.944
+ Points {
+  ShapePoint "{65DE7C5C17DAEC63}" {
+   Position -119.123 0.06 -115.897
+  }
+  ShapePoint "{65DF7D1C37706490}" {
+   Position -299.014 3.849 -138.977
+  }
+  ShapePoint "{65DF7D1C2ACA1072}" {
+   Position -301.302 -12.592 -5.919
+  }
+  ShapePoint "{65DF7D1C2C0212ED}" {
+   Position -203.243 -14.611 -14.111
+  }
+  ShapePoint "{65DF7D1C239B033C}" {
+   Position -165.673 -12.838 15.271
+  }
+  ShapePoint "{65DE7C5C0BF0228A}" {
+   Position -148.38 2.847 59.454
+  }
+  ShapePoint "{65DE7C56A67AD9C8}" {
+   Position -128.357 0.724 95.858
+  }
+  ShapePoint "{65DF7D18855FA40E}" {
+   Position -104.013 -12.868 113.787
+  }
+  ShapePoint "{65DF7D1885EBA1C9}" {
+   Position -103.938 -12.759 133.775
+  }
+  ShapePoint "{65DF7D18849A8A49}" {
+   Position -131.33 -13.094 154.52
+  }
+  ShapePoint "{65DE7C569802DD26}" {
+   Position -136.088 0 177.76
+  }
+  ShapePoint "{65DF7D113925A7B7}" {
+   Position 72.842 0.865 228.19
+  }
+  ShapePoint "{65DE7C5C6A654AC6}" {
+   Position 94.576 1.09 234.374
+  }
+  ShapePoint "{65DE7C5C6F089546}" {
+   Position 154.469 5.412 -72.683
+  }
+ }
+}
+PolylineShapeEntity : "{36DDFCD0D6C43000}PrefabsEditable/PolyZone/INDFORSafestartBoundry.et" {
+ coords 4400.565 10.299 10703.721
+ Points {
+  ShapePoint "{65DE7C5F8FC0FEB2}" {
+   Position -5.939 0.813 -23.065
+  }
+  ShapePoint "{65DE7C5F8EBFAE4D}" {
+   Position -8.232 0 9.405
+  }
+  ShapePoint "{65DE7C5F812B3715}" {
+   Position 13.111 0.001 12.459
+  }
+  ShapePoint "{65DE7C5F8192E1D5}" {
+   Position 17.5 0.016 -20.903
+  }
+ }
+}
+$grp GenericEntity : "{62865C82AB534D91}Prefabs/Structures/FlagPoles/RespawnPoles/BLUFOR_Respawn.et" {
+ {
+  components {
+   CRF_RespawnPointComponent "{645A31042AA16609}" {
+    m_sRespawnPointName "Church Spawn (Dangerous)"
+   }
+  }
+  coords 4452.415 13.792 10734.309
+ }
+ {
+  components {
+   CRF_RespawnPointComponent "{645A31042AA16609}" {
+    m_sRespawnPointName "Safe Spawn"
+   }
+  }
+  coords 4184.278 14.404 10600.747
+ }
+}
+PolylineShapeEntity : "{8AE1D02BC25C93C5}PrefabsEditable/PolyZone/BLUFORSafestartBoundry.et" {
+ coords 4449.602 12.681 10721.466
+ Points {
+  ShapePoint "{65DE7C5C46E2016E}" {
+   Position 2.296 0.277 18.242
+  }
+  ShapePoint "{65DE7C5FB99C1688}" {
+   Position 3.262 0.264 6.976
+  }
+  ShapePoint "{65DE7C5FB398E872}" {
+   Position -12.297 -0.122 4.49
+  }
+  ShapePoint "{65DE7C5FB82787D2}" {
+   Position -13.88 -0.025 16.659
+  }
+ }
+}
+PolylineShapeEntity : "{D8E7812AC12E29EB}PrefabsEditable/PolyZone/OPFORSafestartBoundry.et" {
+ coords 4460.018 11.588 10780.13
+ Points {
+  ShapePoint "{65DE7C5F9BA09782}" {
+   Position 9.509 0 -12.327
+  }
+  ShapePoint "{65DE7C5F9A54F390}" {
+   Position -14.908 0 -16.489
+  }
+  ShapePoint "{65DE7C5F9C8546E8}" {
+   Position -14.042 0 3.413
+  }
+  ShapePoint "{65DE7C5F9F7C8873}" {
+   Position 5.212 0 14.133
+  }
+ }
+}

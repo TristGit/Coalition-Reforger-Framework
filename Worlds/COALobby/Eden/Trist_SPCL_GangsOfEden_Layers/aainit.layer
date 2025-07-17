@@ -163,14 +163,14 @@ CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et
  "		Print(\"SPAWN SCRIPT: Spawning loot...\");"\
  "	"
  m_bAutoPlayerRespawn 1
- m_iTimeLimitMinutes 20
+ m_iTimeLimitMinutes 25
  m_aMissionDescriptors {
   CRF_MissionDescriptor "{644250503DF684C0}" {
    m_sTextData "Arena Looter w/ Infection"\
    ""\
    "- 3 Faction Gangs must loot around the town to kill off ONLY OTHER gangs and police"\
    "- ANY deaths are converted to more police"\
-   "- Police conversion/respawn eats BLUFOR tickets (35 Tickets Total)"\
+   "- Police conversion/respawn eats BLUFOR tickets (30 Tickets Total)"\
    ""\
    "Goal: Kill/Outlast other gangs/police"\
    ""\
@@ -209,7 +209,7 @@ CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et
  m_bRespawnEnabled 1
  m_bWaveRespawn 1
  m_iTimeToRespawn 45
- m_iBLUFORTickets 35
+ m_iBLUFORTickets 30
  {
   SCR_FactionManager "65E1255AAEBCDFEE" {
    ID "632A77473B3CC3A8"

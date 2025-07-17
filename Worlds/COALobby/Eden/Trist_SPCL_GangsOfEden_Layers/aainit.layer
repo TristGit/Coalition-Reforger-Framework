@@ -15,138 +15,157 @@ CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et
   }
  }
  coords 4341.53 4.508 10771.377
- userScript "	// effortless and shameless attempt at gutting the infection script for seting blufor, didnt bother cleaning"\
- "		protected override void OnControllableDestroyed(IEntity entity, IEntity killerEntity, notnull Instigator instigator)"\
- "	{"\
- "		SCR_InstigatorContextData instigatorContextData = new SCR_InstigatorContextData(-1, entity, killerEntity, instigator);"\
- "		int playerId = instigatorContextData.GetVictimPlayerID();"\
+ userScript "	// Side switch on death to BLU"\
+ "	protected override void OnControllableDestroyed(IEntity entity, IEntity killerEntity, notnull Instigator instigator)"\
+ "{"\
+ "	SCR_InstigatorContextData instigatorContextData = new SCR_InstigatorContextData(-1, entity, killerEntity, instigator);"\
+ "	int playerId = instigatorContextData.GetVictimPlayerID();"\
  ""\
- "		CRF_SlottingManager sm = CRF_SlottingManager.GetInstance();"\
- "		CRF_SlotDataContainer slotData = sm.GetPlayerSlotData(playerId);"\
- "		if (!slotData)"\
- "			return;"\
+ "	CRF_SlottingManager sm = CRF_SlottingManager.GetInstance();"\
+ "	CRF_SlotDataContainer slotData = sm.GetPlayerSlotData(playerId);"\
+ "	if (!slotData)"\
+ "		return;"\
  ""\
- "		string currentFaction = slotData.GetSlotFactionKey();"\
+ "	// Set everyone to BLUFOR on death"\
+ "	slotData.SetSlotFactionKey(\"BLUFOR\");"\
+ "	slotData.SetSlotResource(\"{1E08ED0385C765CC}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_TL_P.et\");"\
  ""\
- "	// specific factions to convert"\
- "		if (currentFaction == \"CIV\" || currentFaction == \"OPFOR\" || currentFaction == \"INDFOR\")"\
- "		{"\
- "			slotData.SetSlotFactionKey(\"BLUFOR\");"\
- "			slotData.SetSlotResource(\"{1E08ED0385C765CC}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_TL_P.et\");"\
- "		}"\
- ""\
- "		super.OnControllableDestroyed(entity, killerEntity, instigator);"\
- "	}	"\
+ "	super.OnControllableDestroyed(entity, killerEntity, instigator);"\
+ "}"\
  "	"\
- ""\
- "	// RANDOM WEAPON SPAWN - couldve done this easier //"\
- "	// May break w/o WCS RU, British, RHS Core, WCS NATO Mods"\
- "	ref array<string> weapons = {"\
- "		\"{FA5C25BF66A53DCF}Prefabs/Weapons/Rifles/AK74/Rifle_AK74.et\", // 1"\
- "		\"{BFEA719491610A45}Prefabs/Weapons/Rifles/AKS74U/Rifle_AKS74U.et\", // 2"\
- "		\"{3E413771E1834D2F}Prefabs/Weapons/Rifles/M16/Rifle_M16A2.et\", // 3"\
- "		\"{ADDB4062CA2910CB}Prefabs/Weapons/Rifles/L2A3/Rifle_L2A3_Sterling.et\", // 4"\
- "		\"{24FFA508861139C9}Prefabs/Weapons/Rifles/L42A1/Rifle_L8.et\", // 5"\
- "		\"{24FFA508861139C9}Prefabs/Weapons/Rifles/L42A1/Rifle_L8.et\","\
- "		\"{24FFA508861139C9}Prefabs/Weapons/Rifles/L42A1/Rifle_L8.et\","\
- "		\"{880A80C1FD1AE546}Prefabs/Weapons/Handguns/APS/Handgun_APS.et\", //6"\
- "		\"{880A80C1FD1AE546}Prefabs/Weapons/Handguns/APS/Handgun_APS.et\","\
- "		\"{FD0DE25AC213EC9E}Prefabs/Weapons/Rifles/MP5/Rifle_MP5K.et\", //7"\
- "		\"{D9889FC9DB8C06C0}Prefabs/Weapons/Handguns/HiPower/Handgun_HiPower.et\", //8"\
- "		\"{D9889FC9DB8C06C0}Prefabs/Weapons/Handguns/HiPower/Handgun_HiPower.et\","\
- "		\"{D9889FC9DB8C06C0}Prefabs/Weapons/Handguns/HiPower/Handgun_HiPower.et\","\
- "		\"{1353C6EAD1DCFE43}Prefabs/Weapons/Handguns/M9/Handgun_M9.et\", //9"\
- "		\"{1353C6EAD1DCFE43}Prefabs/Weapons/Handguns/M9/Handgun_M9.et\","\
- "		\"{1353C6EAD1DCFE43}Prefabs/Weapons/Handguns/M9/Handgun_M9.et\","\
- "		\"{E093E637AE693F14}Prefabs/Weapons/Handguns/Welrod/Welrod.et\", //10"\
- "		\"{E998FA484B0C4BFF}Prefabs/Weapons/Handguns/Glock/Handgun_Glock17.et\",//11"\
- "		\"{FD74541D9A39832C}Prefabs/Weapons/Rifles/VSK94/Rifle_VSK94.et\", //12"\
- "		\"{C0F7DD85A86B2900}Prefabs/Weapons/Handguns/PM/Handgun_PM.et\", //13"\
- "		\"{C0F7DD85A86B2900}Prefabs/Weapons/Handguns/PM/Handgun_PM.et\","\
- "		\"{C0F7DD85A86B2900}Prefabs/Weapons/Handguns/PM/Handgun_PM.et\","\
- "		\"{C0F7DD85A86B2900}Prefabs/Weapons/Handguns/PM/Handgun_PM.et\","\
- "		\"{A8B4089ACB473848}Prefabs/Weapons/Handguns/MP443/Handgun_MP443.et\", //14"\
- "		\"{A8B4089ACB473848}Prefabs/Weapons/Handguns/MP443/Handgun_MP443.et\","\
- "		\"{8069A3DF6410FDDF}Prefabs/Weapons/Handguns/M17/Handgun_M17.et\", //15"\
- "		\"{8069A3DF6410FDDF}Prefabs/Weapons/Handguns/M17/Handgun_M17.et\","\
- "		\"{3EB02CDAD5F23C82}Prefabs/Weapons/Rifles/SVD/Rifle_SVD.et\" // 16 "\
+ "	"\
+ "	//"\
+ "	//Scuffed spawn script. Any weight #'s work but stick within a relative range for scale. IE 0.0 - 1.0. "\
+ "	ref array<string> weaponData = {"\
+ "	\"{FA5C25BF66A53DCF}Prefabs/Weapons/Rifles/AK74/Rifle_AK74.et|{0A84AA5A3884176F}Prefabs/Weapons/Magazines/Magazine_545x39_AK_30rnd_Last_5Tracer.et|1|0.25\","\
+ "	\"{BFEA719491610A45}Prefabs/Weapons/Rifles/AKS74U/Rifle_AKS74U.et|{0A84AA5A3884176F}Prefabs/Weapons/Magazines/Magazine_545x39_AK_30rnd_Last_5Tracer.et|1|0.25\","\
+ "	\"{3E413771E1834D2F}Prefabs/Weapons/Rifles/M16/Rifle_M16A2.et|{FB5EB0F6D447E858}Prefabs/Weapons/Magazines/Magazine_556x45_STANAG_30rnd_M193_Ball.et|1|0.25\","\
+ "	\"{ADDB4062CA2910CB}Prefabs/Weapons/Rifles/L2A3/Rifle_L2A3_Sterling.et|{199C2938EA99A6C4}Prefabs/Weapons/Magazines/Magazine_9x19_L2A3_34rnd_Tracer.et|1|0.4\","\
+ "	\"{24FFA508861139C9}Prefabs/Weapons/Rifles/L42A1/Rifle_L8.et|{4F4439BAA80A7A66}Prefabs/Weapons/Magazines/Magazine_762x51_L42a1_10rnd_Base.et|2|0.75\","\
+ "	\"{880A80C1FD1AE546}Prefabs/Weapons/Handguns/APS/Handgun_APS.et|{DFC0532A49E17C39}Prefabs/Weapons/Magazines/aps_magazine/Magazine_9x18_APS_20rnd_Ball.et|2|0.5\","\
+ "	\"{FD0DE25AC213EC9E}Prefabs/Weapons/Rifles/MP5/Rifle_MP5K.et|{046AA0F20A54842A}Prefabs/Weapons/Magazines/Magazine_9x19_MP5_30rnd_Ball.et|1|0.25\","\
+ "	\"{D9889FC9DB8C06C0}Prefabs/Weapons/Handguns/HiPower/Handgun_HiPower.et|{1E7D876C06089E21}Prefabs/Weapons/Magazines/Magazine_9x19_HiPower_13rnd_Ball.et|2|1.0\","\
+ "	\"{1353C6EAD1DCFE43}Prefabs/Weapons/Handguns/M9/Handgun_M9.et|{9C05543A503DB80E}Prefabs/Weapons/Magazines/Magazine_9x19_M9_15rnd_Ball.et|2|0.75\","\
+ "	\"{E093E637AE693F14}Prefabs/Weapons/Handguns/Welrod/Welrod.et|{06AE280848A84E47}Prefabs/Weapons/Magazines/Magazine_9x19_Welrod_6rnd.et|2|0.5\","\
+ "	\"{E998FA484B0C4BFF}Prefabs/Weapons/Handguns/Glock/Handgun_Glock17.et|{F20D1122BC5CD9F2}Prefabs/Weapons/Magazines/glock_magazine/Magazine_9x19_Glock_17rnd.et|2|0.5\","\
+ "	\"{FD74541D9A39832C}Prefabs/Weapons/Rifles/VSK94/Rifle_VSK94.et|{4DEB62CC1499F434}Prefabs/Weapons/Magazines/Magazine_9x39_9A91_20rnd_SP6.et|1|0.25\","\
+ "	\"{C0F7DD85A86B2900}Prefabs/Weapons/Handguns/PM/Handgun_PM.et|{8B853CDD11BA916E}Prefabs/Weapons/Magazines/Magazine_9x18_PM_8rnd_Ball.et|3|1.0\","\
+ "	\"{A8B4089ACB473848}Prefabs/Weapons/Handguns/MP443/Handgun_MP443.et|{A5E373A524710040}Prefabs/Weapons/Magazines/MP443/Magazine_9x19_MP443_17rnd_7N31.et|2|0.5\","\
+ "	\"{8069A3DF6410FDDF}Prefabs/Weapons/Handguns/M17/Handgun_M17.et|{8FF49793853DB2F9}Prefabs/Weapons/Magazines/m17_magazines/Magazine_9x19_m17_17rnd.et|2|0.5\","\
+ "	\"{3EB02CDAD5F23C82}Prefabs/Weapons/Rifles/SVD/Rifle_SVD.et|{4A3649DFF8A3F0E3}Prefabs/Weapons/Magazines/Magazine_762x54_SVD_10rnd_Tracer.et|1|0.25\","\
+ "	\"{177CF9EA974446D1}Prefabs/Weapons/Rifles/AN94/Rifle_AN94.et|{0A84AA5A3884176F}Prefabs/Weapons/Magazines/Magazine_545x39_AK_30rnd_Last_5Tracer.et|1|0.25\","\
+ "	\"{CFDEA9657EAB6269}Prefabs/Weapons/Rifles/M4A1/Rifle_M4A1_CQBR_base.et|{FB5EB0F6D447E858}Prefabs/Weapons/Magazines/Magazine_556x45_STANAG_30rnd_M193_Ball.et|1|0.25\","\
+ "	\"{11F3A285A6F1F51D}Prefabs/Weapons/Rifles/SR3M/Rifle_SR3M.et|{91836E59CE2497BC}Prefabs/Weapons/Magazines/sr3m_magazine_30rnd/Magazine_9x39_SR3M_30rnd_SP5_base.et|1|0.25\","\
+ "	\"{E00D722F11D21FB3}Prefabs/Weapons/Rifles/PP19/Rifle_PP19_zenit.et|{88CC4C272DCC24D6}Prefabs/Weapons/Magazines/Magazine_pp19_7N21.et|1|0.25\","\
  "		"\
- "		//\"{}gun.et\" //"\
- "		//\"{}gun.et\" //"\
+ "	\"{4D1C0BA5076C88CB}Prefabs/Characters/HeadGear/Helmet_MICH_ACH/Helmet_MICH2000_green1.et|NONE|0|.3\","\
+ "	\"{D7C9E28CE0CAF2B2}Prefabs/Characters/HeadGear/Helmet_TOR2/Helmet_TOR2L_olive.et|NONE|0|.3\","\
+ "	\"{AF355DA3D9927C36}Prefabs/Characters/Vests/Vest_JPC/Vest_JPC_base.et|NONE|0|.3\","\
+ "	\"{822B66CBF331F844}Prefabs/Characters/Vests/Vest_PCGen_II/Vest_PCGen_II_base.et|NONE|0|.3\""\
  "		"\
+ "		// Really just functions like \"FIRST ITEM | SECOND ITEM (NONE if none) | # OF SECOND ITEM | WEIGHTED CHANCE\""\
+ "		//if weapon add \"{guid}GUN.et|{guid}MAG.et|EXTRAMAGCOUNT|WEIGHTCHANCE\","\
+ "		//if gear add \"{guid}GEAR.et|NONE|0|WEIGHTCHANCE\","\
  "	};"\
  ""\
- "	ref array<string> magazines = {"\
- "		\"{0A84AA5A3884176F}Prefabs/Weapons/Magazines/Magazine_545x39_AK_30rnd_Last_5Tracer.et\", // 1"\
- "		\"{0A84AA5A3884176F}Prefabs/Weapons/Magazines/Magazine_545x39_AK_30rnd_Last_5Tracer.et\", //2"\
- "		\"{FB5EB0F6D447E858}Prefabs/Weapons/Magazines/Magazine_556x45_STANAG_30rnd_M193_Ball.et\", // 3"\
- "		\"{199C2938EA99A6C4}Prefabs/Weapons/Magazines/Magazine_9x19_L2A3_34rnd_Tracer.et\", // 4"\
- "		\"{4F4439BAA80A7A66}Prefabs/Weapons/Magazines/Magazine_762x51_L42a1_10rnd_Base.et\", //5 "\
- "		\"{4F4439BAA80A7A66}Prefabs/Weapons/Magazines/Magazine_762x51_L42a1_10rnd_Base.et\","\
- "		\"{4F4439BAA80A7A66}Prefabs/Weapons/Magazines/Magazine_762x51_L42a1_10rnd_Base.et\","\
- "		\"{DFC0532A49E17C39}Prefabs/Weapons/Magazines/aps_magazine/Magazine_9x18_APS_20rnd_Ball.et\",//6"\
- "		\"{DFC0532A49E17C39}Prefabs/Weapons/Magazines/aps_magazine/Magazine_9x18_APS_20rnd_Ball.et\","\
- "		\"{046AA0F20A54842A}Prefabs/Weapons/Magazines/Magazine_9x19_MP5_30rnd_Ball.et\", //7"\
- "		\"{1E7D876C06089E21}Prefabs/Weapons/Magazines/Magazine_9x19_HiPower_13rnd_Ball.et\", //8"\
- "		\"{1E7D876C06089E21}Prefabs/Weapons/Magazines/Magazine_9x19_HiPower_13rnd_Ball.et\","\
- "		\"{1E7D876C06089E21}Prefabs/Weapons/Magazines/Magazine_9x19_HiPower_13rnd_Ball.et\","\
- "		\"{9C05543A503DB80E}Prefabs/Weapons/Magazines/Magazine_9x19_M9_15rnd_Ball.et\", //9"\
- "		\"{9C05543A503DB80E}Prefabs/Weapons/Magazines/Magazine_9x19_M9_15rnd_Ball.et\","\
- "		\"{9C05543A503DB80E}Prefabs/Weapons/Magazines/Magazine_9x19_M9_15rnd_Ball.et\","\
- "		\"{06AE280848A84E47}Prefabs/Weapons/Magazines/Magazine_9x19_Welrod_6rnd.et\", //10"\
- "		\"{F20D1122BC5CD9F2}Prefabs/Weapons/Magazines/glock_magazine/Magazine_9x19_Glock_17rnd.et\", //11"\
- "		\"{4DEB62CC1499F434}Prefabs/Weapons/Magazines/Magazine_9x39_9A91_20rnd_SP6.et\", //12"\
- "		\"{8B853CDD11BA916E}Prefabs/Weapons/Magazines/Magazine_9x18_PM_8rnd_Ball.et\", //13"\
- "		\"{8B853CDD11BA916E}Prefabs/Weapons/Magazines/Magazine_9x18_PM_8rnd_Ball.et\","\
- "		\"{8B853CDD11BA916E}Prefabs/Weapons/Magazines/Magazine_9x18_PM_8rnd_Ball.et\","\
- "		\"{8B853CDD11BA916E}Prefabs/Weapons/Magazines/Magazine_9x18_PM_8rnd_Ball.et\","\
- "		\"{A5E373A524710040}Prefabs/Weapons/Magazines/MP443/Magazine_9x19_MP443_17rnd_7N31.et\", //14"\
- "		\"{A5E373A524710040}Prefabs/Weapons/Magazines/MP443/Magazine_9x19_MP443_17rnd_7N31.et\","\
- "		\"{8FF49793853DB2F9}Prefabs/Weapons/Magazines/m17_magazines/Magazine_9x19_m17_17rnd.et\", //15"\
- "		\"{8FF49793853DB2F9}Prefabs/Weapons/Magazines/m17_magazines/Magazine_9x19_m17_17rnd.et\","\
- "		\"{4A3649DFF8A3F0E3}Prefabs/Weapons/Magazines/Magazine_762x54_SVD_10rnd_Tracer.et\" // 16 "\
- "		"\
- "		//\"{}mag.et\" //"\
- "		//\"{}mag.et\" //"\
- "		"\
- "	}; "\
+ "	int totalSpawnPoints = 356;"\
+ "	float globalSpawnChance = 0.69; // nice"\
  ""\
+ "	array<string> SplitWeaponEntry(string entry)"\
+ "	{"\
+ "		array<string> parts = {};"\
+ "		int lastPos = 0;"\
+ "		int sepCount = 0;"\
  ""\
- "	int totalSpawnPoints = 276;"\
+ "		for (int i = 0; i < entry.Length(); i++)"\
+ "		{"\
+ "			if (entry.Substring(i, 1) == \"|\")"\
+ "			{"\
+ "				parts.Insert(entry.Substring(lastPos, i - lastPos));"\
+ "				lastPos = i + 1;"\
+ "				sepCount++;"\
+ "				if (sepCount == 3)"\
+ "					break;"\
+ "			}"\
+ "		}"\
+ "		parts.Insert(entry.Substring(lastPos, entry.Length() - lastPos));"\
+ "		return parts;"\
+ "	}"\
  ""\
- "	void SpawnWeaponsAndMags()"\
+ "	void SpawnShit() // includes parsing of array"\
  "	{"\
  "		EntitySpawnParams spawnParams = new EntitySpawnParams();"\
- "	spawnParams.TransformMode = ETransformMode.WORLD;"\
+ "		spawnParams.TransformMode = ETransformMode.WORLD;"\
+ ""\
+ "		float totalWeight = 0.0;"\
+ "		ref array<float> weights = {};"\
+ "		for (int i = 0; i < weaponData.Count(); i++)"\
+ "		{"\
+ "			array<string> parts = SplitWeaponEntry(weaponData[i]);"\
+ "			if (parts.Count() == 4)"\
+ "			{"\
+ "				weights.Insert(parts[3].ToFloat());"\
+ "				totalWeight += parts[3].ToFloat();"\
+ "			}"\
+ "			else"\
+ "			{"\
+ "				weights.Insert(0.0);"\
+ "			}"\
+ "		}"\
  ""\
  "		for (int i = 1; i <= totalSpawnPoints; i++)"\
  "		{"\
  "			string spawnPointName = \"weaponSpawn\" + i.ToString();"\
  "			IEntity spawnPoint = GetGame().GetWorld().FindEntityByName(spawnPointName);"\
  "			if (!spawnPoint)"\
- "			continue;"\
- ""\
- "			// spawn chance"\
- "			float chanceToSpawn = 0.60;"\
- "			if (Math.RandomFloat01() > chanceToSpawn)"\
  "				continue;"\
  ""\
- "			int idx = Math.RandomInt(0, weapons.Count());"\
+ "			if (Math.RandomFloat01() > globalSpawnChance)"\
+ "				continue;"\
+ ""\
+ "			float roll = Math.RandomFloat01() * totalWeight;"\
+ "			float cumulative = 0.0;"\
+ "			int chosenIndex = 0;"\
+ "			for (int idx = 0; idx < weights.Count(); idx++)"\
+ "			{"\
+ "				cumulative += weights[idx];"\
+ "				if (roll <= cumulative)"\
+ "				{"\
+ "					chosenIndex = idx;"\
+ "					break;"\
+ "				}"\
+ "			}"\
+ ""\
+ "			array<string> parts = SplitWeaponEntry(weaponData[chosenIndex]);"\
+ "			if (parts.Count() != 4)"\
+ "				continue;"\
+ ""\
+ "			string weaponPrefab = parts[0];"\
+ "			string magPrefab = parts[1];"\
+ "			int magCount = parts[2].ToInt();"\
  ""\
  "			spawnParams.Transform[3] = spawnPoint.GetOrigin();"\
  ""\
- "			GetGame().SpawnEntityPrefab(Resource.Load(weapons[idx]), GetGame().GetWorld(), spawnParams);"\
- "			GetGame().SpawnEntityPrefab(Resource.Load(magazines[idx]), GetGame().GetWorld(), spawnParams);"\
+ "			GetGame().SpawnEntityPrefab(Resource.Load(weaponPrefab), GetGame().GetWorld(), spawnParams);"\
+ ""\
+ "			if (magPrefab != \"\" && magPrefab != \"NONE\") // Just to safely pass non ammo magazines"\
+ "			{"\
+ "				for (int m = 0; m < magCount; m++)"\
+ "				{"\
+ "					GetGame().SpawnEntityPrefab(Resource.Load(magPrefab), GetGame().GetWorld(), spawnParams);"\
+ "				}"\
+ "			}"\
+ ""\
  "		}"\
  "	}"\
  ""\
  "	override void EOnInit(IEntity owner)"\
  "	{"\
  "		super.EOnInit(owner);"\
- "		GetGame().GetCallqueue().CallLater(SpawnWeaponsAndMags, 100, false);"\
+ "		GetGame().GetCallqueue().CallLater(SpawnShit, 100, false);"\
  "	}"
  m_bAutoPlayerRespawn 1
- m_iTimeLimitMinutes 18
+ m_iTimeLimitMinutes 20
  m_aMissionDescriptors {
   CRF_MissionDescriptor "{644250503DF684C0}" {
    m_sTextData "Arena Looter w/ Infection"\
@@ -158,9 +177,9 @@ CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et
    "Goal: Kill/Outlast other gangs/police"\
    ""\
    "Rules:"\
-   "- NO STEALING OTHER TEAMS APPAREL (Only Weapons)"\
-   "- Camping with spawns in view is shitty"\
-   ""
+   "- NO STEALING POLICE APPAREL"\
+   "- Camping with spawns in view is shitty and you should feel bad"\
+   "- Anyone camping/sitting on Police spawns smells"
   }
   CRF_MissionDescriptor "{6442505149CF6C93}" {
    m_aFactionKeys + {
@@ -194,7 +213,7 @@ CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et
  m_iTimeToRespawn 45
  m_iBLUFORTickets 35
  {
-  SCR_FactionManager {
+  SCR_FactionManager "65E1255AAEBCDFEE" {
    ID "632A77473B3CC3A8"
    Factions {
     SCR_Faction "{607AA5C7A94496DA}" {
@@ -207,6 +226,1782 @@ CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et
         m_sCallsign "Freakazoids"
        }
        SCR_CallsignInfo "{607A9A9EC820C27B}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27B}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C279}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C279}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27A}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27B}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C279}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C279}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27A}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27B}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C279}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C279}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27A}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27B}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C279}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C279}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27A}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27B}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C279}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C279}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27A}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27B}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C279}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27A}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27B}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27B}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C279}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C279}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27A}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27B}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C279}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C279}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27A}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27B}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C279}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C279}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27A}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27B}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C279}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C279}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27A}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27B}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C279}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C279}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27A}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27B}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C279}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27A}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27B}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27B}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C279}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C279}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27A}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27B}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C279}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C279}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27A}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27B}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C279}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C279}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27A}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27B}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C279}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C279}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27A}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27B}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C279}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C279}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27A}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27B}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27B}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C279}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C279}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27A}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27B}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C279}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C279}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27A}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27B}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C279}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C279}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27A}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27B}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C279}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C279}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27A}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27B}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C279}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C279}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27A}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27B}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C279}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27A}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27B}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27B}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C279}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C279}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27A}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27B}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C279}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C279}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27A}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27B}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C279}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C279}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27A}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27B}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C279}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C279}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27A}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27B}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C279}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C279}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27A}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27B}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C279}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27A}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27B}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27B}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C279}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C279}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27A}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27B}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C279}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C279}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27A}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27B}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C279}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C279}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27A}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27B}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C279}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C279}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27A}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27B}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C279}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C279}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27A}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27B}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
+        m_sCallsign "Freakazoids"
+       }
+       SCR_CallsignInfo "{607A9A9EC820C27D}" {
         m_sCallsign "Freakazoids"
        }
        SCR_CallsignInfo "{607A9A9EC820C27D}" {

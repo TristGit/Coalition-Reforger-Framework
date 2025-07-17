@@ -7,7 +7,7 @@ CRF_ManualMarker ChurchHQMarker : "{D4F0DA86DB75A76B}PrefabsEditable/Markers/Ral
  m_sDescription "Police HQ (No Outside Entry}"
 }
 CRF_ManualMarker : "{E8B2EB8EECE8491C}PrefabsEditable/Markers/GameZoneMarker_BLUFOR.et" {
- coords 4305.574 12.467 10601.587
+ coords 4284.471 12.467 10594.383
  angleY -17.982
  m_fWorldSize 80
  m_sDescription "Police SZ (BLUFOR Only)"

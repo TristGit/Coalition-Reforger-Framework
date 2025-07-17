@@ -241,6 +241,8 @@ class CRF_LoggingManager: SCR_BaseGameModeComponent
 	private void UpdatePlayerCount()
 	{
 		m_iPlayerCount = GetGame().GetPlayerManager().GetPlayerCount();
+		m_sPlayerCountMax = m_iPlayerCount.ToString();
+		m_sPlayerCountMax = m_sPlayerCountMax + "/" + m_sMaxPlayers;
 		
 		m_FM = GetGame().GetFactionManager();
 		m_SFM = SCR_FactionManager.Cast(m_FM);

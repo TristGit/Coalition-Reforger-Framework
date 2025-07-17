@@ -115,6 +115,8 @@ class CRF_LoggingManager: SCR_BaseGameModeComponent
 		// Initialize mission data
 		m_sMissionName = GetGame().GetMissionName();
 		m_iPlayerCount = GetGame().GetPlayerManager().GetPlayerCount();
+		//if (m_iPlayerCount < 9) TODO UNCOMMENT
+			//return;
 		m_sPlayerCountMax = m_iPlayerCount.ToString();
 		SCR_MissionHeader header = SCR_MissionHeader.Cast(GetGame().GetMissionHeader());
 		m_sAuthorName = header.m_sAuthor;
@@ -122,7 +124,8 @@ class CRF_LoggingManager: SCR_BaseGameModeComponent
 		m_sMissionDetails = header.m_sDetails;
 		m_sGameMode = header.m_sGameMode;
 		m_sTerrain = header.m_sTerrainName;
-		m_sPlayerCountMax = m_sPlayerCountMax + "/" + m_sMaxPlayers;
+		m_sMissionName = m_sMissionName + " (" + m_sTerrain + ")"; // append terrain onto mission name due to constraints
+		m_sPlayerCountMax = m_sPlayerCountMax + "/" + m_sMaxPlayers; // same here
 		
 		// Open global log file
 		m_LogFileHandle = FileIO.OpenFile(LOG_PATH, FileMode.APPEND);
@@ -229,9 +232,8 @@ class CRF_LoggingManager: SCR_BaseGameModeComponent
 		
 		if (m_sGameMode == "SPCL" || m_sGameMode == "SPC" || m_sGameMode == "SPECIAL") // ignore specials
 			return;
-		
-		//if (m_iPlayerCount > 9)
-		StartMissionLog(); // mission-specific log
+
+		Attendance(); // Attendance log
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -272,15 +274,13 @@ class CRF_LoggingManager: SCR_BaseGameModeComponent
 		if (!m_LogFileHandle)
 			return;
 		
-		m_LogFileHandle.WriteLine("mission" + SEPARATOR + eventType + SEPARATOR + m_sMissionName + SEPARATOR + m_iPlayerCount + SEPARATOR + m_sMaxPlayers + m_sAuthorName + SEPARATOR + m_sMissionDetails + SEPARATOR + m_sGameMode);
+		m_LogFileHandle.WriteLine("mission" + SEPARATOR + eventType + SEPARATOR + m_sMissionName + SEPARATOR + m_sPlayerCountMax + SEPARATOR + m_sAuthorName + SEPARATOR + m_sMissionDetails + SEPARATOR + m_sGameMode + SEPARATOR + m_aSideCounts);
 	}
 	
-	private void StartMissionLog()
+	private void Attendance()
 	{
 		if (!m_LogFileHandle)
 			return;
-		
-		m_LogFileHandle.WriteLine("mission" + SEPARATOR + m_sMissionName + SEPARATOR + m_sAuthorName + SEPARATOR + m_sMissionDetails + SEPARATOR + m_sGameMode + SEPARATOR + m_sPlayerCountMax + SEPARATOR + m_aSideCounts);
 		
 		// Log players in attendance
 		array<string> playersInAttendance = {};

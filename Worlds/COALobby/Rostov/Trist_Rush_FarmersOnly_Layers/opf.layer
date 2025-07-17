@@ -1,70 +1,85 @@
+$grp SCR_VehicleSpawn {
+ {
+  coords 2112.527 133.207 3338.004
+  angleY -86.051
+  m_rnPrefab "{16C1F16C9B053801}Prefabs/Vehicles/Wheeled/Ural4320/Ural4320_transport.et"
+  respawnDelay 10000
+ }
+ {
+  coords 2101.502 133.207 3330.68
+  angleY 40.374
+  m_rnPrefab "{16C1F16C9B053801}Prefabs/Vehicles/Wheeled/Ural4320/Ural4320_transport.et"
+  respawnDelay 10000
+ }
+ {
+  coords 2115.166 133.207 3333.586
+  angleY -86.051
+  m_rnPrefab "{16C1F16C9B053801}Prefabs/Vehicles/Wheeled/Ural4320/Ural4320_transport.et"
+  respawnDelay 10000
+ }
+ {
+  coords 2118.649 133.207 3328.509
+  angleY -86.051
+  m_rnPrefab "{16C1F16C9B053801}Prefabs/Vehicles/Wheeled/Ural4320/Ural4320_transport.et"
+  respawnDelay 10000
+ }
+ {
+  coords 2122.26 133.207 3323.498
+  angleY -86.051
+  m_rnPrefab "{16C1F16C9B053801}Prefabs/Vehicles/Wheeled/Ural4320/Ural4320_transport.et"
+  respawnDelay 10000
+ }
+ {
+  coords 2126.677 133.207 3317.254
+  angleY -86.051
+  m_rnPrefab "{16C1F16C9B053801}Prefabs/Vehicles/Wheeled/Ural4320/Ural4320_transport.et"
+  respawnDelay 10000
+ }
+ {
+  coords 2093.889 133.433 3319.768
+  angleY 46.156
+  m_rnPrefab "{16C1F16C9B053801}Prefabs/Vehicles/Wheeled/Ural4320/Ural4320_transport.et"
+  respawnDelay 10000
+ }
+ {
+  coords 2085.397 133.207 3314.542
+  angleY 46.156
+  m_rnPrefab "{16C1F16C9B053801}Prefabs/Vehicles/Wheeled/Ural4320/Ural4320_transport.et"
+  respawnDelay 10000
+ }
+ {
+  coords 2078.885 133.207 3305.592
+  angleY 46.156
+  m_rnPrefab "{16C1F16C9B053801}Prefabs/Vehicles/Wheeled/Ural4320/Ural4320_transport.et"
+  respawnDelay 10000
+ }
+ {
+  coords 2130.238 130.841 3303.645
+  angleY -32.628
+  m_rnPrefab "{3336BE330C4F355B}Prefabs/Vehicles/Wheeled/Ural4320/Ural4320_ammo.et"
+  respawnDelay 10000
+ }
+ {
+  coords 2103.96 130.841 3345.136
+  angleY -97.493
+  m_rnPrefab "{3290D38BD0CEBF94}Prefabs/Vehicles/Wheeled/TIGR/PKP/GAZ_TIGR_v2_PKM_1p29_Shield.et"
+  respawnDelay 10000
+ }
+ {
+  coords 2100.689 130.841 3352.162
+  angleY -97.493
+  m_rnPrefab "{7ACFD8FA081996F6}Prefabs/Vehicles/Wheeled/TIGR/PKP/GAZ_TIGR_v2_PKM_1p29.et"
+  respawnDelay 10000
+ }
+ {
+  coords 2123.276 133.207 3311.485
+  angleY -34.041
+  m_rnPrefab "{43C4AF1EEBD001CE}Prefabs/Vehicles/Wheeled/UAZ452/UAZ452_ambulance.et"
+  respawnDelay 10000
+ }
+}
 GenericEntity : "{0B3312C6940005B9}Prefabs/Structures/FlagPoles/RespawnPoles/OPFOR_Respawn.et" {
- coords 2024.889 134.504 3331.072
-}
-$grp Vehicle : "{2B15F98903994DA3}Prefabs/Vehicles/Wheeled/Ural4320/Ural4320_transport_covered_camo1.et" {
- Ural4320_transport_covered_camo1 {
-  coords 2107.829 132.909 3333.206
-  angleY -34.492
- }
- Ural4320_transport_covered_camo2 {
-  coords 2114.891 132.587 3330.688
-  angleY -34.492
- }
- Ural4320_transport_covered_camo3 {
-  coords 2114.779 132.25 3323.19
-  angleY -34.492
- }
- Ural4320_transport_covered_camo4 {
-  coords 2121.5 132.098 3319.84
-  angleY -34.492
- }
- Ural4320_transport_covered_camo5 {
-  coords 2089.558 132.357 3314.883
-  angleY 38.66
- }
- Ural4320_transport_covered_camo6 {
-  coords 2091.782 132.858 3322.545
-  angleY 40.521
- }
- Ural4320_transport_covered_camo7 {
-  coords 2081.446 132.391 3312.41
-  angleY 40.069
- }
- Ural4320_transport_covered_camo9 {
-  coords 2099.14 132.746 3325.051
-  angleY 41.58
- }
-}
-Vehicle Ural4320_ammo1 : "{3336BE330C4F355B}Prefabs/Vehicles/Wheeled/Ural4320/Ural4320_ammo.et" {
- components {
-  SCR_ResourceComponent "{65DC074352D6A2FF}" {
-   m_aContainers {
-    SCR_ResourceContainerVirtual "{65DC074356BB651C}" {
-     m_eResourceRights ALL
-     m_eStorageType CARGO_VEHICLE
-     m_fResourceValueCurrent 1
-     m_fResourceValueMax 50
-     m_bEnableResourceGain 1
-     m_fResourceGain 1
-     m_fResourceGainTickrate 90
-    }
-   }
-  }
-  SCR_UniversalInventoryStorageComponent "{5916C58171230A92}" {
-   MultiSlots {
-    MultiSlotConfiguration "{5A60D38EDB3709A9}" {
-     NumSlots 5
-    }
-   }
-  }
- }
- coords 2132.291 130.399 3300.589
- angleY -31.404
-}
-Vehicle UAZ452_ambulance1 : "{43C4AF1EEBD001CE}Prefabs/Vehicles/Wheeled/UAZ452/UAZ452_ambulance.et" {
- coords 2123.369 131.176 3310.744
- angleX 2.127
- angleY -35.297
+ coords 2150.698 133.212 3375.606
 }
 SCR_AIGroup : "{5BFC01F79A5A8C68}Prefabs/Groups/OPFOR/Standard/Command/CRF_OPFOR_Company_p.et" {
  components {
@@ -150,9 +165,15 @@ SCR_AIGroup : "{5BFC01F79A5A8C68}Prefabs/Groups/OPFOR/Standard/Command/CRF_OPFOR
                   SCR_AIGroup : "{803383BB28D07BB9}Prefabs/Groups/OPFOR/Standard/Vehicle/CRF_OPFOR_2manVehicleCrew_p.et" {
                    coords 15.413 1.62 25.202
                    angleY -139.075
+                   m_aUnitPrefabSlots {
+                    "{F513E3FE0CE0E250}Prefabs/Characters/Factions/OPFOR/CRF_GS_OPFOR_VehDriver_P.et" "{24671DF0A9604F33}Prefabs/Characters/Factions/OPFOR/CRF_GS_OPFOR_VehGunner_P.et"
+                   }
                    {
                     SCR_AIGroup : "{803383BB28D07BB9}Prefabs/Groups/OPFOR/Standard/Vehicle/CRF_OPFOR_2manVehicleCrew_p.et" {
                      coords 15.453 0 0.01
+                     m_aUnitPrefabSlots {
+                      "{F513E3FE0CE0E250}Prefabs/Characters/Factions/OPFOR/CRF_GS_OPFOR_VehDriver_P.et" "{24671DF0A9604F33}Prefabs/Characters/Factions/OPFOR/CRF_GS_OPFOR_VehGunner_P.et"
+                     }
                      {
                       SCR_AIGroup : "{E5143827D374F6DD}Prefabs/Groups/OPFOR/Standard/Vehicle/CRF_OPFOR_3manVehicleCrew_p.et" {
                        coords 43.276 0 18.129
@@ -195,7 +216,7 @@ GenericEntity SupplyGen : "{687A661759E0249B}Prefabs/Props/Military/SupplyBox/Su
      m_fResourceValueMax 50
      m_bEnableResourceGain 1
      m_fResourceGain 1
-     m_fResourceGainTickrate 30
+     m_fResourceGainTickrate 35
     }
    }
   }

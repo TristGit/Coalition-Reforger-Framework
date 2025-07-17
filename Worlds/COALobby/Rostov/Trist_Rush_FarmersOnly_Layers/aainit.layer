@@ -20,11 +20,9 @@ CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et
  }
  coords 3374.031 107.689 2327.99
  m_iTimeLimitMinutes 50
- m_bLockSlotsAfterSafestart 0
- m_bSafestartInstantlyEnabled 0
  m_aMissionDescriptors {
   CRF_MissionDescriptor "{644250503DF684C0}" {
-   m_sTextData "A NATO detachment has supplied/integrated with local armed farmers intent on preventing RUS destruction of key locations."\
+   m_sTextData "A NATO detachment hastily supplied/integrated with local armed farmers intent on preventing RUS destruction of key locations."\
    "(2 Stage Rush)"\
    ""\
    "BLUFOR Composition: 1x Mixed NATO/CIV Plt."\
@@ -128,10 +126,10 @@ CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et
         m_sCallsign "2-2"
        }
        SCR_CallsignInfo "{65DAC0EB555C2E03}" {
-        m_sCallsign "BTR"
+        m_sCallsign "GAZ"
        }
        SCR_CallsignInfo "{65DAC0EB559807B6}" {
-        m_sCallsign "UAZ (PKP)"
+        m_sCallsign "GAZ"
        }
        SCR_CallsignInfo "{65DAC0EB56A2DE56}" {
         m_sCallsign "Logi"
@@ -148,10 +146,6 @@ CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et
    }
   }
  }
-}
-Vehicle GAZ_TIGR_v2_PKM_Shield1 : "{2297AAC5FB2CF134}Prefabs/Vehicles/Wheeled/TIGR/PKP/GAZ_TIGR_v2_PKM_Shield.et" {
- coords 2106.003 133.783 3347.841
- angleY -87.563
 }
 PolylineShapeEntity : "{318DDE6633C34CF1}PrefabsEditable/PolyZone/GameBoundry.et" {
  coords 1280.684 55.938 1970.128
@@ -182,12 +176,8 @@ PolylineShapeEntity : "{318DDE6633C34CF1}PrefabsEditable/PolyZone/GameBoundry.et
   }
  }
 }
-Vehicle GAZ_TIGR_v2_PKM1 : "{7BC76F92B882889D}Prefabs/Vehicles/Wheeled/TIGR/PKP/GAZ_TIGR_v2_PKM.et" {
- coords 2104.352 134.09 3351.491
- angleY -91.824
-}
 PolylineShapeEntity : "{8AE1D02BC25C93C5}PrefabsEditable/PolyZone/BLUFORSafestartBoundry.et" {
- coords 1221.232 98.905 961.454
+ coords 1221.232 88.433 961.454
  Points {
   ShapePoint "{65DC074604EDDFD1}" {
    Position 232.752 28.671 -412.285

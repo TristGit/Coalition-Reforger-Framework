@@ -1,65 +1,46 @@
-Vehicle _Series_LWB_Transport_Camo1 : "{098E31B006CAE0CE}Prefabs/Vehicles/Wheeled/LR_3Series/3Series_LWB_Transport_Camo.et" {
- components {
-  SCR_ArsenalComponent "{65DCCA5991A1F902}" {
-   m_OverwriteArsenalConfig SCR_ArsenalItemListConfig "{65DCCA599491770D}" {
-    m_aArsenalItems {
-     SCR_ArsenalItemStandalone "{65DCCA5997FE677A}" {
-      m_eItemMode AMMUNITION
-      m_eArsenalGameModeTypes 0
-     }
-    }
-   }
-  }
-  SCR_ResourceComponent "{648B4DF41C28F137}" {
-   m_aContainers {
-    SCR_ResourceContainer "{648B4DF41C28F12E}" {
-     m_fResourceValueCurrent 0
-     m_fResourceValueMax 0
-     m_fResourceGain 0
-     m_fResourceGainTickrate 0
-    }
-   }
-  }
-  SCR_UniversalInventoryStorageComponent "{648B4DF41C28F11F}" {
-   MultiSlots {
-    MultiSlotConfiguration "{5E86A8C9C339E7A1}" {
-     SlotTemplate InventoryStorageSlot Jerrycan {
-      Prefab "{7ECA478D7C80ACC0}Prefabs/Weapons/Magazines/Magazine_556x45_STANAG_30rnd_M193_M196_Last_5Tracer.et"
-     }
-     NumSlots 30
-    }
-    MultiSlotConfiguration "{5EB0D397D958C6E8}" {
-     SlotTemplate InventoryStorageSlot Jerrycan {
-      Prefab "{0A84AA5A3884176F}Prefabs/Weapons/Magazines/Magazine_545x39_AK_30rnd_Last_5Tracer.et"
-     }
-     NumSlots 30
-    }
-    MultiSlotConfiguration "{65DCCA50338027BC}" {
-     SlotTemplate InventoryStorageSlot Jerrycan {
-      Prefab "{E8E9972833CB4203}Prefabs/Weapons/Magazines/Box_556x45_M249_200rnd_M855A1_Ball.et"
-     }
-     NumSlots 12
-    }
-    MultiSlotConfiguration "{65DCCA5F40C5DB74}" {
-     SlotTemplate InventoryStorageSlot Jerrycan {
-      Prefab "{7729EF36AA916FB9}Prefabs/Weapons/Magazines/Box_762x51_GPMG_200rnd_4Ball_1Tracer.et"
-     }
-     NumSlots 12
-    }
-    MultiSlotConfiguration "{65DCCA5EFEDEDA18}" {
-     SlotTemplate InventoryStorageSlot Jerrycan {
-      Prefab "{E0CFA3FE78FC5190}Prefabs/Weapons/Launchers/M72/Launcher_LAW66_L1A1.et"
-     }
-     NumSlots 2
-    }
-   }
-  }
-  SCR_VehicleFactionAffiliationComponent "{5882CBD9AC741CEC}" {
-   "faction affiliation" "BLUFOR"
-  }
+$grp SCR_VehicleSpawn {
+ {
+  coords 1252.348 89.687 889.8
+  angleY 19.247
+  m_rnPrefab "{66241E0CEDFCEDFF}Prefabs/Vehicles/Wheeled/Ural4320/Ural4320_transport_covered_CIV_orange.et"
+  respawnDelay 10000
  }
- coords 1275.749 89.898 900.655
- angleY 33.662
+ {
+  coords 1260.348 89.278 918.055
+  angleY -41.531
+  m_rnPrefab "{66241E0CEDFCEDFF}Prefabs/Vehicles/Wheeled/Ural4320/Ural4320_transport_covered_CIV_orange.et"
+  respawnDelay 10000
+ }
+ {
+  coords 1257.895 89.531 899.95
+  angleY 28.36
+  m_rnPrefab "{66241E0CEDFCEDFF}Prefabs/Vehicles/Wheeled/Ural4320/Ural4320_transport_covered_CIV_orange.et"
+  respawnDelay 10000
+ }
+ {
+  coords 1273.724 89.776 903.478
+  angleY 38.681
+  m_rnPrefab "{A354B4CEF8989405}Prefabs/Vehicles/Wheeled/LR_3Series/3Series_LWB_Recce_M2HB_Variant_2.et"
+  respawnDelay 10000
+ }
+ {
+  coords 1276.171 89.776 901.379
+  angleY 38.681
+  m_rnPrefab "{098E31B006CAE0CE}Prefabs/Vehicles/Wheeled/LR_3Series/3Series_LWB_Transport_Camo.et"
+  respawnDelay 10000
+ }
+ {
+  coords 1248.388 89.278 931.092
+  angleY -39.318
+  m_rnPrefab "{66241E0CEDFCEDFF}Prefabs/Vehicles/Wheeled/Ural4320/Ural4320_transport_covered_CIV_orange.et"
+  respawnDelay 10000
+ }
+ {
+  coords 1266.729 89.278 927.787
+  angleY -42.205
+  m_rnPrefab "{66241E0CEDFCEDFF}Prefabs/Vehicles/Wheeled/Ural4320/Ural4320_transport_covered_CIV_orange.et"
+  respawnDelay 10000
+ }
 }
 SCR_AIGroup : "{3D4D53B053964445}Prefabs/Groups/BLUFOR/Standard/Command/CRF_BLUFOR_Platoon_p.et" {
  components {
@@ -164,73 +145,73 @@ SCR_AIGroup : "{3D4D53B053964445}Prefabs/Groups/BLUFOR/Standard/Command/CRF_BLUF
  }
 }
 GenericEntity BLUrespawn : "{62865C82AB534D91}Prefabs/Structures/FlagPoles/RespawnPoles/BLUFOR_Respawn.et" {
- coords 1391.696 91.888 876.746
+ coords 1321.987 91.812 840.072
 }
-$grp Vehicle : "{66241E0CEDFCEDFF}Prefabs/Vehicles/Wheeled/Ural4320/Ural4320_transport_covered_CIV_orange.et" {
- Ural4320_transport_covered_CIV_orange3 {
-  coords 1262.379 89.2 916.804
-  angleX -2.62
-  angleY -7.71
- }
- Ural4320_transport_covered_CIV_orange2 {
-  coords 1257.157 88.984 921.085
-  angleX -2.62
-  angleY -7.71
- }
- Ural4320_transport_covered_CIV_orange4 {
-  coords 1253.066 88.758 925.81
-  angleX -2.62
-  angleY -7.71
- }
- Ural4320_transport_covered_CIV_orange5 {
-  coords 1248.427 88.518 929.875
-  angleX -2.62
-  angleY -7.71
- }
- Ural4320_transport_covered_CIV_orange6 {
-  coords 1244.051 88.265 934.577
-  angleX -2.62
-  angleY -7.71
- }
- Ural4320_transport_covered_CIV_orange7 {
-  coords 1239.821 87.979 940.998
-  angleX -2.62
-  angleY -7.71
- }
-}
-Vehicle _Series_LWB_Recce_M2HB_Variant_1 : "{A354B4CEF8989405}Prefabs/Vehicles/Wheeled/LR_3Series/3Series_LWB_Recce_M2HB_Variant_2.et" {
+GenericEntity : "{892D59073561FCA6}Prefabs/Props/Military/CargoContainers/CargoContainer_01_10ft_US_ammo.et" {
  components {
-  SCR_UniversalInventoryStorageComponent "{648B4DF41C28F11F}" {
+  SCR_SoundDataComponent "{5C53391603B5CF41}" {
+   Enabled 1
+  }
+  SCR_UniversalInventoryStorageComponent "{5476A2F100DF4EFF}" {
+   Enabled 1
    MultiSlots {
-    MultiSlotConfiguration "{6591064157247661}" {
-     SlotTemplate InventoryStorageSlot "{659106415076C478}" {
-      Prefab "{F90F352E1F49965F}Prefabs/Weapons/Magazines/H82_762x51_GPMG_200rnd_Base.et"
+    MultiSlotConfiguration "{65E26CC733C0C594}" {
+     SlotTemplate InventoryStorageSlot Bandages {
+      Prefab "{E67E7932C86FBB96}Prefabs/Items/Medicine/FieldDressing_UK_01.et"
      }
-     NumSlots 4
+     NumSlots 2
     }
-    MultiSlotConfiguration "{659334326B14DD04}" {
-     NumSlots 9
+    MultiSlotConfiguration "{65E26CC72B08DFD3}" {
+     SlotTemplate InventoryStorageSlot Jerrycan {
+      Prefab "{7ECA478D7C80ACC0}Prefabs/Weapons/Magazines/Magazine_556x45_STANAG_30rnd_M193_M196_Last_5Tracer.et"
+     }
+     NumSlots 30
+    }
+    MultiSlotConfiguration "{65E26CC72C6B2D17}" {
+     SlotTemplate InventoryStorageSlot Jerrycan {
+      Prefab "{0A84AA5A3884176F}Prefabs/Weapons/Magazines/Magazine_545x39_AK_30rnd_Last_5Tracer.et"
+     }
+     NumSlots 30
+    }
+    MultiSlotConfiguration "{65E26CC72CA87FB1}" {
+     SlotTemplate InventoryStorageSlot Jerrycan {
+      Prefab "{E8E9972833CB4203}Prefabs/Weapons/Magazines/Box_556x45_M249_200rnd_M855A1_Ball.et"
+     }
+     NumSlots 12
+    }
+    MultiSlotConfiguration "{65E26CC72C8BDECC}" {
+     SlotTemplate InventoryStorageSlot Jerrycan {
+      Prefab "{7729EF36AA916FB9}Prefabs/Weapons/Magazines/Box_762x51_GPMG_200rnd_4Ball_1Tracer.et"
+     }
+     NumSlots 12
+    }
+    MultiSlotConfiguration "{65E26CC70F7ED7E1}" {
+     SlotTemplate InventoryStorageSlot test {
+      Prefab "{2C97722E47FD48F9}Prefabs/Weapons/Magazines/Magazine_762_FABmag_30rnd_57T231P.et"
+     }
+     NumSlots 16
+    }
+    MultiSlotConfiguration "{65E26CC702BC794E}" {
+     SlotTemplate InventoryStorageSlot Jerrycan {
+      Prefab "{E0CFA3FE78FC5190}Prefabs/Weapons/Launchers/M72/Launcher_LAW66_L1A1.et"
+     }
+     NumSlots 2
+    }
+   }
+   m_fMaxWeight 300
+  }
+  ActionsManagerComponent "{5476B36C403D4CC0}" {
+   Enabled 1
+   additionalActions {
+    SCR_OpenStorageAction "{5476DE57AA50402F}" {
+     VisibilityRange 15
     }
    }
   }
- }
- coords 1273.392 89.744 903.249
- angleY 38.068
-}
-Vehicle Ural4320_transport_covered_CIV_blue1 : "{F66EAD0D2016B6BA}Prefabs/Vehicles/Wheeled/Ural4320/Ural4320_transport_covered_CIV_blue.et" {
- components {
-  SCR_VehicleInventoryStorageManagerComponent "{591056FA3B752FE6}" {
-   InitialInventoryItems {
-    ItemsInitConfigurationItem "{65DA366607335A04}" {
-     PrefabsToSpawn {
-      ""
-     }
-    }
-   }
+  RplComponent "{5476B36C54387F41}" {
+   Enabled 1
   }
  }
- coords 1269.755 89.2 922.861
- angleX -2.138
- angleY -60.497
- angleZ -0.11
+ coords 1278.021 90.058 895.648
+ angleY 46.857
 }

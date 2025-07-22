@@ -1,6 +1,10 @@
 // CRF_Looter_Game.c
-// Loot spawning gamemode component. Heavily translated via copilot into workable component.
-// Feel free to modify and improve this, may be too overly engineered
+// Meant to be for easy recreation of Loot in spcls or whatever, loot tables, and spawn logic
+// Feel free to expand on this script or even rework it, meant to just be in a replicable gamecomponent
+// can maybe at some point be remade into full gamemode with goal and win conditions
+//=============================================================================
+// LOOT ENTRY CLASSES - Define different types of loot with spawn behaviors
+//=============================================================================
 
 // -------------------------
 // Base Class: CRF_BaseLootEntry
@@ -14,13 +18,16 @@ class CRF_BaseLootEntry
 	[Attribute(defvalue: "", uiwidget: UIWidgets.ResourcePickerThumbnail, params: "et", desc: "Primary item prefab")]
 	ResourceName m_sPrimaryPrefab;
 	
+	// Internal flag - not visible in editor UI
+	bool m_bIsFlat = false;
+	
 	// Virtual method to spawn items (overridden by derived classes)
 	void SpawnLoot(EntitySpawnParams spawnParams)
 	{
-		// Always spawn primary item
+		// Always spawn primary item with ground placement and flat logic
 		if (m_sPrimaryPrefab != "")
 		{
-			GetGame().SpawnEntityPrefab(Resource.Load(m_sPrimaryPrefab), GetGame().GetWorld(), spawnParams);
+			CRF_LooterSpawnHelper.SpawnWithGroundPlacement(m_sPrimaryPrefab, spawnParams, m_bIsFlat);
 		}
 	}
 	
@@ -42,46 +49,61 @@ class CRF_WeaponLootEntry : CRF_BaseLootEntry
 	[Attribute(defvalue: "0", desc: "Number of magazines to spawn")]
 	int m_iMagazineCount;
 	
+	void CRF_WeaponLootEntry()
+	{
+		m_bIsFlat = true; // Weapons should lay flat
+	}
+	
 	override void SpawnLoot(EntitySpawnParams spawnParams)
 	{
-		super.SpawnLoot(spawnParams);
-		
-		// Spawn magazines for weapons
-		if (m_sMagazinePrefab != "" && m_sMagazinePrefab != "NONE")
+		// Spawn weapon with ground placement
+		if (m_sPrimaryPrefab != "")
 		{
-			for (int i = 0; i < m_iMagazineCount; i++)
-			{
-				GetGame().SpawnEntityPrefab(Resource.Load(m_sMagazinePrefab), GetGame().GetWorld(), spawnParams);
-			}
+			CRF_LooterSpawnHelper.SpawnWithGroundPlacement(m_sPrimaryPrefab, spawnParams, m_bIsFlat);
+		}
+		
+		// Spawn magazines with spread using unified helper method
+		if (m_sMagazinePrefab != "" && m_sMagazinePrefab != "NONE" && m_iMagazineCount > 0)
+		{
+			CRF_LooterSpawnHelper.SpawnMultipleWithSpread(m_sMagazinePrefab, spawnParams, m_iMagazineCount);
 		}
 	}
 }
 
 // -------------------------
-// Class: CRF_GearLootEntry
-// -------------------------
+// Simple Loot Types: Gear/Bags
+// ------------------------- 
 [BaseContainerProps(), SCR_BaseContainerCustomTitleFields({"m_sPrimaryPrefab"}, "%1")]
 class CRF_GearLootEntry : CRF_BaseLootEntry
 {
-	// This is just for the seperate gear class, uses inherited class
+	void CRF_GearLootEntry()
+	{
+		m_bIsFlat = false;
+	}
+}
+
+[BaseContainerProps(), SCR_BaseContainerCustomTitleFields({"m_sPrimaryPrefab"}, "%1")]
+class CRF_BagLootEntry : CRF_BaseLootEntry
+{
+	void CRF_BagLootEntry()
+	{
+		m_bIsFlat = false;
+	}
 }
 
 // -------------------------
-// Helper Class: CRF_KitItem
+// Multi-Item Loot Types: Kits and Misc Items
 // -------------------------
-[BaseContainerProps(), SCR_BaseContainerCustomTitleFields({"m_sPrefab", "m_iCount"}, "%1 (%2)")]
+[BaseContainerProps(), SCR_BaseContainerCustomTitleFields({"m_sPrefab", "m_iCount"}, "%1 %2")]
 class CRF_KitItem
 {
     [Attribute(defvalue: "", uiwidget: UIWidgets.ResourcePickerThumbnail, params: "et", desc: "Item prefab")]
     ResourceName m_sPrefab;
 
-    [Attribute(defvalue: "1", desc: "Number of this item to spawn")]
+    [Attribute(defvalue: "1", desc: "Number of this item to spawn")] 
     int m_iCount;
 }
-
-// -------------------------
-// Class: CRF_KitLootEntry
-// -------------------------
+ 
 [BaseContainerProps(), SCR_BaseContainerCustomTitleFields({"m_sKitName"}, "%1")]
 class CRF_KitLootEntry : CRF_BaseLootEntry
 {
@@ -91,31 +113,30 @@ class CRF_KitLootEntry : CRF_BaseLootEntry
 	[Attribute(desc: "Kit Items")]
 	ref array<ref CRF_KitItem> m_aKitItems;
 	
+	void CRF_KitLootEntry()
+	{
+		m_bIsFlat = false;
+	}
+	
 	override void SpawnLoot(EntitySpawnParams spawnParams)
 	{
 		super.SpawnLoot(spawnParams);
 		
-		// Spawn kit items with individual counts
+		// Spawn kit items with individual counts and spread
 		if (m_aKitItems)
 		{
 			foreach (CRF_KitItem kitItem : m_aKitItems)
 			{
 				if (kitItem && kitItem.m_sPrefab != "")
 				{
-					for (int i = 0; i < kitItem.m_iCount; i++)
-					{
-						GetGame().SpawnEntityPrefab(Resource.Load(kitItem.m_sPrefab), GetGame().GetWorld(), spawnParams);
-					}
+					CRF_LooterSpawnHelper.SpawnMultipleWithSpread(kitItem.m_sPrefab, spawnParams, kitItem.m_iCount, false);
 				}
 			}
 		}
 	}
 }
 
-// -------------------------
-// Helper Class: CRF_MiscItem
-// -------------------------
-[BaseContainerProps(), SCR_BaseContainerCustomTitleFields({"m_sPrefab", "m_iCount"}, "%1 (%2)")]
+[BaseContainerProps(), SCR_BaseContainerCustomTitleFields({"m_sPrefab", "m_iCount"}, "%1 %2")]
 class CRF_MiscItem
 {
     [Attribute(defvalue: "{C3F1FA1E2EC2B345}Prefabs/Items/Medicine/FieldDressing_01/FieldDressing_USSR_01.et", uiwidget: UIWidgets.ResourcePickerThumbnail, params: "et", desc: "Item prefab")]
@@ -125,10 +146,7 @@ class CRF_MiscItem
     int m_iCount;
 }
 
-// -------------------------
-// Class: CRF_MiscLootEntry
-// -------------------------
-[BaseContainerProps(), SCR_BaseContainerCustomTitleFields({"m_sPrimaryPrefab", "m_iPrimaryCount"}, "%1 (%2)")]
+[BaseContainerProps(), SCR_BaseContainerCustomTitleFields({"m_sPrimaryPrefab", "m_iPrimaryCount"}, "%1 %2")]
 class CRF_MiscLootEntry : CRF_BaseLootEntry
 {
     [Attribute(defvalue: "1", desc: "Number of primary items to spawn")]
@@ -137,15 +155,17 @@ class CRF_MiscLootEntry : CRF_BaseLootEntry
     [Attribute(desc: "Extra Items")]
     ref array<ref CRF_MiscItem> m_aExtraItems;
     
+    void CRF_MiscLootEntry()
+    {
+        m_bIsFlat = true; // Misc items like medical supplies often lay flat
+    }
+    
     override void SpawnLoot(EntitySpawnParams spawnParams)
     {
         // Spawn primary item(s) with count
         if (m_sPrimaryPrefab != "")
         {
-            for (int i = 0; i < m_iPrimaryCount; i++)
-            {
-                GetGame().SpawnEntityPrefab(Resource.Load(m_sPrimaryPrefab), GetGame().GetWorld(), spawnParams);
-            }
+            CRF_LooterSpawnHelper.SpawnWithGroundPlacement(m_sPrimaryPrefab, spawnParams, m_bIsFlat, m_iPrimaryCount);
         }
         
         // Spawn misc items with individual counts
@@ -155,19 +175,17 @@ class CRF_MiscLootEntry : CRF_BaseLootEntry
             {
                 if (miscItem && miscItem.m_sPrefab != "")
                 {
-                    for (int j = 0; j < miscItem.m_iCount; j++)
-                    {
-                        GetGame().SpawnEntityPrefab(Resource.Load(miscItem.m_sPrefab), GetGame().GetWorld(), spawnParams);
-                    }
+                    CRF_LooterSpawnHelper.SpawnWithGroundPlacement(miscItem.m_sPrefab, spawnParams, true, miscItem.m_iCount);
                 }
             }
         }
     }
 }
 
-// -------------------------
-// Class: CRF_LooterGamemodeComponent
-// -------------------------
+//=============================================================================
+// MAIN GAMEMODE COMPONENT - Handles spawn logic, weighting, and distribution
+//=============================================================================
+
 [ComponentEditorProps(category: "Game Mode Component", description: "Spawns loot at named positions based on structured loot entries.")]
 class CRF_LooterGamemodeComponentClass : SCR_BaseGameModeComponentClass {}
 
@@ -185,13 +203,14 @@ class CRF_LooterGamemodeComponent : SCR_BaseGameModeComponent
 	[Attribute(defvalue: "false", desc: "Print individual item drop chances to debug log")]
 	protected bool m_bDebugCalcItemChances;
 
-
-
 	[Attribute(desc: "Weapon loot entries (weapons with magazines)")]
 	ref array<ref CRF_WeaponLootEntry> m_aWeaponEntries;
 
 	[Attribute(desc: "Gear loot entries (helmets, vests, etc.)")]
 	ref array<ref CRF_GearLootEntry> m_aGearEntries;
+
+	[Attribute(desc: "Bag loot entries (backpacks, pouches, etc.)")]
+	ref array<ref CRF_BagLootEntry> m_aBagEntries;
 
 	[Attribute(desc: "Kit loot entries (multi-item kits)")]
 	ref array<ref CRF_KitLootEntry> m_aKitEntries;
@@ -199,7 +218,6 @@ class CRF_LooterGamemodeComponent : SCR_BaseGameModeComponent
 	[Attribute(desc: "Misc loot entries (multiple random items)")]
 	ref array<ref CRF_MiscLootEntry> m_aMiscEntries;
 
-	// ---------------- executing on postinit, hope formatted correctly
 	override void OnPostInit(IEntity owner)
 	{
 		super.OnPostInit(owner);
@@ -211,47 +229,18 @@ class CRF_LooterGamemodeComponent : SCR_BaseGameModeComponent
 		Print("CRF_LooterGamemodeComponent: Spawning loot...");
 	}
 
-	// ----------------- Main spawning function
+	// Main spawning function - builds combined loot pool and spawns at random points
 	protected void SpawnLoot()
 	{
 		// Build combined loot pool from all categories
 		ref array<ref CRF_BaseLootEntry> allLootEntries = {};
 		
-		// Add all weapon entries
-		if (m_aWeaponEntries)
-		{
-			foreach (CRF_WeaponLootEntry weaponEntry : m_aWeaponEntries)
-			{
-				allLootEntries.Insert(weaponEntry);
-			}
-		}
-		
-		// Add all gear entries
-		if (m_aGearEntries)
-		{
-			foreach (CRF_GearLootEntry gearEntry : m_aGearEntries)
-			{
-				allLootEntries.Insert(gearEntry);
-			}
-		}
-		
-		// Add all kit entries
-		if (m_aKitEntries)
-		{
-			foreach (CRF_KitLootEntry kitEntry : m_aKitEntries)
-			{
-				allLootEntries.Insert(kitEntry);
-			}
-		}
-		
-		// Add all misc entries
-		if (m_aMiscEntries)
-		{
-			foreach (CRF_MiscLootEntry miscEntry : m_aMiscEntries)
-			{
-				allLootEntries.Insert(miscEntry);
-			}
-		}
+		// Add all entries to combined pool (manual insertion for type safety)
+		if (m_aWeaponEntries)  for (int i = 0; i < m_aWeaponEntries.Count(); i++)  allLootEntries.Insert(m_aWeaponEntries[i]);
+		if (m_aGearEntries)    for (int i = 0; i < m_aGearEntries.Count(); i++)    allLootEntries.Insert(m_aGearEntries[i]);
+		if (m_aBagEntries)     for (int i = 0; i < m_aBagEntries.Count(); i++)     allLootEntries.Insert(m_aBagEntries[i]);
+		if (m_aKitEntries)     for (int i = 0; i < m_aKitEntries.Count(); i++)     allLootEntries.Insert(m_aKitEntries[i]);
+		if (m_aMiscEntries)    for (int i = 0; i < m_aMiscEntries.Count(); i++)    allLootEntries.Insert(m_aMiscEntries[i]);
 		
 		// Skip spawning if no loot entries are configured (safety check)
 		if (allLootEntries.Count() == 0)
@@ -295,7 +284,7 @@ class CRF_LooterGamemodeComponent : SCR_BaseGameModeComponent
 		}
 	}
 
-	// -----------------------------------
+	// Weighted random selection helper
 	protected int WeightedRandomIndex(array<float> weights, float totalWeight)
 	{
 		float roll = Math.RandomFloat01() * totalWeight;
@@ -309,7 +298,7 @@ class CRF_LooterGamemodeComponent : SCR_BaseGameModeComponent
 		return -1;
 	}
 
-	// ------------------ Debug / calculation logging related from here on
+	// DEBUG OUTPUT - Print drop chances for all loot entries
 	protected void PrintDropChances(array<ref CRF_BaseLootEntry> allLootEntries)
 	{
 		float totalWeight = 0;

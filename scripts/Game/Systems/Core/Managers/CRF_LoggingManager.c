@@ -95,6 +95,8 @@ class CRF_LoggingManager: SCR_BaseGameModeComponent
 	{
 		super.OnPostInit(owner);
 		
+		Attendance();
+		
 		// Only run on server in play mode
 		if (RplSession.Mode() != RplMode.Dedicated && RplSession.Mode() != RplMode.Listen)
 			return;
@@ -285,15 +287,12 @@ class CRF_LoggingManager: SCR_BaseGameModeComponent
 			return;
 		
 		// Log players in attendance
-		array<string> playersInAttendance = {};
 		array<int> players = {};
 		GetGame().GetPlayerManager().GetPlayers(players);
 		foreach (int player : players)
 		{
-			playersInAttendance.Insert(GetGame().GetBackendApi().GetPlayerIdentityId(player)); // array of guids we parse server-side
+			m_LogFileHandle.WriteLine("attendance," + GetGame().GetBackendApi().GetPlayerIdentityId(player));
 		}
-		
-		m_LogFileHandle.WriteLine("attendance" + SEPARATOR + playersInAttendance);
 	}
 	
 	// Logs player death and kill data to file

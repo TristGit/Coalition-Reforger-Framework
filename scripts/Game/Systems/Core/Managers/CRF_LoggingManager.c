@@ -95,8 +95,6 @@ class CRF_LoggingManager: SCR_BaseGameModeComponent
 	{
 		super.OnPostInit(owner);
 		
-		Attendance();
-		
 		// Only run on server in play mode
 		if (RplSession.Mode() != RplMode.Dedicated && RplSession.Mode() != RplMode.Listen)
 			return;

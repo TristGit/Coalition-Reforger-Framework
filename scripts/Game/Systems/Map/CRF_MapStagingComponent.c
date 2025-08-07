@@ -2,27 +2,24 @@
  * File Name:        CRF_MapStagingComponent
  * Author:           Trist
  * Date Created:     08/03/25
- * Description:      CRF Boundary staging system with refactored, centralized execution methods
- * Comments:        Dont be mad at me I am learning, sars.
+ * Description:      CRF Boundry staging system with options for timed stages and manual firing via outside script
+ * Comments:        -  Trist: Please feel free edit, use, modify, expand, whatever the fuck you can think of im inexperienced as shit
  ***************************************************************************************/
 
 /*
- * EXTERNAL API REFERENCE - Simplified to two main methods for outside scripts:
+ * EXTERNAL API REFERENCE - Available functions for outside scripts:
  * 
  * CRF_MapStagingComponent staging = CRF_MapStagingComponent.Cast(GetGame().GetGameMode().FindComponent(CRF_MapStagingComponent));
  * 
- * // MAIN EXTERNAL METHODS (use these for all external calls):
- * staging.ExecuteStaging(int stageIndex, bool useTimer, bool chainToNext) - Universal staging execution method
- * staging.ExecuteStagingSequence(int startIndex) - Execute full sequence starting from specific stage
- * 
- * // UTILITY METHODS:
- * staging.BeginStaging()     - Start the full staging sequence from stage 0
- * staging.StopStaging()      - Emergency stop all staging activity and clear timers
+ * staging.TriggerStage(int stageIndex)           - Trigger a specific stage with timer (if enabled) or immediately (if disabled)
+ * staging.TriggerStageChainless(int stageIndex)  - Trigger a single stage immediately without chaining to next stages
+ * staging.BeginStaging()                         - Start the full staging sequence from stage 0
+ * staging.StopStaging()                          - Emergency stop all staging activity and clear timers
  * 
  * Note: All stage indices are 0-based (first stage = 0, second stage = 1, etc.)
 
- Feel free to modify this or the layout/display, to turn it into something else, etc. Intention for this was to just provide a mini api for people scared
- of code to do a little bit more with boundryzones or just make it a bit faster along with getting rid of using markers.
+	This shits heavily commented because I tried my best to code it then have copilot iterate on it
+	Then I tried to make it work with the CRFPolyzoneTrigger and it was a fucking nightmare <3
 
  */
 
@@ -86,8 +83,8 @@ class CRF_MapStagingComponent : SCR_BaseGameModeComponent
 	[Attribute("30", UIWidgets.EditBox, "Initial delay after safestart ends (seconds)", category: "Base Configuration")]
 	int m_iInitialDelay;
 	
-	[Attribute("true", UIWidgets.CheckBox, "Auto-start staging sequence after safestart ends + initial delay (if false, staging only triggers via manual scripting)", category: "Base Configuration")]
-	bool m_bEnableAutoStart;
+	[Attribute("true", UIWidgets.CheckBox, "Use automatic timer staging (if false, stages only trigger via scripting)", category: "Base Configuration")]
+	bool m_bUseAutomaticTimers;
 	
 	// Global audio settings for all stages
 	[Attribute("{E23715DAF7FE2E8A}Sounds/Items/Equipment/Radios/Samples/Items_Radio_Turn_On.wav", UIWidgets.ResourcePickerThumbnail, "Audio to play when any stage timer starts", "wav", category: "Base Configuration")]
@@ -111,7 +108,7 @@ class CRF_MapStagingComponent : SCR_BaseGameModeComponent
 	[Attribute("", UIWidgets.Auto, "List of boundary stages", category: "Stage Configuration")]
 	ref array<ref CRF_BoundaryStageData> m_aBoundaryStages;
 	
- 	[Attribute("STAGING DOCUMENTATION\n\n=== Stage Execution ===\nGet Line:\n\nCRF_MapStagingComponent staging = CRF_MapStagingComponent.Cast(GetGame().GetGameMode().FindComponent(CRF_MapStagingComponent));\n\nCall Types:\n\nstaging.ExecuteStaging(stageIndex, useTimer, chainToNext)\n• stageIndex: Stage to execute (your first non main-gameboundry in the list is index0)\n• useTimer: true = countdown timer, false = immediate\n• chainToNext: true = auto progress to next stages, false = single stage only\n\nstaging.ExecuteStagingSequence(startIndex)\n• Start full sequence from specified stage\n\n=== USAGE EXAMPLES ===\n\n// Execute stage immediately without timer, no chaining\nstaging.ExecuteStaging(2, false, false);\n\n// Execute stage with timer, chain to next stages\nstaging.ExecuteStaging(1, true, true);\n\n// Execute stage with timer but no chaining\nstaging.ExecuteStaging(0, true, false);\n\n// Start full sequence from stage 3\nstaging.ExecuteStagingSequence(2);\n\n=== SETUP ===\n\n- Place & rename Gameboundry prefabs\n- Position them where you want the final boundary areas\n- Be sure to edit faction keys within the boundrys' CRF_Polyzonetriggers based on what factions youre excluding and on your activation type\n- Enable debug if problems arise\n- Only for Non-Reversed gameboundries/crf_polyzones\n\n=== STAGE TYPES ===\nACTIVATION/DEACTIVATION: Boundary either is removed or placed at the END of the timer/manual trigger\nDELETION: Boundary exists at normal position, gets deleted when timer completes", UIWidgets.EditBoxMultiline, "Staging Setup Instructions & API Examples", category: "Documentation")]
+ 	[Attribute("STAGING DOCUMENTATION\n\n- Place & rename Gameboundry prefabs (be sure to name them, can even be the same name.)\n- Position them where you want the final boundary areas\n- Enable debug if problems arise\n\n=== STAGE TYPES ===\nACTIVATION/DEACTIVATION: Boundary either is removed or placed at the END of the timer/manual trigger. For now only usable with the NON-reversed CRFPolyzoneTrigger as it will just render across the whole map elsewise.\nDELETION: Boundary exists at normal position, gets deleted when timer completes/is called\n\n\n=== Details ===\n- Automatic Timer Enabled: Stages execute in sequence after safestart ends. If Disabling automatic timers, control via external scripts\n- Initial Delay: Starts on safestart end, starts first stage when done\n\n\n\n=== EXTERNAL SCRIPT INTEGRATION ===\n\nreminder: Index #'s start at 0\n// Get staging system reference\nCRF_MapStagingComponent staging = CRF_MapStagingComponent.Cast(GetGame().GetGameMode().FindComponent(CRF_MapStagingComponent));\n\n// Trigger specific stage with timer (will go on to next)\nstaging.TriggerStage(**STAGE INDEX #**);\n\n// Trigger stage immediately without chaining to next stage\nstaging.TriggerStageChainless(**STAGE INDEX #**);\n\n// Start full staging sequence\nstaging.BeginStaging();\n\n// Emergency stop all staging\nstaging.StopStaging();\n\n\n=== USE CASES ===\n• Timed based zone activations/deletions\n• Objective-based area unlocking\n• Call/Trigger based activations\n• Mission phase area restrictions\n• Adding regroup period to staged gamemodes", UIWidgets.EditBoxMultiline, "Setup Instructions & Script Examples", category: "Documentation")]
 	string m_sInstructions;
 	
 	// Public state for display
@@ -124,7 +121,7 @@ class CRF_MapStagingComponent : SCR_BaseGameModeComponent
 	[RplProp()]
 	string m_sTimerText = ""; // Dedicated property for timer display
 	
-	[RplProp()]
+	[RplProp(onRplName: "PlaySound", condition: RplCondition.NoOwner)]
 	string m_sSoundToPlay = "";
 	
 	[RplProp()]
@@ -139,7 +136,6 @@ class CRF_MapStagingComponent : SCR_BaseGameModeComponent
 	
 	[RplProp()]
 	protected bool m_bStagingActive = false;
-	protected bool m_bChainToNext = true; // Track chaining mode for current execution
 	protected ref map<string, vector> m_mOriginalPositions;
 	protected ref map<string, CRF_BoundaryStageState> m_mStageStates; // Track state of each boundary
 	protected string m_sStoredMessageContent;
@@ -237,29 +233,20 @@ class CRF_MapStagingComponent : SCR_BaseGameModeComponent
 			// Cache stage data for performance optimization
 			m_mStageDataCache.Set(stageData.m_sBoundaryEntityName, stageData);
 			
-			// Position boundaries for ACTIVATION/DEACTIVATION types (move them away from their final position initially)
 			if (stageData.m_eStageType == CRF_BoundaryStageType.ACTIVATION)
 			{
-				// ACTIVATION boundaries start moved away and get moved back to original position when activated
 				vector newPos = Vector(originalPos[0] + 10000, originalPos[1] + 1000, originalPos[2] + 10000);
 				boundaryEntity.SetOrigin(newPos);
-				if (m_bDebugEnabled) Print(string.Format("[CRF_MapStagingComponent] ACTIVATION boundary '%1' moved away initially", stageData.m_sBoundaryEntityName));
+				if (m_bDebugEnabled) Print(string.Format("[CRF_MapStagingComponent] ACTIVATION boundary '%1' moved away and higher", stageData.m_sBoundaryEntityName));
 			}
 			else if (stageData.m_eStageType == CRF_BoundaryStageType.DEACTIVATION)
 			{
-				// DEACTIVATION boundaries start at their normal position and get moved away when deactivated
-				if (m_bDebugEnabled) Print(string.Format("[CRF_MapStagingComponent] DEACTIVATION boundary '%1' starts at normal position", stageData.m_sBoundaryEntityName));
+				// DEACTIVATION boundaries start at their original position
+				if (m_bDebugEnabled) Print(string.Format("[CRF_MapStagingComponent] DEACTIVATION boundary '%1' ready at original position", stageData.m_sBoundaryEntityName));
 			}
-			
-			// Debug logging for boundary initialization
-			if (m_bDebugEnabled)
+			else if (m_bDebugEnabled)
 			{
-				if (stageData.m_eStageType == CRF_BoundaryStageType.ACTIVATION)
-					Print(string.Format("[CRF_MapStagingComponent] ACTIVATION boundary '%1' ready (moved away initially)", stageData.m_sBoundaryEntityName));
-				else if (stageData.m_eStageType == CRF_BoundaryStageType.DEACTIVATION)
-					Print(string.Format("[CRF_MapStagingComponent] DEACTIVATION boundary '%1' ready (at normal position)", stageData.m_sBoundaryEntityName));
-				else
-					Print(string.Format("[CRF_MapStagingComponent] DELETION boundary '%1' ready for removal", stageData.m_sBoundaryEntityName));
+				Print(string.Format("[CRF_MapStagingComponent] DELETION boundary '%1' ready for removal", stageData.m_sBoundaryEntityName));
 			}
 		}
 		
@@ -332,10 +319,10 @@ class CRF_MapStagingComponent : SCR_BaseGameModeComponent
 		if (RplSession.Mode() == RplMode.Client)
 			return;
 			
-		// No auto staging if auto start is disabled
-		if (!m_bEnableAutoStart)
+		// No auto staging if auto timer is disabled
+		if (!m_bUseAutomaticTimers)
 		{
-			if (m_bDebugEnabled) Print("[CRF_MapStagingComponent] Auto-start disabled - waiting for manual script trigger");
+			if (m_bDebugEnabled) Print("[CRF_MapStagingComponent] Automatic timer staging disabled - waiting for manual script trigger");
 			GetGame().GetCallqueue().Remove(MonitorSafestart);
 			return;
 		}
@@ -353,7 +340,6 @@ class CRF_MapStagingComponent : SCR_BaseGameModeComponent
 		if (m_bDebugEnabled) Print(string.Format("[CRF_MapStagingComponent] Game is live, starting staging in %1 seconds", m_iInitialDelay));
 		GetGame().GetCallqueue().CallLater(StartStaging, m_iInitialDelay * 1000, false);
 		m_bStagingActive = true;
-		m_bChainToNext = true; // Auto staging always chains
 		Replication.BumpMe(); // Replicate staging activation
 	}
 	
@@ -364,16 +350,9 @@ class CRF_MapStagingComponent : SCR_BaseGameModeComponent
 		if (RplSession.Mode() == RplMode.Client)
 			return;
 			
-		if (!m_aBoundaryStages || m_iCurrentStage >= m_aBoundaryStages.Count())
+		if (!m_bStagingActive || !m_aBoundaryStages || m_iCurrentStage >= m_aBoundaryStages.Count())
 		{
 			if (m_bDebugEnabled) Print("[CRF_MapStagingComponent] StartStaging blocked - no valid stage");
-			return;
-		}
-		
-		// For manual calls, m_bStagingActive might not be set yet, so check if we have a valid current stage - Mid stage firing of StartStaging protection
-		if (!m_bStagingActive && m_iCurrentStage == 0)
-		{
-			if (m_bDebugEnabled) Print("[CRF_MapStagingComponent] StartStaging blocked - staging not active and at stage 0");
 			return;
 		}
 		
@@ -384,36 +363,28 @@ class CRF_MapStagingComponent : SCR_BaseGameModeComponent
 			return;
 		}
 		
-		// Clear any existing timer before starting new one
-		if (countDownActive)
-		{
-			GetGame().GetCallqueue().Remove(UpdateStageTimer);
-			countDownActive = false;
-			if (m_bDebugEnabled) Print("[CRF_MapStagingComponent] Cleared existing timer in StartStaging");
-		}
-		
 		m_iCurrentTimer = currentStage.m_iStageDuration;
 		countDownActive = true;
 		m_sStageText = currentStage.m_sStageDisplayText; // Set stage text for HUD display
 		
-		// Update boundary visual state to ACTIVE (timer running) - both RPC and local for Workbench compatibility
-		Rpc(UpdateBoundaryVisualState, currentStage.m_sBoundaryEntityName, CRF_BoundaryStageState.ACTIVE);
-		UpdateBoundaryVisualStateLocal(currentStage.m_sBoundaryEntityName, CRF_BoundaryStageState.ACTIVE);
+		// Update boundary visual state to ACTIVE (timer running)
+		UpdateBoundaryVisualState(currentStage.m_sBoundaryEntityName, CRF_BoundaryStageState.ACTIVE);
 		
-		// Play stage start sound using centralized system
-		PlayStageSound("start");
+		// Play stage start sound if configured
+		if (!m_sStageStartSound.IsEmpty())
+		{
+			m_sSoundToPlay = m_sStageStartSound;
+			Replication.BumpMe();
+		}
 		
 		if (m_bDebugEnabled) Print(string.Format("[CRF_MapStagingComponent] Starting stage %1: '%2' (%3s)", 
 			m_iCurrentStage + 1, m_sStageText, m_iCurrentTimer));
 		
 		Replication.BumpMe();
-		GetGame().GetCallqueue().CallLater(UpdateStageTimer, 1000, true); // Simplified timer call
+		GetGame().GetCallqueue().CallLater(UpdateStageTimer, 1000, true);
 	}
 	
 	//------------------------------------------------------------------------------------------------
-	/**
-	 * Simplified timer update method - handles countdown only
-	 */
 	void UpdateStageTimer()
 	{
 		// Server-only operation for multiplayer safety
@@ -425,36 +396,28 @@ class CRF_MapStagingComponent : SCR_BaseGameModeComponent
 			GetGame().GetCallqueue().Remove(UpdateStageTimer);
 			return;
 		}
-
+		
 		m_sTimerText = SCR_FormatHelper.FormatTime(m_iCurrentTimer);
 		Replication.BumpMe();
-
+		
 		if (m_bDebugEnabled && (m_iCurrentTimer % 10 == 0 || m_iCurrentTimer <= 10))
-		{
 			Print(string.Format("[CRF_MapStagingComponent] Stage %1 timer: %2s remaining", m_iCurrentStage + 1, m_iCurrentTimer));
-		}
-
+		
 		if (m_iCurrentTimer <= 0)
 		{
 			GetGame().GetCallqueue().Remove(UpdateStageTimer);
 			countDownActive = false;
 			m_sTimerText = ""; // Clear timer text when stage completes
 			Replication.BumpMe();
-			
-			// Timer completed - let ExecuteStage handle the progression logic
-			ExecuteStage(m_bChainToNext); // Use stored chaining mode
+			ExecuteStage();
 			return;
 		}
-
+		
 		m_iCurrentTimer--;
 	}
 	
 	//------------------------------------------------------------------------------------------------
-	/**
-	 * Enhanced stage execution method - handles all stage progression logic
-	 * @param isChainedExecution - Whether this should chain to next stages (true for sequences, false for single stages)
-	 */
-	void ExecuteStage(bool isChainedExecution = true)
+	void ExecuteStage()
 	{
 		// Server-only operation for mp
 		if (RplSession.Mode() == RplMode.Client)
@@ -467,56 +430,96 @@ class CRF_MapStagingComponent : SCR_BaseGameModeComponent
 		if (!currentStage)
 			return;
 		
-		// Execute boundary action using centralized method
-		ExecuteBoundaryAction(currentStage, m_iCurrentStage, isChainedExecution);
+		IEntity boundaryEntity = GetCachedBoundaryEntity(currentStage.m_sBoundaryEntityName);
+		string stageTypeString;
 		
-		// Handle progression based on chaining mode
-		if (isChainedExecution)
+		if (boundaryEntity)
 		{
-			// Chained execution - move to next stage or finish sequence
-			m_iCurrentStage++;
-			Replication.BumpMe(); // Replicate stage progression
-			
-			if (m_aBoundaryStages && m_iCurrentStage < m_aBoundaryStages.Count())
+			if (currentStage.m_eStageType == CRF_BoundaryStageType.ACTIVATION)
 			{
-				if (m_bDebugEnabled) Print(string.Format("[CRF_MapStagingComponent] Moving to stage %1 in 2s", m_iCurrentStage + 1));
-				GetGame().GetCallqueue().CallLater(StartStaging, 2000, false);
+				vector originalPos;
+				if (m_mOriginalPositions.Find(currentStage.m_sBoundaryEntityName, originalPos))
+				{
+					boundaryEntity.SetOrigin(originalPos);
+					stageTypeString = "ACTIVATED";
+					if (m_bDebugEnabled) Print(string.Format("[CRF_MapStagingComponent] ACTIVATION boundary '%1' activated", currentStage.m_sBoundaryEntityName));
+				}
+			}
+			else if (currentStage.m_eStageType == CRF_BoundaryStageType.DEACTIVATION)
+			{
+				vector originalPos;
+				if (m_mOriginalPositions.Find(currentStage.m_sBoundaryEntityName, originalPos))
+				{
+					vector newPos = Vector(originalPos[0] + 10000, originalPos[1] + 1000, originalPos[2] + 10000);
+					boundaryEntity.SetOrigin(newPos);
+					stageTypeString = "DEACTIVATED";
+					if (m_bDebugEnabled) Print(string.Format("[CRF_MapStagingComponent] DEACTIVATION boundary '%1' moved away and deactivated", currentStage.m_sBoundaryEntityName));
+				}
 			}
 			else
 			{
-				if (m_bDebugEnabled) Print("[CRF_MapStagingComponent] All stages completed! Finalizing in 3 seconds...");
-				
-				// Delay finalization to allow final stage end sound to play
-				GetGame().GetCallqueue().CallLater(FinalizeStagingSystem, 3000, false);
+				SCR_EntityHelper.DeleteEntityAndChildren(boundaryEntity);
+				stageTypeString = "DELETED";
+				if (m_bDebugEnabled) Print(string.Format("[CRF_MapStagingComponent] DELETION boundary '%1' removed", currentStage.m_sBoundaryEntityName));
 			}
+			
+			// Update boundary visual state to ACTIVATED 
+			UpdateBoundaryVisualState(currentStage.m_sBoundaryEntityName, CRF_BoundaryStageState.ACTIVATED);
+			
+			// Play stage end sound if configured
+			if (!m_sStageEndSound.IsEmpty())
+			{
+				m_sSoundToPlay = m_sStageEndSound;
+				Replication.BumpMe();
+			}
+		}
+		
+		// Show completion popup with custom message
+		string completionMessage;
+		if (!currentStage.m_sStageCompletionMainMessage.IsEmpty())
+		{
+			// Use custom stage completion message with full format support
+			string subMessage;
+			if (currentStage.m_sStageCompletionSubMessage.IsEmpty())
+				subMessage = string.Format("Play area %1", stageTypeString);
+			else
+				subMessage = currentStage.m_sStageCompletionSubMessage;
+				
+			completionMessage = string.Format("%1|%2|%3", 
+				currentStage.m_sStageCompletionMainMessage, 
+				currentStage.m_iStageCompletionDuration, 
+				subMessage);
 		}
 		else
 		{
-			// Single stage execution - clear staging state and stop
-			m_sStageText = ""; // Clear stage text for non-chained execution
-			m_bStagingActive = false; // Clear staging active state since we're not chaining
-			Replication.BumpMe();
-			
-			if (m_bDebugEnabled) Print(string.Format("[CRF_MapStagingComponent] Single stage %1 execution completed", m_iCurrentStage + 1));
+			// Use default format
+			completionMessage = string.Format("Stage %1 Complete|10|Play area %2", m_iCurrentStage + 1, stageTypeString);
 		}
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	/**
-	 * Finalize staging system after delay (allows final sound to play)
-	 */
-	void FinalizeStagingSystem()
-	{
-		if (m_bDebugEnabled) Print("[CRF_MapStagingComponent] Finalizing staging system");
 		
-		m_bStagingActive = false;
-		m_sStageText = ""; // Clear stage text when finished
-		m_sTimerText = ""; // Clear timer text when finished
-		
-		// Use customizable final completion message
-		m_sMessageContent = string.Format("%1|%2|%3", m_sFinalCompletionMainMessage, m_iFinalCompletionMessageDuration, m_sFinalCompletionSubMessage);
+		m_sMessageContent = completionMessage;
 		Replication.BumpMe();
 		ShowMessage();
+		
+		// Move to next stage or finish
+		m_iCurrentStage++;
+		Replication.BumpMe(); // Replicate stage progression
+		if (m_aBoundaryStages && m_iCurrentStage < m_aBoundaryStages.Count())
+		{
+			if (m_bDebugEnabled) Print(string.Format("[CRF_MapStagingComponent] Moving to stage %1 in 2s", m_iCurrentStage + 1));
+			GetGame().GetCallqueue().CallLater(StartStaging, 2000, false);
+		}
+		else
+		{
+			if (m_bDebugEnabled) Print("[CRF_MapStagingComponent] All stages completed!");
+			m_bStagingActive = false;
+			m_sStageText = ""; // Clear stage text when finished
+			m_sTimerText = ""; // Clear timer text when finished
+			
+			// Use customizable final completion message
+			m_sMessageContent = string.Format("%1|%2|%3", m_sFinalCompletionMainMessage, m_iFinalCompletionMessageDuration, m_sFinalCompletionSubMessage);
+			Replication.BumpMe();
+			ShowMessage();
+		}
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -542,65 +545,48 @@ class CRF_MapStagingComponent : SCR_BaseGameModeComponent
 		m_PopUpNotification.PopupMsg(mainMessage, time.ToFloat(), subMessage);
 	}
 	
-	//-----------------------------------------------------------------------------------------------
+	//------------------------------------------------------------------------------------------------
 	/**
-	 * Simple sound system - handles all staging sound effects
-	 * @param soundType - "start" or "end" to determine which sound to play
+	 * Play sound on all clients - called automatically when m_sSoundToPlay changes
 	 */
-	[RplRpc(RplChannel.Reliable, RplRcver.Broadcast)]
-	void PlayStageSound(string soundType)
+	void PlaySound()
 	{
-		ResourceName soundToPlay;
-		
-		if (soundType == "start" && !m_sStageStartSound.IsEmpty())
-			soundToPlay = m_sStageStartSound;
-		else if (soundType == "end" && !m_sStageEndSound.IsEmpty())
-			soundToPlay = m_sStageEndSound;
-		
-		if (soundToPlay.IsEmpty())
-		{
-			if (m_bDebugEnabled) Print(string.Format("[CRF_MapStagingComponent] PlayStageSound: No sound configured for type '%1'", soundType));
+		if (m_sSoundToPlay.IsEmpty())
 			return;
-		}
 		
-		// Server: Send to all clients via RPC
-		if (RplSession.Mode() != RplMode.Client)
-		{
-			Rpc(PlayStageSound, soundType);
-			if (m_bDebugEnabled) Print(string.Format("[CRF_MapStagingComponent] Playing %1 sound: %2", soundType, soundToPlay));
-		}
-	
-		// Both server and clients: Play locally
-		m_sSoundToPlay = soundToPlay;
-		Replication.BumpMe();
-		AudioSystem.PlaySound(soundToPlay);
+		if (m_bDebugEnabled) Print(string.Format("[CRF_MapStagingComponent] Playing sound: %1", m_sSoundToPlay));
+		
+		// Play the sound locally
+		AudioSystem.PlaySound(m_sSoundToPlay);
 	}
 	
 	//------------------------------------------------------------------------------------------------
 	/**
-	 * RPC method to update boundary colors on all clients (including server)
+	 * Update the visual state (colors) of a boundary based on its current stage state
 	 * @param boundaryName - Name of the boundary entity to update
 	 * @param newState - The new visual state to apply
 	 */
-	[RplRpc(RplChannel.Reliable, RplRcver.Broadcast)]
 	void UpdateBoundaryVisualState(string boundaryName, CRF_BoundaryStageState newState)
 	{
-		// Call the local implementation
-		UpdateBoundaryVisualStateLocal(boundaryName, newState);
+		// Call both local and RPC version - I THINK THIS IS OKAY?
+		RPC_UpdateBoundaryVisualState(boundaryName, newState);
+		Rpc(RPC_UpdateBoundaryVisualState, boundaryName, newState);
 	}
-
-	//------------------------------------------------------------------------------------------------
+	
 	/**
-	 * Local implementation of boundary visual state updates (works in both dedicated server and Workbench)
+	 * RPC method to update boundary colors on all clients
 	 * @param boundaryName - Name of the boundary entity to update
 	 * @param newState - The new visual state to apply
 	 */
-	void UpdateBoundaryVisualStateLocal(string boundaryName, CRF_BoundaryStageState newState)
+	[RplRpc(RplChannel.Reliable, RplRcver.Broadcast)]
+	void RPC_UpdateBoundaryVisualState(string boundaryName, CRF_BoundaryStageState newState)
 	{
+		// This runs on ALL clients to update their polygon widgets - I THINK THIS IS OKAY?
+		
 		// Safety checks
 		if (!boundaryName || boundaryName.IsEmpty())
 		{
-			if (m_bDebugEnabled) Print("[CRF_MapStagingComponent] UpdateBoundaryVisualStateLocal: Invalid boundary name");
+			if (m_bDebugEnabled) Print("[CRF_MapStagingComponent] RPC_UpdateBoundaryVisualState: Invalid boundary name");
 			return;
 		}
 		
@@ -608,7 +594,7 @@ class CRF_MapStagingComponent : SCR_BaseGameModeComponent
 		IEntity boundaryEntity = GetCachedBoundaryEntity(boundaryName);
 		if (!boundaryEntity)
 		{
-			if (m_bDebugEnabled) Print(string.Format("[CRF_MapStagingComponent] UpdateBoundaryVisualStateLocal: Boundary '%1' not found", boundaryName));
+			if (m_bDebugEnabled) Print(string.Format("[CRF_MapStagingComponent] UpdateBoundaryVisualState: Boundary '%1' not found", boundaryName));
 			return;
 		}
 		
@@ -634,7 +620,7 @@ class CRF_MapStagingComponent : SCR_BaseGameModeComponent
 		
 		if (!stageData)
 		{
-			if (m_bDebugEnabled) Print(string.Format("[CRF_MapStagingComponent] UpdateBoundaryVisualStateLocal: Stage data not found for boundary '%1'", boundaryName));
+			if (m_bDebugEnabled) Print(string.Format("[CRF_MapStagingComponent] UpdateBoundaryVisualState: Stage data not found for boundary '%1'", boundaryName));
 			return;
 		}
 		
@@ -642,7 +628,7 @@ class CRF_MapStagingComponent : SCR_BaseGameModeComponent
 		CRF_PolyZone polyZone = CRF_PolyZone.Cast(boundaryEntity.FindComponent(CRF_PolyZone));
 		if (!polyZone)
 		{
-			if (m_bDebugEnabled) Print(string.Format("[CRF_MapStagingComponent] UpdateBoundaryVisualStateLocal: CRF_PolyZone component not found on '%1'", boundaryName));
+			if (m_bDebugEnabled) Print(string.Format("[CRF_MapStagingComponent] UpdateBoundaryVisualState: CRF_PolyZone component not found on '%1'", boundaryName));
 			return;
 		}
 		
@@ -698,6 +684,8 @@ class CRF_MapStagingComponent : SCR_BaseGameModeComponent
 			Print(string.Format("[CRF_MapStagingComponent] Colors applied to '%1' - widget will update when map is opened", boundaryName));
 		}
 		
+		
+		
 		// Update the stored state - only server
 		if (Replication.IsServer())
 		{
@@ -744,20 +732,20 @@ class CRF_MapStagingComponent : SCR_BaseGameModeComponent
 			if (!boundaryName || boundaryName.IsEmpty())
 				continue;
 			
-			// Update the visual state without sending RPC (we're receiving one) - use local method
-			UpdateBoundaryVisualStateLocal(boundaryName, state);
+			// Update the visual state without sending RPC (we're receiving one)
+			RPC_UpdateBoundaryVisualState(boundaryName, state);
 		}
 	}
 	
 	//-------------------------------------------------------------------------------------------------
 	/**
-	 * Centralized boundary action execution with integrated sound and completion handling
+	 * Helper method to execute a single stage's boundary action and play completion sound
 	 * @param stageData - The stage data to execute
 	 * @param stageIndex - Index of the stage (for completion message)
-	 * @param isChainedExecution - Whether this is part of a sequence (affects completion message and progression)
+	 * @param isChainedExecution - Whether this is part of a sequence (affects completion message)
 	 * @return string - The stage type string for completion message
 	 */
-	string ExecuteBoundaryAction(CRF_BoundaryStageData stageData, int stageIndex, bool isChainedExecution = false)
+	string ExecuteStageBoundaryAction(CRF_BoundaryStageData stageData, int stageIndex, bool isChainedExecution = false)
 	{
 		if (!stageData)
 			return "";
@@ -765,12 +753,12 @@ class CRF_MapStagingComponent : SCR_BaseGameModeComponent
 		IEntity boundaryEntity = GetCachedBoundaryEntity(stageData.m_sBoundaryEntityName);
 		if (!boundaryEntity)
 		{
-			if (m_bDebugEnabled) Print(string.Format("[CRF_MapStagingComponent] ExecuteBoundaryAction failed - boundary entity '%1' not found", stageData.m_sBoundaryEntityName));
+			if (m_bDebugEnabled) Print(string.Format("[CRF_MapStagingComponent] ExecuteStageBoundaryAction failed - boundary entity '%1' not found", stageData.m_sBoundaryEntityName));
 			return "";
 		}
-
+		
 		string stageTypeString;
-
+		
 		// Execute the boundary action
 		if (stageData.m_eStageType == CRF_BoundaryStageType.ACTIVATION)
 		{
@@ -814,19 +802,21 @@ class CRF_MapStagingComponent : SCR_BaseGameModeComponent
 				logPrefix = "Single execution: ";
 			if (m_bDebugEnabled) Print(string.Format("[CRF_MapStagingComponent] %1DELETION boundary '%2' removed", logPrefix, stageData.m_sBoundaryEntityName));
 		}
-
-		// Update boundary visual state to ACTIVATED - both RPC and local for Workbench compatibility
-		Rpc(UpdateBoundaryVisualState, stageData.m_sBoundaryEntityName, CRF_BoundaryStageState.ACTIVATED);
-		UpdateBoundaryVisualStateLocal(stageData.m_sBoundaryEntityName, CRF_BoundaryStageState.ACTIVATED);
-
-		// Play stage end sound using centralized system
-		PlayStageSound("end");
-
-		// Show completion popup with custom message
+		
+		// Update boundary visual state to ACTIVATED
+		UpdateBoundaryVisualState(stageData.m_sBoundaryEntityName, CRF_BoundaryStageState.ACTIVATED);
+		
+		// Play stage end sound if configured
+		if (!m_sStageEndSound.IsEmpty())
+		{
+			m_sSoundToPlay = m_sStageEndSound;
+			Replication.BumpMe();
+		}
+		
+		// Show completion popup
 		string completionMessage;
 		if (!stageData.m_sStageCompletionMainMessage.IsEmpty())
 		{
-			// Use custom stage completion message with full format support
 			string subMessage;
 			if (stageData.m_sStageCompletionSubMessage.IsEmpty())
 				subMessage = string.Format("Play area %1", stageTypeString);
@@ -840,14 +830,26 @@ class CRF_MapStagingComponent : SCR_BaseGameModeComponent
 		}
 		else
 		{
-			// Use default format
-			completionMessage = string.Format("Stage %1 Complete|10|Play area %2", stageIndex + 1, stageTypeString);
+			string defaultMessage;
+			if (isChainedExecution)
+				defaultMessage = "Stage %1 Complete";
+			else
+				defaultMessage = "Stage %1 Executed";
+			int messageDuration;
+			if (isChainedExecution)
+				messageDuration = 10;
+			else
+				messageDuration = 8;
+			completionMessage = string.Format("%1|%2|Play area %3", 
+				string.Format(defaultMessage, stageIndex + 1), 
+				messageDuration, 
+				stageTypeString);
 		}
-
+		
 		m_sMessageContent = completionMessage;
 		Replication.BumpMe();
 		ShowMessage();
-
+		
 		return stageTypeString;
 	}
 
@@ -856,138 +858,91 @@ class CRF_MapStagingComponent : SCR_BaseGameModeComponent
 	// These methods allow other scripts to manually control the staging system
 	//-------------------------------------------------------------------------------------------------
 	
-	//-------------------------------------------------------------------------------------------------
-	// REFACTORED EXTERNAL API - Two main methods for all external staging control
-	//-------------------------------------------------------------------------------------------------
-	
 	/**
-	 * Universal staging execution method - replaces all previous trigger methods
+	 * Trigger a specific stage by index
 	 * 
-	 * @param stageIndex - Index of the stage to execute (0-based)
-	 * @param useTimer - Whether to use a countdown timer before execution
-	 * @param chainToNext - Whether to automatically chain to next stages after completion
+	 * Starts the timer for the specified stage (if automatic timers enabled), 
+	 * then executes the boundary action when timer completes.
+	 * 
+	 * @param stageIndex - Index of the stage to trigger (0-based)
 	 * @return bool - true if stage was triggered successfully
 	 * 
 	 * USAGE EXAMPLES:
 	 * 
-	 * // Execute stage immediately without timer, no chaining (old TriggerStageChainless)
-	 * staging.ExecuteStaging(2, false, false);
-	 * 
-	 * // Execute stage with timer, chain to next stages (old TriggerStage)
-	 * staging.ExecuteStaging(1, true, true);
-	 * 
-	 * // Execute stage with timer but no chaining (old TriggerStageTimedNoChain)
-	 * staging.ExecuteStaging(0, true, false);
+	 * // Trigger stage 1 (index 0) - starts timer then executes
+		CRF_MapStagingComponent staging = CRF_MapStagingComponent.Cast(GetGame().GetGameMode().FindComponent(CRF_MapStagingComponent));
+		staging.TriggerStage(0);
+	 *
+	 * // Perfect for objective-based triggers, entity destructors, or event-driven staging
+	 * // If automatic timers disabled: only executes via this manual trigger
 	 */
-	bool ExecuteStaging(int stageIndex, bool useTimer = true, bool chainToNext = true)
+	bool TriggerStage(int stageIndex)
 	{
 		// Server-only operation for multiplayer safety
 		if (RplSession.Mode() == RplMode.Client)
 		{
-			if (m_bDebugEnabled) Print("[CRF_MapStagingComponent] ExecuteStaging called on client - ignoring");
+			if (m_bDebugEnabled) Print("[CRF_MapStagingComponent] ManuallyTriggerStage called on client - ignoring");
 			return false;
 		}
 		
 		if (!m_aBoundaryStages || stageIndex < 0 || stageIndex >= m_aBoundaryStages.Count())
 		{
-			if (m_bDebugEnabled) Print(string.Format("[CRF_MapStagingComponent] ExecuteStaging failed - invalid stage index %1", stageIndex));
+			if (m_bDebugEnabled) Print(string.Format("[CRF_MapStagingComponent] ManuallyTriggerStage failed - invalid stage index %1", stageIndex));
 			return false;
 		}
 		
 		CRF_BoundaryStageData stageData = m_aBoundaryStages[stageIndex];
 		if (!stageData)
 		{
-			if (m_bDebugEnabled) Print(string.Format("[CRF_MapStagingComponent] ExecuteStaging failed - stage data is null at index %1", stageIndex));
+			if (m_bDebugEnabled) Print(string.Format("[CRF_MapStagingComponent] ManuallyTriggerStage failed - stage data is null at index %1", stageIndex));
 			return false;
 		}
 		
-		// Set current stage and manage staging state
+		// Set current stage and activate staging
 		m_iCurrentStage = stageIndex;
-		m_bChainToNext = chainToNext; // Store chaining mode
-		m_bStagingActive = true; // Always set active during execution (even for single stages)
+		m_bStagingActive = true;
+		Replication.BumpMe(); // Replicate manual stage trigger
 		
-		if (useTimer) // Always honor useTimer parameter for manual execution
+		// Play stage start sound if configured (for both timer and immediate execution)
+		if (!m_sStageStartSound.IsEmpty())
 		{
-			// Timer-based execution - ensure no existing timers are running first
-			if (countDownActive)
-			{
-				if (m_bDebugEnabled) Print("[CRF_MapStagingComponent] Stopping existing timer before starting new manual timer");
-				GetGame().GetCallqueue().Remove(UpdateStageTimer);
-				countDownActive = false;
-			}
+			m_sSoundToPlay = m_sStageStartSound;
+			Replication.BumpMe();
+		}
+		
+		// Check if automatic timers are enabled
+		if (m_bUseAutomaticTimers)
+		{
+			// Use timer - start countdown then execute
+			m_iCurrentTimer = stageData.m_iStageDuration;
+			countDownActive = true;
+			m_sStageText = stageData.m_sStageDisplayText;
 			
-			if (m_bDebugEnabled) 
-			{
-				string chainText;
-				if (chainToNext)
-					chainText = " (chaining)";
-				else
-					chainText = " (no chain)";
-				Print(string.Format("[CRF_MapStagingComponent] Manual timer execution for stage %1%2", stageIndex + 1, chainText));
-			}
+			// Update boundary visual state to ACTIVE (timer starting)
+			UpdateBoundaryVisualState(stageData.m_sBoundaryEntityName, CRF_BoundaryStageState.ACTIVE);
+			
+			if (m_bDebugEnabled) Print(string.Format("[CRF_MapStagingComponent] Manually starting stage %1: '%2' with %3s timer", 
+				stageIndex + 1, m_sStageText, m_iCurrentTimer));
 			
 			Replication.BumpMe();
-			StartStaging(); // Use existing StartStaging method for consistent timer behavior
+			GetGame().GetCallqueue().CallLater(UpdateStageTimer, 1000, true);
 		}
 		else
 		{
-			// Immediate execution
-			if (m_bDebugEnabled) Print(string.Format("[CRF_MapStagingComponent] Executing stage %1 immediately (no timer)", stageIndex + 1));
-			
-			// Play stage start sound for immediate execution
-			PlayStageSound("start");
+			// No timer - execute immediately but with proper sound timing
+			if (m_bDebugEnabled) Print(string.Format("[CRF_MapStagingComponent] Manually executing stage %1 immediately (no timer)", stageIndex + 1));
 			
 			// Set stage text for display (similar to timer path)
 			m_sStageText = stageData.m_sStageDisplayText;
 			
-			// Update boundary visual state to ACTIVE briefly, then execute - both RPC and local for Workbench compatibility
-			Rpc(UpdateBoundaryVisualState, stageData.m_sBoundaryEntityName, CRF_BoundaryStageState.ACTIVE);
-			UpdateBoundaryVisualStateLocal(stageData.m_sBoundaryEntityName, CRF_BoundaryStageState.ACTIVE);
+			// Update boundary visual state to ACTIVE briefly, then execute
+			UpdateBoundaryVisualState(stageData.m_sBoundaryEntityName, CRF_BoundaryStageState.ACTIVE);
 			Replication.BumpMe();
 			
-			// Delay execution by 1 second to allow start sound to play properly
-			GetGame().GetCallqueue().CallLater(ExecuteStage, 1000, false, m_bChainToNext);
+			// Delay ExecuteStage by 1 second to allow start sound to play properly
+			// This prevents replication race condition between start and end sounds
+			GetGame().GetCallqueue().CallLater(ExecuteStage, 1000, false);
 		}
-		
-		return true;
-	}
-	
-	/**
-	 * Execute a full staging sequence starting from a specific stage
-	 * 
-	 * @param startIndex - Index of the stage to start the sequence from (0-based)
-	 * @return bool - true if sequence was started successfully
-	 * 
-	 * USAGE EXAMPLES:
-	 * 
-	 * // Start full sequence from beginning
-	 * staging.ExecuteStagingSequence(0);
-	 * 
-	 * // Start sequence from stage 3
-	 * staging.ExecuteStagingSequence(2);
-	 */
-	bool ExecuteStagingSequence(int startIndex = 0)
-	{
-		// Server-only operation for multiplayer safety
-		if (RplSession.Mode() == RplMode.Client)
-		{
-			if (m_bDebugEnabled) Print("[CRF_MapStagingComponent] ExecuteStagingSequence called on client - ignoring");
-			return false;
-		}
-		
-		if (!m_aBoundaryStages || startIndex < 0 || startIndex >= m_aBoundaryStages.Count())
-		{
-			if (m_bDebugEnabled) Print(string.Format("[CRF_MapStagingComponent] ExecuteStagingSequence failed - invalid start index %1", startIndex));
-			return false;
-		}
-		
-		if (m_bDebugEnabled) Print(string.Format("[CRF_MapStagingComponent] Starting staging sequence from stage %1", startIndex + 1));
-		
-		m_iCurrentStage = startIndex;
-		m_bStagingActive = true;
-		m_bChainToNext = true; // Sequences always chain
-		Replication.BumpMe();
-		StartStaging();
 		
 		return true;
 	}
@@ -1013,9 +968,10 @@ class CRF_MapStagingComponent : SCR_BaseGameModeComponent
 		}
 		
 		if (m_bDebugEnabled) Print("[CRF_MapStagingComponent] Manually starting staging system");
-		
-		// Use the new unified method to start the sequence
-		ExecuteStagingSequence(0);
+		m_bStagingActive = true;
+		m_iCurrentStage = 0;
+		Replication.BumpMe(); // Replicate manual staging start
+		StartStaging();
 	}
 	
 	/**
@@ -1048,6 +1004,61 @@ class CRF_MapStagingComponent : SCR_BaseGameModeComponent
 		GetGame().GetCallqueue().Remove(MonitorSafestart);
 		GetGame().GetCallqueue().Remove(StartStaging); // Prevent pending StartStaging calls
 		GetGame().GetCallqueue().Remove(InitializeBoundaries); // Prevent pending initialization
-		GetGame().GetCallqueue().Remove(PlayStageSound); // Clear any pending sound calls
+	}
+	
+	/**
+	 * Trigger a single stage immediately without chaining to next stages
+	 * 
+	 * Executes only the specified stage without triggering subsequent stages.
+	 * Perfect for non-linear staging, objective-based triggers, or entity destructors.
+	 * 
+	 * @param stageIndex - Index of the stage to trigger (0-based)
+	 * @return bool - true if stage was triggered successfully
+	 * 
+	 * USAGE EXAMPLES:
+	 * 
+	 * // Trigger only stage 2 without chaining to other stages
+		CRF_MapStagingComponent staging = CRF_MapStagingComponent.Cast(GetGame().GetGameMode().FindComponent(CRF_MapStagingComponent));
+		staging.TriggerStageChainless(1);
+	 *
+	 * // Common use cases:
+	 * // - Capture point A unlocks specific area (trigger stage 3)
+	 * // - Destroy objective triggers boundary change
+	 * // - Non-sequential stage progression based on player actions
+	 */
+	bool TriggerStageChainless(int stageIndex)
+	{
+		// Server-only operation for multiplayer safety
+		if (RplSession.Mode() == RplMode.Client)
+		{
+			if (m_bDebugEnabled) Print("[CRF_MapStagingComponent] TriggerStageChainless called on client - ignoring");
+			return false;
+		}
+		
+		if (!m_aBoundaryStages || stageIndex < 0 || stageIndex >= m_aBoundaryStages.Count())
+		{
+			if (m_bDebugEnabled) Print(string.Format("[CRF_MapStagingComponent] TriggerStageChainless failed - invalid stage index %1", stageIndex));
+			return false;
+		}
+		
+		CRF_BoundaryStageData stageData = m_aBoundaryStages[stageIndex];
+		if (!stageData)
+		{
+			if (m_bDebugEnabled) Print(string.Format("[CRF_MapStagingComponent] TriggerStageChainless failed - stage data is null at index %1", stageIndex));
+			return false;
+		}
+		
+		IEntity boundaryEntity = GetCachedBoundaryEntity(stageData.m_sBoundaryEntityName);
+		if (!boundaryEntity)
+		{
+			if (m_bDebugEnabled) Print(string.Format("[CRF_MapStagingComponent] TriggerStageChainless failed - boundary entity '%1' not found", stageData.m_sBoundaryEntityName));
+			return false;
+		}
+		
+		// Execute using helper method (false = single execution, not chained)
+		ExecuteStageBoundaryAction(stageData, stageIndex, false);
+		
+		if (m_bDebugEnabled) Print(string.Format("[CRF_MapStagingComponent] Single stage %1 triggered successfully - no chaining", stageIndex + 1));
+		return true;
 	}
 }

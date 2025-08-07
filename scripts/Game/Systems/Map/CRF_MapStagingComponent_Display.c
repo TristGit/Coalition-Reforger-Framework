@@ -32,13 +32,13 @@ class CRF_MapStagingComponentDisplay : SCR_InfoDisplayExtended
 	// Optimization: track last timer value to avoid redundant calculations
 	protected int m_iLastTimeLeft = -1;
 	
-	// Sound flags to prevent multiple plays of milestone sounds
-	protected bool m_bTwentySecondSoundPlayed = false;
-	protected bool m_bTenSecondSoundPlayed = false;
-	
 	// Smooth oscillation variables (visual effects only - no scaling)
 	protected float m_fOscillationTime = 0;
 	protected float m_fLastOscillationSpeed = 2.5; // Track last speed for smooth transitions
+	
+	// Sound alert tracking
+	protected bool m_bTwentySecondSoundPlayed = false;
+	protected bool m_bTenSecondSoundPlayed = false;
 	
 	//------------------------------------------------------------------------------------------------
 	override protected void DisplayUpdate(IEntity owner, float timeSlice)

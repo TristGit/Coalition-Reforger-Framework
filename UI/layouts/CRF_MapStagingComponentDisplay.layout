@@ -1,7 +1,5 @@
 FrameWidgetClass {
  Name "rootFrame"
- "Is Visible" 0
- Opacity 0
  {
   ImageWidgetClass "{612734D48040FA26}" {
    Name "Background"
@@ -9,12 +7,12 @@ FrameWidgetClass {
     Anchor 0.5 0 0.5 0
     PositionX -64
     OffsetLeft -64
-    PositionY 25
-    OffsetTop 25
+    PositionY 16
+    OffsetTop 16
     SizeX 128
     OffsetRight -64
-    SizeY 30
-    OffsetBottom -55
+    SizeY 40
+    OffsetBottom -56
    }
    Opacity 0
    Color 0.0648 0.0637 0.0637 0.7812
@@ -27,19 +25,20 @@ FrameWidgetClass {
    Name "Timer"
    Slot FrameWidgetSlot "{612734D4E397B329}" {
     Anchor 0.5 0 0.5 0
-    PositionX -48
-    OffsetLeft -48
-    PositionY 24
-    OffsetTop 24
-    SizeX 96
-    OffsetRight -48
-    SizeY 31
-    OffsetBottom -55
+    PositionX -56
+    OffsetLeft -56
+    PositionY 16
+    OffsetTop 16
+    SizeX 112
+    OffsetRight -56
+    SizeY 40
+    OffsetBottom -56
    }
    Opacity 0
    Color 0.053 0.578 0.053 1
-   Text "00:00"
-   "Min Font Size" 22
+   Text ""
+   "Font Size" 32
+   "Min Font Size" 26
    "Horizontal Alignment" Center
    "Vertical Alignment" Center
    FontProperties FontProperties "{612734D416229D9E}" {
@@ -56,18 +55,18 @@ FrameWidgetClass {
     Anchor 0.5 0 0.5 0
     PositionX -72
     OffsetLeft -72
-    PositionY 56.8
-    OffsetTop 56.8
+    PositionY 56
+    OffsetTop 56
     SizeX 144
     OffsetRight -72
-    SizeY 25
-    OffsetBottom -81.8
+    SizeY 24
+    OffsetBottom -80
    }
    Opacity 0
    Color 1 1 1 1
-   Text "Test"
-   "Font Size" 14
-   "Min Font Size" 14
+   Text "00:00:00"
+   "Font Size" 16
+   "Min Font Size" 16
    "Horizontal Alignment" Center
    "Vertical Alignment" Center
    Wrap 1

@@ -43,16 +43,16 @@ enum CRF_BoundaryStageState
 [BaseContainerProps(), SCR_BaseContainerCustomTitleFields({"m_sBoundaryEntityName"}, "%1")]
 class CRF_BoundaryStageData
 {
-	[Attribute("", UIWidgets.EditBox, "Name of the GameBoundary entity")]
+	[Attribute("", UIWidgets.Object, "Enter name of the GameBoundary entity", params: "et")]
 	string m_sBoundaryEntityName;
 	
-	[Attribute("0", UIWidgets.ComboBox, "Stage behavior type", "", ParamEnumArray.FromEnum(CRF_BoundaryStageType))]
+	[Attribute("0", UIWidgets.ComboBox, "Stage behavior type\nACTIVATION: STARTS DISABLED, WILL ENABLE ON TRIGGER/TIMER\nDELETION: STARTS ENABLED, WILL DISABLE ON TRIGGER/TIMER\nDEACTIVATION: STARTS ENABLED, WILL DISABLE ON TRIGGER/TIMER\n", "", ParamEnumArray.FromEnum(CRF_BoundaryStageType))]
 	CRF_BoundaryStageType m_eStageType;
-	
-	[Attribute("120", UIWidgets.EditBox, "Duration of this stage in seconds")]
+
+	[Attribute("120", UIWidgets.EditBox, "Duration of this stage in seconds, enacts the stage ACTIVATION TYPE at the END of timer")]
 	int m_iStageDuration;
 	
-	[Attribute("", UIWidgets.EditBox, "Text to display during this stage")]
+	[Attribute("", UIWidgets.EditBox, "Text under Stage Timer (If timer for stage is enabled)")]
 	string m_sStageDisplayText;
 	
 	[Attribute("Stage Complete", UIWidgets.EditBox, "Main completion message for this stage (leave empty for default)", category: "Completion Message")]
@@ -65,13 +65,13 @@ class CRF_BoundaryStageData
 	int m_iStageCompletionDuration;
 	
 	// Visual state colors for boundary zones
-	[Attribute("0.8 0.3 0 0.45", UIWidgets.ColorPicker, "ACTIVE state - Polygon fill color (timer running)")]
+	[Attribute("0.8 0.3 0 0.45", UIWidgets.ColorPicker, "ACTIVE state - Polygon fill color (only present when timer running, until activation type completes)")]
 	ref Color m_cActivePolygonColor;
 	
 	[Attribute("0.045 0.045 0.045 1", UIWidgets.ColorPicker, "ACTIVE state - Polygon border color")]
 	ref Color m_cActivePolygonBorderColor;
 	
-	[Attribute("0.5 0.1 0.1 0.45", UIWidgets.ColorPicker, "ACTIVATED state - Polygon fill color (completed)")]
+	[Attribute("0.5 0.1 0.1 0.45", UIWidgets.ColorPicker, "ACTIVATED state - Polygon fill color (visual state after activation type completes)")]
 	ref Color m_cActivatedPolygonColor;
 	
 	[Attribute("0.045 0.045 0.045 1", UIWidgets.ColorPicker, "ACTIVATED state - Polygon border color")]
@@ -83,7 +83,7 @@ class CRF_MapStagingComponentClass : SCR_BaseGameModeComponentClass {}
 
 class CRF_MapStagingComponent : SCR_BaseGameModeComponent
 {
-	[Attribute("30", UIWidgets.EditBox, "Initial delay after safestart ends (seconds)", category: "Base Configuration")]
+	[Attribute("30", UIWidgets.EditBox, "Initial delay of auto starting/staging the first stage after safestart ends (seconds)", category: "Base Configuration")]
 	int m_iInitialDelay;
 	
 	[Attribute("true", UIWidgets.CheckBox, "Auto-start staging sequence after safestart ends + initial delay (if false, staging only triggers via manual scripting)", category: "Base Configuration")]
@@ -99,10 +99,10 @@ class CRF_MapStagingComponent : SCR_BaseGameModeComponent
 	[Attribute("false", UIWidgets.CheckBox, "Enable debug logging", category: "Base Configuration")]
 	bool m_bDebugEnabled;
 	
-	[Attribute("All Stages Complete", UIWidgets.EditBox, "Main message shown when all stages are completed", category: "Base Configuration")]
+	[Attribute("All Stages Complete", UIWidgets.EditBox, "Main message shown when all stages are completed(blank is valid)", category: "Base Configuration")]
 	string m_sFinalCompletionMainMessage;
 	
-	[Attribute("Final boundaries active", UIWidgets.EditBox, "Sub message shown when all stages are completed", category: "Base Configuration")]
+	[Attribute("Final boundaries active", UIWidgets.EditBox, "Sub message shown when all stages are completed(blank is valid)", category: "Base Configuration")]
 	string m_sFinalCompletionSubMessage;
 	
 	[Attribute("15", UIWidgets.EditBox, "Duration (seconds) to display final completion message", category: "Base Configuration")]
@@ -111,7 +111,7 @@ class CRF_MapStagingComponent : SCR_BaseGameModeComponent
 	[Attribute("", UIWidgets.Auto, "List of boundary stages", category: "Stage Configuration")]
 	ref array<ref CRF_BoundaryStageData> m_aBoundaryStages;
 	
- 	[Attribute("STAGING DOCUMENTATION\n\n=== Stage Execution ===\nGet Line:\n\nCRF_MapStagingComponent staging = CRF_MapStagingComponent.Cast(GetGame().GetGameMode().FindComponent(CRF_MapStagingComponent));\n\nCall Types:\n\nstaging.ExecuteStaging(stageIndex, useTimer, chainToNext)\n• stageIndex: Stage to execute (your first non main-gameboundry in the list is index0)\n• useTimer: true = countdown timer, false = immediate\n• chainToNext: true = auto progress to next stages, false = single stage only\n\nstaging.ExecuteStagingSequence(startIndex)\n• Start full sequence from specified stage\n\n=== USAGE EXAMPLES ===\n\n// Execute stage immediately without timer, no chaining\nstaging.ExecuteStaging(2, false, false);\n\n// Execute stage with timer, chain to next stages\nstaging.ExecuteStaging(1, true, true);\n\n// Execute stage with timer but no chaining\nstaging.ExecuteStaging(0, true, false);\n\n// Start full sequence from stage 3\nstaging.ExecuteStagingSequence(2);\n\n=== SETUP ===\n\n- Place & rename Gameboundry prefabs\n- Position them where you want the final boundary areas\n- Be sure to edit faction keys within the boundrys' CRF_Polyzonetriggers based on what factions youre excluding and on your activation type\n- Enable debug if problems arise\n- Only for Non-Reversed gameboundries/crf_polyzones\n\n=== STAGE TYPES ===\nACTIVATION/DEACTIVATION: Boundary either is removed or placed at the END of the timer/manual trigger\nDELETION: Boundary exists at normal position, gets deleted when timer completes", UIWidgets.EditBoxMultiline, "Staging Setup Instructions & API Examples", category: "Documentation")]
+ 	[Attribute("STAGING DOCUMENTATION\n\n=== Stage Execution ===\nGet Line:\n\nCRF_MapStagingComponent staging = CRF_MapStagingComponent.Cast(GetGame().GetGameMode().FindComponent(CRF_MapStagingComponent));\n\nCall Types:\n\nstaging.ExecuteStaging(stageIndex, useTimer, chainToNext)\n• stageIndex: Stage to execute (your first non main-gameboundry in the list is index0)\n• useTimer: true = countdown timer, false = immediate\n• chainToNext: true = auto progress to next stages, false = single stage only\n\nstaging.ExecuteStagingSequence(startIndex)\n• Start full sequence from specified stage\n\n=== USAGE EXAMPLES ===\n\n// Execute stage 3 in list immediately without timer, no chaining after execution\nstaging.ExecuteStaging(2, false, false);\n\n// Execute stage 2 in list with timer, chain to next stage in list after execution\nstaging.ExecuteStaging(1, true, true);\n\n// Execute stage 1 in list with stage timer but no chaining to next stage in list\nstaging.ExecuteStaging(0, true, false);\n\n// Start full sequence from stage 3 in list\nstaging.ExecuteStagingSequence(2);\n\n=== SETUP ===\n\n- Place & rename Gameboundry prefabs\n- Position them where you want the final boundary areas\n- Be sure to edit faction keys within the boundrys' CRF_Polyzonetriggers based on what factions youre excluding and on your activation type\n- Enable debug if problems arise\n- Only for Non-Reversed gameboundries/crf_polyzones\n\n=== STAGE TYPES ===\nACTIVATION/DEACTIVATION: Boundary either is removed or placed at the END of the timer/manual trigger\nDELETION: Boundary exists at normal position, gets deleted when timer completes", UIWidgets.EditBoxMultiline, "Staging Setup Instructions & API Examples", category: "Documentation")]
 	string m_sInstructions;
 	
 	// Public state for display
@@ -393,6 +393,7 @@ class CRF_MapStagingComponent : SCR_BaseGameModeComponent
 		}
 		
 		m_iCurrentTimer = currentStage.m_iStageDuration;
+		m_sTimerText = SCR_FormatHelper.FormatTime(m_iCurrentTimer); // Set initial display text
 		countDownActive = true;
 		m_sStageText = currentStage.m_sStageDisplayText; // Set stage text for HUD display
 		
@@ -400,8 +401,8 @@ class CRF_MapStagingComponent : SCR_BaseGameModeComponent
 		Rpc(UpdateBoundaryVisualState, currentStage.m_sBoundaryEntityName, CRF_BoundaryStageState.ACTIVE);
 		UpdateBoundaryVisualStateLocal(currentStage.m_sBoundaryEntityName, CRF_BoundaryStageState.ACTIVE);
 		
-		// Play stage start sound using centralized system
-		PlayStageSound("start");
+		// Play stage start sound using centralized system with 1 second delay
+		GetGame().GetCallqueue().CallLater(PlayStageSound, 1000, false, "start");
 		
 		if (m_bDebugEnabled) Print(string.Format("[CRF_MapStagingComponent] Starting stage %1: '%2' (%3s)", 
 			m_iCurrentStage + 1, m_sStageText, m_iCurrentTimer));
@@ -451,10 +452,11 @@ class CRF_MapStagingComponent : SCR_BaseGameModeComponent
 	
 	//------------------------------------------------------------------------------------------------
 	/**
-	 * Enhanced stage execution method - handles all stage progression logic
+	 * Enhanced stage execution method - handles all execution logic based on parameters
 	 * @param isChainedExecution - Whether this should chain to next stages (true for sequences, false for single stages)
+	 * @param fromTimer - Whether this execution came from a timer completion (true) or immediate call (false)
 	 */
-	void ExecuteStage(bool isChainedExecution = true)
+	void ExecuteStage(bool isChainedExecution = true, bool fromTimer = true)
 	{
 		// Server-only operation for mp
 		if (RplSession.Mode() == RplMode.Client)
@@ -467,9 +469,40 @@ class CRF_MapStagingComponent : SCR_BaseGameModeComponent
 		if (!currentStage)
 			return;
 		
-		// Execute boundary action using centralized method
-		ExecuteBoundaryAction(currentStage, m_iCurrentStage, isChainedExecution);
+		// Handle immediate execution setup (for non-timer calls)
+		if (!fromTimer)
+		{
+			if (m_bDebugEnabled) Print(string.Format("[CRF_MapStagingComponent] Executing stage %1 immediately (no timer)", m_iCurrentStage + 1));
+			
+			// Play stage start sound for immediate execution with 1 second delay
+			GetGame().GetCallqueue().CallLater(PlayStageSound, 1000, false, "start");
+			
+			// Set stage text for display
+			m_sStageText = currentStage.m_sStageDisplayText;
+			
+			// Update boundary visual state to ACTIVE briefly, then execute
+			Rpc(UpdateBoundaryVisualState, currentStage.m_sBoundaryEntityName, CRF_BoundaryStageState.ACTIVE);
+			UpdateBoundaryVisualStateLocal(currentStage.m_sBoundaryEntityName, CRF_BoundaryStageState.ACTIVE);
+			Replication.BumpMe();
+			
+			// Delay execution by 1 second to allow start sound to play properly
+			GetGame().GetCallqueue().CallLater(ApplyBoundaryAction, 1000, false, currentStage, m_iCurrentStage, isChainedExecution);
+			GetGame().GetCallqueue().CallLater(StageProgressHandler, 1500, false, isChainedExecution); // Handle progression after boundary action
+			return;
+		}
 		
+		// Timer-based execution (existing logic)
+		ApplyBoundaryAction(currentStage, m_iCurrentStage, isChainedExecution);
+		StageProgressHandler(isChainedExecution);
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	/**
+	 * Handle stage progression logic - separated from ExecuteStage for cleaner flow
+	 * @param isChainedExecution - Whether this should chain to next stages
+	 */
+	void StageProgressHandler(bool isChainedExecution)
+	{
 		// Handle progression based on chaining mode
 		if (isChainedExecution)
 		{
@@ -757,7 +790,7 @@ class CRF_MapStagingComponent : SCR_BaseGameModeComponent
 	 * @param isChainedExecution - Whether this is part of a sequence (affects completion message and progression)
 	 * @return string - The stage type string for completion message
 	 */
-	string ExecuteBoundaryAction(CRF_BoundaryStageData stageData, int stageIndex, bool isChainedExecution = false)
+	string ApplyBoundaryAction(CRF_BoundaryStageData stageData, int stageIndex, bool isChainedExecution = false)
 	{
 		if (!stageData)
 			return "";
@@ -765,7 +798,7 @@ class CRF_MapStagingComponent : SCR_BaseGameModeComponent
 		IEntity boundaryEntity = GetCachedBoundaryEntity(stageData.m_sBoundaryEntityName);
 		if (!boundaryEntity)
 		{
-			if (m_bDebugEnabled) Print(string.Format("[CRF_MapStagingComponent] ExecuteBoundaryAction failed - boundary entity '%1' not found", stageData.m_sBoundaryEntityName));
+			if (m_bDebugEnabled) Print(string.Format("[CRF_MapStagingComponent] ApplyBoundaryAction failed - boundary entity '%1' not found", stageData.m_sBoundaryEntityName));
 			return "";
 		}
 
@@ -861,7 +894,7 @@ class CRF_MapStagingComponent : SCR_BaseGameModeComponent
 	//-------------------------------------------------------------------------------------------------
 	
 	/**
-	 * Universal staging execution method - replaces all previous trigger methods
+	 * Universal staging execution method - external API for parameter handling
 	 * 
 	 * @param stageIndex - Index of the stage to execute (0-based)
 	 * @param useTimer - Whether to use a countdown timer before execution
@@ -888,6 +921,7 @@ class CRF_MapStagingComponent : SCR_BaseGameModeComponent
 			return false;
 		}
 		
+		// Validation - keep existing validation logic
 		if (!m_aBoundaryStages || stageIndex < 0 || stageIndex >= m_aBoundaryStages.Count())
 		{
 			if (m_bDebugEnabled) Print(string.Format("[CRF_MapStagingComponent] ExecuteStaging failed - invalid stage index %1", stageIndex));
@@ -901,52 +935,30 @@ class CRF_MapStagingComponent : SCR_BaseGameModeComponent
 			return false;
 		}
 		
-		// Set current stage and manage staging state
+		// Set up execution context - pass parameters to ExecuteStage
 		m_iCurrentStage = stageIndex;
-		m_bChainToNext = chainToNext; // Store chaining mode
-		m_bStagingActive = true; // Always set active during execution (even for single stages)
+		m_bChainToNext = chainToNext;
+		m_bStagingActive = true;
 		
-		if (useTimer) // Always honor useTimer parameter for manual execution
+		if (m_bDebugEnabled) 
 		{
-			// Timer-based execution - ensure no existing timers are running first
-			if (countDownActive)
-			{
-				if (m_bDebugEnabled) Print("[CRF_MapStagingComponent] Stopping existing timer before starting new manual timer");
-				GetGame().GetCallqueue().Remove(UpdateStageTimer);
-				countDownActive = false;
-			}
-			
-			if (m_bDebugEnabled) 
-			{
-				string chainText;
-				if (chainToNext)
-					chainText = " (chaining)";
-				else
-					chainText = " (no chain)";
-				Print(string.Format("[CRF_MapStagingComponent] Manual timer execution for stage %1%2", stageIndex + 1, chainText));
-			}
-			
-			Replication.BumpMe();
-			StartStaging(); // Use existing StartStaging method for consistent timer behavior
+			string timerText = "immediate";
+			if (useTimer) timerText = "with timer";
+			string chainText = "no chain";
+			if (chainToNext) chainText = "chaining";
+			Print(string.Format("[CRF_MapStagingComponent] ExecuteStaging: stage %1 (%2, %3)", stageIndex + 1, timerText, chainText));
+		}
+		
+		// Pass execution to ExecuteStage with parameters
+		if (useTimer)
+		{
+			// Timer-based execution - let StartStaging handle the timer, then ExecuteStage handles logic
+			StartStaging();
 		}
 		else
 		{
-			// Immediate execution
-			if (m_bDebugEnabled) Print(string.Format("[CRF_MapStagingComponent] Executing stage %1 immediately (no timer)", stageIndex + 1));
-			
-			// Play stage start sound for immediate execution
-			PlayStageSound("start");
-			
-			// Set stage text for display (similar to timer path)
-			m_sStageText = stageData.m_sStageDisplayText;
-			
-			// Update boundary visual state to ACTIVE briefly, then execute - both RPC and local for Workbench compatibility
-			Rpc(UpdateBoundaryVisualState, stageData.m_sBoundaryEntityName, CRF_BoundaryStageState.ACTIVE);
-			UpdateBoundaryVisualStateLocal(stageData.m_sBoundaryEntityName, CRF_BoundaryStageState.ACTIVE);
-			Replication.BumpMe();
-			
-			// Delay execution by 1 second to allow start sound to play properly
-			GetGame().GetCallqueue().CallLater(ExecuteStage, 1000, false, m_bChainToNext);
+			// Immediate execution - let ExecuteStage handle all logic
+			ExecuteStage(chainToNext, false); // false = immediate execution
 		}
 		
 		return true;

@@ -4,7 +4,12 @@ A dynamic boundary staging system for Arma Reforger that allows progressive map 
 
 ## Overview
 
-The Map Staging Component provides a simple API for mission makers to create dynamic play areas that change over time. Instead of static boundaries, you can create sequences that activates/deactivates new areas, or delete boundaries entirely as the mission progresses. This provides a mini framework to work with, and you can mix+match activation types + timers etc.
+The Map Staging Component provides a simple API for mission makers to create dynamic play areas that change over time. Instead of static boundaries, you can create sequences that activates/deactivates new areas, or delete boundaries entirely as the mission progresses. This provides a mini api to work with, and you can mix+match activation types + timers etc. Can be expanded on / salvaged.
+
+ToDo:
+- More features
+- Integration OR Absorption into Other GM's
+- Persistance Logic (Dynamic zone changing or looping options/logic instead of linear staging, IE: For Frontline/CCO-likes but with zone restrictions that arent contested zone.)
 
 ## Quick Setup
 
@@ -17,8 +22,14 @@ The Map Staging Component provides a simple API for mission makers to create dyn
 ## Stage Types
 
 - **ACTIVATION**: Boundary's out of bounds effects NOT PRESENT on polyline area on INIT, then moved away via Stage Timer OR script call
-- **DEACTIVATION**: Boundary's out of bounds effects PRESENT on polyline area on INIT, then moved away via Stage Timer OR script call
+- **DEACTIVATION**: Boundary's out of bounds effects PRESENT on polyline area on INIT, then moved away via Stage Timer OR script call.
 - **DELETION**: Boundary gets permanently deleted when stage executes
+
+## Stage States 
+_States of Stages carrying `elseifs` that handle what visual & mechanical logic is used_
+- **INACTIVE** : Redundant unaffected state, default on init
+- **ACTIVE** : Triggered via Stage Timer, if timer parameter set to `False` on `ExecuteStaging` external call. Skipped otherwise. 
+- **ACTIVATED** : The end-state of the Stage, after ActivationType is enacted
 
 ## Basic Configuration
 
@@ -78,7 +89,7 @@ staging.StopStaging();
 - Use clear, descriptive names for boundary entities
 - Position boundaries at their final locations in the editor
 - Test with debug logging enabled
-- Configure faction keys in CRF_PolyZone components
+- Configure faction keys in CRF_PolyZoneTrigger components, based on which FACTION can be allowed in that zone. (IE: Progressive OPFOR-Sided Boundries will have OPFOR)
 - Only use non-reversed GameBoundary/CRF_PolyZone entities
 
 ### Performance
@@ -105,7 +116,7 @@ staging.StopStaging();
 The component integrates with:
 - CRF Safestart Manager (for auto-timing)
 - CRF Gamemode system (for state management)
-- Standard Arma Reforger GameBoundary entities
+- Standard Arma Reforger GameBoundry entities
 - CRF_PolyZone visual system
 
 ---

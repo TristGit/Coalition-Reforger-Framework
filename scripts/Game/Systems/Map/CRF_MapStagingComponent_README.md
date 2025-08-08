@@ -4,20 +4,20 @@ A dynamic boundary staging system for Arma Reforger that allows progressive map 
 
 ## Overview
 
-The Map Staging Component provides a simple API for mission makers to create dynamic play areas that change over time. Instead of static boundaries, you can create sequences that activate new areas, remove old ones, or delete boundaries entirely as the mission progresses.
+The Map Staging Component provides a simple API for mission makers to create dynamic play areas that change over time. Instead of static boundaries, you can create sequences that activates/deactivates new areas, or delete boundaries entirely as the mission progresses. This provides a mini framework to work with, and you can mix+match activation types + timers etc.
 
 ## Quick Setup
 
 1. **Add the Component**: Add `CRF_MapStagingComponent` to your game mode
 2. **Place Boundaries**: Create GameBoundary entities in your world and name them clearly, or else they wont be identified correctly on init
-3. **Add the Component**: Set up the polylines for your zones, be sure to set BOTH  the GameBoundry/CRF_Polyzone & CRF_PolyzoneTrigger (child object in heirarchy) 's Reversed toggles to off. Does NOT work with REVERSED.
-3. **Configure Stages**: Set up your boundary stages in the component inspector.
+3. **Add the Component**: Set up the polylines for your zones, be sure to set BOTH the GameBoundry/CRF_Polyzone & CRF_PolyzoneTrigger (child object in heirarchy) 's Reversed toggles to off. Does NOT work with REVERSED.
+3. **Configure Stages**: Set up your Main Config & Boundary Stage settings in the component inspector.
 4. **Test**: Enable debug logging and test your sequence
 
 ## Stage Types
 
-- **ACTIVATION**: Boundary starts hidden, appears when stage executes
-- **DEACTIVATION**: Boundary starts visible, gets hidden when stage executes  
+- **ACTIVATION**: Boundary's out of bounds effects NOT PRESENT on polyline area on INIT, then moved away via Stage Timer OR script call
+- **DEACTIVATION**: Boundary's out of bounds effects PRESENT on polyline area on INIT, then moved away via Stage Timer OR script call
 - **DELETION**: Boundary gets permanently deleted when stage executes
 
 ## Basic Configuration
@@ -74,7 +74,7 @@ staging.StopStaging();
 ## Example Scenarios
 
 ### Two-Stage Objective Progression (Destructor Chained)
-**Use Case**: Progressive objective unlocking - Rush-like with timers between as a 'R&R' period
+**Use Case**: Progressive objective unlocking - Rush-like with timers between as a 'R&R' period. 3 MCOMS, 1 Per Stage. 
 
 **Base Configuration**:
 - Initial Delay: 0 (not used with manual trigger)
@@ -84,7 +84,7 @@ staging.StopStaging();
 - Stage End Sound: Success chime
 
 **Stage 0 Settings** (First Objective Unlocked):
-- Boundary Entity Name: "FirstObjectiveProtection"
+- Boundary Entity Name: "Objective_1Zone"
 - Stage Type: DELETION (removes protection around first objective)
 - Duration: 180 (3 minute refractory period before zone unlock)
 - Display Text: "First objective protection ending..."

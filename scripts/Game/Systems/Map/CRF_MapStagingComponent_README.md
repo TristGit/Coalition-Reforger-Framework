@@ -1,6 +1,6 @@
 # CRF Map Staging Component
 
-A dynamic boundary staging system for Arma Reforger that allows progressive map control through timed or manual boundary activation, deactivation, and deletion.
+A linear based staging component for several one-time staging usage. NOT a dynamic zone control system.
 
 ## Overview
 

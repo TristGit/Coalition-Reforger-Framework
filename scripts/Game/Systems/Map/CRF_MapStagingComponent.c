@@ -90,10 +90,10 @@ class CRF_MapStagingComponent : SCR_BaseGameModeComponent
 	bool m_bEnableAutoStart;
 	
 	// Global audio settings for all stages
-	[Attribute("{E23715DAF7FE2E8A}Sounds/Items/Equipment/Radios/Samples/Items_Radio_Turn_On.wav", UIWidgets.ResourcePickerThumbnail, "Audio to play when any stage timer starts", "wav", category: "Base Configuration")]
+	[Attribute("{E23715DAF7FE2E8A}Sounds/Items/Equipment/Radios/Samples/Items_Radio_Turn_On.wav", UIWidgets.ResourceNamePicker, "Audio to play when any stage timer starts", "wav", category: "Base Configuration")]
 	ResourceName m_sStageStartSound;
 	
-	[Attribute("{6A5000BE907EFD34}Sounds/Vehicles/Helicopters/Mi-8MT/Samples/WarningVoiceLines/Vehicles_Mi-8MT_WarningBeep_LP.wav", UIWidgets.ResourcePickerThumbnail, "Audio to play when any stage completes", "wav", category: "Base Configuration")]
+	[Attribute("{6A5000BE907EFD34}Sounds/Vehicles/Helicopters/Mi-8MT/Samples/WarningVoiceLines/Vehicles_Mi-8MT_WarningBeep_LP.wav", UIWidgets.ResourceNamePicker, "Audio to play when any stage completes", "wav", category: "Base Configuration")]
 	ResourceName m_sStageEndSound;
 	
 	[Attribute("false", UIWidgets.CheckBox, "Enable debug logging", category: "Base Configuration")]

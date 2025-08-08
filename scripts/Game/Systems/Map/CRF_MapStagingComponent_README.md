@@ -112,12 +112,12 @@ The component integrates with:
 
 ## Example Scenarios
 
-### Ex. 1:  Two-Stage Objective Progression (Destructor Chained)
+### Ex. 1:  Two-Stage Objective Progression (Destructor Call Based)
 **Use Case**: Progressive Objective-Based Zone Unlocking
 
 <img width="380" height="189" alt="image" src="https://github.com/user-attachments/assets/19b9195a-2cb6-4846-8233-d74b01f9055e" />
 
-_Rush-like example with timers between as a 'R&R' period. 2 MCOMS, 1 Per Stage, 2 BoundryObjects & Stages. First MCOM within/exposed on FACTION safestart area end. Technically just 2 zones_
+_Example with timers between as a 'R&R' period, can be used with Rush on destuctor scriptlines or others. 2 MCOMS, 1 Per Stage, 2 BoundryObjects & Stages. First MCOM within/exposed on FACTION safestart area end. Technically just 2 zones_
 
 **Base Configuration**:
 - Initial Delay: 0 (not used with manual trigger)
@@ -171,6 +171,7 @@ staging.ExecuteStaging(1, true, false); // With timer, no chaining
 ### Ex. 2: Single Neutral Zone Unlock In Middle of Map
 **Use Case**: Have a neutral zone that unlocks after safestart/delay, zone visually still present and trigger/restriction deactivated.
 Can also just have DELETION activation type.
+
 <img width="800" height="450" alt="ex2neutral" src="https://github.com/user-attachments/assets/0de126ca-db80-46be-82fe-89fe29417eb3" />
 
 
@@ -193,6 +194,7 @@ Can also just have DELETION activation type.
 
 ### Ex. 3: Multi-Stage Auto Timed Restriction Sequence
 **Use Case**: Progressive map shrinking over time to force engagement. Battle royale zone style restriction.
+
 <img width="800" height="450" alt="ex3_br" src="https://github.com/user-attachments/assets/9f2b0f6e-e923-437e-8e9f-970ae85f3162" />
 
 

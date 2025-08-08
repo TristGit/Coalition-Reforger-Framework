@@ -13,7 +13,7 @@ ToDo:
 
 ## Quick Setup
 
-1. **Add the Component**: Add `CRF_MapStagingComponent` to your game mode
+1. **Add the Component**: Add `CRF_MapStagingComponent` to CRF_Lobby 
 2. **Place Boundaries**: Create GameBoundary entities in your world and name them clearly, or else they wont be identified correctly on init
 3. **Add the Component**: Set up the polylines for your zones, be sure to set BOTH the GameBoundry/CRF_Polyzone & CRF_PolyzoneTrigger (child object in heirarchy) 's Reversed toggles to off. Does NOT work with REVERSED.
 3. **Configure Stages**: Set up your Main Config & Boundary Stage settings in the component inspector. Be sure to set FACTIONKEYS within the CRF_PolyzoneTrigger depending on that boundary's use case.

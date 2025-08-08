@@ -46,7 +46,7 @@ CRF_MapStagingComponent staging = CRF_MapStagingComponent.Cast(
 );
 ```
 
-### Main Methods
+### Main External Call Methods
 
 **Execute Stage**
 ```csharp

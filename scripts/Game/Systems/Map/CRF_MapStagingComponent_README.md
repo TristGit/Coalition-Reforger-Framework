@@ -165,7 +165,7 @@ staging.ExecuteStaging(0, true, false); // With timer, no chaining
 - Sub Completion Message: "Third MCOM Exposed"
 - Completion Duration: 10 seconds
 - Active Colors: Orange fill (0.8 0.4 0 0.5), Dark border (0.1 0.1 0.1 1)
-- Activated Colors: Green fill (0.2 0.6 0.2 0.4), Dark border (0.1 0.1 0.1 1)
+- Activated Colors: Not used (boundary deleted)
 
 **Second Object Destructor Setup:**: 
 ```csharp
@@ -224,8 +224,8 @@ Can also just have DELETION activation type.
 - Display Text: "1st Zone Restriction..."
 - Main Completion Message: "Outer Zone Closed"
 - Sub Completion Message: "Move to inner areas"
-- Active Colors: Orange polygon fill (0.8 0.8 0.2 0.5) _The color that indicates impending restriction_
-- Activated Colors: Red fill (0.6 0.1 0.1 0.3), Dark red border (0.4 0.1 0.1 1)
+- Active Colors: Orange polygon fill, Black Border _The color that indicates impending restriction_
+- Activated Colors: Red fill, Black Border
 
 **Stage 1 Settings** (Inner Ring Removal):
 - Boundary Entity Name: Boundry_inner"
@@ -234,8 +234,8 @@ Can also just have DELETION activation type.
 - Display Text: "Final Zone Restriction..."
 - Main Completion Message: "Final Zone Closed"
 - Sub Completion Message: "Kill everything"
-- Active Colors: Orange polygon fill (0.8 0.4 0 0.6) _The color that indicates impending restriction_
-- Activated Colors: Dark red fill (0.4 0.1 0.1 0.4), Black border (0.1 0.1 0.1 1)
+- Active Colors: Orange polygon fill, Black Border _The color that indicates impending restriction_
+- Activated Colors: Red fill, Black border
 
 
 **Script Usage**: Automatic (no script needed) or `staging.ExecuteStagingSequence(0);` for manual start
@@ -251,18 +251,6 @@ CRF_MapStagingComponent staging = CRF_MapStagingComponent.Cast(
     GetGame().GetGameMode().FindComponent(CRF_MapStagingComponent)
 );
 staging.ExecuteStaging(0, true, false);
-```
-
-### Conditional Staging
-```csharp
-// Different stages based on conditions
-if (playerCount > 10) {
-    // Immediate execution, chain to next stages
-    staging.ExecuteStaging(1, false, true);
-} else {
-    // Timer execution, single stage only
-    staging.ExecuteStaging(2, true, false);
-}
 ```
 
 ### Emergency Controls

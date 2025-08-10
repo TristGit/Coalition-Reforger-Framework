@@ -8,19 +8,19 @@ The Map Staging Component provides a simple API for mission makers to create dyn
 
 ToDo:
 - More features
-- Integration OR Absorption into Other GM's
+- Integration OR Absorption into Other GM's/Manager
 - Persistance Logic (Dynamic zone changing or looping options/logic instead of linear staging, IE: For Frontline/CCO-likes but with zone restrictions that arent contested zone.)
 
 ## Quick Setup
 
 1. **Add the Component**: Add `CRF_MapStagingComponent` to CRF_Lobby 
 2. **Place Boundaries**: Create GameBoundary entities in your world and name them clearly, or else they wont be identified correctly on init
-3. **Add the Component**: Set up the polylines for your zones, be sure to set BOTH the GameBoundry/CRF_Polyzone & CRF_PolyzoneTrigger (child object in heirarchy) 's Reversed toggles to off. Does NOT work with REVERSED.
+3. **Add GameBoundrys/Edit the Component**: Set up the polylines for your zones, be sure to set BOTH the GameBoundry/CRF_Polyzone & CRF_PolyzoneTrigger (child object in heirarchy) 's Reversed toggles to off. Does NOT work with REVERSED.
 3. **Configure Stages**: Set up your Main Config & Boundary Stage settings in the component inspector. Be sure to set FACTIONKEYS within the CRF_PolyzoneTrigger depending on that boundary's use case.
 4. **Test**: Enable debug logging and test your sequence
 
 ## Stage Types
-
+_Types of zone execution._
 - **ACTIVATION**: Boundary's out of bounds effects NOT PRESENT on polyline area on INIT, then moved away via Stage Timer OR script call
 - **DEACTIVATION**: Boundary's out of bounds effects PRESENT on polyline area on INIT, then moved away via Stage Timer OR script call.
 - **DELETION**: Boundary gets permanently deleted when stage executes
@@ -44,8 +44,8 @@ _States of Stages carrying `elseifs` that handle what visual & mechanical logic 
 - **`Boundary Entity Name`**: Exact name of your GameBoundary entity
 - **`Stage Type`**: ACTIVATION, DEACTIVATION, or DELETION. For stage timers, it enacts at the END of the timer.
 - **`Duration`**: Timer length in seconds
-- **`Display Text`**: Message shown under timer during countdown
-- **`Completion Messages`**: Custom popup when stage finishes (blank is valid)
+- **`Display Text`**: Message shown under timer during countdown (if shown)
+- **`Completion Messages`**: Custom popup announcements when stage finishes (blank is valid)
 - **`Visual Colors`**: Boundary colors for ACTIVE and ACTIVATED states. The inital Polygon Color will always be what you set in the boundry prefab component then the script overwrites based on its state. ACTIVE is only present if using STAGE TIMERS. ACTIVATED is the color state in how it will be displayed if its ACTIVATIONTYPE is set to deactivation/activation. Deletion just makes it disappear. (Opacity change for NO fill is valid. IE: Just wanted the polygon fill color to disappear for deactivation type stage.)
 
 ## API Reference
@@ -64,7 +64,7 @@ CRF_MapStagingComponent staging = CRF_MapStagingComponent.Cast(
 staging.ExecuteStaging(stageIndex, useTimer, chainToNext);
 // stageIndex: Which stage (0, 1, 2...)
 // useTimer: true = countdown timer until activationtype enacts, false = immediate 
-// chainToNext: true = continue to next stages, false = stop after this one
+// chainToNext: true = make THIS stage's end continue to next stage in the list, false = independent stage execution
 ```
 
 **Execute Full Sequence**

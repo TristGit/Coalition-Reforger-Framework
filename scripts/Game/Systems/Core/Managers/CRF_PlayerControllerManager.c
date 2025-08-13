@@ -97,8 +97,9 @@ class CRF_PlayerControllerManager : ScriptComponent
 	 * Initializes the player client
 	 * Cleans up previous camera, closes menus, and sets up player-specific settings
 	 * @param IsSpectator - If we should initilize the Spec camera and menu
+	 * @param cameraPos - Optional override position for spectator camera
 	 */
-	void InitilizePlayerClient(bool IsSpectator = false)
+	void InitilizePlayerClient(bool IsSpectator = false, vector cameraPos[4] = {"0 0 0", "0 0 0", "0 0 0", "0 0 0"})
 	{
 		m_Gamemode = CRF_Gamemode.GetInstance();
 		m_RplToAuthorityManager = CRF_RplToAuthorityManager.GetInstance();
@@ -117,16 +118,23 @@ class CRF_PlayerControllerManager : ScriptComponent
 		
 		if (IsSpectator)
 		{	
-			// Set up camera initilal position
-			vector cameraPos[4];
 			SCR_ChimeraCharacter char = CRF_SlottingManager.GetInstance().GetPlayerSlotCharacter(SCR_PlayerController.GetLocalPlayerId());
 			
-			if (char && m_vStoredCameraPos[3] == vector.Zero) {
+			// Use provided death position if available
+			if (cameraPos != {"0 0 0", "0 0 0", "0 0 0", "0 0 0"}) {
+				cameraPos[3][1] = cameraPos[3][1] + 1.5; // Elevate camera slightly above death position
+			}
+			// Use player's slot character position if available and no stored position
+			else if (char && m_vStoredCameraPos[3] == vector.Zero) {
 				char.GetWorldTransform(cameraPos);
 				cameraPos[3][1] = cameraPos[3][1] + 1.5;
-			} else if (m_vStoredCameraPos[3] != vector.Zero) {
+			} 
+			// Use stored camera position if available
+			else if (m_vStoredCameraPos[3] != vector.Zero) {
 				cameraPos = m_vStoredCameraPos;
-			} else {
+			} 
+			// Fallback to generic spawn position
+			else {
 				cameraPos = m_Gamemode.m_vGenericSpawn;
 			}
 				

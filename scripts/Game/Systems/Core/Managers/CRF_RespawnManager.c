@@ -330,7 +330,7 @@ class CRF_RespawnManager : ScriptComponent
 	}
 
 	//------------------------------------------------------------------------------------------------
-	void RespawnPlayer(int playerId, vector spawnLocation[4] = {"0 0 0", "0 0 0", "0 0 0", "0 0 0"}, int groupID = -1, RplId SpawnRplID = -1)
+	void RespawnPlayer(int playerId, vector spawnLocation = vector.Zero, int groupID = -1, RplId SpawnRplID = -1)
 	{
 		// Skip on client
 		if (RplSession.Mode() == RplMode.Client)
@@ -354,10 +354,10 @@ class CRF_RespawnManager : ScriptComponent
 			return;
 		
 		// Determine spawn location
-		vector finalSpawnLocation[4];
+		vector finalSpawnLocation = vector.Zero;
 
 		// Check if the respawn menu provided a spawn point
-		if (SpawnRplID != -1 && spawnLocation[3] == vector.Zero)
+		if (SpawnRplID != -1 && spawnLocation == vector.Zero)
 		{
 			RplComponent rplComp = RplComponent.Cast(Replication.FindItem(SpawnRplID));
 			if (rplComp)
@@ -366,20 +366,24 @@ class CRF_RespawnManager : ScriptComponent
 				CRF_RespawnPointComponent respawnComponent = CRF_RespawnPointComponent.Cast(point.FindComponent(CRF_RespawnPointComponent));
 			
 				if (respawnComponent.m_bActiveRespawnPoint)
-					spawnLocation[3] = point.GetOrigin();
+					spawnLocation = point.GetOrigin();
 			}
 		}
 		
 		// Use provided spawn location or fall back to factions default spawn
-		if (spawnLocation[3] == vector.Zero)
-			FindSpawnPointLocation(factionKey, spawnLocation);
+		if (spawnLocation == vector.Zero)
+			spawnLocation = FindSpawnPointLocation(factionKey);
 		
 		// Fallback to slot origin 
-		if (spawnLocation[3] == vector.Zero)
-			m_SlottingManager.GetPlayerSlotVector(playerId, spawnLocation);
+		if (spawnLocation == vector.Zero)
+		{
+			vector vec[4];
+			m_SlottingManager.GetPlayerSlotVector(playerId, vec);
+			spawnLocation = vec[3];
+		}
 
 		// If no spawn location found, enter spectator mode
-		if (spawnLocation[3] == vector.Zero)
+		if (spawnLocation == vector.Zero)
 		{
 			m_SlottingManager.UpdateSlotDeathState(m_SlottingManager.GetPlayerSlotID(playerId), true);
 			m_GamemodeManager.InitilizePlayer(playerId);
@@ -387,9 +391,8 @@ class CRF_RespawnManager : ScriptComponent
 		}
 
 		// Find a valid spawn position
-		vector validSpawnPos = vector.Zero;
-		SCR_WorldTools.FindEmptyTerrainPosition(validSpawnPos, spawnLocation[3], 10);
-		finalSpawnLocation[3] = validSpawnPos;
+		SCR_WorldTools.FindEmptyTerrainPosition(finalSpawnLocation, spawnLocation, 10);
+		//Print(finalSpawnLocation);
 		
 		// Respawn the player
 		int slotID = m_SlottingManager.GetPlayerSlotID(playerId);
@@ -398,13 +401,12 @@ class CRF_RespawnManager : ScriptComponent
 	}
 	
 	//------------------------------------------------------------------------------------------------
-	void FindSpawnPointLocation(FactionKey factionKey, out vector spawnPointLocation[4])
+	vector FindSpawnPointLocation(FactionKey factionKey)
 	{
 		if (factionKey.IsEmpty())
-		{
-			CRF_GamemodeManager.SetVectorZero(spawnPointLocation);
-			return;
-		};
+			return vector.Zero;
+			
+		vector spawnPointLocation = vector.Zero;
 		
 		foreach (IEntity spawnPoint : m_aRespawnPoints)
 		{
@@ -421,9 +423,11 @@ class CRF_RespawnManager : ScriptComponent
 			if (!respawnComponent.m_bActiveRespawnPoint)
 				continue;
 
-			spawnPoint.GetWorldTransform(spawnPointLocation);
+			spawnPointLocation = spawnPoint.GetOrigin();
 			break;
 		}
+		
+		return spawnPointLocation;
 	}
 	
 	//------------------------------------------------------------------------------------------------

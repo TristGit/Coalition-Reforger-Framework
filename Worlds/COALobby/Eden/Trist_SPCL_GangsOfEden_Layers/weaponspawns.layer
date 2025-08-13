@@ -2793,4 +2793,25 @@ $grp GameEntity {
  weaponSpawn931 {
   coords 4553.945 16.789 10609.642
  }
+ weaponSpawn932 {
+  coords 4676.635 27.424 10977.653
+ }
+ weaponSpawn933 {
+  coords 4676.543 26.884 10978.326
+ }
+ weaponSpawn934 {
+  coords 4675.771 26.884 10977.706
+ }
+ weaponSpawn935 {
+  coords 4676.792 26.915 10976.723
+ }
+ weaponSpawn938 {
+  coords 4654.54 21.877 10707.435
+ }
+ weaponSpawn936 {
+  coords 4618.77 20.433 10753.426
+ }
+ weaponSpawn937 {
+  coords 4615.877 20.441 10760.018
+ }
 }

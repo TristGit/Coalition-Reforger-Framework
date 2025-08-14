@@ -327,7 +327,7 @@ class CRF_LooterGamemodeComponent : SCR_BaseGameModeComponent
 
 		// Start paced spawning
 		m_iCurrentSpawnIndex = 1;
-		GetGame().GetCallqueue().CallLater(SpawnLootBatch, 10, true);
+		GetGame().GetCallqueue().CallLater(SpawnLootBatch, 100, true); // 100 object spawns a second
 	}
 	
 	// Spawn loot in small batches to prevent hitches

@@ -21,8 +21,19 @@ class CRF_GamemodeManager : SCR_BaseGameModeComponent
 	protected SCR_GroupsManagerComponent m_GroupsManagerComponent;
 	protected CRF_AdminMenuManager m_AdminMenuManager;
 	
-	// NEVER EVER SPAWN A ENT WITH A PURE 0 WORLD VECTOR OR ELSE I WILL CASTRATE YOU I STG
+	// NEVER EVER SPAWN AN ENT WITH A PURE 0 WORLD VECTOR OR ELSE I WILL CASTRATE YOU I STG - Njpatman
 	static const vector ZERO_SPAWN_VECTOR[4] = { "1 0 0", "0 1 0", "0 0 1", "0 0 0" };
+	
+	//------------------------------------------------------------------------------------------------
+	/**
+	* Get the spectator resource name
+	* @param vectorToCheck vector to check
+	* @return ResourceName of the spectator entity
+	*/
+	static bool IsValidSpawnVector(vector vectorToCheck)
+	{
+		return (vector.Distance(ZERO_SPAWN_VECTOR[3], vectorToCheck) > 5);
+	}
 	
 	//------------------------------------------------------------------------------------------------
 	/**
@@ -136,7 +147,7 @@ class CRF_GamemodeManager : SCR_BaseGameModeComponent
 	*/
 	void InitilizePlayer(int playerId, vector spawnLocation[4])
 	{
-		if (spawnLocation[3] == vector.Zero && spawnLocation != ZERO_SPAWN_VECTOR)
+		if (!IsValidSpawnVector(spawnLocation[3]) && spawnLocation != ZERO_SPAWN_VECTOR)
 		{
 			Print(string.Format("[CRF ERROR]: %1 DOESN'T HAVE VALID SPAWN VECTOR!", playerId), LogLevel.ERROR);
 			return;

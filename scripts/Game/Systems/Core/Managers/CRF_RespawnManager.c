@@ -354,7 +354,7 @@ class CRF_RespawnManager : ScriptComponent
 			return;
 
 		// Check if the respawn menu provided a spawn point
-		if (SpawnRplID != -1 && spawnLocation[3] == vector.Zero)
+		if (SpawnRplID != -1 && !CRF_GamemodeManager.IsValidSpawnVector(spawnLocation[3]))
 		{
 			RplComponent rplComp = RplComponent.Cast(Replication.FindItem(SpawnRplID));
 			if (rplComp)
@@ -368,15 +368,15 @@ class CRF_RespawnManager : ScriptComponent
 		}
 		
 		// Use provided spawn location or fall back to factions default spawn
-		if (spawnLocation[3] == vector.Zero)
+		if (!CRF_GamemodeManager.IsValidSpawnVector(spawnLocation[3]))
 			FindSpawnPointLocation(factionKey, spawnLocation);
 		
 		// Fallback to slot origin 
-		if (spawnLocation[3] == vector.Zero)
+		if (!CRF_GamemodeManager.IsValidSpawnVector(spawnLocation[3]))
 			m_SlottingManager.GetPlayerSlotVector(playerId, spawnLocation);
 
 		// If no spawn location found, enter spectator mode
-		if (spawnLocation[3] == vector.Zero)
+		if (!CRF_GamemodeManager.IsValidSpawnVector(spawnLocation[3]))
 		{
 			m_SlottingManager.UpdateSlotDeathState(m_SlottingManager.GetPlayerSlotID(playerId), true);
 			m_GamemodeManager.InitilizePlayer(playerId, CRF_GamemodeManager.ZERO_SPAWN_VECTOR);

@@ -112,16 +112,16 @@ class CRF_PlayerControllerManager : ScriptComponent
 			SCR_ChimeraCharacter char = CRF_SlottingManager.GetInstance().GetPlayerSlotCharacter(SCR_PlayerController.GetLocalPlayerId());
 			
 			// Use provided death position if available
-			if (vector.Distance(CRF_GamemodeManager.ZERO_SPAWN_VECTOR[3], cameraPos[3]) > 5) {
+			if (CRF_GamemodeManager.IsValidSpawnVector(cameraPos[3])) {
 				cameraPos[3][1] = cameraPos[3][1] + 1.5; // Elevate camera slightly above death position
 			}
 			// Use player's slot character position if available and no stored position
-			else if (char && m_vStoredCameraPos[3] == vector.Zero) {
+			else if (char && !CRF_GamemodeManager.IsValidSpawnVector(m_vStoredCameraPos[3])) {
 				char.GetWorldTransform(cameraPos);
 				cameraPos[3][1] = cameraPos[3][1] + 1.5;
 			} 
 			// Use stored camera position if available
-			else if (m_vStoredCameraPos[3] != vector.Zero) {
+			else if (CRF_GamemodeManager.IsValidSpawnVector(m_vStoredCameraPos[3])) {
 				cameraPos = m_vStoredCameraPos;
 			} 
 			// Fallback to generic spawn position

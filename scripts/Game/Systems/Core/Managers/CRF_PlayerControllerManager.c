@@ -81,12 +81,6 @@ class CRF_PlayerControllerManager : ScriptComponent
 		GetGame().GetInputManager().AddActionListener("CRF_SpecNVG", EActionTrigger.DOWN, ToggleNVGs);
 		GetGame().GetInputManager().AddActionListener("SwitchSpectatorUI", EActionTrigger.DOWN, UpdateHUDVisible);
 		
-		// Schedule delayed initialization
-		//GetGame().GetCallqueue().CallLater(AddMsgAction, 1000, false);
-		//GetGame().GetCallqueue().CallLater(InitFPSLock, 100, false);
-		//GetGame().GetCallqueue().CallLater(InitAudioLock, 100, false);
-		//GetGame().GetCallqueue().CallLater(OpenCurrentStateMenu, 500, false);
-		// Death to calllaters. Readd if non-functional.
 		GetGame().GetCallqueue().Call(AddMsgAction);
 		GetGame().GetCallqueue().Call(InitFPSLock);
 		GetGame().GetCallqueue().Call(InitAudioLock);
@@ -96,10 +90,8 @@ class CRF_PlayerControllerManager : ScriptComponent
 	/**
 	 * Initializes the player client
 	 * Cleans up previous camera, closes menus, and sets up player-specific settings
-	 * @param IsSpectator - If we should initilize the Spec camera and menu
-	 * @param cameraPos - Optional override position for spectator camera
 	 */
-	void InitilizePlayerClient(bool IsSpectator = false, vector cameraPos[4] = {"0 0 0", "0 0 0", "0 0 0", "0 0 0"})
+	void InitilizePlayerClient()
 	{
 		m_Gamemode = CRF_Gamemode.GetInstance();
 		m_RplToAuthorityManager = CRF_RplToAuthorityManager.GetInstance();
@@ -108,20 +100,19 @@ class CRF_PlayerControllerManager : ScriptComponent
 		if (m_Gamemode.m_GamemodeState == CRF_EGamemodeState.GAME)
 		{
 			GetGame().GetMenuManager().CloseAllMenus();
-		
-			// Schedule delayed initialization of player-specific settings
-			//GetGame().GetCallqueue().CallLater(ResetSettingsToStoredValues, 100, false);
-			//GetGame().GetCallqueue().CallLater(SetupRadioFrequency, 1000, false);
 			ResetSettingsToStoredValues();
 			SetupRadioFrequency();
 		}; 
 		
-		if (IsSpectator)
+		if (SCR_PlayerController.GetLocalMainEntity().GetPrefabData().GetPrefabName() == CRF_GamemodeManager.GetSpectatorResource())
 		{	
+			vector cameraPos[4];
+			SCR_PlayerController.GetLocalMainEntity().GetWorldTransform(cameraPos);
+			
 			SCR_ChimeraCharacter char = CRF_SlottingManager.GetInstance().GetPlayerSlotCharacter(SCR_PlayerController.GetLocalPlayerId());
 			
 			// Use provided death position if available
-			if (cameraPos != {"0 0 0", "0 0 0", "0 0 0", "0 0 0"}) {
+			if (vector.Distance(CRF_GamemodeManager.ZERO_SPAWN_VECTOR[3], cameraPos[3]) > 5) {
 				cameraPos[3][1] = cameraPos[3][1] + 1.5; // Elevate camera slightly above death position
 			}
 			// Use player's slot character position if available and no stored position

@@ -181,12 +181,12 @@ class CRF_RplBroadcastManager : ScriptComponent
 	}
 
 	//------------------------------------------------------------------------------------------------
-	void InitilizePlayerBroadcast(int playerId, bool isSpectator, vector cameraPosition[4] = {"0 0 0", "0 0 0", "0 0 0", "0 0 0"})
+	void InitilizePlayerBroadcast(int playerId)
 	{
 		#ifdef WORKBENCH
-		RpcDo_InitilizePlayerBroadcast(playerId, isSpectator, cameraPosition);
+		RpcDo_InitilizePlayerBroadcast(playerId);
 		#else
-		Rpc(RpcDo_InitilizePlayerBroadcast, playerId, isSpectator, cameraPosition);
+		Rpc(RpcDo_InitilizePlayerBroadcast, playerId);
 		#endif
 	}
 	
@@ -589,12 +589,12 @@ class CRF_RplBroadcastManager : ScriptComponent
 	
 	//------------------------------------------------------------------------------------------------
 	[RplRpc(RplChannel.Reliable, RplRcver.Broadcast)]
-	void RpcDo_InitilizePlayerBroadcast(int playerId, bool isSpectator, vector cameraPosition[4])
+	void RpcDo_InitilizePlayerBroadcast(int playerId)
 	{
 		if (!IsLocalPlayer(playerId))
 			return;
 
-		CRF_PlayerControllerManager.GetInstance().InitilizePlayerClient(isSpectator, cameraPosition);
+		CRF_PlayerControllerManager.GetInstance().InitilizePlayerClient();
 	}
 
 	//------------------------------------------------------------------------------------------------

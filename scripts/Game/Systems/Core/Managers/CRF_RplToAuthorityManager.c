@@ -271,7 +271,7 @@ class CRF_RplToAuthorityManager : ScriptComponent
 	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
 	protected void RpcAsk_RequestInitilizePlayer(int playerId)
 	{
-		m_GamemodeManager.InitilizePlayer(playerId);
+		m_GamemodeManager.InitilizePlayer(playerId, CRF_GamemodeManager.ZERO_SPAWN_VECTOR);
 	}
 	
 	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
@@ -452,7 +452,7 @@ class CRF_RplToAuthorityManager : ScriptComponent
 	protected void RpcAsk_RespawnPlayer(int playerId, RplId SpawnRplID)
 	{
 		vector overrideLocation[4];
-		CRF_GamemodeManager.SetVectorZero(overrideLocation);
+		overrideLocation = CRF_GamemodeManager.ZERO_SPAWN_VECTOR;
 		
 		m_RespawnManager.RespawnPlayer(playerId, overrideLocation, -1, SpawnRplID);
 	}

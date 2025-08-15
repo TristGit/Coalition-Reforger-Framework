@@ -330,7 +330,7 @@ class CRF_RespawnManager : ScriptComponent
 	}
 
 	//------------------------------------------------------------------------------------------------
-	void RespawnPlayer(int playerId, vector spawnLocation[4] = {"0 0 0", "0 0 0", "0 0 0", "0 0 0"}, int groupID = -1, RplId SpawnRplID = -1)
+	void RespawnPlayer(int playerId, vector spawnLocation[4] = CRF_GamemodeManager.ZERO_SPAWN_VECTOR, int groupID = -1, RplId SpawnRplID = -1)
 	{
 		// Skip on client
 		if (RplSession.Mode() == RplMode.Client)
@@ -352,9 +352,6 @@ class CRF_RespawnManager : ScriptComponent
 			
 		if (factionKey.IsEmpty())
 			return;
-		
-		// Determine spawn location
-		vector finalSpawnLocation[4];
 
 		// Check if the respawn menu provided a spawn point
 		if (SpawnRplID != -1 && spawnLocation[3] == vector.Zero)
@@ -382,19 +379,14 @@ class CRF_RespawnManager : ScriptComponent
 		if (spawnLocation[3] == vector.Zero)
 		{
 			m_SlottingManager.UpdateSlotDeathState(m_SlottingManager.GetPlayerSlotID(playerId), true);
-			m_GamemodeManager.InitilizePlayer(playerId);
+			m_GamemodeManager.InitilizePlayer(playerId, CRF_GamemodeManager.ZERO_SPAWN_VECTOR);
 			return;
 		}
-
-		// Find a valid spawn position
-		vector validSpawnPos = vector.Zero;
-		SCR_WorldTools.FindEmptyTerrainPosition(validSpawnPos, spawnLocation[3], 10);
-		finalSpawnLocation[3] = validSpawnPos;
 		
 		// Respawn the player
 		int slotID = m_SlottingManager.GetPlayerSlotID(playerId);
 		m_SlottingManager.UpdateSlotDeathState(slotID, false);
-		m_GamemodeManager.InitilizePlayer(playerId, finalSpawnLocation);
+		m_GamemodeManager.InitilizePlayer(playerId, spawnLocation);
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -402,7 +394,7 @@ class CRF_RespawnManager : ScriptComponent
 	{
 		if (factionKey.IsEmpty())
 		{
-			CRF_GamemodeManager.SetVectorZero(spawnPointLocation);
+			spawnPointLocation = CRF_GamemodeManager.ZERO_SPAWN_VECTOR;
 			return;
 		};
 		

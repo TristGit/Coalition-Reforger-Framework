@@ -557,19 +557,30 @@ class CRF_SlottingManager : ScriptComponent
 		ResourceName resourceName = GetPlayerSlotResource(playerId);
 		if (resourceName.IsEmpty())
 			return null;
+		
+		vector playerSlotVector[4];
+		GetPlayerSlotVector(playerId, playerSlotVector);
 
 		// Setup spawn parameters
 		EntitySpawnParams spawnParams = new EntitySpawnParams();
 		spawnParams.TransformMode = ETransformMode.WORLD;
 		
 		if (overrideLocation[3] != vector.Zero)
-		{
-			spawnParams.Transform = overrideLocation;
-		}
-		else
-		{
-			GetPlayerSlotVector(playerId, spawnParams.Transform);
-		}
+		{	
+			foreach (int i, vector vec : overrideLocation)
+			{
+				if (overrideLocation[i] == vector.Zero)
+					overrideLocation[i] = playerSlotVector[i];
+			}
+		
+			spawnParams.Transform[3] = overrideLocation[3];
+		
+		} else
+			spawnParams.Transform = playerSlotVector;
+
+		vector pos;
+		SCR_WorldTools.FindEmptyTerrainPosition(pos, spawnParams.Transform[3], 16, 4);
+		spawnParams.Transform[3] = pos;
 		
 		// Spawn the character
 		Resource resource = Resource.Load(resourceName);

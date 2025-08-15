@@ -262,10 +262,32 @@ class CRF_GunGame: SCR_BaseGameModeComponent
 		}
 		
 		vector dubugSpawnPointVector[4];
-		dubugSpawnPointVector[3] = GetGame().GetWorld().FindEntityByName("debugSpawnpoint").GetOrigin();
+		GetGame().GetWorld().FindEntityByName("debugSpawnpoint").GetWorldTransform(dubugSpawnPointVector);
 		
-		GetGame().GetCallqueue().CallLater(RespawnPlayer, 5000, false, instigatorContextData.GetVictimPlayerID(), dubugSpawnPointVector);
+		GetGame().GetCallqueue().CallLater(RespawnPlayerDelayed, 5000, false, instigatorContextData.GetVictimPlayerID(), dubugSpawnPointVector[0], dubugSpawnPointVector[1], dubugSpawnPointVector[2], dubugSpawnPointVector[3]);
 	}
+	
+	//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	/**
+	* Can't use static vectors in callLater, so we just use this container method to act as a holder for the call later  
+	* @param playerId ID of the player to initialize
+	* @param locationZero Position 0 in the world vector to spawn the player
+	* @param locationOne Position 1 in the world vector to spawn the player
+	* @param locationTwo Position 2 in the world vector to spawn the player
+	* @param locationThree Position 3 in the world vector to spawn the player
+	*/
+	void RespawnPlayerDelayed(int playerId, vector locationZero, vector locationOne, vector locationTwo, vector locationThree)
+	{
+		vector location[4];
+		
+		location[0] = locationZero;
+		location[1] = locationOne;
+		location[2] = locationTwo;
+		location[3] = locationThree;
+		
+		RespawnPlayer(playerId, location);
+	}
+	
 	
 	//Called by server to tell clients to draw the gameover screen.
 	//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------

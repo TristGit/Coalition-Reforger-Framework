@@ -114,8 +114,8 @@ class CRF_PolyZoneTrigger : SCR_BaseTriggerEntity
 		if (CRF_GamemodeManager.IsSpectator(ent))
 			return;
 		
-		// Allow Admins to teleport out of the safestart borders
-		if (m_polyZone.m_bIsSafestartBorder && SCR_Global.IsAdmin(GetGame().GetPlayerManager().GetPlayerIdFromControlledEntity(ent)))
+		// Allow Admins to teleport out of the game borders during safestart
+		if (CRF_SafestartManager.GetInstance().GetSafestartStatus() && SCR_Global.IsAdmin(GetGame().GetPlayerManager().GetPlayerIdFromControlledEntity(ent)))
 			return;
 		
 		CompartmentAccessComponent compAccess = CompartmentAccessComponent.Cast(ent.FindComponent(CompartmentAccessComponent)); // TODO nullcheck

@@ -2,7 +2,11 @@ class CRF_GamemodeManagerClass : SCR_BaseGameModeComponentClass {}
 
 class CRF_GamemodeManager : SCR_BaseGameModeComponent
 {
-	const static ResourceName SPECTATOR_RESOURCE = "{59886ECB7BBAF5BC}Prefabs/Characters/CRF_InitialEntity.et";
+	// Spectator resource to use
+	static const ResourceName SPECTATOR_RESOURCE = "{59886ECB7BBAF5BC}Prefabs/Characters/CRF_InitialEntity.et";
+	
+	// Time it takes for players to Init
+	static const int PLAYER_INITILIZATION_TIME = 250;
 	
 	[RplProp()]
 	ref array<int> m_aModerators = {}; 
@@ -180,7 +184,7 @@ class CRF_GamemodeManager : SCR_BaseGameModeComponent
 		if (playerCharacter)
 		{
 			AssignFactionToPlayer(playerController, faction);
-			GetGame().GetCallqueue().CallLater(InitilizePlayerCharacter, CRF_Gamemode.PLAYER_INITILIZATION_TIME, false, playerId, playerController, playerCharacter);
+			GetGame().GetCallqueue().CallLater(InitilizePlayerCharacter, CRF_GamemodeManager.PLAYER_INITILIZATION_TIME, false, playerId, playerController, playerCharacter);
 		};
 	}
 	
@@ -238,7 +242,7 @@ class CRF_GamemodeManager : SCR_BaseGameModeComponent
 		if (playerCharacter.GetPrefabData().GetPrefabName() != GetSpectatorResource())
 			AssignPlayerToGroup(playerId);
 
-		CRF_RplBroadcastManager.GetInstance().InitilizePlayerBroadcast(playerId);
+		GetGame().GetCallqueue().CallLater(CRF_RplBroadcastManager.GetInstance().InitilizePlayerBroadcast, PLAYER_INITILIZATION_TIME, false, playerId);
 	}
 	
 	//------------------------------------------------------------------------------------------------

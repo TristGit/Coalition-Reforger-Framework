@@ -31,7 +31,7 @@ class CRF_PlayableCharacter : ScriptComponent
 		
 		// Must be called later due to race condition with AI groups and entity initialization
 		// This ensures the entity is fully initialized before we process it
-		GetGame().GetCallqueue().CallLater(SetInitialEntity, CRF_Gamemode.PLAYER_INITILIZATION_TIME + 25, false, owner);
+		GetGame().GetCallqueue().CallLater(SetInitialEntity, CRF_GamemodeManager.PLAYER_INITILIZATION_TIME + 25, false, owner);
 	}
 	
 	//------------------------------------------------------------------------------------------------

@@ -1117,13 +1117,16 @@ class CRF_RushGamemodeManager: SCR_BaseGameModeComponent
 		// Stop flashing marker since MCOM is destroyed
 		StopFlashingMarker(mcomIdentifier);
 		
-		// Hide the 3D marker for the destroyed MCOM using component system
+		// Hide the 3D marker and delete the MCOM entity
 		IEntity mcomEntity = GetMCOMEntity(mcomIdentifier);
 		if (mcomEntity)
 		{
 			CRF_Rush_3DMarkerComponent markerComponent = CRF_Rush_3DMarkerComponent.Cast(mcomEntity.FindComponent(CRF_Rush_3DMarkerComponent));
 			if (markerComponent)
 				markerComponent.SetVisible(false);
+			
+			// Actually delete the MCOM entity from the world
+			GetGame().GetCallqueue().CallLater(DeleteMCOMEntity, 1000, false, mcomEntity);
 		}
 		
 		// Set destroyed MCOM for client replication
@@ -1162,6 +1165,33 @@ class CRF_RushGamemodeManager: SCR_BaseGameModeComponent
 			case "Zone3Alpha": m_bZone3Alpha = isDestroyed; break;
 			case "Zone3Beta": m_bZone3Beta = isDestroyed; break;
 		}
+	}
+	
+	/**
+	 * Delete MCOM entity from the world after destruction
+	 * @param mcomEntity The MCOM entity to delete
+	 */
+	protected void DeleteMCOMEntity(IEntity mcomEntity)
+	{
+		if (!mcomEntity)
+			return;
+			
+		// Clear the reference from member variables
+		if (mcomEntity == m_Zone1AlphaMCOM)
+			m_Zone1AlphaMCOM = null;
+		else if (mcomEntity == m_Zone1BetaMCOM)
+			m_Zone1BetaMCOM = null;
+		else if (mcomEntity == m_Zone2AlphaMCOM)
+			m_Zone2AlphaMCOM = null;
+		else if (mcomEntity == m_Zone2BetaMCOM)
+			m_Zone2BetaMCOM = null;
+		else if (mcomEntity == m_Zone3AlphaMCOM)
+			m_Zone3AlphaMCOM = null;
+		else if (mcomEntity == m_Zone3BetaMCOM)
+			m_Zone3BetaMCOM = null;
+			
+		// Delete the entity from the world
+		SCR_EntityHelper.DeleteEntityAndChildren(mcomEntity);
 	}
 	
 	/**

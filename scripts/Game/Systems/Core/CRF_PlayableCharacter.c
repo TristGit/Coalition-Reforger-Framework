@@ -29,8 +29,9 @@ class CRF_PlayableCharacter : ScriptComponent
 		m_PlayerControllerComponent = CRF_PlayerControllerManager.GetInstance();
 		m_PossessingManagerComponent = SCR_PossessingManagerComponent.GetInstance();
 		
-		// Must be calledlater due to a race condition with the ai groups being spawned. Needs refactored.
-		GetGame().GetCallqueue().CallLater(SetInitialEntity, 100, false, owner);
+		// Must be called later due to race condition with AI groups and entity initialization
+		// This ensures the entity is fully initialized before we process it
+		GetGame().GetCallqueue().CallLater(SetInitialEntity, CRF_GamemodeManager.PLAYER_INITILIZATION_TIME + 25, false, owner);
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -81,7 +82,9 @@ class CRF_PlayableCharacter : ScriptComponent
 	protected void ConfigureSpectatorEntity(IEntity owner)
 	{
 		SetEventMask(owner, EntityEvent.FRAME);
-		owner.SetOrigin("0 10000 0");
+		
+		if (!CRF_GamemodeManager.IsValidSpawnVector(owner.GetOrigin()))
+			owner.SetOrigin("0 10000 0");
 		
 		Physics physics = owner.GetPhysics();
 		if (!physics)

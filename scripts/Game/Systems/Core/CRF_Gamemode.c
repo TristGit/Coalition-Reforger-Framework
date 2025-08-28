@@ -127,9 +127,6 @@ class CRF_Gamemode : SCR_BaseGameMode
 	protected CRF_GearscriptManager m_GearscriptManager;
 	protected CRF_RplBroadcastManager m_RplBroadcastManager;
 	protected CRF_LoggingManager m_LoggingManager;
-	
-	// Time it takes for players to Init
-	static const int PLAYER_INITILIZATION_TIME = 250;
 
 	//===================================================================================
 	// STATIC METHODS
@@ -366,7 +363,7 @@ class CRF_Gamemode : SCR_BaseGameMode
 			m_GamemodeState == CRF_EGamemodeState.SLOTTING || 
 			m_GamemodeState == CRF_EGamemodeState.AAR)
 		{
-			m_GamemodeManager.InitilizePlayer(iPlayerID);
+			m_GamemodeManager.InitilizePlayer(iPlayerID, CRF_GamemodeManager.ZERO_SPAWN_VECTOR);
 		}
 		
 		// Check if player is a moderator/donator and set privileges
@@ -430,7 +427,7 @@ class CRF_Gamemode : SCR_BaseGameMode
 				if (m_SlottingManager.IsPlayerInASlot(playerId) && !m_SlottingManager.IsPlayerConsideredDead(playerId))
 				{
 					// Schedule re-initialization to fix race condition
-					GetGame().GetCallqueue().CallLater(m_GamemodeManager.InitilizePlayer, 500, false, playerId);
+					GetGame().GetCallqueue().CallLater(OnControllableInitilizePlayerDelayed, 500, false, playerId, CRF_GamemodeManager.ZERO_SPAWN_VECTOR[0], CRF_GamemodeManager.ZERO_SPAWN_VECTOR[1], CRF_GamemodeManager.ZERO_SPAWN_VECTOR[2], CRF_GamemodeManager.ZERO_SPAWN_VECTOR[3]);
 				}
 			}
 		}
@@ -522,7 +519,27 @@ class CRF_Gamemode : SCR_BaseGameMode
 		entity.GetWorldTransform(deathPosition);
 
 		// Move player to spectator
-		GetGame().GetCallqueue().CallLater(m_GamemodeManager.InitilizePlayerDelay, delay, false, playerId, deathPosition[0], deathPosition[1], deathPosition[2], deathPosition[3]);
+		GetGame().GetCallqueue().CallLater(OnControllableInitilizePlayerDelayed, delay, false, playerId, deathPosition[0], deathPosition[1], deathPosition[2], deathPosition[3]);
+	}
+	
+	/**
+	* Can't use static vectors in callLater, so we just use this container method to act as a holder for the call later  
+	* @param playerId ID of the player to initialize
+	* @param locationZero Position 0 in the world vector to spawn the player
+	* @param locationOne Position 1 in the world vector to spawn the player
+	* @param locationTwo Position 2 in the world vector to spawn the player
+	* @param locationThree Position 3 in the world vector to spawn the player
+	*/
+	void OnControllableInitilizePlayerDelayed(int playerId, vector locationZero, vector locationOne, vector locationTwo, vector locationThree)
+	{
+		vector location[4];
+		
+		location[0] = locationZero;
+		location[1] = locationOne;
+		location[2] = locationTwo;
+		location[3] = locationThree;
+		
+		m_GamemodeManager.InitilizePlayer(playerId, location);
 	}
 }
 

@@ -34,6 +34,7 @@ class CRF_PlayerControllerManager : ScriptComponent
 	// Game Systems
 	protected CRF_Gamemode m_Gamemode;                      // Reference to the active gamemode
 	protected CRF_GamemodeManager m_GamemodeManager;        // Reference to the gamemode manager
+	protected CRF_SlottingManager m_SlottingManager;		 // Reference to the slotting manager
 	protected CRF_RplToAuthorityManager m_RplToAuthorityManager;  // Network authority manager
 	
 	// Map and Markers
@@ -72,6 +73,7 @@ class CRF_PlayerControllerManager : ScriptComponent
 		// Get references to required systems
 		m_Gamemode = CRF_Gamemode.GetInstance();
 		m_GamemodeManager = CRF_GamemodeManager.GetInstance();
+		m_SlottingManager = CRF_SlottingManager.GetInstance();
 		m_RplToAuthorityManager = CRF_RplToAuthorityManager.GetInstance();
 
 		// Register input action handlers
@@ -81,12 +83,6 @@ class CRF_PlayerControllerManager : ScriptComponent
 		GetGame().GetInputManager().AddActionListener("CRF_SpecNVG", EActionTrigger.DOWN, ToggleNVGs);
 		GetGame().GetInputManager().AddActionListener("SwitchSpectatorUI", EActionTrigger.DOWN, UpdateHUDVisible);
 		
-		// Schedule delayed initialization
-		//GetGame().GetCallqueue().CallLater(AddMsgAction, 1000, false);
-		//GetGame().GetCallqueue().CallLater(InitFPSLock, 100, false);
-		//GetGame().GetCallqueue().CallLater(InitAudioLock, 100, false);
-		//GetGame().GetCallqueue().CallLater(OpenCurrentStateMenu, 500, false);
-		// Death to calllaters. Readd if non-functional.
 		GetGame().GetCallqueue().Call(AddMsgAction);
 		GetGame().GetCallqueue().Call(InitFPSLock);
 		GetGame().GetCallqueue().Call(InitAudioLock);
@@ -96,11 +92,21 @@ class CRF_PlayerControllerManager : ScriptComponent
 	/**
 	 * Initializes the player client
 	 * Cleans up previous camera, closes menus, and sets up player-specific settings
-	 * @param IsSpectator - If we should initilize the Spec camera and menu
-	 * @param cameraPos - Optional override position for spectator camera
+	 * @param playerCharacter - The spectator entity the server created and set to this player
 	 */
-	void InitilizePlayerClient(bool IsSpectator = false, vector cameraPos[4] = {"0 0 0", "0 0 0", "0 0 0", "0 0 0"})
+	void InitilizePlayerClient(RplId playerCharID)
 	{
+		// Get player character
+		IEntity playerCharacter = m_SlottingManager.GetCharacterFromRplId(playerCharID);
+		
+		// if we cant get the player character or it's null, wait another full initilization time before attempting again
+		if (!playerCharacter || !SCR_ChimeraCharacter.Cast(playerCharacter))
+		{
+			// Schedule another verification attempt
+			GetGame().GetCallqueue().CallLater(InitilizePlayerClient, CRF_GamemodeManager.PLAYER_INITILIZATION_TIME, false, playerCharID);
+			return;
+		};
+		
 		m_Gamemode = CRF_Gamemode.GetInstance();
 		m_RplToAuthorityManager = CRF_RplToAuthorityManager.GetInstance();
 		
@@ -108,85 +114,92 @@ class CRF_PlayerControllerManager : ScriptComponent
 		if (m_Gamemode.m_GamemodeState == CRF_EGamemodeState.GAME)
 		{
 			GetGame().GetMenuManager().CloseAllMenus();
-		
-			// Schedule delayed initialization of player-specific settings
-			//GetGame().GetCallqueue().CallLater(ResetSettingsToStoredValues, 100, false);
-			//GetGame().GetCallqueue().CallLater(SetupRadioFrequency, 1000, false);
 			ResetSettingsToStoredValues();
 			SetupRadioFrequency();
 		}; 
 		
-		if (IsSpectator)
-		{	
-			SCR_ChimeraCharacter char = CRF_SlottingManager.GetInstance().GetPlayerSlotCharacter(SCR_PlayerController.GetLocalPlayerId());
-			
-			// Use provided death position if available
-			if (cameraPos != {"0 0 0", "0 0 0", "0 0 0", "0 0 0"}) {
-				cameraPos[3][1] = cameraPos[3][1] + 1.5; // Elevate camera slightly above death position
-			}
-			// Use player's slot character position if available and no stored position
-			else if (char && m_vStoredCameraPos[3] == vector.Zero) {
-				char.GetWorldTransform(cameraPos);
-				cameraPos[3][1] = cameraPos[3][1] + 1.5;
-			} 
-			// Use stored camera position if available
-			else if (m_vStoredCameraPos[3] != vector.Zero) {
-				cameraPos = m_vStoredCameraPos;
-			} 
-			// Fallback to generic spawn position
-			else {
-				cameraPos = m_Gamemode.m_vGenericSpawn;
-			}
-				
-			// Set up camera entity
-			EntitySpawnParams cameraSpawnParams = new EntitySpawnParams();
-			cameraSpawnParams.TransformMode = ETransformMode.WORLD;
-			cameraSpawnParams.Transform = cameraPos;
+		if (playerCharacter.GetPrefabData().GetPrefabName() == CRF_GamemodeManager.GetSpectatorResource())
+			InitilizeLocalSpectator(playerCharacter);
+		else
+			InitilizeLocalCharacter();
+	}
 	
-			// Spawn or reposition camera
-			if (!m_eCamera)
-				m_eCamera = GetGame().SpawnEntityPrefab(Resource.Load("{E1FF38EC8894C5F3}Prefabs/Editor/Camera/ManualCameraSpectate.et"), GetGame().GetWorld(), cameraSpawnParams);
-			else
-				m_eCamera.SetWorldTransform(cameraPos);
-			
-			// Level camera horizon
-			vector mat = m_eCamera.GetAngles();
-			m_eCamera.SetAngles(Vector(mat[0], mat[1], 0));
-	
-			// Register for VON (voice chat)
-			m_RplToAuthorityManager.CheckVONRegister(SCR_PlayerController.GetLocalPlayerId());
-			
-			// Open spectator menu if in game state
-			if (m_Gamemode.m_GamemodeState == CRF_EGamemodeState.GAME)
-				GetGame().GetMenuManager().OpenMenu(ChimeraMenuPreset.CRF_SpectatorMenu);
-			
-			// Switch to spectator camera
-			GetGame().GetCameraManager().SetCamera(CameraBase.Cast(m_eCamera));
-			
-			// Turn on killfeed for specs
-			SCR_NotificationSenderComponent sender = SCR_NotificationSenderComponent.Cast(
-				GetGame().GetGameMode().FindComponent(SCR_NotificationSenderComponent)
-			);
-			if (sender)
-				sender.SetKillFeedTypeDeadLocal();
-		} else { 
-			// Clean up previous camera if exists
-			if (m_eCamera)
-				delete m_eCamera;
-			
-			// Originally added for data collector
-			m_Gamemode.GetOnPlayerSpawned().Invoke(SCR_PlayerController.GetLocalPlayerId(), SCR_PlayerController.GetLocalMainEntity());
-			
-			// Reset Stored Pos
-			GetGame().GetCallqueue().CallLater(UpdateStoredCameraPos, 200, false, vector.Zero, vector.Zero, vector.Zero, vector.Zero);
-			
-			// Reset kill feed type to default
-			SCR_NotificationSenderComponent sender = SCR_NotificationSenderComponent.Cast(
-				GetGame().GetGameMode().FindComponent(SCR_NotificationSenderComponent)
-			);
-			if (sender)
-				sender.SetKillFeedTypeNoneLocal();
+	/**
+	 * Initilizes players if they have a valid spectator entity
+	 * @param playerCharacter - The spectator entity the server created and set to this player
+	 */
+	void InitilizeLocalSpectator(IEntity playerCharacter)
+	{
+		vector cameraPos[4];
+		playerCharacter.GetWorldTransform(cameraPos);
+		
+		// Use provided death position if available
+		if (CRF_GamemodeManager.IsValidSpawnVector(cameraPos[3])) {
+			cameraPos[3][1] = cameraPos[3][1] + 1.5; // Elevate camera slightly above death position
 		}
+		// Use stored camera position if available
+		else if (CRF_GamemodeManager.IsValidSpawnVector(m_vStoredCameraPos[3])) {
+			cameraPos = m_vStoredCameraPos;
+		} 
+		// Fallback to generic spawn position
+		else {
+			cameraPos = m_Gamemode.m_vGenericSpawn;
+		}
+			
+		// Set up camera entity
+		EntitySpawnParams cameraSpawnParams = new EntitySpawnParams();
+		cameraSpawnParams.TransformMode = ETransformMode.WORLD;
+		cameraSpawnParams.Transform = cameraPos;
+
+		// Spawn or reposition camera
+		if (!m_eCamera)
+			m_eCamera = GetGame().SpawnEntityPrefab(Resource.Load("{E1FF38EC8894C5F3}Prefabs/Editor/Camera/ManualCameraSpectate.et"), GetGame().GetWorld(), cameraSpawnParams);
+		else
+			m_eCamera.SetWorldTransform(cameraPos);
+		
+		// Level camera horizon
+		vector mat = m_eCamera.GetAngles();
+		m_eCamera.SetAngles(Vector(mat[0], mat[1], 0));
+
+		// Register for VON (voice chat)
+		m_RplToAuthorityManager.CheckVONRegister(SCR_PlayerController.GetLocalPlayerId());
+		
+		// Open spectator menu if in game state
+		if (m_Gamemode.m_GamemodeState == CRF_EGamemodeState.GAME)
+			GetGame().GetMenuManager().OpenMenu(ChimeraMenuPreset.CRF_SpectatorMenu);
+		
+		// Switch to spectator camera
+		GetGame().GetCameraManager().SetCamera(CameraBase.Cast(m_eCamera));
+		
+		// Turn on killfeed for specs
+		SCR_NotificationSenderComponent sender = SCR_NotificationSenderComponent.Cast(
+			GetGame().GetGameMode().FindComponent(SCR_NotificationSenderComponent)
+		);
+		if (sender)
+			sender.SetKillFeedTypeDeadLocal();
+	}
+	
+	/**
+	 * Initilizes players if they have a valid slotted character
+	 */
+	void InitilizeLocalCharacter()
+	{
+		// Clean up previous camera if exists
+		if (m_eCamera)
+			delete m_eCamera;
+		
+		// Originally added for data collector
+		m_Gamemode.GetOnPlayerSpawned().Invoke(SCR_PlayerController.GetLocalPlayerId(), SCR_PlayerController.GetLocalMainEntity());
+		
+		// Reset Stored Pos
+		GetGame().GetCallqueue().CallLater(UpdateStoredCameraPos, 200, false, vector.Zero, vector.Zero, vector.Zero, vector.Zero);
+		
+		// Reset kill feed type to default
+		SCR_NotificationSenderComponent sender = SCR_NotificationSenderComponent.Cast(
+			GetGame().GetGameMode().FindComponent(SCR_NotificationSenderComponent)
+		);
+		if (sender)
+			sender.SetKillFeedTypeNoneLocal();
 	}
 	
 	//------------------------------------------------------------------------------------------------

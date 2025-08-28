@@ -2,7 +2,11 @@ class CRF_GamemodeManagerClass : SCR_BaseGameModeComponentClass {}
 
 class CRF_GamemodeManager : SCR_BaseGameModeComponent
 {
-	const static ResourceName SPECTATOR_RESOURCE = "{59886ECB7BBAF5BC}Prefabs/Characters/CRF_InitialEntity.et";
+	// Spectator resource to use
+	static const ResourceName SPECTATOR_RESOURCE = "{59886ECB7BBAF5BC}Prefabs/Characters/CRF_InitialEntity.et";
+	
+	// Time it takes for players to Init
+	static const int PLAYER_INITILIZATION_TIME = 250;
 	
 	[RplProp()]
 	ref array<int> m_aModerators = {}; 
@@ -21,14 +25,26 @@ class CRF_GamemodeManager : SCR_BaseGameModeComponent
 	protected SCR_GroupsManagerComponent m_GroupsManagerComponent;
 	protected CRF_AdminMenuManager m_AdminMenuManager;
 	
+	// NEVER EVER SPAWN AN ENT WITH A PURE 0 WORLD VECTOR OR ELSE I WILL CASTRATE YOU I STG - Njpatman
+	static const vector ZERO_SPAWN_VECTOR[4] = { "1 0 0", "0 1 0", "0 0 1", "0 0 0" };
+	
 	//------------------------------------------------------------------------------------------------
 	/**
-	* Set vector to zero
-	* @out zero'd Vector
+	* Get the spectator resource name
+	* @param vectorToCheck vector to check
+	* @return ResourceName of the spectator entity
 	*/
-	static void SetVectorZero(out vector zeroVector[4])
-	{
-		zeroVector = { "0 0 0", "0 0 0", "0 0 0", "0 0 0" };
+	static bool IsValidSpawnVector(vector vectorToCheck)
+	{	
+		bool finalcheck = false;
+		bool zeroCheck = (vector.Distance(ZERO_SPAWN_VECTOR[3], vectorToCheck) > 5);
+		bool tenCheck = (vector.Distance("0 10000 0", vectorToCheck) > 5);
+		bool negCheck = (vectorToCheck[1] >= 0);
+		
+		if (zeroCheck && tenCheck && negCheck)
+			finalcheck = true;
+		
+		return finalcheck;
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -135,39 +151,22 @@ class CRF_GamemodeManager : SCR_BaseGameModeComponent
 	// PLAYER INITIALIZATION
 	//------------------------------------------------------------------------------------------------
 	
-	/**
-	* Can't use static vectors in callLater, so we just use this container method to act as a holder for the call later  
-	* @param playerId ID of the player to initialize
-	* @param overrideLocationZero Position 0 in the world vector to spawn the player
-	* @param overrideLocationOne Position 1 in the world vector to spawn the player
-	* @param overrideLocationTwo Position 2 in the world vector to spawn the player
-	* @param overrideLocationThree Position 3 in the world vector to spawn the player
-	*/
-	void InitilizePlayerDelay(int playerId, vector overrideLocationZero, vector overrideLocationOne, vector overrideLocationTwo, vector overrideLocationThree)
-	{
-		vector overrideLocation[4];
-		
-		overrideLocation[0] = overrideLocationZero;
-		overrideLocation[1] = overrideLocationOne;
-		overrideLocation[2] = overrideLocationTwo;
-		overrideLocation[3] = overrideLocationThree;
-		
-		InitilizePlayer(playerId, overrideLocation);
-	};
-	
 	//------------------------------------------------------------------------------------------------
 	/**
 	* Initialize a player into the game either as a playable character or spectator
 	* @param playerId ID of the player to initialize
-	* @param overrideLocation Optional location to spawn the player
+	* @param spawnLocation Location to spawn the player (Use "CRF_GamemodeManager.ZERO_SPAWN_VECTOR" as the input to have players spawn at their original slot location)
 	*/
-	void InitilizePlayer(int playerId, vector overrideLocation[4] = {"0 0 0", "0 0 0", "0 0 0", "0 0 0"})
+	void InitilizePlayer(int playerId, vector spawnLocation[4])
 	{
+		if (!IsValidSpawnVector(spawnLocation[3]) && spawnLocation != ZERO_SPAWN_VECTOR)
+		{
+			Print(string.Format("[CRF ERROR]: %1 DOESN'T HAVE VALID SPAWN VECTOR!", playerId), LogLevel.ERROR);
+			return;
+		};
+		
 		if (playerId <= 0)
 			return;
-		
-		// Store the death/override position for spectator camera
-		vector spectatorCameraPosition[4] = overrideLocation;
 		
 		SCR_PlayerController playerController = SCR_PlayerController.Cast(GetGame().GetPlayerManager().GetPlayerController(playerId));
 		if (!playerController)
@@ -176,55 +175,26 @@ class CRF_GamemodeManager : SCR_BaseGameModeComponent
 		SCR_ChimeraCharacter playerCharacter = null;
 		Faction faction = null;
 		bool alreadyCreated;
-		bool isSpectator;
 		
 		// Determine if player should be spectator or playable character
 		if (!m_SlottingManager.IsPlayerInASlot(playerId) || m_SlottingManager.IsPlayerConsideredDead(playerId))
 		{
-			playerCharacter = CreateSpectatorEntity();
+			playerCharacter = CreateSpectatorEntity(spawnLocation);
 			faction = GetGame().GetFactionManager().GetFactionByKey("SPEC");
-			isSpectator = true;
 			
 			RemovePlayerFromCurrentGroup(playerId);
 			DisableDamageForSpectator(playerCharacter);
 		} else {
-			playerCharacter = GetOrCreatePlayableCharacter(playerId, overrideLocation, alreadyCreated);
+			playerCharacter = GetOrCreatePlayableCharacter(playerId, spawnLocation, alreadyCreated);
 			faction = m_SlottingManager.GetPlayerSlotFaction(playerId);
-			// For regular players, don't use spectator camera position
-			SetVectorZero(spectatorCameraPosition);
 		}
 		
 		if (playerCharacter)
 		{
 			AssignFactionToPlayer(playerController, faction);
-			GetGame().GetCallqueue().CallLater(InitilizePlayerCharacterDelay, CRF_Gamemode.PLAYER_INITILIZATION_TIME, false, playerId, playerController, playerCharacter, isSpectator, spectatorCameraPosition[0], spectatorCameraPosition[1], spectatorCameraPosition[2], spectatorCameraPosition[3]);
+			GetGame().GetCallqueue().CallLater(InitilizePlayerCharacter, CRF_GamemodeManager.PLAYER_INITILIZATION_TIME, false, playerId, playerController, playerCharacter);
 		};
 	}
-	
-	//------------------------------------------------------------------------------------------------
-	/**
-	* Assign the player to the set entity delayed
-	* Can't use static vectors in callLater, so we just use this container method to act as a holder for the call later
-	* @param playerId ID of the player
-	* @param playerController controller of the player
-	* @param playerCharacter entity the player will take
-	* @param isSpectator to pass along to the players client
-	* @param overrideLocationZero Position 0 in the world vector to optionally spawn then spectator camera
-	* @param overrideLocationOne Position 1 in the world vector to optionally spawn then spectator camera
-	* @param overrideLocationTwo Position 2 in the world vector to optionally spawn then spectator camera
-	* @param overrideLocationThree Position 3 in the world vector to optionally spawn then spectator camera
-	*/
-	void InitilizePlayerCharacterDelay(int playerId, SCR_PlayerController playerController, SCR_ChimeraCharacter playerCharacter, bool isSpectator, vector spectatorCameraPositionZero, vector spectatorCameraPositionOne, vector spectatorCameraPositionTwo, vector spectatorCameraPositionThree)
-	{
-		vector spectatorCameraPosition[4];
-		
-		spectatorCameraPosition[0] = spectatorCameraPositionZero;
-		spectatorCameraPosition[1] = spectatorCameraPositionOne;
-		spectatorCameraPosition[2] = spectatorCameraPositionTwo;
-		spectatorCameraPosition[3] = spectatorCameraPositionThree;
-		
-		InitilizePlayerCharacter(playerId, playerController, playerCharacter, isSpectator, spectatorCameraPosition);
-	};
 	
 	//------------------------------------------------------------------------------------------------
 	/**
@@ -232,10 +202,8 @@ class CRF_GamemodeManager : SCR_BaseGameModeComponent
 	* @param playerId ID of the player
 	* @param playerController controller of the player
 	* @param playerCharacter entity the player will take
-	* @param isSpectator to pass along to the players client
-	* @param spectatorCameraPosition Optional position for spectator camera
 	*/
-	protected void InitilizePlayerCharacter(int playerId, SCR_PlayerController playerController, SCR_ChimeraCharacter playerCharacter, bool isSpectator, vector spectatorCameraPosition[4] = {"0 0 0", "0 0 0", "0 0 0", "0 0 0"})
+	protected void InitilizePlayerCharacter(int playerId, SCR_PlayerController playerController, SCR_ChimeraCharacter playerCharacter)
 	{
 		// Validate that player is still connected before proceeding
 		if (!GetGame().GetPlayerManager().IsPlayerConnected(playerId))
@@ -248,33 +216,8 @@ class CRF_GamemodeManager : SCR_BaseGameModeComponent
 		AssignCharacterToPlayer(playerController, playerCharacter);
 		
 		// Wait a frame for the entity assignment to take effect, then verify success
-		GetGame().GetCallqueue().Call(VerifyCharacterAssignmentDelay, playerId, playerController, playerCharacter, isSpectator, spectatorCameraPosition[0], spectatorCameraPosition[1], spectatorCameraPosition[2], spectatorCameraPosition[3]);
+		GetGame().GetCallqueue().Call(VerifyCharacterAssignment, playerId, playerController, playerCharacter);
 	}
-	
-	//------------------------------------------------------------------------------------------------
-	/**
-	* Verify that character assignment was successful and complete initialization delayed
-	* Can't use static vectors in callLater, so we just use this container method to act as a holder for the call later
-	* @param playerId ID of the player
-	* @param playerController controller of the player
-	* @param playerCharacter entity the player will take
-	* @param isSpectator to pass along to the players client
-	* @param overrideLocationZero Position 0 in the world vector to optionally spawn then spectator camera
-	* @param overrideLocationOne Position 1 in the world vector to optionally spawn then spectator camera
-	* @param overrideLocationTwo Position 2 in the world vector to optionally spawn then spectator camera
-	* @param overrideLocationThree Position 3 in the world vector to optionally spawn then spectator camera
-	*/
-	void VerifyCharacterAssignmentDelay(int playerId, SCR_PlayerController playerController, SCR_ChimeraCharacter playerCharacter, bool isSpectator, vector spectatorCameraPositionZero, vector spectatorCameraPositionOne, vector spectatorCameraPositionTwo, vector spectatorCameraPositionThree)
-	{
-		vector spectatorCameraPosition[4];
-		
-		spectatorCameraPosition[0] = spectatorCameraPositionZero;
-		spectatorCameraPosition[1] = spectatorCameraPositionOne;
-		spectatorCameraPosition[2] = spectatorCameraPositionTwo;
-		spectatorCameraPosition[3] = spectatorCameraPositionThree;
-		
-		VerifyCharacterAssignment(playerId, playerController, playerCharacter, isSpectator, spectatorCameraPosition);
-	};
 	
 	//------------------------------------------------------------------------------------------------
 	/**
@@ -282,10 +225,8 @@ class CRF_GamemodeManager : SCR_BaseGameModeComponent
 	* @param playerId ID of the player
 	* @param playerController controller of the player
 	* @param playerCharacter entity the player should control
-	* @param isSpectator to pass along to the players client
-	* @param spectatorCameraPosition Optional position for spectator camera
 	*/
-	protected void VerifyCharacterAssignment(int playerId, SCR_PlayerController playerController, SCR_ChimeraCharacter playerCharacter, bool isSpectator, vector spectatorCameraPosition[4] = {"0 0 0", "0 0 0", "0 0 0", "0 0 0"})
+	protected void VerifyCharacterAssignment(int playerId, SCR_PlayerController playerController, SCR_ChimeraCharacter playerCharacter)
 	{
 		// Validate that player is still connected
 		if (!GetGame().GetPlayerManager().IsPlayerConnected(playerId))
@@ -295,21 +236,23 @@ class CRF_GamemodeManager : SCR_BaseGameModeComponent
 		IEntity controlledEntity = GetGame().GetPlayerManager().GetPlayerControlledEntity(playerId);
 		
 		// If player is still controlling the initial entity, retry the assignment
-		if (controlledEntity && controlledEntity.GetPrefabData().GetPrefabName() == GetSpectatorResource() && !isSpectator)
+		if (controlledEntity && controlledEntity.GetPrefabData().GetPrefabName() == GetSpectatorResource() && (playerCharacter.GetPrefabData().GetPrefabName() != GetSpectatorResource()))
 		{
 			// Force reassign the character
 			AssignCharacterToPlayer(playerController, playerCharacter);
 			
 			// Schedule another verification attempt
-			GetGame().GetCallqueue().CallLater(VerifyCharacterAssignmentDelay, 100, false, playerId, playerController, playerCharacter, isSpectator, spectatorCameraPosition[0], spectatorCameraPosition[1], spectatorCameraPosition[2], spectatorCameraPosition[3]);
+			GetGame().GetCallqueue().CallLater(VerifyCharacterAssignment, 100, false, playerId, playerController, playerCharacter);
 			return;
 		}
 		
 		// Assignment successful, complete initialization
-		if (!isSpectator)
+		if (playerCharacter.GetPrefabData().GetPrefabName() != GetSpectatorResource())
 			AssignPlayerToGroup(playerId);
+		
+		RplComponent playerRplComp = RplComponent.Cast(playerCharacter.FindComponent(RplComponent));
 
-		CRF_RplBroadcastManager.GetInstance().InitilizePlayerBroadcast(playerId, isSpectator, spectatorCameraPosition);
+		GetGame().GetCallqueue().CallLater(CRF_RplBroadcastManager.GetInstance().InitilizePlayerBroadcast, PLAYER_INITILIZATION_TIME, false, playerId, playerRplComp.Id());
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -317,10 +260,15 @@ class CRF_GamemodeManager : SCR_BaseGameModeComponent
 	* Create a spectator entity in the world
 	* @return The created spectator character
 	*/
-	protected SCR_ChimeraCharacter CreateSpectatorEntity()
+	protected SCR_ChimeraCharacter CreateSpectatorEntity(vector spawnLocation[4])
 	{
+		// Setup spawn parameters
+		EntitySpawnParams spawnParams = new EntitySpawnParams();
+		spawnParams.TransformMode = ETransformMode.WORLD;
+		spawnParams.Transform = spawnLocation;
+		
 		Resource spectatorRes = Resource.Load(GetSpectatorResource());
-		return SCR_ChimeraCharacter.Cast(GetGame().SpawnEntityPrefab(spectatorRes, GetGame().GetWorld()));
+		return SCR_ChimeraCharacter.Cast(GetGame().SpawnEntityPrefab(spectatorRes, GetGame().GetWorld(), spawnParams));
 	}
 	
 	//------------------------------------------------------------------------------------------------

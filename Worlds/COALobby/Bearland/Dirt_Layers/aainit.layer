@@ -26,9 +26,18 @@ CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et
   SCR_InitWeatherComponent "{64427EEC0AFF43EE}" {
    m_sInitialStartingWeatherId "Heavy Wet Fog"
   }
+  SCR_TimeAndWeatherHandlerComponent "{64427EEC304DD9A0}" {
+   m_bUsePredefineStartingTimeAndWeather 1
+   m_aStartingWeatherAndTime {
+    SCR_TimeAndWeatherState "{663B12C8A4403D24}" {
+     m_sWeatherPresetName "Clear"
+     m_iStartingHour 12
+    }
+   }
+  }
  }
  coords 1082.789 14.169 918.958
- m_iTimeLimitMinutes 65
+ m_iTimeLimitMinutes 70
  m_aMissionDescriptors {
   CRF_MissionDescriptor "{644250503DF684C0}" {
    m_sTextData "Rush. One MCOM per zone and three zones."\
@@ -125,7 +134,7 @@ PolylineShapeEntity : "{8AE1D02BC25C93C5}PrefabsEditable/PolyZone/BLUFORSafestar
  coords 1348.171 3.114 568.732
  Points {
   ShapePoint "{663AEC8E580071EB}" {
-   Position 52.931 -0 44.887
+   Position 52.931 0 44.887
   }
   ShapePoint "{663AEC8E5F140A52}" {
    Position -90.29 0 16.332

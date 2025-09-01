@@ -445,9 +445,9 @@ class CRF_PlayerControllerManager : ScriptComponent
 		MenuBase topMenu = GetGame().GetMenuManager().GetTopMenu();
 		if (topMenu)
 		{
-			if (topMenu.IsInherited(CRF_PreviewMenuUI) || topMenu.IsInherited(CRF_SlottingMenuUI))
+			if (topMenu.IsInherited(CRF_PreviewMenu) || topMenu.IsInherited(CRF_SlottingMenu))
 				return;
-			else if (topMenu.IsInherited(CRF_SpectatorMenuUI))
+			else if (topMenu.IsInherited(CRF_SpectatorMenu))
 				GetGame().GetMenuManager().CloseMenu(topMenu);
 		}
 

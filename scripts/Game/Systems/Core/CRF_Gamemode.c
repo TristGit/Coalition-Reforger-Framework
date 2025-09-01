@@ -575,7 +575,7 @@ modded class SCR_ManualCamera
 		MenuBase topMenu = m_MenuManager.GetTopMenu();
 		
 		// Allow camera control in editor and spectator menus
-		return topMenu && (!topMenu.IsInherited(EditorMenuUI) && !topMenu.IsInherited(CRF_SpectatorMenuUI));
+		return topMenu && (!topMenu.IsInherited(EditorMenuUI) && !topMenu.IsInherited(CRF_SpectatorMenu));
 	}
 }
 

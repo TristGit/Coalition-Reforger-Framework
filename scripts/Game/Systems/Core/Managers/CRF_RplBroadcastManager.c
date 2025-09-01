@@ -790,7 +790,7 @@ class CRF_RplBroadcastManager : ScriptComponent
 		Print(string.Format("[VON] Top menu: %1", topMenu), LogLevel.NORMAL);
 
 		// Try to get the spectator menu with retry logic
-		CRF_SpectatorMenuUI specMenu = CRF_SpectatorMenuUI.Cast(topMenu);
+		CRF_SpectatorMenu specMenu = CRF_SpectatorMenu.Cast(topMenu);
 		if (!specMenu)
 		{
 			Print(string.Format("[VON] Spectator menu not available (topMenu=%1), retrying in 100ms", topMenu), LogLevel.NORMAL);
@@ -839,7 +839,7 @@ class CRF_RplBroadcastManager : ScriptComponent
 		if (!IsLocalPlayer(playerId))
 			return;
 
-		CRF_SpectatorMenuUI specMenu = CRF_SpectatorMenuUI.Cast(GetGame().GetMenuManager().GetTopMenu());
+		CRF_SpectatorMenu specMenu = CRF_SpectatorMenu.Cast(GetGame().GetMenuManager().GetTopMenu());
 		if (!specMenu)
 			return;
 
@@ -1148,7 +1148,7 @@ class CRF_RplBroadcastManager : ScriptComponent
 		Print(string.Format("[VON] Top menu: %1", topMenu), LogLevel.NORMAL);
 
 		// Try to get the spectator menu with retry logic
-		CRF_SpectatorMenuUI specMenu = CRF_SpectatorMenuUI.Cast(topMenu);
+		CRF_SpectatorMenu specMenu = CRF_SpectatorMenu.Cast(topMenu);
 		if (!specMenu)
 		{
 			Print(string.Format("[VON] Spectator menu not available (topMenu=%1), retrying in 100ms", topMenu), LogLevel.NORMAL);

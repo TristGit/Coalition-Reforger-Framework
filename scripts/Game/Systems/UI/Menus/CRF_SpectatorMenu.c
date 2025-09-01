@@ -1,4 +1,4 @@
-class CRF_SpectatorMenuUI: ChimeraMenuBase
+class CRF_SpectatorMenu: ChimeraMenuBase
 {
 	//=================================================================================================
 	// PROPERTIES

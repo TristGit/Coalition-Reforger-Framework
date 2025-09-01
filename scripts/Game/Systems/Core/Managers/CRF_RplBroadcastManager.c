@@ -113,11 +113,18 @@ class CRF_RplBroadcastManager : ScriptComponent
 	//------------------------------------------------------------------------------------------------
 	void TeleportPlayers(int playerId1, int playerId2, bool logAction)
 	{
-		#ifdef WORKBENCH
-		RpcDo_TeleportPlayers(playerId1, playerId2, logAction);
-		#else
-		Rpc(RpcDo_TeleportPlayers, playerId1, playerId2, logAction);
-		#endif
+		IEntity player2Char = GetGame().GetPlayerManager().GetPlayerControlledEntity(playerId2);
+		
+		if(player2Char)
+		{
+			vector player2Origin = player2Char.GetOrigin();
+		
+			#ifdef WORKBENCH
+			RpcDo_TeleportPlayers(playerId1, playerId2, player2Origin, logAction);
+			#else
+			Rpc(RpcDo_TeleportPlayers, playerId1, playerId2, player2Origin, logAction);
+			#endif
+		};
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -595,7 +602,7 @@ class CRF_RplBroadcastManager : ScriptComponent
 
 	//------------------------------------------------------------------------------------------------
 	[RplRpc(RplChannel.Reliable, RplRcver.Broadcast)]
-	void RpcDo_TeleportPlayers(int playerId1, int playerId2, bool logAction)
+	void RpcDo_TeleportPlayers(int playerId1, int playerId2, vector player2Origin, bool logAction)
 	{
 		if (logAction)
 		{
@@ -606,18 +613,13 @@ class CRF_RplBroadcastManager : ScriptComponent
 		
 		if (!IsLocalPlayer(playerId1))
 			return;
-
-		IEntity entity2 = GetGame().GetPlayerManager().GetPlayerControlledEntity(playerId2);
-		if (!entity2)
-			return;
-			
-		EntitySpawnParams spawnParams = new EntitySpawnParams();
-		spawnParams.TransformMode = ETransformMode.WORLD;
-		vector teleportLocation = vector.Zero;
-		SCR_WorldTools.FindEmptyTerrainPosition(teleportLocation, entity2.GetOrigin(), 10);
-		spawnParams.Transform[3] = teleportLocation;
-
-		SCR_Global.TeleportPlayer(playerId1, teleportLocation);
+	
+		// Find a safe spot near the destination
+		vector finalSpawnLocation = vector.Zero;
+		SCR_WorldTools.FindEmptyTerrainPosition(finalSpawnLocation, player2Origin, 3);
+		
+		// Perform the teleportation
+		SCR_Global.TeleportLocalPlayer(finalSpawnLocation, SCR_EPlayerTeleportedReason.FAST_TRAVEL);
 	}
 
 	//------------------------------------------------------------------------------------------------

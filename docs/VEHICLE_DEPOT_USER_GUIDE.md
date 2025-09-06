@@ -82,5 +82,8 @@ The CRF Vehicle Depot system allows players to spawn vehicles using various cost
 |------|--------|---------|
 | 1 | **Add CRF_VehicleDepot & ActionsManagerComponent To Object** | Set Depot Name and Interaction Range (default: 5m) |
 | 2 | **Set Up Vehicle Depot** | Add vehicles, set up desired settings |
-| 3.A | **Set Up ActionsManager Component** | Create an Action Context. Name it anything. Under ActionsManager, Add a **PointInfo** to the **Position** class, and customize PointInfo offset for menu location. **Set a Radius and Height for menu distance interactibility**   |
-| 3.B | **Set Up ActionsManager Component** | Under **Additional Actions**, add the **CRF_DepotSpawnAction** to it. Add as many indexes to it as there are vehicles in **CRF_VehicleDepot**.  |
+| 3.A | **Set Up ActionsManager Component** | Create an Action Context. Name it anything. <br><br> Under ActionsManager, Add a **PointInfo** to the **Position** class, and customize PointInfo offset for menu location. <br><br> **Set a Radius and Height for menu distance interactibility**   |
+| 3.B | **Set Up ActionsManager Component** | Under **Additional Actions**, add the **CRF_DepotSpawnAction** to it. <br><br> If you set up **3.A** correctly, you should be able to set the **ParentContextList** of the **DepotSpawnAction** to the **Action Context**->**Context Name** (This links any **Additional Actions**->**CRF_DepotSpawnActions** you add together.) <br><br> Add as many indexes to it as there are vehicles in **CRF_VehicleDepot**. <img width="150" height="300" alt="image" src="https://github.com/user-attachments/assets/8dbd334f-103a-4081-8b6d-4217e2fb1450" />|
+| 4 | **Done?** | If done correctly, should now be functional. If wanting a good example or to copy properties, use prefabs. |
+
+

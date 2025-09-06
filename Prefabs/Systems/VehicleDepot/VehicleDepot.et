@@ -64,6 +64,69 @@ GenericEntity : "{273FAE0DD2734C1F}Prefabs/Structures/Signs/Military/SignRectang
      Duration 4
      m_iVehicleIndex 2
     }
+    CRF_DepotSpawnAction "{664C7C274296F89D}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{664C7C274296F96E}" {
+     }
+     Duration 4
+     m_iVehicleIndex 3
+    }
+    CRF_DepotSpawnAction "{664C7C274296F89E}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{664C7C274296F96F}" {
+     }
+     Duration 4
+     m_iVehicleIndex 4
+    }
+    CRF_DepotSpawnAction "{664C7C274296F89F}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{664C7C274296F970}" {
+     }
+     Duration 4
+     m_iVehicleIndex 5
+    }
+    CRF_DepotSpawnAction "{664C7C274296F8A0}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{664C7C274296F971}" {
+     }
+     Duration 4
+     m_iVehicleIndex 6
+    }
+    CRF_DepotSpawnAction "{664C7C274296F8A1}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{664C7C274296F972}" {
+     }
+     Duration 4
+     m_iVehicleIndex 7
+    }
+    CRF_DepotSpawnAction "{664C7C274296F8A2}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{664C7C274296F973}" {
+     }
+     Duration 4
+     m_iVehicleIndex 8
+    }
+    CRF_DepotSpawnAction "{664C7C274296F8A3}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{664C7C274296F974}" {
+     }
+     Duration 4
+     m_iVehicleIndex 9
+    }
    }
   }
   RplComponent "{566CB016AAC374C6}" {

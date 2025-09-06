@@ -68,6 +68,69 @@ GenericEntity {
      Duration 4
      m_iVehicleIndex 2
     }
+    CRF_DepotSpawnAction "{664B076A6EEF5728}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{664B076A6EEF5729}" {
+     }
+     Duration 4
+     m_iVehicleIndex 3
+    }
+    CRF_DepotSpawnAction "{664B076A6EEF572A}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{664B076A6EEF572B}" {
+     }
+     Duration 4
+     m_iVehicleIndex 4
+    }
+    CRF_DepotSpawnAction "{664B076A6EEF572C}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{664B076A6EEF572D}" {
+     }
+     Duration 4
+     m_iVehicleIndex 5
+    }
+    CRF_DepotSpawnAction "{664B076A6EEF572E}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{664B076A6EEF572F}" {
+     }
+     Duration 4
+     m_iVehicleIndex 6
+    }
+    CRF_DepotSpawnAction "{664B076A6EEF5730}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{664B076A6EEF5731}" {
+     }
+     Duration 4
+     m_iVehicleIndex 7
+    }
+    CRF_DepotSpawnAction "{664B076A6EEF5732}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{664B076A6EEF5733}" {
+     }
+     Duration 4
+     m_iVehicleIndex 8
+    }
+    CRF_DepotSpawnAction "{664B076A6EEF5734}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{664B076A6EEF5735}" {
+     }
+     Duration 4
+     m_iVehicleIndex 9
+    }
    }
   }
   RplComponent "{664B07581AC71C47}" {

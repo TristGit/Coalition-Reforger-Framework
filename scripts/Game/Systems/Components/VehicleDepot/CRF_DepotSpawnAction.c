@@ -24,20 +24,28 @@ class CRF_DepotSpawnAction : ScriptedUserAction
 		m_DepotComponent = CRF_VehicleDepot.Cast(pOwnerEntity.FindComponent(CRF_VehicleDepot));
 		if (!m_DepotComponent)
 		{
+			// ERROR messages should always show (not debug-only) since they indicate setup problems
 			Print("[CRF_DepotSpawnAction] ERROR: No CRF_VehicleDepot component found on owner entity");
 			return;
 		}
 		
 		// Get vehicle data from depot
 		array<ref CRF_VehicleDepotVehicle> vehicles = m_DepotComponent.GetVehicles();
+		
 		if (m_iVehicleIndex >= 0 && m_iVehicleIndex < vehicles.Count())
 		{
 			m_Vehicle = vehicles[m_iVehicleIndex];
-			Print(string.Format("[CRF_DepotSpawnAction] Initialized action for vehicle %1: %2", m_iVehicleIndex, m_Vehicle.m_sVehicleName));
+			// Only show action registration in debug mode
+			if (m_DepotComponent && m_DepotComponent.m_bEnableDebugLogging) Print(string.Format("[CRF_DepotSpawnAction] Initialized action for vehicle %1: %2", m_iVehicleIndex, m_Vehicle.m_sVehicleName));
 		}
 		else
 		{
-			Print(string.Format("[CRF_DepotSpawnAction] ERROR: Invalid vehicle index %1 (total vehicles: %2)", m_iVehicleIndex, vehicles.Count()));
+			// Only show a condensed message for invalid indices (and only once) when debug is enabled
+			if (m_iVehicleIndex == vehicles.Count() && m_DepotComponent && m_DepotComponent.m_bEnableDebugLogging)
+			{
+				// Show brief summary with specific unused action range
+				if (m_DepotComponent && m_DepotComponent.m_bEnableDebugLogging) Print(string.Format("[CRF_DepotSpawnAction] SETUP: %1 vehicles configured.", vehicles.Count(), vehicles.Count()));
+			}
 		}
 	}
 	
@@ -46,6 +54,7 @@ class CRF_DepotSpawnAction : ScriptedUserAction
 	{
 		if (!m_DepotComponent || !m_Vehicle)
 		{
+			// ERROR messages should always show (not debug-only) since they indicate setup problems
 			Print("[CRF_DepotSpawnAction] ERROR: Missing depot component or vehicle data");
 			return;
 		}
@@ -53,12 +62,12 @@ class CRF_DepotSpawnAction : ScriptedUserAction
 		// Get player ID
 		int playerId = SCR_PlayerController.GetLocalPlayerId();
 		
-		Print(string.Format("[CRF_DepotSpawnAction] Attempting to spawn %1 for player %2", m_Vehicle.m_sVehicleName, playerId));
+		if (m_DepotComponent && m_DepotComponent.m_bEnableDebugLogging) Print(string.Format("[CRF_DepotSpawnAction] Attempting to spawn %1 for player %2", m_Vehicle.m_sVehicleName, playerId));
 		
 		// Check if player can afford the vehicle
 		if (!m_DepotComponent.CanAffordVehicle(playerId, m_Vehicle, m_iVehicleIndex))
 		{
-			Print("[CRF_DepotSpawnAction] Player cannot afford vehicle");
+			if (m_DepotComponent && m_DepotComponent.m_bEnableDebugLogging) Print("[CRF_DepotSpawnAction] Player cannot afford vehicle");
 			
 			// Log specific error message based on cost type for debugging
 			string errorMsg;
@@ -75,7 +84,8 @@ class CRF_DepotSpawnAction : ScriptedUserAction
 					break;
 			}
 			
-			Print(string.Format("[CRF_DepotSpawnAction] %1", errorMsg));
+			// Show error details only in debug mode
+			if (m_DepotComponent && m_DepotComponent.m_bEnableDebugLogging) Print(string.Format("[CRF_DepotSpawnAction] %1", errorMsg));
 			
 			return;
 		}
@@ -84,41 +94,37 @@ class CRF_DepotSpawnAction : ScriptedUserAction
 		CRF_RplToAuthorityManager rplManager = CRF_RplToAuthorityManager.GetInstance();
 		if (rplManager)
 		{
-			Print("[CRF_DepotSpawnAction] RplManager found");
+			if (m_DepotComponent && m_DepotComponent.m_bEnableDebugLogging) Print("[CRF_DepotSpawnAction] RplManager found");
 			
 			// Get the depot entity's RplId for server communication
 			RplComponent rplComponent = RplComponent.Cast(GetOwner().FindComponent(RplComponent));
 			if (rplComponent)
 			{
 				RplId depotRplId = rplComponent.Id();
-				Print(string.Format("[CRF_DepotSpawnAction] Depot RplComponent found, RplId: %1", depotRplId));
+				if (m_DepotComponent && m_DepotComponent.m_bEnableDebugLogging) Print(string.Format("[CRF_DepotSpawnAction] Depot RplComponent found, RplId: %1", depotRplId));
 				
 				// Send RPC to server to spawn the vehicle - this ensures it works on dedicated servers
 				rplManager.RequestVehicleDepotSpawn(playerId, m_iVehicleIndex, depotRplId);
-				Print(string.Format("[CRF_DepotSpawnAction] Sent vehicle depot spawn request via RPC for %1", m_Vehicle.m_sVehicleName));
+				if (m_DepotComponent && m_DepotComponent.m_bEnableDebugLogging) Print(string.Format("[CRF_DepotSpawnAction] Sent vehicle depot spawn request via RPC for %1", m_Vehicle.m_sVehicleName));
 			}
 			else
 			{
-				Print("[CRF_DepotSpawnAction] Depot entity missing RplComponent - using fallback direct spawn");
+				if (m_DepotComponent && m_DepotComponent.m_bEnableDebugLogging) Print("[CRF_DepotSpawnAction] Depot entity missing RplComponent - using fallback direct spawn");
 				
 				// Fallback: direct spawn when no replication available
 				bool success = m_DepotComponent.SpawnVehicle(playerId, m_iVehicleIndex);
-				if (success)
-					Print(string.Format("[CRF_DepotSpawnAction] Fallback direct spawn successful: %1", m_Vehicle.m_sVehicleName));
-				else
-					Print(string.Format("[CRF_DepotSpawnAction] Fallback direct spawn failed: %1", m_Vehicle.m_sVehicleName));
+				if (success && m_DepotComponent && m_DepotComponent.m_bEnableDebugLogging) Print(string.Format("[CRF_DepotSpawnAction] Fallback direct spawn successful: %1", m_Vehicle.m_sVehicleName));
+				else if (!success && m_DepotComponent && m_DepotComponent.m_bEnableDebugLogging) Print(string.Format("[CRF_DepotSpawnAction] Fallback direct spawn failed: %1", m_Vehicle.m_sVehicleName));
 			}
 		}
 		else
 		{
-			Print("[CRF_DepotSpawnAction] CRF_RplToAuthorityManager not available - fallback to direct spawn");
+			if (m_DepotComponent && m_DepotComponent.m_bEnableDebugLogging) Print("[CRF_DepotSpawnAction] CRF_RplToAuthorityManager not available - fallback to direct spawn");
 			
 			// Fallback: direct spawn (for local testing)
 			bool success = m_DepotComponent.SpawnVehicle(playerId, m_iVehicleIndex);
-			if (success)
-				Print(string.Format("[CRF_DepotSpawnAction] Direct spawn successful: %1", m_Vehicle.m_sVehicleName));
-			else
-				Print(string.Format("[CRF_DepotSpawnAction] Direct spawn failed: %1", m_Vehicle.m_sVehicleName));
+			if (success && m_DepotComponent && m_DepotComponent.m_bEnableDebugLogging) Print(string.Format("[CRF_DepotSpawnAction] Direct spawn successful: %1", m_Vehicle.m_sVehicleName));
+			else if (!success && m_DepotComponent && m_DepotComponent.m_bEnableDebugLogging) Print(string.Format("[CRF_DepotSpawnAction] Direct spawn failed: %1", m_Vehicle.m_sVehicleName));
 		}
 	}
 	

@@ -11,18 +11,17 @@ The CRF Vehicle Depot system allows players to spawn vehicles using various cost
 - 3 Use Cases (Custom Use count, Side Tickets, & Nearby Storage Detection)
 - Customizable spawn locations
 
-## Quick Setup Guide
+## Quick Setup Guide (Prefab Use)
 
 | Step | Action | Details |
 |------|--------|---------|
-| 1 | **Place Prefab** | Place prefab "VehicleDepot" or "VehicleDepot_Cache" → Place in mission → Orient toward spawn direction |
+| 1 | **Place Prefab** | Place prefab "**VehicleDepot.et**" or "**VehicleDepot_Cache.et**" (Comes with supply cache) → Place in mission → Orient toward spawn direction |
 | 2 | **Basic Config** | Set Depot Name and Interaction Range (default: 5m) |
-| 3 | **Add Vehicles** | Vehicle Configuration → Add vehicles with Name, Prefab, Cost Type, Cost Amount |
-| 4 | **Create Actions** | ActionsManagerComponent → Add **CRF_DepotSpawnAction** via **Additional Actions** → Set Vehicle Index (starts at 0) |
-| 5 | **Duplicate Actions** | Right-click → Duplicate → Change Vehicle Index (1, 2, 3...) for each vehicle you add |
-| 6 | **Configure Spawning** | Set Spawn Pattern, Distance, Spacing, Point Count or desired settings for spawning. |
+| 4 | **Add Vehicles** | Vehicle Configuration → Add vehicles with Name, Prefab, Cost Type, Cost Amount |
+| 5 | **Configure Spawning** | Set Spawn Pattern, Distance, Spacing, Point Count or desired settings for spawning. |
 
-⚠️ **Critical**: Vehicle Index must match vehicle position in array (First vehicle = 0, Second = 1, etc.)
+### ⚠️ **Critical**: 
+- If Exceeding 10+ vehicles (The prefab default amount), It will no longer auto-detect vehicle additions <br> Add/Duplicate more **AdditionalActions**:**CRF_DepotSpawnActions** within the **ActionsManager** and change their vehicle indexes <br> (IE: 15 vehicles in **VehicleDepot** -> 15 **CRF_DepotSpawnActions** -> All with indices 0-14)
 
 ## Configuration Settings
 
@@ -77,7 +76,7 @@ The CRF Vehicle Depot system allows players to spawn vehicles using various cost
 | **Can't afford vehicles** | Check ticket/supply availability or global uses pool |
 | **It doesnt spawn vehicles** | Toggle debug OR reload Workbench |
 
-## Custom Depot Creation
+## Custom Depot Creation (Non-Prefab Use)
 | Step | Action | Details |
 |------|--------|---------|
 | 1 | **Add CRF_VehicleDepot & ActionsManagerComponent To Object** | Set Depot Name and Interaction Range (default: 5m) |

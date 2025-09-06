@@ -173,7 +173,7 @@ class CRF_VehicleDepot : ScriptComponent
 	//------------------------------------------------------------------------------------------------
 	override void EOnInit(IEntity owner)
 	{
-		DebugPrint(string.Format("Vehicle depot initialized with %1 vehicles and %2 spawn points.", m_aVehicles.Count(), m_iSpawnPointCount));
+	//-	DebugPrint(string.Format("Vehicle depot initialized with %1 vehicles and %2 spawn points.", m_aVehicles.Count(), m_iSpawnPointCount));
 		
 		// Pre-cache spawn positions during initialization for better performance
 		// This follows the pattern used in other CRF components (like CRF_MapStagingComponent)
@@ -335,7 +335,7 @@ class CRF_VehicleDepot : ScriptComponent
 		// Only log during actual spawn attempts, not UI updates
 		if (!canAfford)
 		{
-			DebugPrint(string.Format("Spawn failed - need %1 supplies, only %2 available (cached)", cost, m_iCachedSuppliesRemaining));
+			if (m_bEnableDebugLogging) Print(string.Format("[CRF_VehicleDepot] Spawn failed - need %1 supplies, only %2 available (cached)", cost, m_iCachedSuppliesRemaining));
 		}
 		
 		return canAfford;
@@ -585,7 +585,7 @@ class CRF_VehicleDepot : ScriptComponent
 		// Check for unlimited tickets (cost of -1)
 		if (amount == -1)
 		{
-			DebugPrint("Spawned unlimited ticket vehicle - no tickets deducted");
+			if (m_bEnableDebugLogging) Print("[CRF_VehicleDepot] Spawned unlimited ticket vehicle - no tickets deducted");
 			return;
 		}
 		
@@ -607,7 +607,7 @@ class CRF_VehicleDepot : ScriptComponent
 		SCR_ResourceComponent resourceComponent = FindNearbyResourceStorage();
 		if (!resourceComponent)
 		{
-			DebugPrint("No supply storage found nearby for deduction!");
+			if (m_bEnableDebugLogging) Print("[CRF_VehicleDepot] No supply storage found nearby for deduction!");
 			return;
 		}
 		
@@ -615,7 +615,7 @@ class CRF_VehicleDepot : ScriptComponent
 		IEntity resourceEntity = resourceComponent.GetOwner();
 		if (!resourceEntity)
 		{
-			DebugPrint("Could not find resource entity owner!");
+			if (m_bEnableDebugLogging) Print("[CRF_VehicleDepot] Could not find resource entity owner!");
 			return;
 		}
 		
@@ -627,7 +627,7 @@ class CRF_VehicleDepot : ScriptComponent
 			bool consumptionSuccess = consumer.RequestConsumtion(amount);
 			if (consumptionSuccess)
 			{
-				DebugPrint(string.Format("Successfully consumed %1 supplies from real Arma resource system", amount));
+				if (m_bEnableDebugLogging) Print(string.Format("[CRF_VehicleDepot] Successfully consumed %1 supplies from real Arma resource system", amount));
 				
 				// Update cached supply count for real-time UI updates
 				m_iCachedSuppliesRemaining = GetRemainingSuppliesFromSource();
@@ -640,14 +640,14 @@ class CRF_VehicleDepot : ScriptComponent
 			}
 			else
 			{
-				DebugPrint(string.Format("Failed to consume %1 supplies - insufficient supplies available", amount));
+				if (m_bEnableDebugLogging) Print(string.Format("[CRF_VehicleDepot] Failed to consume %1 supplies - insufficient supplies available", amount));
 			}
 		}
 		else
 		{
 			// Warning: Cannot actually consume from direct storage
-			DebugPrint("WARNING: Supply storage found but no consumer available - cannot actually deduct supplies!");
-			DebugPrint("You need to configure the supply storage with proper consumers/generators for real resource consumption.");
+			if (m_bEnableDebugLogging) Print("[CRF_VehicleDepot] WARNING: Supply storage found but no consumer available - cannot actually deduct supplies!");
+			if (m_bEnableDebugLogging) Print("[CRF_VehicleDepot] You need to configure the supply storage with proper consumers/generators for real resource consumption.");
 		}
 	}
 	
@@ -660,7 +660,7 @@ class CRF_VehicleDepot : ScriptComponent
 			// Check for unlimited uses (cost of -1)
 			if (vehicle.m_iCost == -1)
 			{
-				DebugPrint(string.Format("Spawned unlimited vehicle %1 - no cost deducted", vehicle.m_sVehicleName));
+				if (m_bEnableDebugLogging) Print(string.Format("[CRF_VehicleDepot] Spawned unlimited vehicle %1 - no cost deducted", vehicle.m_sVehicleName));
 				return;
 			}
 			
@@ -669,7 +669,7 @@ class CRF_VehicleDepot : ScriptComponent
 			if (m_iUsesRemaining >= cost)
 			{
 				m_iUsesRemaining -= cost;
-				DebugPrint(string.Format("Deducted %1 uses from global pool, %2 remaining", cost, m_iUsesRemaining));
+				if (m_bEnableDebugLogging) Print(string.Format("[CRF_VehicleDepot] Deducted %1 uses from global pool, %2 remaining", cost, m_iUsesRemaining));
 				
 				// Trigger replication to update all clients immediately
 				Replication.BumpMe();
@@ -698,19 +698,19 @@ class CRF_VehicleDepot : ScriptComponent
 			// Log error but don't show notification to player
 			if (m_bRestrictToLeadership && !HasRequiredLeadershipRole(playerId))
 			{
-				DebugPrint("Player lacks required leadership role!");
+				if (m_bEnableDebugLogging) Print("[CRF_VehicleDepot] Player lacks required leadership role!");
 			}
 			else if (vehicle.m_eCostType == CRF_EVehicleDepotCostType.SUPPLIES)
 			{
 				// Use the debug version for spawn attempts
 				if (!CanAffordSuppliesForSpawn(vehicle.m_iCost))
 				{
-					DebugPrint("Player cannot afford supplies!");
+					if (m_bEnableDebugLogging) Print("[CRF_VehicleDepot] Player cannot afford supplies!");
 				}
 			}
 			else
 			{
-				DebugPrint("Player cannot afford this vehicle!");
+				if (m_bEnableDebugLogging) Print("[CRF_VehicleDepot] Player cannot afford this vehicle!");
 			}
 			return false;
 		}
@@ -785,7 +785,7 @@ class CRF_VehicleDepot : ScriptComponent
 		IEntity spawnedVehicle = GetGame().SpawnEntityPrefab(resource, GetGame().GetWorld(), spawnParams);
 		if (!spawnedVehicle)
 		{
-			DebugPrint("Failed to spawn vehicle!");
+			if (m_bEnableDebugLogging) Print("[CRF_VehicleDepot] Failed to spawn vehicle!");
 			return false;
 		}
 		

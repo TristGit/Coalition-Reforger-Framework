@@ -124,6 +124,12 @@ class CRF_VehicleDepot : ScriptComponent
 	[Attribute("0", UIWidgets.CheckBox, "Enable debug logging")]
 	bool m_bEnableDebugLogging;
 	
+	#ifdef WORKBENCH
+	// Debug shape creation tracking (Workbench only - zero runtime overhead)
+	protected bool m_bDebugShapesCreated = false;
+	protected ref array<ref Shape> m_aDebugShapes = {};
+	#endif
+	
 	// Store found entities for processing
 	protected ref array<IEntity> m_aNearbyEntities = {};
 
@@ -141,6 +147,9 @@ class CRF_VehicleDepot : ScriptComponent
 			
 		// Initialize performance caches
 		m_aCachedSpawnPositions = {};
+		#ifdef WORKBENCH
+		m_aDebugShapes = {};
+		#endif
 			
 		// Initialize global uses pool
 		m_iUsesRemaining = m_iGlobalUsesPool;
@@ -1206,11 +1215,30 @@ class CRF_VehicleDepot : ScriptComponent
 	{
 		// Only draw if debug visuals are enabled
 		if (!m_bEnableSpawnVisuals)
+		{
+			// Clear shapes if visuals are disabled
+			if (m_bDebugShapesCreated)
+			{
+				ClearDebugShapes();
+			}
 			return;
+		}
 			
 		if (!owner)
 			return;
 		
+		// Only create shapes once, then leave them persistent
+		if (!m_bDebugShapesCreated)
+		{
+			CreateDebugShapes(owner);
+			m_bDebugShapesCreated = true;
+		}
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	//! Create persistent debug shapes (called once)
+	protected void CreateDebugShapes(IEntity owner)
+	{
 		vector depotPos = owner.GetOrigin();
 		vector transform[4];
 		owner.GetWorldTransform(transform);
@@ -1241,50 +1269,74 @@ class CRF_VehicleDepot : ScriptComponent
 			vehicleForwardDir = newForwardDir.Normalized();
 		}
 		
-		// Use cached positions if available, otherwise calculate on-the-fly for debug
-		if (m_bSpawnPositionsCached && m_aCachedSpawnPositions.Count() > 0)
+		// Use the proper world reference and coordinate handling like CRF_PolyZoneMeshComponent
+		BaseWorld world = owner.GetWorld(); // Use owner.GetWorld() instead of GetGame().GetWorld()
+		
+		// Shape flags for consistent rendering
+		const ShapeFlags solidSphereFlags = ShapeFlags.VISIBLE | ShapeFlags.NOZBUFFER | ShapeFlags.NOOUTLINE;
+		const ShapeFlags wireframeSphereFlags = ShapeFlags.TRANSP | ShapeFlags.VISIBLE | ShapeFlags.NOOUTLINE | ShapeFlags.NOZBUFFER;
+		const ShapeFlags arrowFlags = ShapeFlags.VISIBLE | ShapeFlags.NOZBUFFER;
+		
+		for (int i = 0; i < m_iSpawnPointCount; i++)
 		{
-			// Draw cached spawn positions as red spheres
-			for (int i = 0; i < m_aCachedSpawnPositions.Count(); i++)
+			// Calculate spawn position using same logic as cache
+			vector spawnPos = CalculateSpawnPosition(depotPos, forwardDir, rightDir, i);
+			
+			// Apply proper ground snapping using owner's world reference
+			if (world)
 			{
-				vector spawnPos = m_aCachedSpawnPositions[i];
-				
-				// Draw red sphere at cached spawn position
-				Shape.CreateSphere(ARGB(255, 255, 0, 0), ShapeFlags.WIREFRAME | ShapeFlags.ONCE, spawnPos, 2.0);
-				
-				// Draw collision detection radius as blue wireframe sphere
-				Shape.CreateSphere(ARGB(100, 0, 150, 255), ShapeFlags.WIREFRAME | ShapeFlags.ONCE, spawnPos, m_fCollisionRadius);
-				
-				// Draw vehicle orientation line (green line showing which way vehicles will face)
-				vector lineEnd = spawnPos + (vehicleForwardDir * 4.0); // 4 meter line
-				Shape.CreateArrow(spawnPos, lineEnd, 0.3, ARGB(255, 0, 255, 0), ShapeFlags.ONCE);
+				float surfaceY = world.GetSurfaceY(spawnPos[0], spawnPos[2]);
+				spawnPos[1] = surfaceY + 0.1; // Small offset to keep spheres just above ground
 			}
+			else
+			{
+				spawnPos[1] = depotPos[1] + 0.1; // Small fallback offset
+			}
+			
+			// Create and store shape references for proper management
+			// Red sphere for spawn position
+			ref Shape spawnSphere = Shape.CreateSphere(ARGB(255, 255, 0, 0), solidSphereFlags, spawnPos, 0.2);
+			if (spawnSphere)
+				m_aDebugShapes.Insert(spawnSphere);
+			
+			// Blue wireframe sphere for collision radius
+			ref Shape collisionSphere = Shape.CreateSphere(ARGB(100, 0, 150, 255), wireframeSphereFlags, spawnPos, m_fCollisionRadius);
+			if (collisionSphere)
+				m_aDebugShapes.Insert(collisionSphere);
+
+			// Green arrow showing vehicle orientation
+			vector lineEnd = spawnPos + (vehicleForwardDir * 4.0); // 4 meter line
+			ref Shape orientationArrow = Shape.CreateArrow(spawnPos, lineEnd, 0.3, ARGB(255, 0, 255, 0), arrowFlags);
+			if (orientationArrow)
+				m_aDebugShapes.Insert(orientationArrow);
 		}
-		else
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	//! Clear all debug shapes
+	protected void ClearDebugShapes()
+	{
+		// In Arma Reforger, shapes are automatically cleaned up by the engine
+		// We just need to clear our references and reset the flag
+		if (m_aDebugShapes)
 		{
-			// Fallback: Calculate positions on-the-fly for debug (only in Workbench)
-			BaseWorld world = GetGame().GetWorld();
-			for (int i = 0; i < m_iSpawnPointCount; i++)
-			{
-				vector spawnPos = CalculateSpawnPosition(depotPos, forwardDir, rightDir, i);
-				
-				// Adjust height to ground level for debug visualization
-				if (world)
-				{
-					float surfaceY = world.GetSurfaceY(spawnPos[0], spawnPos[2]);
-					spawnPos[1] = surfaceY + 1.5; // Vehicle spawn height
-				}
-				
-				// Draw red sphere at spawn position
-				Shape.CreateSphere(ARGB(255, 255, 0, 0), ShapeFlags.WIREFRAME | ShapeFlags.ONCE, spawnPos, 0.2);
-				
-				// Draw collision detection radius as blue wireframe sphere
-				Shape.CreateSphere(ARGB(100, 0, 150, 255), ShapeFlags.WIREFRAME | ShapeFlags.ONCE, spawnPos, m_fCollisionRadius);
-				
-				// Draw vehicle orientation line (green line showing which way vehicles will face)
-				vector lineEnd = spawnPos + (vehicleForwardDir * 4.0); // 4 meter line
-				Shape.CreateArrow(spawnPos, lineEnd, 0.3, ARGB(255, 0, 255, 0), ShapeFlags.ONCE);
-			}
+			m_aDebugShapes.Clear();
+		}
+		
+		// Reset creation flag
+		m_bDebugShapesCreated = false;
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	//! Force refresh of debug shapes (useful when depot settings change)
+	void RefreshDebugShapes()
+	{
+		if (m_bEnableSpawnVisuals && GetOwner())
+		{
+			// Clear existing shapes first
+			ClearDebugShapes();
+			// Recreate them on next update
+			m_bDebugShapesCreated = false;
 		}
 	}
 	#endif

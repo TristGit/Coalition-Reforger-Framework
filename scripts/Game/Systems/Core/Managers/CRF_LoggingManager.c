@@ -2,10 +2,8 @@
 * Logging component for COALITION games
 * Component overrides base game mode so it always runs
 *
-* Note that write files are form	// Register for gamemode state changes
-	CRF_Gamemode gamemode = CRF_Gamemode.GetInstance();
-	if (gamemode)
-		gamemode.GetOnStateChanged().Insert(OnGamemodeStateChanged);d for parsing by an external program
+* Note that write files are formatted as CSV
+* for parsing by an external program
 * which splits strings via commas
 *
 * Server only

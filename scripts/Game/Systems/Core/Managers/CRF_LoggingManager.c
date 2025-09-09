@@ -46,6 +46,9 @@ class CRF_LoggingManager: SCR_BaseGameModeComponent
 	// Kill tracking for more accurate weapon logging
 	private ref map<string, string> m_mPendingDamageWeapons;
 	
+	// Damage type tracking for kills
+	private ref map<string, int> m_mPendingDamageTypes;
+	
 	// Player counts
 	private int m_iPlayerCount;
 	private string m_sPlayerCountMax;
@@ -78,8 +81,9 @@ class CRF_LoggingManager: SCR_BaseGameModeComponent
 		if (!s_Instance)
 			s_Instance = this;
 		
-		// Initialize damage tracking map
+		// Initialize damage tracking maps
 		m_mPendingDamageWeapons = new map<string, string>();
+		m_mPendingDamageTypes = new map<string, int>();
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -411,13 +415,19 @@ class CRF_LoggingManager: SCR_BaseGameModeComponent
 	
 	//------------------------------------------------------------------------------------------------
 	// Track a weapon used on a specific player
-	void TrackWeaponUsed(int victimId, string weaponName)
+	void TrackWeaponUsed(int victimId, string weaponName, int damageType = 0)
 	{
 		if (victimId <= 0 || weaponName.IsEmpty())
 			return;
 		
 		string victimKey = victimId.ToString();
 		m_mPendingDamageWeapons.Set(victimKey, weaponName);
+		
+		// Also track the damage type if provided
+		if (damageType > 0)
+		{
+			m_mPendingDamageTypes.Set(victimKey, damageType);
+		}
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -456,8 +466,9 @@ class CRF_LoggingManager: SCR_BaseGameModeComponent
 			m_sKillerName = "AI";
 		m_sKillerName = m_sKillerName + "(" + m_sKillerFaction + ")"; // we append the faction here due to compiler constraints
 		
-		// Default weapon name
+		// Default weapon name and damage type
 		m_sWeaponName = "Unknown Weapon";
+		int damageType = 0;
 		
 		// First, check if we have tracked a weapon for this victim
 		string victimKey = victimId.ToString();
@@ -465,6 +476,13 @@ class CRF_LoggingManager: SCR_BaseGameModeComponent
 		{
 			m_sWeaponName = m_mPendingDamageWeapons.Get(victimKey);
 			m_mPendingDamageWeapons.Remove(victimKey); // Clear the tracking data
+			
+			// Also get the damage type if available
+			if (m_mPendingDamageTypes.Contains(victimKey))
+			{
+				damageType = m_mPendingDamageTypes.Get(victimKey);
+				m_mPendingDamageTypes.Remove(victimKey); // Clear the tracking data
+			}
 		}
 		else
 		{
@@ -496,8 +514,17 @@ class CRF_LoggingManager: SCR_BaseGameModeComponent
   		m_iTotalSeconds = (m_fTotalTime / 1000);
 		m_sTime = SCR_FormatHelper.FormatTime(m_iTotalSeconds);
 		
+		// Append damage type to weapon name if available
+		if (damageType > 0)
+		{
+			string damageTypeStr = CRF_DamageUtility.GetDamageTypeString(damageType);
+			m_sWeaponName = m_sWeaponName + " (" + damageTypeStr + ")";
+		}
+		
 		// Log to file
-		m_LogFileHandle.WriteLine("kill" + SEPARATOR + m_sVictimName + SEPARATOR + m_sVictimGUID + SEPARATOR + m_sKillerName + SEPARATOR + m_sKillerGUID + SEPARATOR + m_sWeaponName + SEPARATOR + m_fRange + SEPARATOR + m_sTime);
+		m_LogFileHandle.WriteLine("kill" + SEPARATOR + m_sVictimName + SEPARATOR + m_sVictimGUID + SEPARATOR + 
+		                         m_sKillerName + SEPARATOR + m_sKillerGUID + SEPARATOR + m_sWeaponName + SEPARATOR + 
+		                         m_fRange + SEPARATOR + m_sTime);
 	}
 	
 	// TODO: Implement these on EH where grenade is thrown
@@ -576,8 +603,8 @@ class CRF_LoggingManager: SCR_BaseGameModeComponent
 			}
 		}
 		
-		// Store this weapon for the victim
-		TrackWeaponUsed(victimId, weaponName);
+		// Store this weapon and damage type for the victim
+		TrackWeaponUsed(victimId, weaponName, damageType);
 	}
 	
 	//------------------------------------------------------------------------------------------------

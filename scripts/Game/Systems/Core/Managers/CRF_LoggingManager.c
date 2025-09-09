@@ -500,7 +500,7 @@ class CRF_LoggingManager: SCR_BaseGameModeComponent
 					{
 						m_BWC = m_Inventory.GetCurrentCharacterWeapon();
 						if (m_BWC)
-							m_sWeaponName = m_BWC.GetUIInfo().GetName() + " (Current)";
+							m_sWeaponName = m_BWC.GetUIInfo().GetName();
 					}
 				}
 			}

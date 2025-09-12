@@ -97,10 +97,6 @@ class CRF_PlayableCharacter : ScriptComponent
 		string prefabName = owner.GetPrefabData().GetPrefabName();
 		bool isCRFInitialEntity = prefabName.Contains("CRF_InitialEntity.et");
 		
-		// Log entity detection
-		Print(string.Format("CRF_PlayableCharacter: Spectator entity detected - Prefab: %1, IsCRFInitialEntity: %2", 
-			prefabName, isCRFInitialEntity), LogLevel.NORMAL);
-		
 		if (isCRFInitialEntity)
 		{
 			// Apply random spread positioning to CRF_InitialEntity
@@ -108,11 +104,6 @@ class CRF_PlayableCharacter : ScriptComponent
 			vector spreadPos = GenerateRandomSpreadPosition(currentPos, 500.0);
 			spreadPos[1] = 10000.0; // Set elevation to 10000m
 			owner.SetOrigin(spreadPos);
-			
-			// Log the position change for debugging
-			Print(string.Format("CRF_PlayableCharacter: CRF_InitialEntity moved from [%1, %2, %3] to [%4, %5, %6]", 
-				currentPos[0], currentPos[1], currentPos[2],
-				spreadPos[0], spreadPos[1], spreadPos[2]), LogLevel.NORMAL);
 		}
 		else if (!CRF_GamemodeManager.IsValidSpawnVector(owner.GetOrigin()))
 		{

@@ -113,8 +113,7 @@ class CRF_PlayerControllerManager : ScriptComponent
 		{
 			GetGame().GetMenuManager().CloseAllMenus();
 			ResetSettingsToStoredValues();
-			if (!CVON_VONGameModeComponent.GetInstance())
-				SetupRadioFrequency();
+			SetupRadioFrequency();
 		}; 
 		
 		if (playerCharacter.GetPrefabData().GetPrefabName() == CRF_GamemodeManager.GetSpectatorResource())
@@ -267,7 +266,7 @@ class CRF_PlayerControllerManager : ScriptComponent
 		IEntity entity = SCR_PlayerController.GetLocalMainEntity();
 		if (!entity || CRF_GamemodeManager.IsSpectator(entity))
 			return;
-
+		
 		// Find radio in inventory
 		array<IEntity> items = {};
 		SCR_InventoryStorageManagerComponent.Cast(entity.FindComponent(SCR_InventoryStorageManagerComponent)).GetItems(items);
@@ -295,7 +294,7 @@ class CRF_PlayerControllerManager : ScriptComponent
 
 		SCR_AIGroup group = m_GroupManager.GetPlayerGroup(SCR_PlayerController.GetLocalPlayerId());
 		PlayerController pc = GetGame().GetPlayerController();
-
+		
 		// Set frequency based on group
 		if (pc && group)
 		{
@@ -307,14 +306,14 @@ class CRF_PlayerControllerManager : ScriptComponent
 		// Set up Voice over Network component
 		SCR_VONController vc = SCR_VONController.Cast(pc.FindComponent(SCR_VONController));
 		SCR_VoNComponent von = SCR_VoNComponent.Cast(entity.FindComponent(SCR_VoNComponent));
-
+		
 		von.SetTransmitRadio(grpTsv);
 
 		// Set up platoon radio if available
 		BaseTransceiver pltTsv = radio.GetTransceiver(1);
 		if (pltTsv)
 			von.SetTransmitRadio(pltTsv);
-
+		
 		vc.PublicResetVON();
 		vc.SetVONComponent(von);
 	}

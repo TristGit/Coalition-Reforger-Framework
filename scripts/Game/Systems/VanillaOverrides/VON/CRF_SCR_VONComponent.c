@@ -18,44 +18,41 @@ modded class SCR_VoNComponent
 	//------------------------------------------------------------------------------------------------
 	override protected event void OnCapture(BaseTransceiver transmitter)
 	{
-		if (!CVON_VONGameModeComponent.GetInstance())
+		// Check if this is direct speech in spectator mode that should be restricted
+		if (!m_Gamemode || m_Gamemode.m_GamemodeState != CRF_EGamemodeState.GAME)
 		{
-			// Check if this is direct speech in spectator mode that should be restricted
-			if (!m_Gamemode || m_Gamemode.m_GamemodeState != CRF_EGamemodeState.GAME)
+			// Check if this is direct speech (no radio transmitter) in spectator mode
+			if (!transmitter)
 			{
-				// Check if this is direct speech (no radio transmitter) in spectator mode
-				if (!transmitter)
+				// Get local player's channel
+				int localPlayerId = SCR_PlayerController.GetLocalPlayerId();
+				int localChannel;
+				if (m_MenuManager)
+					localChannel = m_MenuManager.GetChannel(localPlayerId);
+				else
+					localChannel = 0;
+				
+				// Only allow direct speech if in default channels (0 or 1)
+				// For custom channels (>1), block direct speech to force radio usage
+				if (localChannel > 1)
 				{
-					// Get local player's channel
-					int localPlayerId = SCR_PlayerController.GetLocalPlayerId();
-					int localChannel;
-					if (m_MenuManager)
-						localChannel = m_MenuManager.GetChannel(localPlayerId);
-					else
-						localChannel = 0;
-					
-					// Only allow direct speech if in default channels (0 or 1)
-					// For custom channels (>1), block direct speech to force radio usage
-					if (localChannel > 1)
-					{
-						// Block direct speech by not calling parent
-						// Only register for UI display purposes
-						AddPlayerTalking(localPlayerId);
-						return;
-					}
+					// Block direct speech by not calling parent
+					// Only register for UI display purposes
+					AddPlayerTalking(localPlayerId);
+					return;
 				}
 			}
-			
-			// Call parent implementation to maintain core functionality
-			super.OnCapture(transmitter);
-			
-			// Skip processing during active gameplay to prevent FPS impact
-			if (!m_Gamemode || m_Gamemode.m_GamemodeState == CRF_EGamemodeState.GAME)
-				return;
-			
-			// Register local player as currently talking
-			AddPlayerTalking(SCR_PlayerController.GetLocalPlayerId());
 		}
+		
+		// Call parent implementation to maintain core functionality
+		super.OnCapture(transmitter);
+		
+		// Skip processing during active gameplay to prevent FPS impact
+		if (!m_Gamemode || m_Gamemode.m_GamemodeState == CRF_EGamemodeState.GAME)
+			return;
+		
+		// Register local player as currently talking
+		AddPlayerTalking(SCR_PlayerController.GetLocalPlayerId());
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -63,31 +60,28 @@ modded class SCR_VoNComponent
 	//------------------------------------------------------------------------------------------------
 	override protected event void OnReceive(int playerId, BaseTransceiver receiver, int frequency, float quality)
 	{
-		if (!CVON_VONGameModeComponent.GetInstance())
+		// Filter spectator direct speech based on channel membership
+		if (!m_Gamemode || m_Gamemode.m_GamemodeState != CRF_EGamemodeState.GAME)
 		{
-			// Filter spectator direct speech based on channel membership
-			if (!m_Gamemode || m_Gamemode.m_GamemodeState != CRF_EGamemodeState.GAME)
+			// Check if this is direct speech (no radio receiver) in spectator mode
+			if (!receiver && IsSpectatorDirectSpeechFiltered(playerId))
 			{
-				// Check if this is direct speech (no radio receiver) in spectator mode
-				if (!receiver && IsSpectatorDirectSpeechFiltered(playerId))
-				{
-					// Block direct speech reception by not calling parent
-					// Only register for UI display purposes
-					AddPlayerTalking(playerId);
-					return;
-				}
-			}
-			
-			// Call parent implementation to maintain core functionality
-			super.OnReceive(playerId, receiver, frequency, quality);
-			
-			// Skip processing during active gameplay to prevent FPS impact
-			if (!m_Gamemode || m_Gamemode.m_GamemodeState == CRF_EGamemodeState.GAME)
+				// Block direct speech reception by not calling parent
+				// Only register for UI display purposes
+				AddPlayerTalking(playerId);
 				return;
-			
-			// Register the remote player as currently talking
-			AddPlayerTalking(playerId);
+			}
 		}
+		
+		// Call parent implementation to maintain core functionality
+		super.OnReceive(playerId, receiver, frequency, quality);
+		
+		// Skip processing during active gameplay to prevent FPS impact
+		if (!m_Gamemode || m_Gamemode.m_GamemodeState == CRF_EGamemodeState.GAME)
+			return;
+		
+		// Register the remote player as currently talking
+		AddPlayerTalking(playerId);
 	}
 	
 	//------------------------------------------------------------------------------------------------

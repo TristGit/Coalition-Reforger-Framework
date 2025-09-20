@@ -24,7 +24,6 @@ class CRF_PlayerControllerManager : ScriptComponent
 	
 	// Camera and Spectator
 	IEntity m_eCamera;                      // Stores local camera entity for spectator mode
-	bool m_bActivated = false;              // NVG activation state for spectator
 	protected vector m_vStoredCameraPos[4];   // Stores camera transform between sessions
 	
 	// Game Performance Settings
@@ -80,7 +79,6 @@ class CRF_PlayerControllerManager : ScriptComponent
 		GetGame().GetInputManager().AddActionListener("CRF_ToggleSideReady", EActionTrigger.DOWN, ToggleSideReady);
 		GetGame().GetInputManager().AddActionListener("CRF_AdminForceReady", EActionTrigger.DOWN, AdminForceReady);
 		GetGame().GetInputManager().AddActionListener("CRF_OpenLobby", EActionTrigger.PRESSED, OpenSlottingMenu);
-		GetGame().GetInputManager().AddActionListener("CRF_SpecNVG", EActionTrigger.DOWN, ToggleNVGs);
 		GetGame().GetInputManager().AddActionListener("SwitchSpectatorUI", EActionTrigger.DOWN, UpdateHUDVisible);
 		
 		GetGame().GetCallqueue().Call(AddMsgAction);
@@ -115,7 +113,8 @@ class CRF_PlayerControllerManager : ScriptComponent
 		{
 			GetGame().GetMenuManager().CloseAllMenus();
 			ResetSettingsToStoredValues();
-			SetupRadioFrequency();
+			if (!CVON_VONGameModeComponent.GetInstance())
+				SetupRadioFrequency();
 		}; 
 		
 		if (playerCharacter.GetPrefabData().GetPrefabName() == CRF_GamemodeManager.GetSpectatorResource())
@@ -254,19 +253,6 @@ class CRF_PlayerControllerManager : ScriptComponent
 		}
 	}
 	
-	/**
-	 * Toggles night vision goggles in spectator mode
-	 */
-	void ToggleNVGs()
-	{
-		m_bActivated = !m_bActivated;
-
-		if (m_bActivated)
-			SCR_ScreenEffectsManager.GetScreenEffectsDisplay().RHS_SetHDR("{0AD0A1ADEBCF893F}Assets/Items/Equipment/NVG/pvs14/data/SpecNVGFilm.emat", true);
-		else
-			SCR_ScreenEffectsManager.GetScreenEffectsDisplay().RHS_SetHDR("{765A5E642D09A4B8}Common/Postprocess/HDR_Vanila.emat", false);
-	}
-	
 	//------------------------------------------------------------------------------------------------
 	// PLAYER EQUIPMENT
 	//------------------------------------------------------------------------------------------------
@@ -281,7 +267,7 @@ class CRF_PlayerControllerManager : ScriptComponent
 		IEntity entity = SCR_PlayerController.GetLocalMainEntity();
 		if (!entity || CRF_GamemodeManager.IsSpectator(entity))
 			return;
-		
+
 		// Find radio in inventory
 		array<IEntity> items = {};
 		SCR_InventoryStorageManagerComponent.Cast(entity.FindComponent(SCR_InventoryStorageManagerComponent)).GetItems(items);
@@ -309,7 +295,7 @@ class CRF_PlayerControllerManager : ScriptComponent
 
 		SCR_AIGroup group = m_GroupManager.GetPlayerGroup(SCR_PlayerController.GetLocalPlayerId());
 		PlayerController pc = GetGame().GetPlayerController();
-		
+
 		// Set frequency based on group
 		if (pc && group)
 		{
@@ -321,14 +307,14 @@ class CRF_PlayerControllerManager : ScriptComponent
 		// Set up Voice over Network component
 		SCR_VONController vc = SCR_VONController.Cast(pc.FindComponent(SCR_VONController));
 		SCR_VoNComponent von = SCR_VoNComponent.Cast(entity.FindComponent(SCR_VoNComponent));
-		
+
 		von.SetTransmitRadio(grpTsv);
 
 		// Set up platoon radio if available
 		BaseTransceiver pltTsv = radio.GetTransceiver(1);
 		if (pltTsv)
 			von.SetTransmitRadio(pltTsv);
-		
+
 		vc.PublicResetVON();
 		vc.SetVONComponent(von);
 	}
@@ -460,9 +446,9 @@ class CRF_PlayerControllerManager : ScriptComponent
 		MenuBase topMenu = GetGame().GetMenuManager().GetTopMenu();
 		if (topMenu)
 		{
-			if (topMenu.IsInherited(CRF_PreviewMenuUI) || topMenu.IsInherited(CRF_SlottingMenuUI))
+			if (topMenu.IsInherited(CRF_PreviewMenu) || topMenu.IsInherited(CRF_SlottingMenu))
 				return;
-			else if (topMenu.IsInherited(CRF_SpectatorMenuUI))
+			else if (topMenu.IsInherited(CRF_SpectatorMenu))
 				GetGame().GetMenuManager().CloseMenu(topMenu);
 		}
 
@@ -512,6 +498,12 @@ class CRF_PlayerControllerManager : ScriptComponent
 			return;
 		
 		int playerID = GetGame().GetPlayerController().GetPlayerId();
+		
+		if (!data.Length() > 0)
+		{
+			chatComponent.ShowMessage("You need to include your message after /a");
+			return;
+		}	
 		
 		chatComponent.ShowMessage(string.Format("Message Sent: \"%1\"", data));
 		m_RplToAuthorityManager.SendAdminMessage(data, playerID);
@@ -653,11 +645,107 @@ class CRF_PlayerControllerManager : ScriptComponent
 	}
 	
 	/**
-	 * Callback for advancing gamemode state
+	 * Callback for advancing gamemode state with optional faction winner parameter
+	 * Usage: /aar [faction]
+	 * Examples: /aar, /aar blufor, /aar blu, /aar opfor, /aar opf, /aar indfor, /aar ind, /aar civ
 	 */
 	void Advance_Callback(SCR_ChatPanel panel, string data)
 	{
-		m_RplToAuthorityManager.RequestAdvanceGamemodeState(true);
+		// Check if admin privileges are required
+		if (!SCR_Global.IsAdmin())
+		{
+			if (panel)
+			{
+				SCR_ChatComponent chatComponent = SCR_ChatComponent.Cast(GetGame().GetPlayerController().FindComponent(SCR_ChatComponent));
+				if (chatComponent)
+					chatComponent.ShowMessage("You need admin privileges to use the /aar command.");
+			}
+			return;
+		}
+		
+		// Parse faction parameter if provided
+		if (data && data.Length() > 0)
+		{
+			// Clean up the input - remove extra spaces and convert to uppercase
+			data.Trim();
+			data.ToUpper();
+			
+			// Map short faction names to full names
+			FactionKey winningFaction = "";
+			switch (data)
+			{
+				case "BLUFOR":
+				case "BLU":
+				case "B":
+				case "BLUE":
+					winningFaction = "BLUFOR";
+					break;
+					
+				case "OPFOR":
+				case "OPF":
+				case "O":
+				case "RED":
+					winningFaction = "OPFOR";
+					break;
+					
+				case "INDFOR":
+				case "IND":
+				case "I":
+				case "INDEPENDENT":
+				case "GREEN":
+					winningFaction = "INDFOR";
+					break;
+					
+				case "CIV":
+				case "C":
+				case "CIVILIAN":
+					winningFaction = "CIV";
+					break;
+					
+				default:
+					// Invalid faction specified
+					if (panel)
+					{
+						SCR_ChatComponent chatComponent = SCR_ChatComponent.Cast(GetGame().GetPlayerController().FindComponent(SCR_ChatComponent));
+						if (chatComponent)
+						{
+							string validOptions = "Valid faction options: blufor (blu), opfor (opf), indfor (ind), civ";
+							chatComponent.ShowMessage(string.Format("Invalid faction '%1'. %2", data, validOptions));
+						}
+					}
+					return;
+			}
+			
+			// Set the winning faction in the logging manager
+			CRF_LoggingManager loggingManager = CRF_LoggingManager.GetInstance();
+			if (loggingManager)
+			{
+				loggingManager.SetWinningFaction(winningFaction, "manual");
+				
+				// Show confirmation message
+				if (panel)
+				{
+					SCR_ChatComponent chatComponent = SCR_ChatComponent.Cast(GetGame().GetPlayerController().FindComponent(SCR_ChatComponent));
+					if (chatComponent)
+						chatComponent.ShowMessage(string.Format("Winner set to %1. Advancing to AAR...", winningFaction));
+				}
+			}
+
+			// Advance to AAR state
+			m_RplToAuthorityManager.RequestAdvanceGamemodeState(true);
+		}
+		else
+		{
+			// No faction specified - show current usage
+			if (panel)
+			{
+				SCR_ChatComponent chatComponent = SCR_ChatComponent.Cast(GetGame().GetPlayerController().FindComponent(SCR_ChatComponent));
+				if (chatComponent)
+					chatComponent.ShowMessage("Usage: /aar [faction] - Examples: /aar blufor, /aar opfor, /aar indfor, /aar civ");
+					
+			}
+			return;
+		}
 	}
 	
 	//------------------------------------------------------------------------------------------------

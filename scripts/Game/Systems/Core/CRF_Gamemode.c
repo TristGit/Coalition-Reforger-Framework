@@ -589,7 +589,7 @@ class CRF_Gamemode : SCR_BaseGameMode
 		);
 		
 		if (!damageManager)
-			continue;
+			return;
 			
 		HitZone defaultHitZone = damageManager.GetDefaultHitZone();
 		if (defaultHitZone)

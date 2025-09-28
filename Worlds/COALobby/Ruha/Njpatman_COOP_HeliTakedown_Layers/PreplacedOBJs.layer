@@ -16,20 +16,6 @@ GenericEntity : "{16148BF23770F1D3}Prefabs/Compositions/Slotted/SlotFlatSmall/Ma
  coords 6278.066 54.815 7052.794
  angleY 19.882
 }
-$grp Vehicle : "{16C1F16C9B053801}Prefabs/Vehicles/Wheeled/Ural4320/Ural4320_transport.et" {
- Ural4320_transport1 {
-  coords 5879.055 53.003 7109.872
-  angleY 134.989
- }
- Ural4320_transport2 {
-  coords 5919.163 53.287 7104.444
-  angleY -75.352
- }
- Ural4320_transport3 {
-  coords 5936.038 53.096 7117.291
-  angleY -93.3
- }
-}
 $grp GenericEntity : "{28D63631873AA636}Prefabs/Compositions/Slotted/SlotFlatSmall/MortarPlacement_S_USSR_01.et" {
  {
   coords 5187.811 71.121 7802.765
@@ -67,24 +53,6 @@ $grp GenericEntity : "{4093AE33DCEFAD67}Prefabs/Compositions/Slotted/SlotFlatSma
 GenericEntity : "{4510C273B794F3A9}Prefabs/Compositions/Slotted/SlotFlatMedium/VehicleMaintenance_M_USSR_01.et" {
  coords 6131.882 56.625 7060.909
  angleY 84.148
-}
-$grp Vehicle : "{4C81D7ED8F8C0D87}Prefabs/Vehicles/Wheeled/Ural4320/Ural4320_tanker.et" {
- Ural4320_tanker2 {
-  coords 5923.289 53.419 7139.311
-  angleY 95.137
- }
- Ural4320_tanker1 {
-  coords 6098.843 56.625 7040.748
-  angleY 56.545
- }
- Ural4320_tanker3 {
-  coords 6107.52 56.625 7067.445
-  angleY -128.237
- }
- Ural4320_tanker4 {
-  coords 6142.125 56.625 7079.263
-  angleY 147.396
- }
 }
 $grp GenericEntity : "{525C793E1943EA05}Prefabs/Compositions/Slotted/SlotFlatLarge/Helipad_L_USSR_01.et" {
  {
@@ -142,28 +110,6 @@ $grp GenericEntity : "{8E1DF47DD56E69E6}Prefabs/Compositions/Slotted/SlotFlatSma
  {
   coords 6195.968 57.91 7114.14
   angleY 74.639
- }
-}
-Vehicle Ural4320_repair1 : "{A5647958579A4149}Prefabs/Vehicles/Wheeled/Ural4320/Ural4320_repair.et" {
- coords 6126.516 56.625 7069.01
- angleY 84.076
-}
-$grp Vehicle : "{DF5CCB7C0FF049F4}Prefabs/Vehicles/Helicopters/Mi8MT/Mi8MT_unarmed_transport.et" {
- Mi8MT_unarmed_transport1 {
-  coords 6106.169 56.626 7029.426
-  angleY -145.769
- }
- Mi8MT_unarmed_transport4 {
-  coords 6141.865 56.626 7033.481
-  angleY 135.279
- }
- Mi8MT_unarmed_transport2 {
-  coords 6130.7 56.626 7088.964
-  angleY 29.708
- }
- Mi8MT_unarmed_transport3 {
-  coords 6098.269 56.626 7082.136
-  angleY -56.213
  }
 }
 GenericEntity : "{F68F3B7247F6E810}Prefabs/Compositions/Slotted/SlotFlatLarge/LivingArea_L_USSR_01.et" {

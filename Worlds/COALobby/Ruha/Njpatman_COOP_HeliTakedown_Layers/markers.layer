@@ -1,13 +1,3 @@
-$grp Vehicle : "{3EA6F47D95867114}Prefabs/Vehicles/Wheeled/M998/M1025_armed_M2HB.et" {
- M1025_armed_M2HB1 {
-  coords 6798.641 54.813 7975.875
-  angleY -164.89
- }
- M1025_armed_M2HB2 {
-  coords 6803.304 54.813 7974.617
-  angleY -164.89
- }
-}
 $grp CRF_ManualMarker : "{7B677FB61E410D0D}PrefabsEditable/Markers/ObjectiveMarker.et" {
  {
   coords 6118.004 56.625 7058.465

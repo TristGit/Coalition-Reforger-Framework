@@ -365,6 +365,15 @@ class CRF_RplToAuthorityManager : ScriptComponent
 		Rpc(RpcAsk_UpdateTicket, action, faction, delta); 
 	}
 	
+	void MiniArsenalRequestNewItem(int playerId, string resourceName, int slotId)
+	{
+		Rpc(RpcAsk_MiniArsenalRequestNewItem, playerId, resourceName, slotId);
+	}
+	
+	void SightArsenalRequestNewSight(int playerId, string resourceName, string type)
+	{
+		Rpc(RpcAsk_SightArsenalRequestNewSight, playerId, resourceName, type);
+    
 	void TogglePlayerListening(int playerId, bool input)
 	{
 		Rpc(RpcAsk_TogglePlayerLisntening, playerId, input);
@@ -929,6 +938,71 @@ class CRF_RplToAuthorityManager : ScriptComponent
 	}
 	
 	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
+	protected void RpcAsk_MiniArsenalRequestNewItem(int playerId, string newResource, int slotId)
+	{
+		IEntity player = GetGame().GetPlayerManager().GetPlayerControlledEntity(playerId);
+		if (!player)
+			return;
+		
+		EntitySpawnParams params = new EntitySpawnParams();
+		player.GetTransform(params.Transform);
+		
+		IEntity newItem = GetGame().SpawnEntityPrefab(Resource.Load(newResource), null, params);
+		
+		SCR_InventoryStorageManagerComponent invManager = SCR_InventoryStorageManagerComponent.Cast(player.FindComponent(SCR_InventoryStorageManagerComponent));
+		BaseInventoryStorageComponent invComponent = BaseInventoryStorageComponent.Cast(player.FindComponent(BaseInventoryStorageComponent));
+		IEntity oldItem = invComponent.Get(slotId);
+		BaseInventoryStorageComponent oldStorageComp = BaseInventoryStorageComponent.Cast(oldItem.FindComponent(BaseInventoryStorageComponent));
+		BaseInventoryStorageComponent newStorageComp = BaseInventoryStorageComponent.Cast(newItem.FindComponent(BaseInventoryStorageComponent));
+		if (oldStorageComp)
+		{
+			ref array<IEntity> items = {};
+			oldStorageComp.GetAll(items);
+			if (items.Count() > 0)
+			{
+				foreach (IEntity item: items)
+				{
+					invManager.TrySpawnPrefabToStorage(item.GetPrefabData().GetPrefabName(), newStorageComp);
+				}
+			}
+		}
+		SCR_EntityHelper.DeleteEntityAndChildren(oldItem);
+		invManager.TryReplaceItem(newItem, invComponent, slotId);
+	}
+	
+	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
+	protected void RpcAsk_SightArsenalRequestNewSight(int playerId, string newResource, string type)
+	{
+		IEntity player = GetGame().GetPlayerManager().GetPlayerControlledEntity(playerId);
+		if (!player)
+			return;
+		EntitySpawnParams params = new EntitySpawnParams();
+		player.GetTransform(params.Transform);
+		
+		IEntity newSight = GetGame().SpawnEntityPrefab(Resource.Load(newResource), null, params);
+		SCR_CharacterControllerComponent charController = SCR_CharacterControllerComponent.Cast(player.FindComponent(SCR_CharacterControllerComponent));
+		array<AttachmentSlotComponent> attachments = {};
+		charController.GetWeaponManagerComponent().GetCurrentWeapon().GetAttachments(attachments);
+		AttachmentSlotComponent sightAttachment;
+		foreach (AttachmentSlotComponent attachment: attachments)
+		{
+			if (!attachment.GetAttachmentSlotType())
+				continue;
+			if (type.ToType().IsInherited(attachment.GetAttachmentSlotType().Type()))
+				sightAttachment = attachment;
+		}
+		if (!sightAttachment)
+			return;
+		
+		IEntity oldSight = sightAttachment.GetAttachedEntity();
+		if (sightAttachment.CanSetAttachment(newSight))
+		{
+			if (oldSight)
+				delete oldSight;
+			
+			sightAttachment.SetAttachment(newSight);
+		}
+    
 	protected void RpcAsk_TogglePlayerLisntening(int playerId, bool input)
 	{
 		CVON_VONGameModeComponent.GetInstance().TogglePlayerListening(playerId, input);

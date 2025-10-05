@@ -11,7 +11,6 @@ modded class CVON_VONGameModeComponent
 		}
 		else
 			m_aListeningPlayers.Insert(playerId);
-		Print(m_aListeningPlayers);
 		Replication.BumpMe();
 	}
 }

@@ -992,6 +992,8 @@ class CRF_RplToAuthorityManager : ScriptComponent
 		array<AttachmentSlotComponent> attachments = {};
 		charController.GetWeaponManagerComponent().GetCurrentWeapon().GetAttachments(attachments);
 		AttachmentSlotComponent sightAttachment;
+		SCR_InventoryStorageManagerComponent invManager = SCR_InventoryStorageManagerComponent.Cast(player.FindComponent(SCR_InventoryStorageManagerComponent));
+		BaseInventoryStorageComponent weaponInv = BaseInventoryStorageComponent.Cast(charController.GetWeaponManagerComponent().GetCurrentWeapon().GetOwner().FindComponent(BaseInventoryStorageComponent));
 		foreach (AttachmentSlotComponent attachment: attachments)
 		{
 			if (!attachment.GetAttachmentSlotType())
@@ -1008,7 +1010,7 @@ class CRF_RplToAuthorityManager : ScriptComponent
 			if (oldSight)
 				delete oldSight;
 			
-			sightAttachment.SetAttachment(newSight);
+			invManager.TryInsertItemInStorage(newSight, weaponInv);
 		}
 	}
     

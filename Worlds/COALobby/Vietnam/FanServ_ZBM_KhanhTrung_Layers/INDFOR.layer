@@ -1,4 +1,4 @@
-SCR_AIGroup : "{96DB67CD45DC5F85}Prefabs/Groups/INDFOR/Standard/Command/CRF_INDFOR_Platoon_p.et" {
+SCR_AIGroup : "{49B488DBF265FF12}Prefabs/Groups/INDFOR/Standard/Command/CRF_INDFOR_Platoon_Large_p.et" {
  coords 1152.048 24.205 852.928
  {
   SCR_AIGroup : "{35D9448A4ED99223}Prefabs/Groups/INDFOR/Standard/Support/CRF_INDFOR_MedicTeam_p.et" {

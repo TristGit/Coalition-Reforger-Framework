@@ -1,4 +1,4 @@
-SCR_AIGroup : "{3D4D53B053964445}Prefabs/Groups/BLUFOR/Standard/Command/CRF_BLUFOR_Platoon_p.et" {
+SCR_AIGroup : "{93B14C52DA54543D}Prefabs/Groups/BLUFOR/Standard/Command/CRF_BLUFOR_Platoon-Large_p.et" {
  coords 1435.604 36.928 857.299
  {
   SCR_AIGroup : "{D0B17EDF43465305}Prefabs/Groups/BLUFOR/Standard/Support/CRF_BLUFOR_MedicTeam_p.et" {

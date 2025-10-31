@@ -6,6 +6,9 @@ modded class SCR_AIGroup
 	[Attribute("0", UIWidgets.SearchComboBox, enums: ParamEnumArray.FromEnum(CRF_EFlagType), category: "Group")]
 	protected CRF_EFlagType m_FlagType;
 	
+	[Attribute("1", category: "Group")]
+	bool m_bBlueForceTrackerEnabled;
+	
 	protected bool m_bIsPlayableGroup;
 	protected SCR_AIGroup m_NewGroup;
 	

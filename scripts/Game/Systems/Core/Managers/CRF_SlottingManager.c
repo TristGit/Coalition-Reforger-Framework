@@ -3,10 +3,7 @@ class CRF_SlottingManagerClass : ScriptComponentClass {}
 class CRF_SlottingManager : ScriptComponent
 {
 	// Slot data storage - uses ID-based system where IDs are generated in AddSlot
-	protected ref map<int, CRF_SlotDataContainer> m_mSlotsMap = new map<int, CRF_SlotDataContainer>;
-	
-	// Client-side dirty tracking for optimized UI updates
-	protected ref map<int, bool> m_mDirtySlots = new map<int, bool>;
+	protected ref map<int, ref CRF_SlotDataContainer> m_mSlotsMap = new map<int, ref CRF_SlotDataContainer>;
 	
 	// Latest Slot ID used
 	protected int m_iLatestSlotID;
@@ -49,120 +46,74 @@ class CRF_SlottingManager : ScriptComponent
 	//------------------------------------------------------------------------------------------------
 	// SLOTTING UPDATE METHODS
 	//------------------------------------------------------------------------------------------------
-	
-	//------------------------------------------------------------------------------------------------
-	// NEW: Send single slot update via RPC (replaces full array replication)
-	// Bandwidth: ~370 bytes vs ~18,300 bytes (50 slots) = 98% reduction
-	//------------------------------------------------------------------------------------------------
-	void BroadcastSlotUpdate(int slotId)
+
+	void UpdateSlotCharacter(int slotId, RplId charId)
 	{
-		if (!Replication.IsServer())
-			return;
+		CRF_SlotDataContainer slotData = GetSlotData(slotId);
 		
-		CRF_SlotDataContainer slotData = m_mSlotsMap.Get(slotId);
-		if (!slotData)
-			return;
-		
-		if (!m_RplBroadcastManager)
-			m_RplBroadcastManager = CRF_RplBroadcastManager.GetInstance();
-		
-		if (m_RplBroadcastManager)
-			m_RplBroadcastManager.UpdateSlotData(slotId, slotData);
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	// Optimized batch update method that minimizes replication calls
-	bool BatchUpdateSlot(int slotId, int playerId = -1, RplId groupId = RplId.Invalid(), RplId charId = RplId.Invalid(), 
-	                    ResourceName resource = "", string name = "", bool isLocked = false, bool isDead = false)
-	{
-		CRF_SlotDataContainer slotData = m_mSlotsMap.Get(slotId);
-		if (!slotData)
-			return false;
-		
-		// Use the optimized batch update that only triggers one InvokeDataUpdate()
-		bool updated = slotData.BatchUpdateSlotData(playerId, groupId, charId, resource, name, isLocked, isDead);
-		
-		// Handle special cleanup logic for player removal
-		if (updated && playerId == 0)
+		if (slotData)
 		{
-			CleanupCharacterFromSlot(slotData);
-		}
+			slotData.SetSlotCurrentCharacter(charId);
+			m_RplBroadcastManager.UpdateSlotData(slotData);
+		};
+	}
+	
+	void UpdateSlotResource(int slotId, ResourceName resource)
+	{
+		CRF_SlotDataContainer slotData = GetSlotData(slotId);
 		
-		// NEW: Send only this slot via targeted RPC (not entire array)
-		if (updated)
+		if (slotData)
 		{
-			BroadcastSlotUpdate(slotId);
-		}
-		
-		return updated;
+			slotData.SetSlotResource(resource);
+			m_RplBroadcastManager.UpdateSlotData(slotData);
+		};
 	}
 	
-	//------------------------------------------------------------------------------------------------
-	// NEW CLIENT-SIDE METHODS: Receive targeted RPC slot updates
-	//------------------------------------------------------------------------------------------------
-	
-	//------------------------------------------------------------------------------------------------
-	// Client-side: Update single slot from RPC (called by CRF_RplBroadcastManager)
-	// Only updates if data actually changed (prevents unnecessary UI rebuilds)
-	//------------------------------------------------------------------------------------------------
-	void UpdateSlotDataClient(int slotId, CRF_SlotDataContainer slotData)
+	void UpdateSlotDeathState(int slotId, bool input)
 	{
-		if (Replication.IsServer())
-			return;  // Server doesn't receive these, only sends
+		CRF_SlotDataContainer slotData = GetSlotData(slotId);
 		
-		// Check if slot data actually changed before updating
-		CRF_SlotDataContainer existingData = m_mSlotsMap.Get(slotId);
-		
-		// Always update for now (could add comparison logic later for extra optimization)
-		m_mSlotsMap.Set(slotId, slotData);
-		m_mDirtySlots.Set(slotId, true);
-		
-		// Trigger UI update
-		if (m_OnSlottingUpdate)
-			m_OnSlottingUpdate.Invoke();
-		
-		Print(string.Format("[CRF_SlottingManager] Client received slot %1 update", slotId), LogLevel.VERBOSE);
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	// Client-side: Remove slot from RPC (called by CRF_RplBroadcastManager)
-	//------------------------------------------------------------------------------------------------
-	void RemoveSlotClient(int slotId)
-	{
-		if (Replication.IsServer())
-			return;
-		
-		m_mSlotsMap.Remove(slotId);
-		m_mDirtySlots.Set(slotId, true);
-		
-		if (m_OnSlottingUpdate)
-			m_OnSlottingUpdate.Invoke();
-		
-		Print(string.Format("[CRF_SlottingManager] Client removed slot %1", slotId), LogLevel.VERBOSE);
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	// Get dirty slots for optimized UI updates (returns slots that changed since last clear)
-	//------------------------------------------------------------------------------------------------
-	array<int> GetDirtySlots()
-	{
-		array<int> dirtySlots = {};
-		
-		foreach (int slotId, bool isDirty : m_mDirtySlots)
+		if (slotData)
 		{
-			if (isDirty)
-				dirtySlots.Insert(slotId);
-		}
-		
-		return dirtySlots;
+			slotData.SetIsDeadSlot(input);
+			m_RplBroadcastManager.UpdateSlotData(slotData);
+		};
 	}
 	
-	//------------------------------------------------------------------------------------------------
-	// Clear dirty flags after UI update
-	//------------------------------------------------------------------------------------------------
-	void ClearDirtyFlags()
+	void UpdateSlotGroup(int slotId, RplId group)
 	{
-		m_mDirtySlots.Clear();
+		CRF_SlotDataContainer slotData = GetSlotData(slotId);
+		
+		if (slotData)
+		{
+			slotData.SetSlotCurrentGroup(group);
+			m_RplBroadcastManager.UpdateSlotData(slotData);
+		};
+	}
+	
+	void UpdateSlotPlayerID(int slotId, int playerId = -1)
+	{	
+		CRF_SlotDataContainer slotData = GetSlotData(slotId);
+		
+		if (slotData)
+		{
+			slotData.SetSlotCurrentPlayerId(playerId);
+			m_RplBroadcastManager.UpdateSlotData(slotData);
+		};
+	}
+	
+	void UpdateSlotLockedState(int slotId, bool isLocked = false)
+	{
+		CRF_SlotDataContainer slotData = GetSlotData(slotId);
+		
+		if (slotData)
+		{
+			slotData.SetIsLockedSlot(isLocked);
+			if (isLocked)
+				slotData.SetSlotCurrentPlayerId(0);
+			
+			m_RplBroadcastManager.UpdateSlotData(slotData);
+		};
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -183,7 +134,7 @@ class CRF_SlottingManager : ScriptComponent
 	}
 	
 	//------------------------------------------------------------------------------------------------
-	map<int, CRF_SlotDataContainer> GetSlotMap()
+	map<int, ref CRF_SlotDataContainer> GetSlotMap()
 	{
 		return m_mSlotsMap;
 	}
@@ -458,33 +409,10 @@ class CRF_SlottingManager : ScriptComponent
 			
 		return slotData.GetIsDeadSlot();
 	}
-
-	//------------------------------------------------------------------------------------------------
-	// SLOT UPDATE METHODS
-	//------------------------------------------------------------------------------------------------
-	void UpdateSlotLockedState(int slotId, bool input)
-	{
-		// Use optimized batch update method
-		BatchUpdateSlot(slotId, -1, RplId.Invalid(), RplId.Invalid(), "", "", input, false);
-	}
-
-	//------------------------------------------------------------------------------------------------
-	void UpdateSlotDeathState(int slotId, bool input)
-	{
-		// Use optimized batch update method  
-		BatchUpdateSlot(slotId, -1, RplId.Invalid(), RplId.Invalid(), "", "", false, input);
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	void UpdateSlotPlayerID(int slotId, int playerId)
-	{
-		// Use optimized batch update method (includes automatic cleanup for player removal)
-		BatchUpdateSlot(slotId, playerId, RplId.Invalid(), RplId.Invalid(), "", "", false, false);
-	}
 	
 	//------------------------------------------------------------------------------------------------
 	// Helper method to clean up character from slot
-	protected void CleanupCharacterFromSlot(CRF_SlotDataContainer slotData)
+	void CleanupCharacterFromSlot(CRF_SlotDataContainer slotData)
 	{
 		if (!slotData)
 			return;
@@ -502,56 +430,6 @@ class CRF_SlottingManager : ScriptComponent
 			SCR_EntityHelper.DeleteEntityAndChildren(character);
 			
 		slotData.SetSlotCurrentCharacter(RplId.Invalid());
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	void UpdateSlotGroup(int slotId, RplId groupId)
-	{
-		// Use optimized batch update method
-		BatchUpdateSlot(slotId, -1, groupId, RplId.Invalid(), "", "", false, false);
-	}
-
-	//------------------------------------------------------------------------------------------------
-	void UpdateSlotResource(int slotId, ResourceName resource)
-	{
-		// Use optimized batch update method
-		BatchUpdateSlot(slotId, -1, RplId.Invalid(), RplId.Invalid(), resource, "", false, false);
-	}
-
-	//------------------------------------------------------------------------------------------------
-	void UpdateSlotIcon(int slotId, ResourceName icon)
-	{
-		CRF_SlotDataContainer slotData = m_mSlotsMap.Get(slotId);
-		if (!slotData)
-			return;
-			
-		slotData.SetSlotIcon(icon);
-		BroadcastSlotUpdate(slotId);
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	void UpdateSlotType(int slotId, CRF_ESlotType type)
-	{
-		CRF_SlotDataContainer slotData = m_mSlotsMap.Get(slotId);
-		if (!slotData)
-			return;
-			
-		slotData.SetSlotType(type);
-		BroadcastSlotUpdate(slotId);
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	void UpdateSlotName(int slotId, string name)
-	{
-		// Use optimized batch update method
-		BatchUpdateSlot(slotId, -1, RplId.Invalid(), RplId.Invalid(), "", name, false, false);
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	void UpdateSlotCharacter(int slotId, RplId charId)
-	{
-		// Use optimized batch update method
-		BatchUpdateSlot(slotId, -1, RplId.Invalid(), charId, "", "", false, false);
 	}
 
 	//------------------------------------------------------------------------------------------------
@@ -808,10 +686,11 @@ class CRF_SlottingManager : ScriptComponent
 				
 		// Add to slots map
 		m_iLatestSlotID++;
+		slotData.SetSlotId(m_iLatestSlotID);
 		m_mSlotsMap.Set(m_iLatestSlotID, slotData);
 		
 		// Broadcast new slot to all clients
-		BroadcastSlotUpdate(m_iLatestSlotID);
+		m_RplBroadcastManager.UpdateSlotData(slotData);
 		
 		// Delete entity if not in game state
 		if (m_Gamemode.m_GamemodeState != CRF_EGamemodeState.GAME)
@@ -861,5 +740,79 @@ class CRF_SlottingManager : ScriptComponent
 			vector.Distance(centerPosition, finalPosition)), LogLevel.VERBOSE);
 			
 		return finalPosition;
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	// NEW CLIENT-SIDE METHODS: Receive targeted RPC slot updates
+	//------------------------------------------------------------------------------------------------
+	
+	//------------------------------------------------------------------------------------------------
+	// Client-side: Update single slot from RPC (called by CRF_RplBroadcastManager)
+	// Only updates if data actually changed (prevents unnecessary UI rebuilds)
+	//------------------------------------------------------------------------------------------------
+	void UpdateSlotDataClient(CRF_SlotDataContainer slotData)
+	{
+		if (Replication.IsServer())
+			return;  // Server doesn't receive these, only sends
+		
+		int slotId = slotData.GetSlotId();
+		CRF_SlotDataContainer oldSlotData = m_mSlotsMap.Get(slotId);
+
+		if(!oldSlotData)
+			m_mSlotsMap.Set(slotId, slotData);
+		else
+			oldSlotData.DataUpdate(slotData);
+				
+		// Trigger UI update
+		if (m_OnSlottingUpdate)
+			m_OnSlottingUpdate.Invoke();
+		
+		Print(string.Format("[CRF_SlottingManager] Client received slot %1 update", slotId), LogLevel.VERBOSE);
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	// Client-side: Remove slot from RPC (called by CRF_RplBroadcastManager)
+	//------------------------------------------------------------------------------------------------
+	void RemoveSlotClient(int slotId)
+	{
+		if (Replication.IsServer())
+			return;
+		
+		m_mSlotsMap.Remove(slotId);
+		
+		if (m_OnSlottingUpdate)
+			m_OnSlottingUpdate.Invoke();
+		
+		Print(string.Format("[CRF_SlottingManager] Client removed slot %1", slotId), LogLevel.VERBOSE);
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	override protected bool RplSave(ScriptBitWriter writer)
+	{
+		// Save slotData
+		int slotsCount = m_mSlotsMap.Count();
+		writer.WriteInt(slotsCount);
+		foreach (int slotId, CRF_SlotDataContainer slotData : m_mSlotsMap)
+		{
+			slotData.Save(writer);
+		}
+
+		return true;
+	}
+
+	//------------------------------------------------------------------------------------------------
+	override protected bool RplLoad(ScriptBitReader reader)
+	{
+		// Load slotData
+		int slotsCount;
+		reader.ReadInt(slotsCount);
+		for (int i = 0; i < slotsCount; i++)
+		{
+			CRF_SlotDataContainer slotData = new CRF_SlotDataContainer();
+			slotData.Load(reader);
+			UpdateSlotDataClient(slotData);
+		}
+
+		return true;
 	}
 }

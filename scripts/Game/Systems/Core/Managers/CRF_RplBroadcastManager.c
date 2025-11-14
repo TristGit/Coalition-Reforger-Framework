@@ -471,7 +471,7 @@ class CRF_RplBroadcastManager : ScriptComponent
 		#ifdef WORKBENCH
 		RpcDo_RemoveGroupLeaderMarker(playerId);
 		#else
-		Rpc(RpcDo_RemoveGroupLeaderMarker(playerId);
+		Rpc(RpcDo_RemoveGroupLeaderMarker, playerId);
 		#endif
 	}
 	

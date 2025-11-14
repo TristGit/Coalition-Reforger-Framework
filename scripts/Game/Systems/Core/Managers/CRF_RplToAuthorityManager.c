@@ -1206,8 +1206,16 @@ class CRF_RplToAuthorityManager : ScriptComponent
 		// Telemetry: 2 ints + string + 2 ResourceName arrays + int array + bool
 		int bytes = CRF_BandwidthTelemetryManager.EstimateSize_Int() * 2;
 		bytes += CRF_BandwidthTelemetryManager.EstimateSize_String(newWeaponResource);
-		bytes += CRF_BandwidthTelemetryManager.EstimateSize_StringArray(attachments);
-		bytes += CRF_BandwidthTelemetryManager.EstimateSize_StringArray(magazines);
+		
+		// Manually calculate ResourceName array sizes
+		bytes += 4; // Array length for attachments
+		foreach (ResourceName attachment : attachments)
+			bytes += CRF_BandwidthTelemetryManager.EstimateSize_ResourceName(attachment);
+		
+		bytes += 4; // Array length for magazines
+		foreach (ResourceName magazine : magazines)
+			bytes += CRF_BandwidthTelemetryManager.EstimateSize_ResourceName(magazine);
+		
 		bytes += CRF_BandwidthTelemetryManager.EstimateSize_IntArray(magazineCounts);
 		bytes += CRF_BandwidthTelemetryManager.EstimateSize_Bool();
 		LogTelemetry("RpcAsk_MiniArsenalRequestNewWeapon", bytes);

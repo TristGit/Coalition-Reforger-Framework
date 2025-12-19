@@ -33,7 +33,14 @@ CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et
    ""\
    "You must have a 2:1 dominance within 80m of each OBJ to begin capturing it."\
    ""\
-   "You may opt to counter-attack OBJ A if you lose it, but it must be an entire platoon movement. "
+   "You may opt to counter-attack OBJ A if you lose it, but it must be an entire platoon movement. "\
+   ""\
+   "Note: An engineer company mined the AO last night. Check map for minefield."
+  }
+  CRF_MissionDescriptor "{6442505149CF6C93}" {
+   m_sTextData "It takes 60s to capture an objective once dominance has been achieved."\
+   ""\
+   "An objective being captured will trigger a respawn wave for both sides."
   }
  }
  m_iFactionOneRatio 3
@@ -41,7 +48,7 @@ CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et
  m_iFactionTwoRatio 2
  m_sFactionTwoKey "OPF"
  {
-  SCR_FactionManager {
+  SCR_FactionManager "672648D1FB4381A6" {
    ID "632A77473B3CC3A8"
    Factions {
     SCR_Faction "{628B22E9B4056C88}" {

@@ -233,4 +233,25 @@ modded class SCR_AIGroup
 			}
 		}
 	}
+	
+	// Removes the "x left your group" upon death or anything else. Fucking stupid tbh.
+	// This is a carbon copy of the method and may break if it changes in an update
+	override void RemovePlayer(int playerID) 
+	{
+		if (!m_aPlayerIDs.Contains(playerID))
+			return;
+
+		//if player is last in group it doesnt matter as the group will get deleted
+		if (playerID == m_iLeaderID && GetPlayerCount() > 1)
+		{
+			SetCustomName("", 0);
+			SetCustomDescription("", 0);
+		}
+
+		RPC_DoRemovePlayer(playerID);
+		Rpc(RPC_DoRemovePlayer, playerID);
+		CheckForLeader(-1, false);
+		RemovePlayerAgent(playerID);
+		//SCR_NotificationsComponent.SendToGroup(m_iGroupID, ENotification.GROUPS_PLAYER_LEFT, playerID);
+	}
 }

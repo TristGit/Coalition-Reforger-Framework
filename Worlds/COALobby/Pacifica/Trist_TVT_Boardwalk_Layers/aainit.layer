@@ -84,7 +84,6 @@ CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et
  }
  coords 759.247 3.155 2641.271
  m_iTimeLimitMinutes 65
- m_bLockSlotsAfterSafestart 0
  m_aMissionDescriptors {
   CRF_MissionDescriptor "{644250503DF684C0}" {
    m_sTextData "The long war between Sino-Russian allies and the West has wrecked borders & coastlines across the world, nations' military stockpiles dwindle & armies resort to surplus. An amphibious landing on a long since devastated American coastline commences."\

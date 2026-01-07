@@ -88,6 +88,8 @@ CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et
   CRF_MissionDescriptor "{644250503DF684C0}" {
    m_sTextData "The long war between Sino-Russian allies and the West has wrecked borders & coastlines across the world, nations' military stockpiles dwindle & armies resort to surplus. An amphibious landing on a long since devastated American coastline commences."\
    ""\
+   "LEADERSHIP Radios Only"\
+   ""\
    "BLUFOR Composition: US Army Plt."\
    "BLUFOR Assets: Transports w/Supplies"\
    ""\
@@ -156,6 +158,7 @@ CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et
     m_iAmountOfItemRegularVehicle 40
    }
   }
+  m_bEnableGIRadios 0
  }
  m_OPFORGearScriptSettings CRF_GearScriptContainer "{64570ACB9B11EAAD}" {
   m_rGearScript "{79BC9C410D0E876E}Configs/Gearscripts/Custom/Trist/Boardwalk/CRF_GS_USSR80s_BOARDWALK.conf"
@@ -174,16 +177,13 @@ CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et
    }
    CRF_VehicleGearScriptAdditionalItem "{684D679CFEFCA4FC}" {
     m_Prefab "{5897D01F41DB5D2D}Prefabs/Weapons/Magazines/Magazine_545x39_RPK_45rnd_Tracer.et"
-    m_iAmountOfItemRegularVehicle 15
-   }
-   CRF_VehicleGearScriptAdditionalItem "{684C58FC1459F24C}" {
-    m_Prefab "{77EAE5E07DC4678A}Prefabs/Weapons/Grenades/Smoke_RDG2.et"
-    m_iAmountOfItemRegularVehicle 2
+    m_iAmountOfItemRegularVehicle 10
    }
    CRF_VehicleGearScriptAdditionalItem "{684C58FD604087C6}" {
     m_Prefab "{21EF98BFC1EB3793}Prefabs/Items/Equipment/Kits/MedicalKit_01/MedicalKit_01_USSR.et"
    }
   }
+  m_bEnableGIRadios 0
  }
  {
   SCR_FactionManager "684D678FB0FB6FF3" {
@@ -238,7 +238,7 @@ CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et
         m_sCallsign "2-3"
        }
        SCR_CallsignInfo "{684D46D17ED69690}" {
-        m_sCallsign "BTR Crew (Armed)"
+        m_sCallsign "Sappers"
        }
       }
      }

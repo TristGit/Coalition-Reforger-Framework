@@ -128,10 +128,6 @@ CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et
  m_BLUFORGearScriptSettings CRF_GearScriptContainer "{64570ACB9B419A7B}" {
   m_rGearScript "{C6BAA1ED6AA6B985}Configs/Gearscripts/Custom/Trist/Boardwalk/CRF_GS_US80s_BOARDWALK.conf"
   m_aAdditionalVehicleItems {
-   CRF_VehicleGearScriptAdditionalItem "{684C58DC1AA53128}" {
-    m_Prefab "{6224DDAB578E96C0}Prefabs/Weapons/Magazines/M1 Garand/BC_Clip_8rnd_M1_Garand.et"
-    m_iAmountOfItemRegularVehicle 40
-   }
    CRF_VehicleGearScriptAdditionalItem "{684C58DC1D3914DD}" {
     m_Prefab "{A9A385FE1F7BF4BD}Prefabs/Weapons/Magazines/Magazine_556x45_STANAG_30rnd_M856_Tracer.et"
     m_iAmountOfItemRegularVehicle 20
@@ -154,6 +150,10 @@ CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et
    CRF_VehicleGearScriptAdditionalItem "{684D679828A0F0AC}" {
     m_Prefab "{1742632597955A55}Prefabs/Items/Misc/Sandbags/Part_Sandbag_Plastic.et"
     m_iAmountOfItemRegularVehicle 30
+   }
+   CRF_VehicleGearScriptAdditionalItem "{684E27A7C6C266EF}" {
+    m_Prefab "{6224DDAB578E96C0}Prefabs/Weapons/Magazines/M1 Garand/BC_Clip_8rnd_M1_Garand.et"
+    m_iAmountOfItemRegularVehicle 40
    }
   }
  }
@@ -182,10 +182,6 @@ CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et
    }
    CRF_VehicleGearScriptAdditionalItem "{684C58FD604087C6}" {
     m_Prefab "{21EF98BFC1EB3793}Prefabs/Items/Equipment/Kits/MedicalKit_01/MedicalKit_01_USSR.et"
-   }
-   CRF_VehicleGearScriptAdditionalItem "{684C58DAEB4A0E89}" {
-    m_Prefab "{6224DDAB578E96C0}Prefabs/Weapons/Magazines/M1 Garand/BC_Clip_8rnd_M1_Garand.et"
-    m_iAmountOfItemRegularVehicle 25
    }
   }
  }

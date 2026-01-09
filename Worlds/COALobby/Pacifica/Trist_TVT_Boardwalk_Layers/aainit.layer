@@ -18,8 +18,9 @@ CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et
     CRF_BoundaryStageData "{684A62A00AF799F4}" {
      m_sBoundaryEntityName "playboundry_z1"
      m_eStageType DELETION
-     m_iStageDuration 90
+     m_iStageDuration 150
      m_sStageDisplayText "Regroup! Zone Opening"
+     m_bShowStageCompletionMessage 0
      m_sStageCompletionMainMessage ""
      m_sStageCompletionSubMessage ""
     }
@@ -28,8 +29,9 @@ CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et
      m_eStageType DELETION
      m_iStageDuration 180
      m_sStageDisplayText "Regroup! Zone Opening"
-     m_sStageCompletionMainMessage " "
-     m_sStageCompletionSubMessage " "
+     m_bShowStageCompletionMessage 0
+     m_sStageCompletionMainMessage ""
+     m_sStageCompletionSubMessage ""
     }
    }
   }
@@ -69,8 +71,8 @@ CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et
   }
   SCR_TimeAndWeatherHandlerComponent "{64427EEC304DD9A0}" {
    m_iStartingHours 18
-   m_fDayTimeAcceleration 0.8
-   m_fNightTimeAcceleration 0.8
+   m_fDayTimeAcceleration 0.5
+   m_fNightTimeAcceleration 0.5
    m_aStartingWeatherAndTime {
     SCR_TimeAndWeatherState "{66EE8AEC3605B974}" {
      m_sWeatherPresetName "Clear Fog"
@@ -217,28 +219,28 @@ CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et
         m_sCallsign "1PLT"
        }
        SCR_CallsignInfo "{55CCB79287BAFBD6}" {
-        m_sCallsign "1-1"
+        m_sCallsign "Sappers"
        }
        SCR_CallsignInfo "{55CCB79287A4D7B6}" {
+        m_sCallsign "1-1"
+       }
+       SCR_CallsignInfo "{68520651982EB30E}" {
         m_sCallsign "1-2"
        }
-       SCR_CallsignInfo "{684D46D137EEF667}" {
+       SCR_CallsignInfo "{68520651984F937E}" {
         m_sCallsign "1-3"
        }
-       SCR_CallsignInfo "{684D46D11070CE57}" {
+       SCR_CallsignInfo "{685206519B37DB5F}" {
         m_sCallsign "2PLT"
        }
-       SCR_CallsignInfo "{684D46D10E54528E}" {
+       SCR_CallsignInfo "{685206519B03471F}" {
         m_sCallsign "2-1"
        }
-       SCR_CallsignInfo "{684D46D1794088B6}" {
+       SCR_CallsignInfo "{685206519B6C87ED}" {
         m_sCallsign "2-2"
        }
-       SCR_CallsignInfo "{684D46D17D6800C1}" {
+       SCR_CallsignInfo "{685206519BB6FF88}" {
         m_sCallsign "2-3"
-       }
-       SCR_CallsignInfo "{684D46D17ED69690}" {
-        m_sCallsign "Sappers"
        }
       }
      }
@@ -252,7 +254,7 @@ $grp GameEntity {
   coords 943.091 0 3218.846
  }
  OPFspawn_z2 {
-  coords 876.118 0.228 2979.43
+  coords 957.928 0 3074.086
  }
  BLUspawn_z1 {
   coords 1020.033 3.55 2750.49

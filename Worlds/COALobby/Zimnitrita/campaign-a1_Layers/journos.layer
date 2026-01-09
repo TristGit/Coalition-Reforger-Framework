@@ -12,3 +12,6 @@ Vehicle UAZ452_cargo_CIV_Journo1 : "{81554826C1B2A2D6}Prefabs/Vehicles/Wheeled/U
  coords 7312.305 54.156 6281.188
  angles 0 -58 0
 }
+SCR_AIGroup : "{A2FC590C090D9693}Prefabs/Groups/CIV/Zeus/CRF_CIV_Zeus.et" {
+ coords 7303.895 54.156 6275.835
+}

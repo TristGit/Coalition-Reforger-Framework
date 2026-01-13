@@ -1233,8 +1233,13 @@ class CRF_AdminMenu : ChimeraMenuBase
 		int groupID = m_groupIDList.Get(groupList.GetSelectedItem());
 		vector spawnpoint = m_spawnPoints.Get(respawnPoints.GetSelectedItem());
 		
+		// Create transformation matrix with spawn location
+		vector spawnLocation[4];
+		Math3D.MatrixIdentity3(spawnLocation);
+		spawnLocation[3] = spawnpoint; // Set position (4th vector is translation)
+		
 		// Spawn player on group
-		CRF_RplToAuthorityManager.GetInstance().SpawnOnGroup(playerId, spawnpoint, groupID, true);
+		CRF_RplToAuthorityManager.GetInstance().SpawnOnGroup(playerId, spawnLocation, groupID, true);
 
 		// Refresh the menu after a short delay
 		GetGame().GetCallqueue().CallLater(ClearMenu, 1250, false);

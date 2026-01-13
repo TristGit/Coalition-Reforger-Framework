@@ -255,7 +255,7 @@ class CRF_RplToAuthorityManager : ScriptComponent
 	}
 	
 	// Group and spawn management
-	void SpawnOnGroup(int playerId, vector spawnLocation[4], int groupID, bool logAction)
+	void SpawnOnGroup(int playerId, vector spawnLocation, int groupID, bool logAction)
 	{
 		Rpc(RpcAsk_SpawnOnGroup, playerId, spawnLocation, groupID, logAction); 
 	}
@@ -829,34 +829,7 @@ class CRF_RplToAuthorityManager : ScriptComponent
 		bytes += CRF_BandwidthTelemetryManager.EstimateSize_Bool();
 		LogTelemetry("RpcAsk_SpawnOnGroup", bytes);
 		
-		// Validate spawn location and implement fallback chain
-		vector validatedLocation[4];
-		validatedLocation[0] = spawnLocation[0];
-		validatedLocation[1] = spawnLocation[1];
-		validatedLocation[2] = spawnLocation[2];
-		validatedLocation[3] = spawnLocation[3];
-		
-		// Get player's faction for fallback purposes
-		FactionKey playerFactionKey = "";
-		Faction playerFaction = m_SlottingManager.GetPlayerSlotFaction(playerId);
-		if (playerFaction)
-			playerFactionKey = playerFaction.GetFactionKey();
-		
-		// Fallback chain (same as RespawnPlayer method in CRF_RespawnManager):
-		// 1. Try provided spawn location (from selected player/location in admin menu)
-		// 2. If invalid, use faction's default spawn point (FindSpawnPointLocation - finds first active respawn for faction, typically the flag pole)
-		// 3. RespawnPlayer will handle final validation and spectator mode if no valid spawn exists
-		
-		// Use provided spawn location or fall back to faction's default spawn (same pattern as CRF_RespawnManager.RespawnPlayer line 738-740)
-		if (!CRF_GamemodeManager.IsValidSpawnVector(validatedLocation[3]) && !playerFactionKey.IsEmpty())
-		{
-			// FindSpawnPointLocation searches through m_aRespawnPoints to find the first active respawn point
-			// for the given faction - this is typically the flag pole/base spawn
-			m_RespawnManager.FindSpawnPointLocation(playerFactionKey, validatedLocation);
-		}
-		
-		// Spawn the player with validated location (RespawnPlayer has additional fallback to spectator if still invalid)
-		m_RespawnManager.RespawnPlayer(playerId, validatedLocation, groupID);
+		m_RespawnManager.RespawnPlayer(playerId, spawnLocation, groupID);
 
 		if (logAction)
 		{

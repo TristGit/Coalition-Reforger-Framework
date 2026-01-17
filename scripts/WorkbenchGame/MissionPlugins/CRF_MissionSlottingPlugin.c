@@ -34,7 +34,7 @@ class CRF_MissionSlottingPlugin : WorkbenchPlugin
 			// Actually shows the window.
 			if (!Workbench.ScriptDialog(
 				"Mission Quick Slot Setup", 
-				"This allows you to change mission slots at a more basic level so you arent building PLTs from scratch each time \n\n WARNING: THIS EDITOR WILL NOT BE AVALIBLE AFTER INITIAL SLOTS SETUP!", 
+				"This allows you to change mission slots at a more basic level so you arent building PLTs from scratch each time\nAll factions have pre-made quickslots set in their quikcslot arrays, please ensure you clear a factions quickslot array if you aren't planning to use that faction \n\n WARNING: THIS EDITOR WILL NOT BE AVALIBLE AFTER INITIAL SLOTS SETUP!", 
 				dialog))
 				return;
 		} else {

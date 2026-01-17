@@ -8,6 +8,9 @@ class CRF_GearscriptManager : ScriptComponent
 	
 	protected ref map<ResourceName, int> m_mVehicleSupplyCosts = new map<ResourceName, int>;
 	
+	// Track entities currently having gear applied to prevent race conditions
+	protected ref set<IEntity> m_sEntitiesBeingGeared = new set<IEntity>();
+	
 	//------------------------------------------------------------------------------------------------
 	/**
 	 * @brief Get singleton instance of the GearscriptManager

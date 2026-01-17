@@ -38,7 +38,7 @@ CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et
    m_bUsePredefineStartingTimeAndWeather 0
   }
  }
- coords 7201.416 54.156 6275
+ coords 10085.398 202.192 8141.504
  m_iTimeLimitMinutes 90
  m_bAllowEspionage 1
  m_bLockSlotsAfterSafestart 0
@@ -288,6 +288,9 @@ PolylineShapeEntity : "{318DDE6633C34CF1}PrefabsEditable/PolyZone/GameBoundry.et
    Position 1425.59 0 -832.577
   }
  }
+}
+GenericEntity : "{91AC884B31EDEE23}Prefabs/Structures/FlagPoles/RespawnPoles/CIV_Respawn.et" {
+ coords 10007.348 67.003 8777.21
 }
 CRF_ManualMarker : "{E256B56F799AEB41}PrefabsEditable/Markers/BLUFORSpawnMarker.et" {
  coords 9148.622 68.844 8344.885

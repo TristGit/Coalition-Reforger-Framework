@@ -988,7 +988,7 @@ class CRF_GearscriptManager : ScriptComponent
 		
 		// Add attachments on next frame to ensure weapon is fully initialized
 		GetGame().GetCallqueue().Call(AddAttachments, weaponResource, attachmentResources, spawnParams, inventoryManager);
-		GetGame().GetCallqueue().Call(SelectWeapon, inventory.GetOwner()); 
+		GetGame().GetCallqueue().CallLater(SelectWeapon, 500, false, inventory.GetOwner()); 
 	}
 	
 	void SelectWeapon(IEntity entity)

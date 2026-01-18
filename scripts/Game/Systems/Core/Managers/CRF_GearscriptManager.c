@@ -479,13 +479,13 @@ class CRF_GearscriptManager : ScriptComponent
 			
 			if (gsVisIdentity)
 			{
-	        	visIdentity.SetHead(gsVisIdentity.m_Head);
-	        	visIdentity.SetBody(gsVisIdentity.m_Body);
+	        		visIdentity.SetHead(gsVisIdentity.m_Head);
+	        		visIdentity.SetBody(gsVisIdentity.m_Body);
 			};
 			
 			if (gsSndIdentity)
 			{
-	        	sndIdentity.SetVoiceID(gsSndIdentity.m_VoiceID);
+	        		sndIdentity.SetVoiceID(gsSndIdentity.m_VoiceID);
 				sndIdentity.SetPitch(gsSndIdentity.m_VoicePitch);
 			};
 			

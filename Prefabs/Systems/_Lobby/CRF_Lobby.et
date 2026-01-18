@@ -29,7 +29,7 @@ CRF_Gamemode : "{1B76F75A3175E85C}Prefabs/MP/Modes/Plain/GameMode_Plain.et" {
   CRF_MissionValidatorComponent "{67094DE3BA792F81}" {
   }
   CVON_VONGameModeComponent "{6624E607CC6D4CC8}" {
-   m_sFreqConfig "{8FE52CD7F8502E24}Configs/FreqConfigs/CFCFrequencyConfig.conf"
+   m_sFreqConfig "{8FE52CD7F8502E24}Configs/Systems/FreqConfigs/CFCFrequencyConfig.conf"
   }
   SCR_AdditionalGameModeSettingsComponent "{6170E11C3C452ACC}" {
    m_bEnableTeamKillPunishment 0
@@ -467,11 +467,11 @@ CRF_Gamemode : "{1B76F75A3175E85C}Prefabs/MP/Modes/Plain/GameMode_Plain.et" {
  }
  m_CIVILIANGearScriptSettings CRF_GearScriptContainer "{64570ACB9A9C5C52}" {
   m_rGearScript "{6FFD426FE0C1079B}Configs/Gearscripts/Standard/80s/CRF_GS_CIV.conf"
-  m_VehicleLoadout CRF_VehicleGearScriptLoadout "{669494159C990589}" {
-  }
   m_bEnableLeadershipRadios 0
   m_bEnableGIRadios 0
   m_bEnableRTORadios 0
+  m_VehicleLoadout CRF_VehicleGearScriptLoadout "{669494159C990589}" {
+  }
  }
  {
   PerceptionManager "6445176B75D36372" : "{028DAEAD63E056BE}Prefabs/World/Game/PerceptionManager.et" {
@@ -574,12 +574,12 @@ CRF_Gamemode : "{1B76F75A3175E85C}Prefabs/MP/Modes/Plain/GameMode_Plain.et" {
     }
     SCR_Faction "{607AA5C7A94496DA}" {
      UIInfo SCR_FactionUIInfo "{56B49118D8D0A9C5}" {
-      Icon "{C8565602E0F422C5}Images/UI/Zeus GearScript Factions/CIV_NATO.edds"
+      Icon "{C8565602E0F422C5}UI/Images/GS_Factions/CIV_NATO.edds"
      }
-     "Identity of soldiers" FactionIdentity "{60DCEDE56D10632C}" : "{7BE453211ACB5F01}Configs/Identities/FactionIdentity_COAL.conf" {
+     "Identity of soldiers" FactionIdentity "{60DCEDE56D10632C}" {
      }
      m_iOrder 7
-     m_sFactionFlag "{C8565602E0F422C5}Images/UI/Zeus GearScript Factions/CIV_NATO.edds"
+     m_sFactionFlag "{C8565602E0F422C5}UI/Images/GS_Factions/CIV_NATO.edds"
      m_FactionFlagMaterial "{936E6C67A71A9421}Assets/Props/Fabric/Flags/Data/Flag_2_3_White.emat"
      m_CallsignInfo SCR_FactionCallsignInfo "{607A9A9E40D70F6E}" {
       m_sCallsignGroupFormat "%3"
@@ -646,46 +646,46 @@ CRF_Gamemode : "{1B76F75A3175E85C}Prefabs/MP/Modes/Plain/GameMode_Plain.et" {
      FactionColor 0.392 0.157 0.624 1
      UIInfo SCR_FactionUIInfo "{615009275A4B9FE7}" {
       Name "Spectator"
-      Icon "{BB790255945032F8}UI/data/Spec_Eye_BCR.edds"
+      Icon "{BB790255945032F8}UI/Images/SpecImages/Spec_Eye_BCR.edds"
       m_sNameUpper "SPECTATOR"
      }
      "Identity of soldiers" FactionIdentity "{570D128F4022EF5A}" {
       VisualIdentityArray {
        VisualIdentity "{570CE64C784286B5}" {
-        Head "{2FC2A1CE68435471}Prefabs/Characters/Heads/Head_Invisible.et"
-        Body "{E25DCEC549E17067}Prefabs/Characters/Basebody/CharacterBasebody_Invisible.et"
+        Head "{2FC2A1CE68435471}Prefabs/Characters/Core/Body/Head_Invisible.et"
+        Body "{E25DCEC549E17067}Prefabs/Characters/Core/Body/CharacterBasebody_Invisible.et"
        }
        VisualIdentity "{570CFDC06CAAD480}" {
-        Head "{2FC2A1CE68435471}Prefabs/Characters/Heads/Head_Invisible.et"
-        Body "{E25DCEC549E17067}Prefabs/Characters/Basebody/CharacterBasebody_Invisible.et"
+        Head "{2FC2A1CE68435471}Prefabs/Characters/Core/Body/Head_Invisible.et"
+        Body "{E25DCEC549E17067}Prefabs/Characters/Core/Body/CharacterBasebody_Invisible.et"
        }
        VisualIdentity "{570CFDC05A2BFCE8}" {
-        Head "{2FC2A1CE68435471}Prefabs/Characters/Heads/Head_Invisible.et"
-        Body "{E25DCEC549E17067}Prefabs/Characters/Basebody/CharacterBasebody_Invisible.et"
+        Head "{2FC2A1CE68435471}Prefabs/Characters/Core/Body/Head_Invisible.et"
+        Body "{E25DCEC549E17067}Prefabs/Characters/Core/Body/CharacterBasebody_Invisible.et"
        }
        VisualIdentity "{570CE64C790A3C7D}" {
-        Head "{2FC2A1CE68435471}Prefabs/Characters/Heads/Head_Invisible.et"
-        Body "{E25DCEC549E17067}Prefabs/Characters/Basebody/CharacterBasebody_Invisible.et"
+        Head "{2FC2A1CE68435471}Prefabs/Characters/Core/Body/Head_Invisible.et"
+        Body "{E25DCEC549E17067}Prefabs/Characters/Core/Body/CharacterBasebody_Invisible.et"
        }
        VisualIdentity "{570CFDC037CCBCD3}" {
-        Head "{2FC2A1CE68435471}Prefabs/Characters/Heads/Head_Invisible.et"
-        Body "{E25DCEC549E17067}Prefabs/Characters/Basebody/CharacterBasebody_Invisible.et"
+        Head "{2FC2A1CE68435471}Prefabs/Characters/Core/Body/Head_Invisible.et"
+        Body "{E25DCEC549E17067}Prefabs/Characters/Core/Body/CharacterBasebody_Invisible.et"
        }
        VisualIdentity "{570CFDC1C8B17A43}" {
-        Head "{2FC2A1CE68435471}Prefabs/Characters/Heads/Head_Invisible.et"
-        Body "{E25DCEC549E17067}Prefabs/Characters/Basebody/CharacterBasebody_Invisible.et"
+        Head "{2FC2A1CE68435471}Prefabs/Characters/Core/Body/Head_Invisible.et"
+        Body "{E25DCEC549E17067}Prefabs/Characters/Core/Body/CharacterBasebody_Invisible.et"
        }
        VisualIdentity "{570EDB838B8AC563}" {
-        Head "{2FC2A1CE68435471}Prefabs/Characters/Heads/Head_Invisible.et"
-        Body "{E25DCEC549E17067}Prefabs/Characters/Basebody/CharacterBasebody_Invisible.et"
+        Head "{2FC2A1CE68435471}Prefabs/Characters/Core/Body/Head_Invisible.et"
+        Body "{E25DCEC549E17067}Prefabs/Characters/Core/Body/CharacterBasebody_Invisible.et"
        }
        VisualIdentity "{588508C19AA51746}" {
-        Head "{2FC2A1CE68435471}Prefabs/Characters/Heads/Head_Invisible.et"
-        Body "{E25DCEC549E17067}Prefabs/Characters/Basebody/CharacterBasebody_Invisible.et"
+        Head "{2FC2A1CE68435471}Prefabs/Characters/Core/Body/Head_Invisible.et"
+        Body "{E25DCEC549E17067}Prefabs/Characters/Core/Body/CharacterBasebody_Invisible.et"
        }
        VisualIdentity "{588508C199AD5966}" {
-        Head "{2FC2A1CE68435471}Prefabs/Characters/Heads/Head_Invisible.et"
-        Body "{E25DCEC549E17067}Prefabs/Characters/Basebody/CharacterBasebody_Invisible.et"
+        Head "{2FC2A1CE68435471}Prefabs/Characters/Core/Body/Head_Invisible.et"
+        Body "{E25DCEC549E17067}Prefabs/Characters/Core/Body/CharacterBasebody_Invisible.et"
        }
       }
      }
@@ -696,7 +696,7 @@ CRF_Gamemode : "{1B76F75A3175E85C}Prefabs/MP/Modes/Plain/GameMode_Plain.et" {
      m_bIsPlayable 0
      m_bShowInWelcomeScreenIfNonPlayable 0
      m_bIsMilitary 0
-     m_sFactionFlag "{BB790255945032F8}UI/data/Spec_Eye_BCR.edds"
+     m_sFactionFlag "{BB790255945032F8}UI/Images/SpecImages/Spec_Eye_BCR.edds"
      m_FactionFlagMaterial "{E3BB2EF7F600DD28}Assets/Props/Fabric/Flags/Data/Flag_2_3_CIVILIAN.emat"
      m_FactionLabel FACTION_CIV
      m_aFriendlyFactionsIds {
@@ -732,16 +732,16 @@ CRF_Gamemode : "{1B76F75A3175E85C}Prefabs/MP/Modes/Plain/GameMode_Plain.et" {
      FactionColor 0.016 0.552 0.905 1
      UIInfo SCR_FactionUIInfo "{528C961236B7DCD3}" {
       Name "BLUFOR"
-      Icon "{E5DECCCA6F4B7416}Images/UI/Zeus GearScript Factions/BLUFOR_NATO.edds"
+      Icon "{E5DECCCA6F4B7416}UI/Images/GS_Factions/BLUFOR_NATO.edds"
       m_sNameUpper "BLUFOR"
      }
-     "Identity of soldiers" FactionIdentity "{62D8F84F18596BBF}" : "{7BE453211ACB5F01}Configs/Identities/FactionIdentity_COAL.conf" {
+     "Identity of soldiers" FactionIdentity "{6864102F997B0ADE}" : "{CA5DDD91CE5C7824}Configs/_Identities/FactionIdentity_COAL.conf" {
      }
      m_OutlineFactionColor 0.005 0.044 0.114 1
      m_NotificationFactionColor 0.016 0.552 0.905 1
      m_NotificationTextFactionColor 0.013 0.395 0.651 1
      m_bIsPlayable 0
-     m_sFactionFlag "{E5DECCCA6F4B7416}Images/UI/Zeus GearScript Factions/BLUFOR_NATO.edds"
+     m_sFactionFlag "{E5DECCCA6F4B7416}UI/Images/GS_Factions/BLUFOR_NATO.edds"
      m_FactionFlagMaterial "{DB52C2D4463AA0A0}Assets/Props/Fabric/Flags/Data/Flag_2_3_Blue.emat"
      m_FactionLabel FACTION_US
      m_CallsignInfo SCR_FactionCallsignInfo "{5DA0F2A6677ADA9E}" {
@@ -1108,17 +1108,17 @@ CRF_Gamemode : "{1B76F75A3175E85C}Prefabs/MP/Modes/Plain/GameMode_Plain.et" {
      FactionColor 0.855 0.031 0.028 1
      UIInfo SCR_FactionUIInfo "{528C96127F8B6B08}" {
       Name "OPFOR"
-      Icon "{11112420EEC8576C}Images/UI/Zeus GearScript Factions/OPFOR_NATO.edds"
+      Icon "{11112420EEC8576C}UI/Images/GS_Factions/OPFOR_NATO.edds"
       m_sNameUpper "OPFOR"
      }
-     "Identity of soldiers" FactionIdentity "{62D8F84F060C0F95}" : "{7BE453211ACB5F01}Configs/Identities/FactionIdentity_COAL.conf" {
+     "Identity of soldiers" FactionIdentity "{62D8F84F060C0F95}" : "{CA5DDD91CE5C7824}Configs/_Identities/FactionIdentity_COAL.conf" {
      }
      m_iOrder 1
      m_OutlineFactionColor 0.168 0.006 0.007 1
      m_NotificationFactionColor 0.855 0.031 0.028 1
      m_NotificationTextFactionColor 0.521 0.021 0.019 1
      m_bIsPlayable 0
-     m_sFactionFlag "{11112420EEC8576C}Images/UI/Zeus GearScript Factions/OPFOR_NATO.edds"
+     m_sFactionFlag "{11112420EEC8576C}UI/Images/GS_Factions/OPFOR_NATO.edds"
      m_FactionFlagMaterial "{362AC46447DBE58B}Assets/Props/Fabric/Flags/Data/Flag_1_2_Red.emat"
      m_FactionLabel FACTION_USSR
      m_CallsignInfo SCR_FactionCallsignInfo "{5DA0F2A67DFB8809}" {
@@ -1481,17 +1481,17 @@ CRF_Gamemode : "{1B76F75A3175E85C}Prefabs/MP/Modes/Plain/GameMode_Plain.et" {
      FactionColor 0 0.44 0.078 1
      UIInfo SCR_FactionUIInfo "{5570936866E0AD08}" {
       Name "INDFOR"
-      Icon "{EFA0BA63504B1230}Images/UI/Zeus GearScript Factions/INDFOR_NATO.edds"
+      Icon "{EFA0BA63504B1230}UI/Images/GS_Factions/INDFOR_NATO.edds"
       m_sNameUpper "INDFOR"
      }
-     "Identity of soldiers" FactionIdentity "{62D8F84F08F0FEAC}" : "{7BE453211ACB5F01}Configs/Identities/FactionIdentity_COAL.conf" {
+     "Identity of soldiers" FactionIdentity "{6864102F1A4666FE}" : "{CA5DDD91CE5C7824}Configs/_Identities/FactionIdentity_COAL.conf" {
      }
      m_iOrder 2
      m_OutlineFactionColor 0.001 0.082 0.023 1
      m_NotificationFactionColor 0 0.44 0.078 1
      m_NotificationTextFactionColor 0 0.296 0.055 1
      m_bIsPlayable 0
-     m_sFactionFlag "{EFA0BA63504B1230}Images/UI/Zeus GearScript Factions/INDFOR_NATO.edds"
+     m_sFactionFlag "{EFA0BA63504B1230}UI/Images/GS_Factions/INDFOR_NATO.edds"
      m_FactionFlagMaterial "{B7A02313829700F9}Assets/Props/Fabric/Flags/Data/Flag_1_2_Green.emat"
      m_FactionLabel FACTION_FIA
      m_CallsignInfo SCR_FactionCallsignInfo "{60A6B21E18F28741}" {

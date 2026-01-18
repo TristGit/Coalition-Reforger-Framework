@@ -17,13 +17,13 @@ SCR_AIWorld : "{01DC74137CFDDB6A}Prefabs/AI/SCR_AIWorld_Arland.et" {
  }
  coords 2506.797 147.634 2250.988
 }
-CRF_Gamemode CRF_Lobby : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et" {
+CRF_Gamemode CRF_Lobby : "{6A996BBFCEB37E78}Prefabs/Systems/MP/Modes/Lobby/CRF_Lobby.et" {
  components {
   CVON_VONGameModeComponent "{6624E607CC6D4CC8}" {
    m_bTeamspeakChecks 0
   }
  }
- coords 1228.604 37.813 2846.753
+ coords 1228.604 37.813 2845.828
  m_iFactionOneRatio 0
  m_iFactionTwoRatio 0
  m_sFactionOneKey ""

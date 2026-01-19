@@ -1,5 +1,5 @@
 MetaFileClass {
- Name "{62C0ACD6CF2544DD}Assets/Props/Fabric/Flags/Data/EASTGERFlagWorld.edds"
+ Name "{62C0ACD6CF2544DD}Assets/Materials/Flags/Factions/data/EASTGERFlagWorld.edds"
  Configurations {
   PNGResourceClass PC : "{DC555BD399D92412}Configs/System/ResourceTypes/PC/TextureUnspecified.conf" {
    ColorSpace ToSRGB

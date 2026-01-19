@@ -34,10 +34,10 @@ GenericEntity : "{8364151EF33B3B33}Prefabs/Structures/Core/FlagPole_Base.et" {
     m_Image "{2F23E25348144FAE}UI/Textures/FieldManual/MPModes/Conflict/Tiles/respawn_UI.edds"
     m_sFaction "INDFOR"
     m_aAuthoredLabels {
-     7 51872
+     ENTITYTYPE_SYSTEM FACTION_CRF_INDFOR
     }
     m_aAutoLabels {
-     7
+     ENTITYTYPE_SYSTEM
     }
     m_EntityBudgetCost {
      SCR_EntityBudgetValue "{649042603C80CE2F}" {
@@ -55,9 +55,6 @@ GenericEntity : "{8364151EF33B3B33}Prefabs/Structures/Core/FlagPole_Base.et" {
   SCR_FactionAffiliationComponent "{6490426E8DDBE360}" {
    "faction affiliation" "INDFOR"
   }
-  SCR_FlagComponent "{645911A16DDD122D}" {
-   m_sDefaultMaterial "{83AEA78E1C112F01}Prefabs/Structures/FlagPoles/Flags/INDFOR_Flag.emat"
-  }
   SCR_HorizontalAlignComponent "{6490426E852C080A}" {
   }
   SlotManagerComponent "{645911A16DDD122C}" {
@@ -65,7 +62,7 @@ GenericEntity : "{8364151EF33B3B33}Prefabs/Structures/Core/FlagPole_Base.et" {
     EntitySlotInfo Flag {
      Offset 0.0181 5.2653 0.0122
      Angles 0 180 0
-     Prefab "{CCCC185722D6D6EC}Assets/Props/Fabric/Flags/Flag_1_2_White_Base.et"
+     Prefab "{8C743CB2D8E074D5}Prefabs/Props/Fabric/Flags/Gearscript Factions/INDFOR_FLAG.et"
     }
    }
   }

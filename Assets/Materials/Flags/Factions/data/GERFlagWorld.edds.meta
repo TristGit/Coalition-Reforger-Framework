@@ -1,5 +1,5 @@
 MetaFileClass {
- Name "{3C11EF3C5B51A286}Assets/Props/Fabric/Flags/Data/GERFlagWorld.edds"
+ Name "{3C11EF3C5B51A286}Assets/Materials/Flags/Factions/data/GERFlagWorld.edds"
  Configurations {
   PNGResourceClass PC : "{DC555BD399D92412}Configs/System/ResourceTypes/PC/TextureUnspecified.conf" {
    ColorSpace ToSRGB

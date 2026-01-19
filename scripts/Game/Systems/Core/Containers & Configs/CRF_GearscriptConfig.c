@@ -29,13 +29,13 @@ class CRF_GearScriptContainer
 	//------------------------------------------------------------------------------------------------
 	// Vars considered "advanced" and not set by plugin
 	
-	[Attribute("{E6555DA2F31B0EC0}Configs/Gearscripts/CRF_Global_SightArsenal_Regular.conf", UIWidgets.ResourceNamePicker, desc: "Gearscript applied to all entities on this faction", "conf class=CRF_SightArsenalConfig")]
+	[Attribute("{E6555DA2F31B0EC0}Configs/Gearscripts/Additional Configs/CRF_Global_SightArsenal_Regular.conf", UIWidgets.ResourceNamePicker, desc: "Gearscript applied to all entities on this faction", "conf class=CRF_SightArsenalConfig")]
 	ResourceName m_rSightArsenal;
 	
-	[Attribute("{9D8E5FA08331042D}Configs/Gearscripts/CRF_Global_SightArsenal_Magnified.conf", UIWidgets.ResourceNamePicker, desc: "Gearscript applied to all entities on this faction", "conf class=CRF_SightArsenalConfig")]
+	[Attribute("{9D8E5FA08331042D}Configs/Gearscripts/Additional Configs/CRF_Global_SightArsenal_Magnified.conf", UIWidgets.ResourceNamePicker, desc: "Gearscript applied to all entities on this faction", "conf class=CRF_SightArsenalConfig")]
 	ResourceName m_rMagnifiedSightArsenal;
 	
-	[Attribute("{2E2626C733070162}Configs/Gearscripts/CRF_Global_VehicleGearscriptValues.conf", UIWidgets.ResourceNamePicker, desc: "Gearscript applied to all vehicles on this faction", "conf class=CRF_VehicleGearscriptConfig")]
+	[Attribute("{2E2626C733070162}Configs/Gearscripts/Additional Configs/CRF_Global_VehicleGearscriptValues.conf", UIWidgets.ResourceNamePicker, desc: "Gearscript applied to all vehicles on this faction", "conf class=CRF_VehicleGearscriptConfig")]
 	ResourceName m_rVehicleGearscriptValues;
 	
 	[Attribute("", desc: "Loadout values applied to all vehicles in this faction", "conf class=CRF_VehicleGearScriptLoadout")]
@@ -115,7 +115,7 @@ class CRF_GearScriptConfig
 	[Attribute(uiwidget: "resourcePickerThumbnail", params: "edds", category: "CRF Gearscript - Faction Settings")]
 	ResourceName m_FactionIcon;
 	
-	[Attribute("{11CAD6C8909CE567}Configs/Identities/CRF_CharacterIdentity_European.conf", UIWidgets.ResourceNamePicker, desc: "Gearscript Faction Identity", "conf class=CRF_CharacterIdentity", category: "CRF Gearscript - Faction Settings")]
+	[Attribute("{11CAD6C8909CE567}Configs/_Identities/CRF_CharacterIdentity_European.conf", UIWidgets.ResourceNamePicker, desc: "Gearscript Faction Identity", "conf class=CRF_CharacterIdentity", category: "CRF Gearscript - Faction Settings")]
 	ResourceName m_FactionIdentity;
 	
 	[Attribute(category: "CRF Gearscript - Faction Weapons")]

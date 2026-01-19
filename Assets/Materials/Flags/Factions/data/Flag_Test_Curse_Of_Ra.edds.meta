@@ -1,5 +1,5 @@
 MetaFileClass {
- Name "{D5BF7BD3D5406B1E}Assets/Props/Fabric/Flags/Data/Flag_Test_Curse_Of_Ra.edds"
+ Name "{D5BF7BD3D5406B1E}Assets/Materials/Flags/Factions/data/Flag_Test_Curse_Of_Ra.edds"
  Configurations {
   PNGResourceClass PC : "{DC555BD399D92412}Configs/System/ResourceTypes/PC/TextureUnspecified.conf" {
   }

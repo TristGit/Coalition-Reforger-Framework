@@ -34,10 +34,10 @@ GenericEntity : "{8364151EF33B3B33}Prefabs/Structures/Core/FlagPole_Base.et" {
     m_Image "{2F23E25348144FAE}UI/Textures/FieldManual/MPModes/Conflict/Tiles/respawn_UI.edds"
     m_sFaction "BLUFOR"
     m_aAuthoredLabels {
-     7 51870
+     ENTITYTYPE_SYSTEM FACTION_CRF_BLUFOR
     }
     m_aAutoLabels {
-     7
+     ENTITYTYPE_SYSTEM
     }
     m_EntityBudgetCost {
      SCR_EntityBudgetValue "{64904260E3C6B087}" {
@@ -55,9 +55,6 @@ GenericEntity : "{8364151EF33B3B33}Prefabs/Structures/Core/FlagPole_Base.et" {
   SCR_FactionAffiliationComponent "{6490426F457D9246}" {
    "faction affiliation" "BLUFOR"
   }
-  SCR_FlagComponent "{645911BD734B5E5F}" {
-   m_sDefaultMaterial "{3918C7E059058554}Prefabs/Structures/FlagPoles/Flags/BLUFOR_Flag.emat"
-  }
   SCR_HorizontalAlignComponent "{6490426F517E6DD0}" {
   }
   SlotManagerComponent "{645911BAB1D66B16}" {
@@ -65,7 +62,7 @@ GenericEntity : "{8364151EF33B3B33}Prefabs/Structures/Core/FlagPole_Base.et" {
     EntitySlotInfo Flag {
      Offset 0.0181 5.2653 0.0122
      Angles 0 180 0
-     Prefab "{CCCC185722D6D6EC}Assets/Props/Fabric/Flags/Flag_1_2_White_Base.et"
+     Prefab "{AB72A0D9CB73483B}Prefabs/Props/Fabric/Flags/Gearscript Factions/BLUFOR_FLAG.et"
     }
    }
   }

@@ -1,5 +1,5 @@
 MetaFileClass {
- Name "{E6555DA2F31B0EC0}Configs/Gearscripts/CRF_Global_SightArsenal_Regular.conf"
+ Name "{E6555DA2F31B0EC0}Configs/Gearscripts/Additional Configs/CRF_Global_SightArsenal_Regular.conf"
  Configurations {
   CONFResourceClass PC {
   }

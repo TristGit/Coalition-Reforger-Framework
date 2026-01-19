@@ -1,5 +1,5 @@
 MetaFileClass {
- Name "{2E2626C733070162}Configs/Gearscripts/CRF_Global_VehicleGearscriptValues.conf"
+ Name "{2E2626C733070162}Configs/Gearscripts/Additional Configs/CRF_Global_VehicleGearscriptValues.conf"
  Configurations {
   CONFResourceClass PC {
   }

@@ -1,5 +1,5 @@
 MetaFileClass {
- Name "{F04F02DBFC65553E}Configs/Gearscripts/CRF_CVON_Global_Roles_Config.conf"
+ Name "{F04F02DBFC65553E}Configs/Gearscripts/Additional Configs/CRF_CVON_Global_Roles_Config.conf"
  Configurations {
   CONFResourceClass PC {
   }

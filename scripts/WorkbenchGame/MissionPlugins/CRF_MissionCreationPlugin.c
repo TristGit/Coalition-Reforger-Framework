@@ -37,6 +37,7 @@ class CRF_MissionWorldCreationPlugin : WorkbenchPlugin
 		WorldEditorAPI api = worldEditor.GetApi();
 		
 		api.CreateSubsceneLayer(1, "_INIT");
+		api.CreateSubsceneLayer(1, "MARKERS");
 		api.CreateSubsceneLayer(1, "SPAWNPOINTS");
 		api.CreateSubsceneLayer(1, "SPAWNPOINTSGROUPS");
 		api.CreateSubsceneLayer(1, "OBJECTIVES");

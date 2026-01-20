@@ -92,7 +92,6 @@ class CRF_MissionConfigurationPlugin : WorkbenchPlugin
 		};
 		
 		missionHeaderContainer.Set("m_sName", string.Format("CRF %1%2 %3", missionMode, missionPlayercount, m_sMissionName));
-		missionHeaderContainer.Set("m_iPlayerCount", missionPlayercount);
 		
 		//--- Get target config path
 		string fileSystem = FilePath.FileSystemNameFromFileName(worldPath);

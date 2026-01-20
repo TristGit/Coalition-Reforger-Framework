@@ -1,6 +1,6 @@
 #ifdef WORKBENCH
 [WorkbenchPluginAttribute(
-	name: "Configure Slots", 
+	name: "4 | Configure Slots", 
 	description: "Configure Mission Slots", 
 	shortcut: "", 
 	wbModules: { "WorldEditor" }, 

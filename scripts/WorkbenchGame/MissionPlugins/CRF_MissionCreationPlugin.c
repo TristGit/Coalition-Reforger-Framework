@@ -1,6 +1,6 @@
 #ifdef WORKBENCH
 [WorkbenchPluginAttribute(
-	name: "Automatically Create Initial Layers/Objects", 
+	name: "1 | Automatically Create Initial Layers/Objects", 
 	description: "Automatically Generate Mission Layers", 
 	shortcut: "", 
 	wbModules: { "WorldEditor" }, 

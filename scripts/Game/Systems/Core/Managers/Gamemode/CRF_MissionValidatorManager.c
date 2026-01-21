@@ -4,9 +4,9 @@
 //! Add this to your gamemode entity to get real-time validation feedback
 //------------------------------------------------------------------------------------------------
 
-class CRF_MissionValidatorComponentClass : ScriptComponentClass {}
+class CRF_MissionValidatorManagerClass : ScriptComponentClass {}
 
-class CRF_MissionValidatorComponent : ScriptComponent
+class CRF_MissionValidatorManager : ScriptComponent
 {
 	//------------------------------------------------------------------------------------
 	// ATTRIBUTES

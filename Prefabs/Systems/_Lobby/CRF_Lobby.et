@@ -10,9 +10,13 @@ CRF_Gamemode : "{1B76F75A3175E85C}Prefabs/MP/Modes/Plain/GameMode_Plain.et" {
     }
     CRF_GearscriptManager "{652A3313EF7B772C}" {
     }
+    CRF_GroupLeaderMarkerManager "{686A3E86B81A4662}" {
+    }
     CRF_LoggingManager "{65654A2C50A1F78D}" {
     }
     CRF_MenuManager "{652A3313EB733550}" {
+    }
+    CRF_MissionValidatorManager "{686A3E855DC73533}" {
     }
     CRF_RespawnManager "{652A331316B363A2}" {
     }
@@ -23,10 +27,6 @@ CRF_Gamemode : "{1B76F75A3175E85C}Prefabs/MP/Modes/Plain/GameMode_Plain.et" {
     CRF_SlottingManager "{6535438600F2A9C0}" {
     }
    }
-  }
-  CRF_GroupLeaderMarkerManager "{663A2207B840B089}" {
-  }
-  CRF_MissionValidatorComponent "{67094DE3BA792F81}" {
   }
   CVON_VONGameModeComponent "{6624E607CC6D4CC8}" {
    m_sFreqConfig "{8FE52CD7F8502E24}Configs/Systems/FreqConfigs/CFCFrequencyConfig.conf"
@@ -346,7 +346,7 @@ CRF_Gamemode : "{1B76F75A3175E85C}Prefabs/MP/Modes/Plain/GameMode_Plain.et" {
    Enabled 0
   }
  }
- coords 2049.433 45.156 2065.633
+ coords 0 0 0
  PlayerControllerPrefab "{4E5DAC62A374950F}Prefabs/Characters/Core/CRF_PlayerControllerMP.et"
  m_bAutoPlayerRespawn 0
  m_bAllowFactionChange 0

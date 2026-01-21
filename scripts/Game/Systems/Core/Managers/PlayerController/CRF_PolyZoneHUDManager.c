@@ -1,8 +1,8 @@
 [ComponentEditorProps(category: "GameScripted/Misc", description: "")]
-class CRF_PolyZoneHUDControllerClass: ScriptComponentClass
+class CRF_PolyZoneHUDManagerClass: ScriptComponentClass
 {
 };
-class CRF_PolyZoneHUDController: ScriptComponent
+class CRF_PolyZoneHUDManager: ScriptComponent
 {
 	protected CRF_PolyZoneHUD m_PolyZoneHUD;
 			

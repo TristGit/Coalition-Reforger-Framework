@@ -55,7 +55,7 @@ class CRF_MissionConfigurationPlugin : WorkbenchPlugin
 		string worldPath;
 		
 		//--- Get mission header from the template config (can't use the class directly, it's engine-controlled class that cannot have reference in script)
-		Resource templateResource = Resource.Load("{3D094352621EA88C}Missions/ACRF_BaseMissionConfig.conf");
+		Resource templateResource = Resource.Load("{3D094352621EA88C}!Missions/CRF_BaseMissionConfig.conf");
 		BaseContainer missionHeaderContainer = templateResource.GetResource().ToBaseContainer();
 		
 		WorldEditor worldEditor = Workbench.GetModule(WorldEditor);
@@ -152,6 +152,7 @@ class CRF_MissionConfigurationPlugin : WorkbenchPlugin
 		return true;
 	}
 	
+	//------------------------------------------------------------------------------------------------
 	protected int GetPlayerCount(array<ref CRF_SlottingGroup> factionSlots)
 	{
 		int missionPlayercount;

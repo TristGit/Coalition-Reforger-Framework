@@ -1,0 +1,19 @@
+MetaFileClass {
+ Name "{F9B14C01FE118FE1}!Missions/Chernarus/Harry_Chernarus_0121_SEARCHANDDESTROY94_Getting Started.conf"
+ Configurations {
+  CONFResourceClass PC {
+  }
+  CONFResourceClass XBOX_ONE : PC {
+  }
+  CONFResourceClass XBOX_SERIES : PC {
+  }
+  CONFResourceClass PS4 : PC {
+  }
+  CONFResourceClass PS5 : PC {
+  }
+  CONFResourceClass HEADLESS : PC {
+  }
+  CONFResourceClass Xbox : PC {
+  }
+ }
+}

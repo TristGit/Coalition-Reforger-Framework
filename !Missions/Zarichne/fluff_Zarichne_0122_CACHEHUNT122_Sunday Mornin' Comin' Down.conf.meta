@@ -1,0 +1,19 @@
+MetaFileClass {
+ Name "{4C88072A5C99E976}!Missions/Zarichne/fluff_Zarichne_0122_CACHEHUNT122_Sunday Mornin' Comin' Down.conf"
+ Configurations {
+  CONFResourceClass PC {
+  }
+  CONFResourceClass XBOX_ONE : PC {
+  }
+  CONFResourceClass XBOX_SERIES : PC {
+  }
+  CONFResourceClass PS4 : PC {
+  }
+  CONFResourceClass PS5 : PC {
+  }
+  CONFResourceClass HEADLESS : PC {
+  }
+  CONFResourceClass Xbox : PC {
+  }
+ }
+}

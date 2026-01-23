@@ -1,0 +1,19 @@
+MetaFileClass {
+ Name "{4B021EFA8EA12F2F}!Missions/Eden/fluff_Eden_0122_SPECIAL112_You Have My Word.conf"
+ Configurations {
+  CONFResourceClass PC {
+  }
+  CONFResourceClass XBOX_ONE : PC {
+  }
+  CONFResourceClass XBOX_SERIES : PC {
+  }
+  CONFResourceClass PS4 : PC {
+  }
+  CONFResourceClass PS5 : PC {
+  }
+  CONFResourceClass HEADLESS : PC {
+  }
+  CONFResourceClass Xbox : PC {
+  }
+ }
+}

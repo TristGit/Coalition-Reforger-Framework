@@ -1,0 +1,19 @@
+MetaFileClass {
+ Name "{9BC616B98940B7DC}!Missions/Arland/Trist, Salami, Harry_Arland_0122_SPECIAL100_Fight Club.conf"
+ Configurations {
+  CONFResourceClass PC {
+  }
+  CONFResourceClass XBOX_ONE : PC {
+  }
+  CONFResourceClass XBOX_SERIES : PC {
+  }
+  CONFResourceClass PS4 : PC {
+  }
+  CONFResourceClass PS5 : PC {
+  }
+  CONFResourceClass HEADLESS : PC {
+  }
+  CONFResourceClass Xbox : PC {
+  }
+ }
+}

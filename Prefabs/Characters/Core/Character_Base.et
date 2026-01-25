@@ -40,7 +40,7 @@ SCR_ChimeraCharacter {
    LinkingObjects LinkingObjectArray "{649C9A0C1A1B1AFF}" {
     LinkingObjects {
      LinkingObject "{66EE199EAA151287}" {
-      Prefab "{D35A20947FE9E130}PrefabsEditable/Auto/Props/c130.et"
+      Prefab "{D35A20947FE9E130}Prefabs/Vehicles/Airplanes/C-130/Props/c130.et"
       LinkingColliderConfig {
        LinkingColliderConfig "{66EE199E9A5F4DE3}" {
         LinkingConfig "{20D6C9A48069F770}Configs/CharacterLinking/TruckCargo.conf"

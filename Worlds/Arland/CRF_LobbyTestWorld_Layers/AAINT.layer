@@ -42,8 +42,8 @@ CRF_Gamemode CRF_Lobby : "{6A996BBFCEB37E78}Prefabs/Systems/!Lobby/CRF_Lobby.et"
  m_bAllowEspionage 0
  m_bLockUnusedSlots 1
  m_bSafestartInstantlyEnabled 1
- m_bUseSafestartTimeLimit 1
- m_iSafestartTimeLimit 1
+ m_bUseSafestartTimeLimit 0
+ m_iSafestartTimeLimit 15
  m_iFactionOneRatio 1
  m_iFactionTwoRatio 2
  m_sFactionOneKey "BLU"
@@ -683,17 +683,17 @@ CRF_Gamemode CRF_Lobby : "{6A996BBFCEB37E78}Prefabs/Systems/!Lobby/CRF_Lobby.et"
  m_BLUFORGearScriptSettings CRF_GearScriptContainer "{64570ACB9B419A7B}" {
   m_rGearScript "{3A15E672C2171BB9}Configs/Gearscripts/Standard/80s/CRF_GS_GER_80s.conf"
   m_bEnableShareableMarkers 1
-  m_bEnableBFT 1
+  m_bEnableBFT 0
   m_bEnableLeadershipRadios 1
   m_bEnableGIRadios 1
-  m_bEnableRTORadios 1
+  m_bEnableRTORadios 0
  }
  m_OPFORGearScriptSettings CRF_GearScriptContainer "{64570ACB9B11EAAD}" {
   m_rGearScript "{4B989C4FB6562899}Configs/Gearscripts/Standard/Modern/CRF_GS_RHSUSMC.conf"
-  m_bEnableShareableMarkers 1
+  m_bEnableShareableMarkers 0
   m_bEnableBFT 1
-  m_bEnableLeadershipRadios 1
-  m_bEnableGIRadios 1
+  m_bEnableLeadershipRadios 0
+  m_bEnableGIRadios 0
   m_bEnableRTORadios 1
  }
  m_INDFORGearScriptSettings CRF_GearScriptContainer "{64570ACB9AE1C9ED}" {

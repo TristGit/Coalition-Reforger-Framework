@@ -63,6 +63,12 @@ class CRF_Gamemode : SCR_BaseGameMode
 	[Attribute("true", UIWidgets.Hidden)]
 	bool m_bSafestartInstantlyEnabled;
 	
+	[Attribute("false", UIWidgets.Hidden)]
+	bool m_bUseSafestartTimeLimit;
+	
+	[Attribute("0", UIWidgets.Hidden)]
+	int m_iSafestartTimeLimit;
+	
 	[Attribute("", UIWidgets.Hidden)]
 	ref	array<ref CRF_MissionDescriptor> m_aMissionDescriptors;
 	

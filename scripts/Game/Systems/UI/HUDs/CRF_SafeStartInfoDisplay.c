@@ -358,20 +358,31 @@ class CRF_SafeStartInfoDisplay : SCR_InfoDisplayExtended
 	 */
 	protected void LoadEquipmentInfo()
 	{
-		// Get player's faction to check gear script settings
+		// Get player's faction and role to check gear script settings
 		string factionName = "Unknown";
 		string radiosValue = "None";
+		string mapValue = "N/A";
+		string binocularsValue = "N/A";
+		string entrenchingToolValue = "N/A";
+		string nightVisionValue = "N/A";
+		string flashlightValue = "N/A";
 		
 		SCR_PlayerController playerController = SCR_PlayerController.Cast(GetGame().GetPlayerController());
 		if (playerController)
 		{
-			SCR_FactionManager factionManager = SCR_FactionManager.Cast(GetGame().GetFactionManager());
-			if (factionManager)
+			int playerId = playerController.GetPlayerId();
+			CRF_SlottingManager slottingManager = CRF_SlottingManager.GetInstance();
+			
+			if (slottingManager)
 			{
-				Faction playerFaction = factionManager.GetPlayerFaction(playerController.GetPlayerId());
-				if (playerFaction)
+				// Get player's slot data to determine role
+				CRF_SlotDataContainer slotData = slottingManager.GetPlayerSlotData(playerId);
+				if (slotData)
 				{
-					string factionKey = playerFaction.GetFactionKey();
+					// Get player role from slot resource
+					ResourceName slotResource = slotData.GetSlotResource();
+					CRF_EGearRole playerRole = CRF_RoleHelper.ResourceToRole(slotResource);
+					string factionKey = slotData.GetSlotFactionKey();
 					CRF_GearScriptContainer gearScriptSettings = null;
 					
 					// Get the appropriate gear script settings based on faction
@@ -393,7 +404,7 @@ class CRF_SafeStartInfoDisplay : SCR_InfoDisplayExtended
 					
 					if (gearScriptSettings)
 					{
-						// Load the gear script config to get faction name
+						// Load the gear script config to get faction name and equipment details
 						ResourceName gearScriptResource = gearScriptSettings.m_rGearScript;
 						if (gearScriptResource)
 						{
@@ -403,8 +414,109 @@ class CRF_SafeStartInfoDisplay : SCR_InfoDisplayExtended
 								)
 							);
 							
-							if (gearConfig && gearConfig.m_FactionName != "")
-								factionName = gearConfig.m_FactionName;
+							if (gearConfig)
+							{
+								// Get faction name
+								if (gearConfig.m_FactionName != "")
+									factionName = gearConfig.m_FactionName;
+								
+								// Get role configuration for binoculars
+								CRF_RoleConfig roleConfig = CRF_GamemodeManager.RolesConfig().FindRoleConfig(playerRole);
+								if (roleConfig)
+								{
+									// Check for binoculars (leadership/assistant get them)
+									CRF_ESlotType slotType = roleConfig.m_SlottingType;
+									if (slotType == CRF_ESlotType.SQUAD_LEADER || 
+									    slotType == CRF_ESlotType.TEAM_LEADER || 
+									    slotType == CRF_ESlotType.ASSISTANT)
+									{
+										ResourceName binocularsPrefab;
+										if (slotType == CRF_ESlotType.ASSISTANT && gearConfig.m_sAssistantBinocularsPrefab)
+											binocularsPrefab = gearConfig.m_sAssistantBinocularsPrefab;
+										else if (gearConfig.m_sLeadershipBinocularsPrefab)
+											binocularsPrefab = gearConfig.m_sLeadershipBinocularsPrefab;
+										
+										if (binocularsPrefab)
+										{
+											// Extract binocular name from prefab path
+											string binocularsName = binocularsPrefab;
+											int lastSlashIndex = binocularsName.LastIndexOf("/");
+											if (lastSlashIndex >= 0)
+												binocularsName = binocularsName.Substring(lastSlashIndex + 1, binocularsName.Length() - lastSlashIndex - 1);
+											
+											// Remove file extension if present
+											int dotIndex = binocularsName.LastIndexOf(".");
+											if (dotIndex >= 0)
+												binocularsName = binocularsName.Substring(0, dotIndex);
+											
+											binocularsValue = string.Format("Yes - %1", binocularsName);
+										}
+									}
+								}
+								
+								// Check default inventory items for equipment
+								if (gearConfig.m_DefaultInventoryItems)
+								{
+									foreach (CRF_Inventory_Item invItem : gearConfig.m_DefaultInventoryItems)
+									{
+										if (invItem && invItem.m_sItemPrefab)
+										{
+											string itemPath = invItem.m_sItemPrefab;
+											itemPath.ToLower();
+											
+											if (itemPath.Contains("map") || itemPath.Contains("Map"))
+											{
+												mapValue = "Yes";
+											}
+											else if (itemPath.Contains("etool") || itemPath.Contains("ETool") || itemPath.Contains("entrench") || itemPath.Contains("shovel"))
+											{
+												entrenchingToolValue = "Yes";
+											}
+											else if (itemPath.Contains("nvg") || itemPath.Contains("nightvision") || itemPath.Contains("NVG") || itemPath.Contains("NightVision"))
+											{
+												nightVisionValue = "Yes";
+											}
+											else if (itemPath.Contains("flashlight") || itemPath.Contains("torch") || itemPath.Contains("Flashlight") || itemPath.Contains("Torch"))
+											{
+												flashlightValue = "Yes";
+											}
+										}
+									}
+								}
+								
+								// Also check custom gear for the role
+								foreach (ref CRF_Role_Custom_Gear customGear : gearConfig.m_RolesToSetCustomSettings)
+								{
+									if (customGear.m_Role != playerRole)
+										continue;
+									
+									foreach (CRF_Inventory_Item invItem : customGear.m_AdditionalInventoryItems)
+									{
+										if (invItem && invItem.m_sItemPrefab)
+										{
+											string itemPath = invItem.m_sItemPrefab;
+											itemPath.ToLower();
+											
+											if (itemPath.Contains("map") || itemPath.Contains("Map"))
+											{
+												mapValue = "Yes";
+											}
+											else if (itemPath.Contains("etool") || itemPath.Contains("ETool") || itemPath.Contains("entrench") || itemPath.Contains("shovel"))
+											{
+												entrenchingToolValue = "Yes";
+											}
+											else if (itemPath.Contains("nvg") || itemPath.Contains("nightvision") || itemPath.Contains("NVG") || itemPath.Contains("NightVision"))
+											{
+												nightVisionValue = "Yes";
+											}
+											else if (itemPath.Contains("flashlight") || itemPath.Contains("torch") || itemPath.Contains("Flashlight") || itemPath.Contains("Torch"))
+											{
+												flashlightValue = "Yes";
+											}
+										}
+									}
+								}
+							}
 						}
 						
 						// Determine radio configuration
@@ -431,12 +543,10 @@ class CRF_SafeStartInfoDisplay : SCR_InfoDisplayExtended
 		
 		m_wFactionNameValue.SetText(string.Format("Faction Name: %1", factionName));
 		m_wRadiosValue.SetText(string.Format("Radios: %1", radiosValue));
-		
-		// Placeholder values for other equipment - TODO: implement actual checks
-		m_wMapValue.SetText("Map: Yes");
-		m_wBinocularsValue.SetText("Binoculars: Yes");
-		m_wEntrenchingToolValue.SetText("Entrenching Tool: Yes");
-		m_wNightVisionValue.SetText("Night Vision: None");
-		m_wFlashlightValue.SetText("Flashlight: None");
+		m_wMapValue.SetText(string.Format("Map: %1", mapValue));
+		m_wBinocularsValue.SetText(string.Format("Binoculars: %1", binocularsValue));
+		m_wEntrenchingToolValue.SetText(string.Format("Entrenching Tool: %1", entrenchingToolValue));
+		m_wNightVisionValue.SetText(string.Format("Night Vision: %1", nightVisionValue));
+		m_wFlashlightValue.SetText(string.Format("Flashlight: %1", flashlightValue));
 	}
 }

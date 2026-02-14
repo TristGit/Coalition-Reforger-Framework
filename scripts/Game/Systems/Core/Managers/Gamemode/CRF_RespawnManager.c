@@ -521,7 +521,7 @@ class CRF_RespawnManager : ScriptComponent
 			if (!respawnComponent.m_bActiveRespawnPoint)
 				continue;
 
-			sideRespawnPoints.Insert(point)
+			sideRespawnPoints.Insert(point);
 		}
 		
 		return sideRespawnPoints;

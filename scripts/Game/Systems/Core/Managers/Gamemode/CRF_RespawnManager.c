@@ -535,6 +535,9 @@ class CRF_RespawnManager : ScriptComponent
 		{
 			IEntity point = GetSpawnEntityFromRplID(pointRplID);
 			
+			if (!point)
+				continue;
+			
 			CRF_RespawnPointComponent pointRespawnComponent = CRF_RespawnPointComponent.Cast(point.FindComponent(CRF_RespawnPointComponent));
 			if (!pointRespawnComponent)
 				continue;
@@ -753,10 +756,13 @@ class CRF_RespawnManager : ScriptComponent
 			if (rplComp)
 			{
 				IEntity point = rplComp.GetEntity();
-				CRF_RespawnPointComponent respawnComponent = CRF_RespawnPointComponent.Cast(point.FindComponent(CRF_RespawnPointComponent));
-			
-				if (respawnComponent.m_bActiveRespawnPoint)
-					spawnLocation[3] = point.GetOrigin();
+				if (point)
+				{
+					CRF_RespawnPointComponent respawnComponent = CRF_RespawnPointComponent.Cast(point.FindComponent(CRF_RespawnPointComponent));
+				
+					if (respawnComponent && respawnComponent.m_bActiveRespawnPoint)
+						spawnLocation[3] = point.GetOrigin();
+				}
 			}
 		}
 		

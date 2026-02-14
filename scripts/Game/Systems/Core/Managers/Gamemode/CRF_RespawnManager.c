@@ -545,7 +545,7 @@ class CRF_RespawnManager : ScriptComponent
 			if (!pointRespawnComponent.m_bActiveRespawnPoint)
 				continue;
 
-			RplIDs.Insert(pointRplID)
+			RplIDs.Insert(pointRplID);
 		}
 		
 		return RplIDs;

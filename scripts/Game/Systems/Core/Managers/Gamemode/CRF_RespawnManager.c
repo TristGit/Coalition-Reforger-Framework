@@ -165,17 +165,17 @@ class CRF_RespawnManager : ScriptComponent
 			
 		int currentTickets = GetFactionTickets(faction);
 		
-		// Only subtract if tickets are positive and not unlimited (-1)
-		if (currentTickets <= 0 || currentTickets == -1)
+		// Don't subtract if tickets are unlimited (-1) or already at 0
+		if (currentTickets == -1 || currentTickets <= 0)
 			return false;
 			
 		// Update the appropriate faction's tickets
 		switch (faction)
 		{
-			case "BLUFOR": m_iBLUFORTickets -= amount; if (m_iBLUFORTickets < 0) m_iBLUFORTickets = 0; break;
-			case "OPFOR": m_iOPFORTickets -= amount; if (m_iOPFORTickets < 0) m_iOPFORTickets = 0; break;
-			case "INDFOR": m_iINDFORTickets -= amount; if (m_iINDFORTickets < 0) m_iINDFORTickets = 0; break;
-			case "CIV": m_iCIVTickets -= amount; if (m_iCIVTickets < 0) m_iCIVTickets = 0; break;
+			case "BLUFOR": m_iBLUFORTickets -= amount; if (m_iBLUFORTickets < 0 && m_iBLUFORTickets != -1) m_iBLUFORTickets = 0; break;
+			case "OPFOR": m_iOPFORTickets -= amount; if (m_iOPFORTickets < 0 && m_iOPFORTickets != -1) m_iOPFORTickets = 0; break;
+			case "INDFOR": m_iINDFORTickets -= amount; if (m_iINDFORTickets < 0 && m_iINDFORTickets != -1) m_iINDFORTickets = 0; break;
+			case "CIV": m_iCIVTickets -= amount; if (m_iCIVTickets < 0 && m_iCIVTickets != -1) m_iCIVTickets = 0; break;
 		}
 		
 		return true;

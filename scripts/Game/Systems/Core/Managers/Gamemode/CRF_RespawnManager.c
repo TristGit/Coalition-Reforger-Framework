@@ -129,6 +129,26 @@ class CRF_RespawnManager : ScriptComponent
 	}
 	
 	//------------------------------------------------------------------------------------------------
+	/**
+	* Check if respawns are allowed based on time cutoff setting
+	* @return True if respawns are allowed, false if past the cutoff time
+	*/
+	bool IsRespawnTimeAllowed()
+	{
+		// No cutoff configured (0 = never disable)
+		if (m_Gamemode.m_iRespawnCutoffMinutes <= 0)
+			return true;
+		
+		// Check if we're within the cutoff window
+		int currentTime = GetGame().GetWorld().GetWorldTime();
+		int missionEndTime = m_SafestartManager.m_iTimeMissionEnds;
+		int cutoffTime = missionEndTime - (m_Gamemode.m_iRespawnCutoffMinutes * 60000);
+		
+		// If current time is past the cutoff, disable respawns
+		return currentTime < cutoffTime;
+	}
+	
+	//------------------------------------------------------------------------------------------------
 	int GetFactionTickets(string faction)
 	{
 		switch (faction)
@@ -355,7 +375,8 @@ class CRF_RespawnManager : ScriptComponent
 	//------------------------------------------------------------------------------------------------
 	void RespawnTimer(float timeSlice)
 	{
-		if (GetFactionTickets(m_SlottingManager.GetPlayerSlotFaction(SCR_PlayerController.GetLocalPlayerId()).GetFactionKey()) <= 0 || !m_bCurrentRespawnEnabled)
+		int tickets = GetFactionTickets(m_SlottingManager.GetPlayerSlotFaction(SCR_PlayerController.GetLocalPlayerId()).GetFactionKey());
+		if ((tickets <= 0 && tickets != -1) || !m_bCurrentRespawnEnabled || !IsRespawnTimeAllowed())
 		{
 			GetGame().GetMenuManager().CloseAllMenus();
 			GetGame().GetMenuManager().OpenMenu(ChimeraMenuPreset.CRF_SpectatorMenu);
@@ -597,8 +618,13 @@ class CRF_RespawnManager : ScriptComponent
 			if (vehicle.m_sFactionKey != faction)
 				continue;
 			
-			//Do we have enough tickets and are they not at 0.
-			if (GetFactionTickets(faction) != 0 && GetFactionTickets(faction) < vehicle.m_iTicketsPerRespawn)
+			// Check if we have enough tickets to respawn this vehicle
+			int factionTickets = GetFactionTickets(faction);
+			// Skip if we're out of tickets (but allow if unlimited -1)
+			if (factionTickets == 0)
+				continue;
+			// Skip if we don't have enough tickets (but allow if unlimited -1)
+			if (factionTickets > 0 && factionTickets < vehicle.m_iTicketsPerRespawn)
 				continue;
 			
 			bool shouldRespawn = false;

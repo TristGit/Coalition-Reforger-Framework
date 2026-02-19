@@ -71,7 +71,7 @@ class CRF_Frontline_HUD : SCR_InfoDisplayExtended
 		else
 			m_wRoot.SetOpacity(1);
 		
-		m_wSiteCaptureText.SetText(m_FrontlineGamemodeManager.m_sHudMessage);
+		m_wSiteCaptureText.SetText(m_FrontlineGamemodeManager.GetHudMessage());
 		
 		m_bStoredProgressBarBoolean = false;
 		
@@ -82,7 +82,7 @@ class CRF_Frontline_HUD : SCR_InfoDisplayExtended
 			if(!zone)
 				continue;
 			
-			string status = m_FrontlineGamemodeManager.m_aZonesStatus[i];
+			string status = m_FrontlineGamemodeManager.GetZonesStatus()[i];
 			
 			ImageWidget widget;
 			ImageWidget lockWidget;

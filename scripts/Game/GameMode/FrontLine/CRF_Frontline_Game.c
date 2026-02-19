@@ -110,11 +110,12 @@ class CRF_FrontlineGamemodeManager: SCR_BaseGameModeComponent
 	{
 		super.EOnInit(owner);
 		
-		//--- Server only
+		// Initialize the array on all machines (needed for RPC updates to work)
+		SetupZoneStatus();
+		
+		// Server-only initialization
 		if (RplSession.Mode() == RplMode.Client)
 			return;
-		
-		SetupZoneStatus();
 	}
 	
 	float m_fUpdateBuffer = 0;

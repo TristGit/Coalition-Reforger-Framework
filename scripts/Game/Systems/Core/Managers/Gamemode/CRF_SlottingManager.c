@@ -5,17 +5,11 @@ class CRF_SlottingManager : ScriptComponent
 	// Slot data storage - uses ID-based system where IDs are generated in AddSlot
 	protected ref map<int, ref CRF_SlotDataContainer> m_mSlotsMap = new map<int, ref CRF_SlotDataContainer>;
 	
-	// Maps player ID to slot ID for instant lookup instead of O(n) iteration
-	protected ref map<int, int> m_mPlayerToSlotMap = new map<int, int>();
-	
 	// Latest Slot ID used
 	protected int m_iLatestSlotID;
 	
 	// Invoker for slot updates
 	protected ref ScriptInvoker m_OnSlottingUpdate;
-	
-	// Separate invoker for individual slot changes
-	protected ref ScriptInvoker m_OnSlotChanged;
 	
 	// References to other managers
 	protected CRF_Gamemode m_Gamemode;
@@ -36,7 +30,6 @@ class CRF_SlottingManager : ScriptComponent
 		m_sInstance = this;
 		// Initialize ScriptInvoker to avoid null checks - PERFORMANCE OPTIMIZATION
 		m_OnSlottingUpdate = new ScriptInvoker();
-		m_OnSlotChanged = new ScriptInvoker();
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -112,31 +105,6 @@ class CRF_SlottingManager : ScriptComponent
 		
 		if (slotData)
 		{
-			// PERFORMANCE OPTIMIZATION: Update reverse mapping
-			// Remove old mapping if player was previously in this slot
-			int oldPlayerId = slotData.GetSlotCurrentPlayerId();
-			if (oldPlayerId > 0 && m_mPlayerToSlotMap.Contains(oldPlayerId))
-				m_mPlayerToSlotMap.Remove(oldPlayerId);
-			
-			// CRITICAL: If this player is already in another slot, clear that slot first
-			if (playerId > 0)
-			{
-				int oldSlotId = GetPlayerSlotID(playerId);
-				if (oldSlotId >= 0 && oldSlotId != slotId)
-				{
-					// Clear the player from their old slot
-					CRF_SlotDataContainer oldSlot = GetSlotData(oldSlotId);
-					if (oldSlot)
-					{
-						oldSlot.SetSlotCurrentPlayerId(0);
-						m_RplBroadcastManager.UpdateSlotPlayerIdDelta(oldSlotId, 0);
-					}
-				}
-				
-				// Add new mapping
-				m_mPlayerToSlotMap.Set(playerId, slotId);
-			}
-			
 			slotData.SetSlotCurrentPlayerId(playerId);
 			m_RplBroadcastManager.UpdateSlotPlayerIdDelta(slotId, playerId);
 		};
@@ -171,12 +139,6 @@ class CRF_SlottingManager : ScriptComponent
 	ScriptInvoker GetOnSlottingUpdate()
 	{
 		return m_OnSlottingUpdate;
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	ScriptInvoker GetOnSlotChanged()
-	{
-		return m_OnSlotChanged;
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -329,10 +291,11 @@ class CRF_SlottingManager : ScriptComponent
 	//------------------------------------------------------------------------------------------------
 	int GetPlayerSlotID(int playerId)
 	{
-		// Old implementation iterated through ALL slots
-		int slotId;
-		if (m_mPlayerToSlotMap.Find(playerId, slotId))
-			return slotId;
+		foreach (int slotID, CRF_SlotDataContainer slotData : m_mSlotsMap)
+		{
+			if (slotData.GetSlotCurrentPlayerId() == playerId)
+				return slotID;
+		}
 		
 		return -1;
 	}
@@ -340,13 +303,13 @@ class CRF_SlottingManager : ScriptComponent
 	//------------------------------------------------------------------------------------------------
 	CRF_SlotDataContainer GetPlayerSlotData(int playerId)
 	{
-		// Old implementation iterated through ALL slots every call
-		// New implementation uses direct map lookup
-		int slotId;
-		if (!m_mPlayerToSlotMap.Find(playerId, slotId))
-			return null;
+		foreach (int slotID, CRF_SlotDataContainer slotData : m_mSlotsMap)
+		{
+			if (slotData.GetSlotCurrentPlayerId() == playerId)
+				return slotData;
+		}
 		
-		return GetSlotData(slotId);
+		return null;
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -441,8 +404,13 @@ class CRF_SlottingManager : ScriptComponent
 	//------------------------------------------------------------------------------------------------
 	bool IsPlayerInASlot(int playerId)
 	{
-		// Old implementation iterated through ALL slots
-		return m_mPlayerToSlotMap.Contains(playerId);
+		foreach (int slotID, CRF_SlotDataContainer slotData : m_mSlotsMap)
+		{
+			if (slotData.GetSlotCurrentPlayerId() == playerId)
+				return true;
+		}
+		
+		return false;
 	}
 	
 	//------------------------------------------------------------------------------------------------
